@@ -28,8 +28,10 @@ outstanding against the project's own priority tiers, and proposes the next thin
 but never starts building without the user confirming first.
 
 Files:
-- `next-improvement/SKILL.md` -- the core loop (tiers, ties, idea top-up, ranking, propose/
+- `next-improvement/SKILL.md` -- the steady-state loop (ties, idea top-up, ranking, propose/
   confirm/build/record). Always loaded when the skill triggers.
+- `next-improvement/setup.md` -- the one-time-per-project bootstrap interrogation. Only read the
+  first time the skill runs for a project, before its tracker file exists.
 - `next-improvement/strategies.md` -- optional alternate ways of presenting candidates (spread
   across tiers, a wildcard slot, a quick-win lane, category rotation). Only read when a project
   actually configures a `Selection strategy:` beyond the default.

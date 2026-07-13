@@ -31,7 +31,7 @@ Done entries extend the base format (see `SKILL.md`) with a ship date and an `ou
 
 `outcome:` is one of `pending`, `delivered`, `mixed`, `missed`, or `skipped`.
 
-## Setup (from `SKILL.md` Step 0)
+## Setup (from `setup.md`)
 
 Ask one short yes/no: want the skill to occasionally check back on how shipped work actually
 landed (delivered / mixed / missed)? Default `Feedback: on` if they don't care -- it's capped and

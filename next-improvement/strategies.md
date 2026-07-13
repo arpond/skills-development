@@ -67,7 +67,7 @@ Each entry below covers what the mode means *and* what Step 4 does with it -- on
   call; category-rotation is a generic fallback that only kicks in when no tie-break rule is in
   play.
 
-## Setup (from `SKILL.md` Step 0)
+## Setup (from `setup.md`)
 
 Ask, briefly, which selection strategy the user wants (one sentence each on `spread`, `wildcard`,
 `quick-win`, `category-rotation`), defaulting to plain `top-tier` if they don't care. This is
@@ -78,7 +78,7 @@ interrogation. Write their choice as the `Selection strategy:` line.
 
 Not fixed at setup. The user can change it any time by just saying so (e.g. "show me more
 options next time", "add a wildcard", "drop category-rotation") -- edit the line in place, no
-need to re-run the full Step 0 interrogation.
+need to re-run the full `setup.md` interrogation.
 
 ## Capping combined output
 

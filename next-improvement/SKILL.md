@@ -230,9 +230,10 @@ candidates scoring similarly; a tied-goal conflict is about the tier ranking its
 to pick a winner.
 
 **Do not start implementing until the user confirms which one (if any) to build.** This is the
-one hard rule in this skill: the ranking is a recommendation, not a decision. The user may pick
-something other than the top candidate, ask for a different combination, or say none of it is
-worth doing right now -- all of those are fine outcomes.
+second of this skill's two hard rules (the other being Step 2's append gate): the ranking is a
+recommendation, not a decision. The user may pick something other than the top candidate, ask
+for a different combination, or say none of it is worth doing right now -- all of those are
+fine outcomes.
 
 ## Step 5: Build it
 

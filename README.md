@@ -23,9 +23,10 @@ existing folder).
 A repeatable "what should we work on next" loop for any project. Instead of re-deciding from
 scratch every session what to build next, it maintains a per-project `IMPROVEMENT_TRACKER.md`:
 a small set of idea categories, a tiered list of priorities, and a running history of what's
-shipped. Each time it runs, it tops up any idea category that's gotten thin, ranks whatever's
-outstanding against the project's own priority tiers, and proposes the next thing to build --
-but never starts building without the user confirming first.
+shipped (and what's been rejected, and why). Each time it runs, it proposes fresh ideas for any
+category that's gotten thin, ranks whatever's outstanding against the project's own priority
+tiers, and proposes the next thing to build -- but never writes a new idea to the tracker or
+starts building anything without the user confirming first.
 
 Files:
 - `next-improvement/SKILL.md` -- the steady-state loop (ties, idea top-up, ranking, propose/
@@ -61,9 +62,14 @@ Claude: No IMPROVEMENT_TRACKER.md yet for this project -- let's set one up.
 
 You: Swap 1 and 2, we don't have anything broken right now.
 
-Claude: [writes IMPROVEMENT_TRACKER.md with confirmed tiers, then tops up both
-         categories with ideas grounded in the actual codebase, ranks them, and
-         proposes the top candidate with reasoning tied to the tiers]
+Claude: [writes IMPROVEMENT_TRACKER.md with confirmed tiers, then brainstorms ideas
+         for both categories grounded in the actual codebase]
+        Proposed for Features: ... Proposed for Refactors: ... -- add these?
+
+You: Looks good, add them all.
+
+Claude: [appends the confirmed ideas, ranks them, and proposes the top candidate
+         with reasoning tied to the tiers]
 ```
 
 ### Example: steady-state run

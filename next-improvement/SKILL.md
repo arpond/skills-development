@@ -8,11 +8,10 @@ description: Runs a "what should we work on next" process for whatever project t
 A repeatable "what next" loop: keep a running list of ideas per project, top the list up when
 it runs thin, pick the next thing to build by weighing it against that project's own standing
 priorities, confirm with the user, plan it in detail, build it, then record what shipped. This
-skill is project-agnostic — all project-specific detail (what categories of idea to track,
-what the priority
-tiers are, what's already been decided) lives in a file inside the project itself, not in this
-skill. That file is what makes this skill reusable across every project rather than rewritten
-per repo.
+skill is project-agnostic — all project-specific detail (what categories of idea to track, what
+the priority tiers are, what's already been decided) lives in a file inside the project itself,
+not in this skill. That file is what makes this skill reusable across every project rather than
+rewritten per repo.
 
 This file covers the steady-state loop only. Three companion files live alongside it and are
 only worth reading when actually in play — **don't read them unless the trigger condition

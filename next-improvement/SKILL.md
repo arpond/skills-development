@@ -58,6 +58,9 @@ Feedback: on                   <!-- optional, see feedback.md -->
 ## Done
 - **Idea name** (Category) -- one-line note on what actually shipped (may differ from the
   original idea's exact wording if the implementation took a different shape).
+
+## Rejected
+- **Idea name** (Category, YYYY-MM-DD) -- one-line reason it was declined.
 ```
 
 - **Goals** is an ordered list, highest priority first, with a `Last reviewed:` date. Earlier
@@ -83,6 +86,9 @@ Feedback: on                   <!-- optional, see feedback.md -->
 - **Done** is append-only history, never deleted from. Prefix each entry with its origin
   category in parens -- useful bookkeeping regardless of any optional subsystem; legacy entries
   without a tag just aren't counted by anything that relies on it, no migration needed.
+- **Rejected** is append-only, same as Done -- an idea proposed in Step 2 and declined by the
+  user goes here with the reason, not just dropped. See Step 2 for how this gets checked before
+  re-proposing something similar; the reason is what matters, not the mere fact of rejection.
 
 ## Step 0: Find or bootstrap the tracker
 
@@ -141,12 +147,21 @@ the project's actual current state rather than inventing from nowhere:
 - What did the user mention in passing that sounded like a want but wasn't captured yet?
 - If `Feedback:` is on, factor recorded outcomes in too -- see `feedback.md`.
 
+**Check Rejected before proposing.** If a candidate closely resembles something already in
+Rejected, don't just skip it or blindly re-propose it -- read the recorded reason and judge
+whether it still applies. A timing/priority reason ("not now, focused on X") can go stale and
+stop applying; a substance reason ("doesn't fit this project," "already tried, didn't work")
+usually doesn't. When genuinely unsure, it's fine to re-propose with a note ("this was declined
+before for X -- has that changed?") rather than silently suppressing or silently repeating it.
+
 **Show the proposed new ideas and wait for confirmation before appending anything.** Same
 principle as Step 4's build gate: brainstorming is a recommendation, not a decision -- the user
 may accept all of it, drop some, tweak wording, or say none of it's worth keeping. Don't write to
-the tracker until they've had a chance to react. Match that file's existing format and voice for
-whatever does get appended. Don't pad a thin category with filler just to hit a count -- if there
-are only one or two solid ideas, say so and move on rather than inventing weak ones. If
+the tracker until they've had a chance to react. Whatever gets declined, add it to **Rejected**
+with the reason given (or your best summary of it if the user was terse) -- don't just drop it
+silently, that's what lets the check above work next time. Match that file's existing format and
+voice for whatever does get appended. Don't pad a thin category with filler just to hit a count --
+if there are only one or two solid ideas, say so and move on rather than inventing weak ones. If
 `Selection strategy:` includes `wildcard(tagged)`, see `strategies.md` for the idea-tagging
 convention that mode depends on.
 

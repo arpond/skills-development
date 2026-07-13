@@ -7,7 +7,8 @@ description: Runs a "what should we work on next" process for whatever project t
 
 A repeatable "what next" loop: keep a running list of ideas per project, top the list up when
 it runs thin, pick the next thing to build by weighing it against that project's own standing
-priorities, confirm with the user, build it, then record what shipped. This skill is project-
+priorities, confirm with the user, plan it in detail, build it, then record what shipped. This
+skill is project-
 agnostic -- all project-specific detail (what categories of idea to track, what the priority
 tiers are, what's already been decided) lives in a file inside the project itself, not in this
 skill. That file is what makes this skill reusable across every project rather than rewritten
@@ -229,17 +230,35 @@ resolves it automatically -- which matters more for this one?" Close contenders 
 candidates scoring similarly; a tied-goal conflict is about the tier ranking itself being unable
 to pick a winner.
 
-**Do not start implementing until the user confirms which one (if any) to build.** This is the
-second of this skill's two hard rules (the other being Step 2's append gate): the ranking is a
-recommendation, not a decision. The user may pick something other than the top candidate, ask
-for a different combination, or say none of it is worth doing right now -- all of those are
-fine outcomes.
+**Do not start planning or implementing until the user confirms which one (if any) to build.**
+This is the second of this skill's three hard rules (the others being Step 2's append gate and
+Step 4.5's plan-approval gate): the ranking is a recommendation, not a decision. The user may
+pick something other than the top candidate, ask for a different combination, or say none of it
+is worth doing right now -- all of those are fine outcomes.
+
+## Step 4.5: Plan the confirmed pick
+
+A confirmed idea is still just an idea -- don't jump straight to code. Produce a detailed
+implementation plan first: what files/functions get touched, the approach, and how it'll be
+verified. **This is the third hard rule: get the plan approved before writing any code.**
+
+If Claude Code's plan mode is available in this session, use it naturally for this (EnterPlanMode
+/ ExitPlanMode) -- write the plan to the plan file and call ExitPlanMode to request approval. If
+plan mode isn't available or doesn't fit the context, present the plan inline instead and wait
+for an explicit go-ahead before proceeding.
+
+Keep the plan proportional to the work -- a one-line fix doesn't need the same ceremony as a
+multi-file feature. Use judgment on how much detail is actually useful rather than padding every
+plan to a fixed template.
+
+If the user asks for changes to the plan, revise and re-confirm before moving to Step 5.
 
 ## Step 5: Build it
 
-Once confirmed, implement normally -- this skill only changes how the work item was chosen, not
-how you write code, run tests, or verify changes. Follow whatever conventions the project's own
-docs/CLAUDE.md/memory already establish.
+Once the plan is approved, implement it as planned -- this skill only changes how the work item
+was chosen and planned, not how you write code, run tests, or verify changes. Follow whatever
+conventions the project's own docs/CLAUDE.md/memory already establish. If reality diverges from
+the plan enough to matter, say so rather than silently deviating.
 
 ## Step 6: Record what shipped
 

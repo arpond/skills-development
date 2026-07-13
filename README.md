@@ -25,12 +25,12 @@ scratch every session what to build next, it maintains a per-project `IMPROVEMEN
 a small set of idea categories, a tiered list of priorities, and a running history of what's
 shipped (and what's been rejected, and why). Each time it runs, it proposes fresh ideas for any
 category that's gotten thin, ranks whatever's outstanding against the project's own priority
-tiers, and proposes the next thing to build -- but never writes a new idea to the tracker or
-starts building anything without the user confirming first.
+tiers, and proposes the next thing to build -- but never writes a new idea to the tracker, starts
+planning, or starts building anything without the user confirming first.
 
 Files:
 - `next-improvement/SKILL.md` -- the steady-state loop (ties, idea top-up, ranking, propose/
-  confirm/build/record). Always loaded when the skill triggers.
+  confirm/plan/build/record). Always loaded when the skill triggers.
 - `next-improvement/setup.md` -- the one-time-per-project bootstrap interrogation. Only read the
   first time the skill runs for a project, before its tracker file exists.
 - `next-improvement/strategies.md` -- optional alternate ways of presenting candidates (spread
@@ -84,8 +84,13 @@ Claude: Goals last reviewed 3 weeks ago, nothing suggests drift -- skipping that
 
 You: Build it.
 
-Claude: [implements, then moves the item to Done in the tracker with a one-line note
-         on what actually shipped]
+Claude: [writes a detailed implementation plan -- what changes, where, how it'll be
+         verified -- and asks for approval before touching any code]
+
+You: Looks good, go ahead.
+
+Claude: [implements per the plan, then moves the item to Done in the tracker with a
+         one-line note on what actually shipped]
 ```
 
 ### Example: reprioritizing mid-project

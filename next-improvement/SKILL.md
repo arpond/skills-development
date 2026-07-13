@@ -155,8 +155,9 @@ stop applying; a substance reason ("doesn't fit this project," "already tried, d
 usually doesn't. When genuinely unsure, it's fine to re-propose with a note ("this was declined
 before for X -- has that changed?") rather than silently suppressing or silently repeating it.
 
-**Show the proposed new ideas and wait for confirmation before appending anything.** Same
-principle as Step 4's build gate: brainstorming is a recommendation, not a decision -- the user
+**Show the proposed new ideas and wait for confirmation before appending anything.** This is the
+first of the skill's three hard rules (the others being Step 4's pick-confirmation gate and
+Step 4.5's plan-approval gate): brainstorming is a recommendation, not a decision -- the user
 may accept all of it, drop some, tweak wording, or say none of it's worth keeping. Don't write to
 the tracker until they've had a chance to react. Whatever gets declined, add it to **Rejected**
 with the reason given (or your best summary of it if the user was terse) -- don't just drop it
@@ -253,6 +254,12 @@ plan to a fixed template.
 
 If the user asks for changes to the plan, revise and re-confirm before moving to Step 5 -- that's
 iterating on the same plan within the same session, not a persistence question.
+
+If the user declines the plan outright rather than asking for changes ("actually, let's not do
+this after all"), that's not a Step 6 outcome and not a Rejected outcome either -- a plan getting
+declined doesn't retroactively unpick or reject the idea itself, which is still perfectly valid,
+just not being built right now. Leave it as-is in its category; it goes back through Step 3's
+ranking next time like anything else outstanding.
 
 **Always plan fresh; don't reuse an old plan for an idea that gets picked again later.** If a
 candidate was proposed, planned, and then declined or shelved in an earlier session, and the same

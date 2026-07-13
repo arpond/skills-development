@@ -240,7 +240,8 @@ is worth doing right now — all of those are fine outcomes.
 
 A confirmed idea is still just an idea — don't jump straight to code. Produce a detailed
 implementation plan first: what files/functions get touched, the approach, and how it'll be
-verified. **This is the third hard rule: get the plan approved before writing any code.**
+verified. **This is the third of the skill's three hard rules (the others being Step 2's append
+gate and Step 4's pick-confirmation gate): get the plan approved before writing any code.**
 
 If Claude Code's plan mode is available in this session, use it naturally for this (EnterPlanMode
 / ExitPlanMode) — write the plan to the plan file and call ExitPlanMode to request approval. If

@@ -251,7 +251,17 @@ Keep the plan proportional to the work -- a one-line fix doesn't need the same c
 multi-file feature. Use judgment on how much detail is actually useful rather than padding every
 plan to a fixed template.
 
-If the user asks for changes to the plan, revise and re-confirm before moving to Step 5.
+If the user asks for changes to the plan, revise and re-confirm before moving to Step 5 -- that's
+iterating on the same plan within the same session, not a persistence question.
+
+**Always plan fresh; don't reuse an old plan for an idea that gets picked again later.** If a
+candidate was proposed, planned, and then declined or shelved in an earlier session, and the same
+idea comes up again now, write a new plan grounded in the project's current state rather than
+resurrecting the old one -- the codebase may have changed since (other ideas shipped, files
+moved, dependencies shifted), and a stale plan silently reused is the same risk this skill
+already guards against elsewhere (dry-run tracking, goal staleness, feedback outcomes: don't
+trust a cached judgment, re-ground it). Plan-mode plan files aren't tracked by or referenced from
+the tracker for this reason.
 
 ## Step 5: Build it
 

@@ -141,11 +141,14 @@ the project's actual current state rather than inventing from nowhere:
 - What did the user mention in passing that sounded like a want but wasn't captured yet?
 - If `Feedback:` is on, factor recorded outcomes in too -- see `feedback.md`.
 
-Append new ideas to the relevant category in the tracker, matching that file's existing format
-and voice. Don't pad a thin category with filler just to hit a count -- if there are only one or
-two solid ideas, say so and move on rather than inventing weak ones. If `Selection strategy:`
-includes `wildcard(tagged)`, see `strategies.md` for the idea-tagging convention that mode
-depends on.
+**Show the proposed new ideas and wait for confirmation before appending anything.** Same
+principle as Step 4's build gate: brainstorming is a recommendation, not a decision -- the user
+may accept all of it, drop some, tweak wording, or say none of it's worth keeping. Don't write to
+the tracker until they've had a chance to react. Match that file's existing format and voice for
+whatever does get appended. Don't pad a thin category with filler just to hit a count -- if there
+are only one or two solid ideas, say so and move on rather than inventing weak ones. If
+`Selection strategy:` includes `wildcard(tagged)`, see `strategies.md` for the idea-tagging
+convention that mode depends on.
 
 **Exhausted is a valid outcome, not a failure to fix.** If brainstorming (grounded in the checks
 above) turns up nothing genuinely new or worth building, say so explicitly rather than quietly
@@ -156,8 +159,9 @@ marginal/duplicate/out of scope." A vague "nothing comes to mind" isn't enough; 
 what lets the user judge whether the category's actually done or the search just wasn't broad
 enough.
 
-**Track dry top-ups so they don't repeat silently.** When a top-up attempt adds nothing (or only
-adds something you flagged as weak), note it inline under that category's header:
+**Track dry top-ups so they don't repeat silently.** When a top-up attempt ends up adding nothing
+-- brainstorming found nothing genuinely new, everything proposed was flagged weak, or the user
+declined what was proposed -- note it inline under that category's header:
 `(dry runs: N -- last: YYYY-MM-DD)`. Increment on each dry attempt; reset to nothing (remove the
 line) the next time a solid idea actually gets added. At `dry runs: 2+`, surface this to the user
 up front the next time this category comes up -- e.g. "Features has been topped up 2 times with

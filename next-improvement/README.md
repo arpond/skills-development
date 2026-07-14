@@ -20,6 +20,12 @@ Files:
   (delivered / mixed / missed) and feeds that back into future judgement, capped so it never
   turns into a nagging backlog. Only read when a project has `Feedback: on`.
 
+## Requires
+
+Nothing beyond local file read/write — no MCP server, no external service. The one optional
+dependency is Claude Code's plan mode, used for the approval flow in Step 4.5 if available;
+falls back to presenting the plan inline and waiting for a go-ahead otherwise.
+
 ## When it triggers
 
 Claude reaches for this skill when you say things like:

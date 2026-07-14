@@ -90,6 +90,18 @@ Feedback: on                   <!-- optional, see feedback.md -->
   user goes here with the reason, not just dropped. See Step 2 for how this gets checked before
   re-proposing something similar; the reason is what matters, not the mere fact of rejection.
 
+**Hard rules by step, so a review can check none have gone missing:**
+
+| Step | Hard rule |
+|---|---|
+| 2 | Show proposed new ideas and wait for confirmation before appending anything |
+| 4 | Do not start planning or implementing until the user confirms which one (if any) to build |
+| 4.5 | Get the plan approved before writing any code |
+
+*Update this table in the same edit whenever a hard rule is added, removed, or moved* — it's a
+mirror of the steps, not independent prose, so it's the one place to check rather than three
+scattered cross-references.
+
 ## Step 0: Find or bootstrap the tracker
 
 Look for `IMPROVEMENT_TRACKER.md` at the root of whichever project the user is currently working
@@ -154,9 +166,8 @@ stop applying; a substance reason ("doesn't fit this project," "already tried, d
 usually doesn't. When genuinely unsure, it's fine to re-propose with a note ("this was declined
 before for X — has that changed?") rather than silently suppressing or silently repeating it.
 
-**Show the proposed new ideas and wait for confirmation before appending anything.** This is the
-first of the skill's three hard rules (the others being Step 4's pick-confirmation gate and
-Step 4.5's plan-approval gate): brainstorming is a recommendation, not a decision — the user
+**Show the proposed new ideas and wait for confirmation before appending anything.** This is one
+of the skill's hard rules (see the table above): brainstorming is a recommendation, not a decision — the user
 may accept all of it, drop some, tweak wording, or say none of it's worth keeping. Don't write to
 the tracker until they've had a chance to react. Whatever gets declined, add it to **Rejected**
 with the reason given (or your best summary of it if the user was terse) — don't just drop it
@@ -231,8 +242,8 @@ candidates scoring similarly; a tied-goal conflict is about the tier ranking its
 to pick a winner.
 
 **Do not start planning or implementing until the user confirms which one (if any) to build.**
-This is the second of this skill's three hard rules (the others being Step 2's append gate and
-Step 4.5's plan-approval gate): the ranking is a recommendation, not a decision. The user may
+This is one of the skill's hard rules (see the table above): the ranking is a recommendation, not
+a decision. The user may
 pick something other than the top candidate, ask for a different combination, or say none of it
 is worth doing right now — all of those are fine outcomes.
 
@@ -240,8 +251,8 @@ is worth doing right now — all of those are fine outcomes.
 
 A confirmed idea is still just an idea — don't jump straight to code. Produce a detailed
 implementation plan first: what files/functions get touched, the approach, and how it'll be
-verified. **This is the third of the skill's three hard rules (the others being Step 2's append
-gate and Step 4's pick-confirmation gate): get the plan approved before writing any code.**
+verified. **This is one of the skill's hard rules (see the table above): get the plan approved
+before writing any code.**
 
 If Claude Code's plan mode is available in this session, use it naturally for this (EnterPlanMode
 / ExitPlanMode) — write the plan to the plan file and call ExitPlanMode to request approval. If

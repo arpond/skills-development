@@ -16,6 +16,20 @@ Files:
   one-time or opt-in the way `next-improvement`'s companion files are, so there's nothing to split
   out; every step runs on every ticket.
 
+## Requires
+
+- **A Jira MCP server, configured and authenticated** — this is a hard dependency. Every step
+  from resolving the ticket onward relies on Jira MCP tools (`getJiraIssue`, `search`,
+  `getJiraIssueRemoteIssueLinks`, and so on); without one, the skill can't do anything beyond
+  saying so and pointing at whatever MCP setup docs exist in the environment (e.g. an
+  `atlassian-mcp` skill, if installed). Set this up before expecting this skill to trigger
+  usefully.
+- **git**, in whatever repo(s) get explored — soft dependency. Used for the checkout-freshness and
+  existing-work checks in Step 5. If it's missing, not a git repo, or has no remote configured,
+  the skill notes that limitation in the plan rather than failing outright.
+- **Claude Code's plan mode** — optional. Used for the approval flow in Step 6 if available;
+  falls back to presenting the plan inline and waiting for a go-ahead otherwise.
+
 ## When it triggers
 
 Claude reaches for this skill when you give it a ticket number and ask it to plan, scope, break

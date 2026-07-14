@@ -10,7 +10,11 @@ Principles applied consistently across the skills in this repo:
   choice of what to build, an implementation plan — gets shown to the user and confirmed before
   it happens. A recommendation is not a decision. Where a skill has more than one such gate, they
   should be explicitly numbered/cross-referenced so drift is easy to catch on review, not left
-  implicit.
+  implicit — and that cross-reference needs to mirror the skill's actual structure (one entry per
+  step/section, e.g. a table keyed to step number) rather than free prose that bundles items under
+  a loose phrase. Prose summaries let a gap hide behind vague bundling and drift silently as steps
+  change; a structurally mirrored one makes a missing entry visible by inspection, and should carry
+  an explicit note to update it in the same edit that changes what it's summarizing.
 - **Progressive disclosure.** The always-loaded core file stays lean; anything one-time
   (a bootstrap/setup step) or opt-in (a feature most projects won't touch) lives in a companion
   file read only when its trigger condition is actually met. A file's size is a signal — if a
@@ -29,6 +33,17 @@ Principles applied consistently across the skills in this repo:
 - **Ask when genuinely ambiguous, don't silently resolve.** Ties, close calls, and conflicting
   signals get surfaced explicitly rather than picked arbitrarily and presented as if there was
   only ever one obvious answer.
+- **One check-in, not two.** When a skill needs several related confirmations before proceeding
+  (e.g. scope and understanding), fold them into a single message rather than gating twice in a
+  row. Back-to-back stops for adjacent information don't add safety — they train the user to skim
+  past confirmations instead of actually reading them, which undermines "propose, don't just do"
+  more than it reinforces it.
+- **Inputs are claims, not truth.** "Re-ground, don't cache" covers a skill's own judgements going
+  stale as a project changes over time; this is the same discipline applied to what comes in from
+  outside the skill on a single pass — a ticket description, a config file, a local checkout. None
+  of these are guaranteed accurate just because they were provided: verify them against a more
+  authoritative source (the actual code, the actual remote, the actual current state) before
+  building on them, and treat a mismatch as something to surface, not quietly reconcile.
 
 ## Installation
 
@@ -147,5 +162,74 @@ Claude: Tier 1 pick: "Fix pagination bug" — because X.
         a second look.
         Also: last shipped "Add retry logic" (3 weeks ago) — deliver as expected,
         mixed, or miss?
+```
+
+## plan-technical-jira-ticket
+
+Turns a single, well-scoped technical Jira ticket (tech debt, a refactor, a performance fix, a
+config/infra change) into an implementation plan grounded in the actual codebase(s) it touches,
+rather than just restating the ticket in different words. It fetches the ticket plus everything
+that might carry context the ticket body doesn't — linked issues, remote links, attachments, a
+parent epic — verifies the ticket's claims (and the local checkout's freshness) against real code
+rather than trusting either at face value, and recaps its understanding once in a single check-in
+before spending any effort exploring. Deliberately narrow in scope: it flags rather than plans
+epics, bug reports, and multi-integration feature tickets, since each of those needs a different
+process than "plan one well-defined technical change."
+
+Files:
+- `plan-technical-jira-ticket/SKILL.md` — the whole flow (resolve/classify, gather context,
+  understand, recap, ground in code, write the plan, hand off). Single file — nothing here is
+  one-time or opt-in the way `next-improvement`'s companion files are, so there's nothing to split
+  out; every step runs on every ticket.
+
+### When it triggers
+
+Claude reaches for this skill when you give it a ticket number and ask it to plan, scope, break
+down, or figure out the approach for that kind of technical work:
+
+- "Plan out SD-4821, it's the tech debt ticket about the old retry logic."
+- "What would it take to do PROJ-456?"
+- Pasting a Jira URL and asking what the change actually involves.
+
+### Example: straightforward run
+
+```
+You: Plan out SD-4821, it's a tech debt ticket about the old retry logic.
+
+Claude: [fetches SD-4821, checks status/assignee (To Do, unassigned) and links
+         (none blocking), confirms it's tech debt rather than a bug or feature,
+         pulls a linked Confluence doc for design detail]
+        Here's what I'm taking this ticket to mean: replace the manual retry loop
+        in the sync job with the shared retry helper the rest of the codebase uses.
+        Looks scoped to just this repo — right so far?
+
+You: Yes, that's right.
+
+Claude: [confirms the local checkout is current, checks for any branch already
+         referencing SD-4821 (none), explores the sync job and how the shared
+         retry helper is used elsewhere]
+        Plan: replace the loop in sync_job.py with RetryHelper (same pattern as
+        export_job.py), add a unit test for the backoff behaviour, verify against
+        the existing integration tests. Covers both acceptance criteria on the
+        ticket. Want me to go ahead?
+
+You: Approved, go ahead.
+
+Claude: [implements per the plan]
+```
+
+### Example: a scope gate firing
+
+```
+You: Can you plan JIRA-991?
+
+Claude: [fetches JIRA-991] This reads as a bug report — it describes users seeing
+        stale cached data, not a known change to make. Want a bug-investigation
+        process instead, or is the root cause already known, in which case this
+        is really just "invalidate the cache on write"?
+
+You: Root cause is known, just implement the cache invalidation.
+
+Claude: [proceeds with a plan scoped to that specific, already-diagnosed change]
 ```
 

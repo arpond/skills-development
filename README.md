@@ -44,6 +44,25 @@ Principles applied consistently across the skills in this repo:
   of these are guaranteed accurate just because they were provided: verify them against a more
   authoritative source (the actual code, the actual remote, the actual current state) before
   building on them, and treat a mismatch as something to surface, not quietly reconcile.
+- **Unreachable isn't resolved, in either direction.** Sometimes a check can't be run at all — a
+  linked ticket without read access, an unfetchable remote link, a search with zero results, a
+  missing git remote. That's a third state, distinct from "confirmed true" and "confirmed false,"
+  and collapsing it into either — treating it as absent, or treating it as an automatic blocker —
+  is the mistake. Surface the specific thing that couldn't be checked and let the user decide,
+  rather than guessing which direction is safer.
+- **Documentation travels with the skill.** Installing a skill means copying its folder, so
+  anything a person needs to evaluate or use it — what it does, when it triggers, example runs,
+  prerequisites — belongs inside that folder as its own `README.md`, not in a repo-level file that
+  doesn't get copied along. This is a different concern from progressive disclosure (which is
+  about what Claude loads into context); this is about what a human still has once the skill is
+  installed elsewhere. The top-level README stays a thin index pointing into each skill's own
+  docs, rather than duplicating them.
+- **State hard dependencies explicitly, distinguish them from what degrades gracefully.** If a
+  skill can't function at all without something external (an MCP server, a specific tool), that
+  belongs up front in its own docs — not just handled gracefully at runtime once someone's already
+  hit it. Dependencies the skill already works around on its own (and notes the limitation for,
+  per "unreachable isn't resolved") don't need the same billing; conflating the two either buries
+  a real blocker behind a wall of caveats or overstates how fragile the skill actually is.
 
 ## Installation
 

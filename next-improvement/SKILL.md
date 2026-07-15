@@ -215,7 +215,12 @@ are already close within a tier, never to promote a candidate across tiers — a
 happens to set up a tier-1 idea is still tier-3 for ranking purposes; the synergy is worth
 mentioning in Step 4, not worth re-tiering it over. Nothing here gets written to the tracker —
 it's noticed and reasoned about at ranking time from whatever's actually outstanding, so there's
-no annotation to keep in sync as ideas get reworded, merged, or shipped.
+no annotation to keep in sync as ideas get reworded, merged, or shipped. If `category-rotation` is
+also active and points at a different candidate for the same close call, see its precedence rule
+in `strategies.md` — a stored tie-break rule beats both, and synergy beats category-rotation when
+the two disagree. Scoped the same way `category-rotation` is: it breaks the base pick's own close
+call, not a tie within one of `spread(N)`'s individual per-tier picks — a tie that narrow is left
+as-is rather than resolved by either signal.
 
 **Tied tiers**: evaluate candidates against every goal in the tied group, not just one.
 - If a candidate serves all goals in the tie equally (or none of them), there's no conflict —

@@ -206,6 +206,17 @@ tier does that outcome serve? Don't take a category label at face value — a "r
 doesn't make anything more readable or any future feature easier doesn't serve the maintenance
 tier just because it's filed under that category.
 
+**Synergies are a soft signal, judged fresh each run, not tracked data.** While ranking, notice if
+a candidate is a genuine stepping stone toward another outstanding candidate, would make one
+noticeably easier, or shares real implementation with it — but only when it's concrete (name the
+actual shared file/module/step), never a vague "these feel related." Where it's genuinely true,
+use it the same way a tied-goal's tie-break rule is used: to break a tie between candidates that
+are already close within a tier, never to promote a candidate across tiers — a tier-3 idea that
+happens to set up a tier-1 idea is still tier-3 for ranking purposes; the synergy is worth
+mentioning in Step 4, not worth re-tiering it over. Nothing here gets written to the tracker —
+it's noticed and reasoned about at ranking time from whatever's actually outstanding, so there's
+no annotation to keep in sync as ideas get reworded, merged, or shipped.
+
 **Tied tiers**: evaluate candidates against every goal in the tied group, not just one.
 - If a candidate serves all goals in the tie equally (or none of them), there's no conflict —
   rank it normally against the other tiers.
@@ -234,7 +245,9 @@ Default (no `Selection strategy:` set, or set to plain `top-tier`): present the 
 or up to 4 total (winner + close contenders) if the ranking is genuinely close, with reasoning
 tied to specific tiers — not "this seems good" but "this serves tier 1 because X" or "this is
 tier-3 maintenance work but nothing above it is ready to build, since Y." The close-contender cap
-is configurable (`max-options(N)`) — see `strategies.md`.
+is configurable (`max-options(N)`) — see `strategies.md`. If Step 3 noticed a genuine, concrete
+synergy with another outstanding candidate, mention it here too ("this also lays the groundwork
+for Y") — it's part of the reasoning, not a separate line item.
 
 If `Selection strategy:` is set to anything else, read `strategies.md` and build the
 presentation as it describes instead.

@@ -73,6 +73,20 @@ Principles applied consistently across the skills in this repo:
   hit it. Dependencies the skill already works around on its own (and notes the limitation for,
   per "unreachable isn't resolved") don't need the same billing; conflating the two either buries
   a real blocker behind a wall of caveats or overstates how fragile the skill actually is.
+- **Moving content means re-pointing every reference to it, not just the file it moved from/to.**
+  Progressive disclosure says *where* something should live; it doesn't guarantee every other file
+  gets updated when it moves. A companion file can cross-reference another step/section by name
+  without either file being touched in the edit that relocates it — that reference goes stale
+  silently. Grep the whole skill for the old location whenever content is split out or merged, and
+  treat the move as incomplete until every cross-reference repo-wide points at the new home.
+- **Don't persist a signal just because it's useful once.** If a piece of information can be
+  computed fresh, cheaply, at the moment it's needed, that beats writing it down and now having to
+  keep it in sync. Stored state (a tracker annotation, a cached judgement) needs its own
+  staleness-handling the moment it's written — an idea gets reworded, merged, or shipped, and
+  whatever referenced it by name is now wrong. This is distinct from "re-ground, don't cache" (which
+  is about re-checking a stored judgement before trusting it): this is about *not storing* the
+  judgement in the first place when recomputing it each time costs little and the value doesn't
+  come from accumulating across runs.
 
 ## Installation
 

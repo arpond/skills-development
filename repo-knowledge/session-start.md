@@ -29,23 +29,35 @@ If the project has a `CLAUDE.md`, also propose adding a single pointer line to i
 without duplicating content, and only needs proposing once at bootstrap, not re-checked on every
 later run.
 
-**Also check `CLAUDE.md`/`AGENTS.md` (or similar agent-instructions files) for content that
-belongs in `KNOWLEDGE.md` instead.** These files are supposed to document the repo *as designed*,
-but in practice they often accumulate gotcha-shaped bullets anyway, simply because there was
-nowhere else to put them before now. This isn't the redundancy test from Step 2 — the content is
-already written down, that's the premise — it's a classification question: does this bullet
-describe a deliberate convention/decision (leave it), or an incidentally-discovered quirk/root-
-cause that only ended up there for lack of a better home (candidate to migrate)? Propose migration
-candidates as a single numbered list and wait for confirmation before moving anything — this is
-one of the skill's hard rules (see the table in `SKILL.md`). On confirmation, move (don't
-duplicate) each one into `KNOWLEDGE.md` as a proper entry, filling in Evidence from what's
-described and noting `Captured: <today> — migrated from CLAUDE.md` (the original discovery date
-isn't recoverable, so don't guess one), and remove it from the source file.
+**Also check for content in the project's existing documentation that belongs in `KNOWLEDGE.md`
+instead.** These files are supposed to document the repo *as designed* (or, for a troubleshooting
+guide, as a curated reference), but in practice they often accumulate gotcha-shaped bullets anyway,
+simply because there was nowhere else to put them before now. This isn't the redundancy test from
+Step 2 — the content is already written down, that's the premise — it's a classification question:
+does this bullet describe a deliberate convention/decision, or curated general guidance (leave it),
+or an incidentally-discovered quirk/root-cause that only ended up there for lack of a better home
+(candidate to migrate)?
+
+Check a curated, bounded set of conventional locations — not every markdown file in the repo,
+which would make bootstrap slow and noisy over content that's mostly unrelated (changelogs, ADRs,
+API docs, contributing guides):
+- At the project root: `README.md`, `CLAUDE.md`/`AGENTS.md`, `TSG.md`/`TROUBLESHOOTING.md`,
+  `RUNBOOK.md`.
+- The same filenames one level inside a `docs/` or `documentation/` folder at the project root, if
+  one exists — but don't recurse further into subfolders there. If a project's docs are nested
+  deeper than that, use the on-demand trigger below pointed at the specific file instead of
+  expecting the automatic pass to find it.
+
+Propose migration candidates as a single numbered list and wait for confirmation before moving
+anything — this is one of the skill's hard rules (see the table in `SKILL.md`). On confirmation,
+move (don't duplicate) each one into `KNOWLEDGE.md` as a proper entry, filling in Evidence from
+what's described and noting `Captured: <today> — migrated from <source file>` (the original
+discovery date isn't recoverable, so don't guess one), and remove it from the source file.
 
 This check runs automatically the first time `KNOWLEDGE.md` is created, and is also available on
 request at any later point (e.g. "check CLAUDE.md for things that should move to repo knowledge")
-for projects that adopted this skill before this check existed, or where CLAUDE.md picked up new
-gotcha-shaped content since. It isn't re-run automatically every session — same reasoning as
+for projects that adopted this skill before this check existed, or where one of these files picked
+up new gotcha-shaped content since. It isn't re-run automatically every session — same reasoning as
 Step 0.5's staleness check being event/request-triggered rather than a standing sweep.
 
 **If it exists, read it as-is and continue** — don't re-ask whether to create it. Judgment-drift

@@ -15,10 +15,11 @@ Files:
   capture bar (checking a `Declined` history first so the same idea isn't silently re-proposed or
   silently re-suppressed), and remove entries under three specific conditions. Always loaded when
   the skill triggers.
-- `session-start.md` — finding or bootstrapping `KNOWLEDGE.md`, checking `CLAUDE.md`/`AGENTS.md`
-  for gotcha-shaped content that should migrate over instead, and checking whether a
-  judgment-drift review is due. Read every run, right after `SKILL.md`'s intro — not optional,
-  just split out to keep `SKILL.md` itself focused on the loop.
+- `session-start.md` — finding or bootstrapping `KNOWLEDGE.md`, checking a bounded set of the
+  project's existing docs (README, CLAUDE.md/AGENTS.md, a troubleshooting guide/runbook, and their
+  `docs/`-folder equivalents) for gotcha-shaped content that should migrate over instead, and
+  checking whether a judgment-drift review is due. Read every run, right after `SKILL.md`'s intro —
+  not optional, just split out to keep `SKILL.md` itself focused on the loop.
 - `review.md` — the occasional judgment-drift review/prune pass (mechanical staleness is handled
   inline in `SKILL.md`; this is the human-judgment pass on top of it). Read when a review is due,
   or on explicit request.
@@ -56,14 +57,15 @@ Claude: No KNOWLEDGE.md yet for this project — this seems worth capturing (cos
 You: Yes to both.
 
 Claude: [creates KNOWLEDGE.md with the entry, adds the CLAUDE.md pointer]
-        While I'm here — CLAUDE.md has a couple of bullets that read more like gotchas than
-        design decisions: 1. "remember to bump the cache version after touching config/" —
-        2. "the export job silently no-ops if AWS creds aren't in env." Want me to move
-        these into KNOWLEDGE.md instead of leaving them in CLAUDE.md?
+        While I'm here — a couple of bullets elsewhere read more like gotchas than design
+        decisions or curated guidance: 1. CLAUDE.md: "remember to bump the cache version
+        after touching config/" — 2. docs/TSG.md: "if the export job silently no-ops,
+        check AWS creds are in env." Want me to move these into KNOWLEDGE.md instead of
+        leaving them where they are?
 
 You: Yes, move both.
 
-Claude: [adds both as entries to KNOWLEDGE.md, removes them from CLAUDE.md]
+Claude: [adds both as entries to KNOWLEDGE.md, removes them from CLAUDE.md and docs/TSG.md]
 ```
 
 ## Example: referencing an existing entry

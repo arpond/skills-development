@@ -1,6 +1,6 @@
 ---
 name: repo-knowledge
-description: Maintains a per-project KNOWLEDGE.md — a git-tracked, human-readable log of incidentally-discovered repo gotchas, root-causes, and dependency/environment quirks that cost real time to (re)discover and aren't already recorded anywhere findable (not in the code, not in CLAUDE.md, not in a commit message). Captures new entries proactively whenever a debugging session, incident, or piece of tribal knowledge clears a deliberate capture bar (redundant/surprising/costly/recurring), and explicitly when asked to "note this in repo knowledge" or similar. References existing entries when work touches a file/area one covers, mechanically checking the entry still holds before relying on it. Also runs an occasional judgment-drift review to prune stale or never-used entries. Use this whenever you resolve a non-obvious bug, hit a surprising quirk in a dependency/build/test/environment setup, are asked to check or review repo knowledge, are asked whether CLAUDE.md/AGENTS.md content should move into repo knowledge, or are about to work in an area of the repo that has a recorded entry.
+description: Maintains a per-project KNOWLEDGE.md — a git-tracked, human-readable log of incidentally-discovered repo gotchas, root-causes, and dependency/environment quirks that cost real time to (re)discover and aren't already recorded anywhere findable (not in the code, not in CLAUDE.md, not in a commit message). Captures new entries proactively whenever a debugging session, incident, or piece of tribal knowledge clears a deliberate capture bar (redundant/surprising/costly/recurring), and explicitly when asked to "note this in repo knowledge" or similar. References existing entries when work touches a file/area one covers, mechanically checking the entry still holds before relying on it. Also runs an occasional judgment-drift review to prune stale or never-used entries. Use this whenever you resolve a non-obvious bug, hit a surprising quirk in a dependency/build/test/environment setup, are asked to check or review repo knowledge, are asked whether existing docs (README, CLAUDE.md/AGENTS.md, a troubleshooting guide/runbook, or their docs-folder equivalents) contain gotchas that should move into repo knowledge, or are about to work in an area of the repo that has a recorded entry.
 ---
 
 # Repo knowledge
@@ -80,7 +80,7 @@ Last reviewed: <YYYY-MM-DD>
 |---|---|
 | 0 (session-start.md) | Confirm with the user before creating `KNOWLEDGE.md` for the first time |
 | 0 (session-start.md) | If the file exists but is malformed, ask the user rather than silently rewriting |
-| 0 (session-start.md) | Show migration candidates from CLAUDE.md/AGENTS.md and wait for confirmation before moving anything |
+| 0 (session-start.md) | Show migration candidates from existing docs and wait for confirmation before moving anything |
 | 2 | Show the proposed new entry (or edit to an existing one) and wait for confirmation before writing it |
 | 2 | Never write secrets, credentials, or PII into an entry or a Declined line — ask if uncertain |
 | 3 | Confirm before removing an entry for staleness (a failed mechanical check alone isn't enough) |

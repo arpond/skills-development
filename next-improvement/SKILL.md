@@ -206,6 +206,13 @@ tier does that outcome serve? Don't take a category label at face value — a "r
 doesn't make anything more readable or any future feature easier doesn't serve the maintenance
 tier just because it's filed under that category.
 
+**Don't cite a factor in Step 4's reasoning that didn't actually decide anything.** It's tempting
+to add color like "this one's been sitting in the backlog a while" when presenting a pick — but
+unless that's an actual tie-break input in play (`wildcard(oldest)` explicitly uses idea age;
+nothing else here does by default), saying it implies it mattered when it didn't. Only mention a
+factor if it's tier fit, a genuine synergy (below), or an active strategy signal that actually
+swung the pick.
+
 **Synergies are a soft signal, judged fresh each run, not tracked data.** While ranking, notice if
 a candidate is a genuine stepping stone toward another outstanding candidate, would make one
 noticeably easier, or shares real implementation with it — but only when it's concrete (name the

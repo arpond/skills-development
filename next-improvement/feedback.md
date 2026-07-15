@@ -51,18 +51,31 @@ just the category.
 
 ## Checking in (from `session-start.md` Step 0.5)
 
+**Once per session, not once per invocation.** Doing several rounds of this skill back to back in
+one sitting re-runs Step 0.5 every round, but the eligible set can't meaningfully change within
+that sitting — a Done entry only becomes eligible after `wait` days, so nothing new becomes
+eligible mid-session, and anything already answered has already dropped out. Track (in
+conversation context only, never written to the tracker — this is exactly the kind of signal that
+shouldn't be persisted, since it's only ever useful within the current sitting) whether this
+check-in has already surfaced once this session. If it has, skip the rest of this section
+entirely on later rounds — no drip question, no bulk offer, no "N ships pending" note, no "nothing
+eligible" note either. Silence by default beats a repeat announcement of the same fact. Re-check
+normally the next time the skill starts a new session.
+
 A Done entry is **eligible** once it's shipped ≥`wait` days ago (default 7) and still has
 `outcome: pending` — enough time has passed to actually judge it. Count eligible entries; this
 costs nothing extra since Step 0.5 already reads the tracker.
 
 - **Always surface the count** when it's nonzero, even if nothing else here triggers — e.g. a
   trailing "(3 ships pending feedback)" note. This is what stops the backlog from silently
-  growing unnoticed; a visible number is enough on its own even between prompts.
+  growing unnoticed; a visible number is enough on its own even between prompts. This still only
+  fires once per session, per the throttle above — it's about not going silent forever across
+  separate sessions, not about repeating every round within one.
 - **Below the `bulk` threshold (default 5 eligible)**: drip mode. Ask about the single oldest
   eligible item, one short question — "Last shipped '<idea>' (<date>) — deliver as expected,
   mixed, or miss?" Any answer, including "skip," gets written back as its `outcome:` value
   immediately (skip -> `outcome: skipped`), so that item is never asked about again. At most one
-  such question per invocation.
+  such question per session, per the throttle above.
 - **At or above `bulk`, and the eligible count exceeds `bulk-offer last:` by at least `bulk`**:
   make a single bulk offer instead of the drip question — "N ships pending feedback — want to
   clear them now, or keep going one at a time?" Either way (accepted or declined), update

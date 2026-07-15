@@ -60,7 +60,9 @@ expected, mixed, or miss?" Two unrelated confirmations stacked back-to-back at t
 is exactly what "one check-in, not two" exists to avoid, even though they're about different
 things (goals vs. outcomes) — the point is the user reads one message, not that the topics match.
 If only one of the two is due, ask just that one; don't manufacture a second question to fill out
-a combined message.
+a combined message. Note that `feedback.md`'s own check-in only actually surfaces once per
+session regardless — see its "Checking in" section — so on a later round in the same sitting there
+may be nothing from Feedback to fold in at all.
 
 The user can also trigger this at any time outside of a normal run — e.g. "reprioritise" or
 "goals have changed" — by jumping straight to this step, editing Goals, and bumping the date.

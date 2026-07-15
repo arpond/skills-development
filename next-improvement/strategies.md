@@ -7,6 +7,23 @@ this setting, none of this applies and you never need to read it.
 Selection strategy controls how Step 4 of `SKILL.md` **presents** candidates from the ranking
 Step 3 already computed — it never changes how ranking itself works.
 
+**Quick reference** — full detail for each is under Modes/Capping below:
+
+| Syntax | Kind | Default | What it does |
+|---|---|---|---|
+| `top-tier` | base mode (pick one) | — | Top pick, plus close contenders if genuinely close |
+| `spread(N)` | base mode (pick one) | N=3 | Top pick from each of the top N tiers |
+| `wildcard(mode)` | additive | `mode`=`rotate` | Extra pick outside ranking; exempt from `max-options(N)` |
+| `quick-win` | additive | — | Appends the cheapest candidate; same exemption as `wildcard` |
+| `category-rotation(window=N)` | additive | N=5 | Tie-break bias toward categories that haven't shipped recently |
+| `max-options(N)` | additive | N=4 | Cap on the base mode's own picks (close contenders / tier picks) — not a total cap, see Capping |
+
+Numbering the final list is `SKILL.md` Step 4's rule, not this file's — it applies regardless of
+strategy. What this file adds: display order within that numbered list is base-mode pick(s) first
+(tier order for `spread(N)`), then `wildcard`, then `quick-win` — and each mode's gate checks
+against every pick placed earlier in that order, not just the base pick, so the same candidate
+never occupies two numbered lines under two different labels.
+
 ## Tracker format
 
 In the Goals block:
@@ -17,24 +34,38 @@ Selection strategy: top-tier
 
 Values, combinable space- or `+`-separated, e.g. `spread(3) + wildcard(rotate) + quick-win`.
 `top-tier` and `spread(N)` are the two base modes and mutually exclusive; `wildcard`,
-`quick-win`, and `category-rotation` are additive on top of either base mode.
+`quick-win`, `category-rotation`, and `max-options(N)` are additive on top of either base mode.
+
+Two separate counts exist — `spread(N)` (how many tiers to generate from) and `max-options(N)`
+(how many of the base mode's picks to display) — set independently, neither piggybacking on the
+other's number. See their own entries under Modes, and Capping for how they interact.
 
 ## Modes
 
 Each entry below covers what the mode means *and* what Step 4 does with it — one place per mode.
 
-- **`top-tier`** (default) — the skill's original, always-available behaviour. Step 4 presents
-  the top tier's winner, or 2-3 close contenders if the ranking is genuinely close, with
-  reasoning tied to specific tiers — not "this seems good" but "this serves tier 1 because X"
-  or "this is tier-3 maintenance work but nothing above it is ready to build, since Y."
+- **`top-tier`** (default) — the skill's original, always-available behaviour. Step 4 presents the
+  top tier's winner alone, or up to `max-options(N)` total (winner + close contenders, default 4)
+  if the ranking is genuinely close — never more than that even if more candidates are arguably
+  close, and never padded up to it if only the winner is actually clear. The close-contender count
+  is `max-options(N)`'s job, not a separate `top-tier`-only setting — see Capping. Reasoning stays
+  tied to specific tiers either way — not "this seems good" but "this serves tier 1 because X" or
+  "this is tier-3 maintenance work but nothing above it is ready to build, since Y."
 - **`spread(N)`** — Step 4 presents the top candidate from each of the top N tiers (default
-  N=3, capped at however many tiers exist), one line per tier — "Tier 1 pick: X, because...",
-  "Tier 2 pick: Y, because..." — for real cross-tier choice instead of one narrow answer. Tier
-  1's pick is still the top recommendation unless a tied-goal conflict (`SKILL.md` Step 3/4)
-  overrides that.
+  N=3, capped at however many tiers exist), one numbered line per tier — "1. Tier 1 pick: X,
+  because...", "2. Tier 2 pick: Y, because..." — for real cross-tier choice instead of one narrow
+  answer. Tier 1's pick is still the top recommendation unless a tied-goal conflict (`SKILL.md`
+  Step 3/4) overrides that. If one of the top N tiers has no outstanding candidate at all, skip
+  its line rather than fabricating a weak pick or silently pulling one from a lower tier to
+  backfill the count — say so in one clause ("Tier 2 has nothing outstanding right now") so the
+  gap is visible, and let the numbered list simply be shorter than N that run. If one of the top
+  N tiers *is itself* an unresolved tied-goal conflict (`SKILL.md` Step 3), that tier contributes
+  both co-contenders as their own numbered lines instead of one pick — same as any other
+  tied-goal conflict, they're never dropped to fit a count (see Capping), so this can legitimately
+  make the list longer than N or push past `max-options(N)` by exactly the size of that one tie.
 - **`wildcard(mode)`** — Step 4 appends one extra, clearly-labelled candidate chosen *outside*
-  normal ranking, alongside the base proposal: "Wildcard: Z (picked via <source>, because
-  <reason>)". `mode` is:
+  normal ranking, alongside the base proposal, as the next number in the list: "3. Wildcard: Z
+  (picked via <source>, because <reason>)". `mode` is:
   - `rotate` (default) — cycles oldest -> random -> low-tier -> repeat across runs, tracked via
     `wildcard(rotate: last=oldest)` inline in the Selection strategy line, updated after each
     presentation. An unrecognised or missing `last=` value just restarts the cycle from the top
@@ -48,31 +79,54 @@ Each entry below covers what the mode means *and* what Step 4 does with it — o
 
   Gate: only add a wildcard if there's a candidate left over that isn't already one of the base
   picks. If the pool's too small for a distinct pick, skip the wildcard silently rather than
-  re-listing the same item under a different label — that's padding, not variety.
+  re-listing the same item under a different label — that's padding, not variety. When the gate
+  passes, the wildcard always shows — it's not counted by or trimmed for `max-options(N)` (see
+  Capping); it's a fixed, self-limiting +1, not part of the base-mode count.
 - **`quick-win`** — Step 4 appends the cheapest/fastest outstanding candidate with clear value,
-  regardless of tier: "Quick win: W (cheap, tier-N, could slot in alongside or instead of the
-  above)". "Cheapest" isn't a stored metric — judge it the same way you'd judge tier fit in
-  Step 3: think concretely about what building each candidate would actually involve (scope
-  described in its rationale, files/functions it touches if named) and pick whichever reads as
-  smallest, with a defensible one-line reason ("touches one function, no new UI"). Same gate as
-  wildcard: skip it if the cheapest candidate is already one of the base picks.
-- **`category-rotation`** — when the base pick's ranking has a genuine close call, Step 4
-  prefers whichever candidate's category hasn't appeared in the last 5 Done entries (across all
-  categories combined, oldest-first count; fewer than 5 total Done entries -> insufficient
-  history, skip the bias), and says so ("Y also serves tier 1 equally well and its category
-  hasn't shipped recently"). Only affects the base `top-tier`/`spread(N)` pick's own close-call,
-  not each `spread(N)` tier independently; never overrides a clear tier-1-vs-lower-tier win, only
-  breaks ties. **Precedence**: if a tied-tier's stored tie-break rule (`SKILL.md` Step 3) also
-  applies to the same close call, the stored rule wins — it's the user's explicit, deliberate
+  regardless of tier, as the next number in the list: "4. Quick win: W (cheap, tier-N, could
+  slot in alongside or instead of the above)". "Cheapest" isn't a stored metric — judge it the
+  same way you'd judge tier fit in Step 3: think concretely about what building each candidate
+  would actually involve (scope described in its rationale, files/functions it touches if named)
+  and pick whichever reads as smallest, with a defensible one-line reason ("touches one function,
+  no new UI"). Same gate as
+  wildcard, extended to cover wildcard's own pick too: skip it if the cheapest candidate is
+  already one of the base picks *or* already the wildcard pick (checked in that order, since
+  wildcard is placed earlier in display order — see Modes intro) — a candidate never occupies two
+  numbered lines under two different labels. Same exemption as `wildcard`: when the gate passes,
+  quick-win always shows, uncounted by `max-options(N)`.
+- **`category-rotation`** or **`category-rotation(window=N)`** (default N=5) — when the base
+  pick's ranking has a genuine close call, Step 4 prefers whichever candidate's category hasn't
+  appeared in the last N Done entries (across all categories combined, oldest-first count; fewer
+  than N total Done entries -> insufficient history, skip the bias), and says so ("Y also serves
+  tier 1 equally well and its category hasn't shipped recently"). Only affects the base
+  `top-tier`/`spread(N)` pick's own close-call, not each `spread(N)` tier independently; never
+  overrides a clear tier-1-vs-lower-tier win, only breaks ties. **Precedence**: if a tied-tier's
+  stored tie-break rule (`SKILL.md` Step 3) also applies to the same close call, the stored rule
+  wins — it's the user's explicit, deliberate
   call; category-rotation is a generic fallback that only kicks in when no tie-break rule is in
   play.
 
 ## Setup (from `setup.md`)
 
-Ask, briefly, which selection strategy the user wants (one sentence each on `spread`, `wildcard`,
-`quick-win`, `category-rotation`), defaulting to plain `top-tier` if they don't care. This is
-opt-in enrichment, not a mandatory extra setup burden — don't turn it into another long
-interrogation. Write their choice as the `Selection strategy:` line.
+Present the full option set explicitly, not just an open "any preference?" — the user can't pick
+combinations they were never shown. Two separate choices, since they compose differently:
+
+1. **Base mode (pick exactly one)**: `top-tier` (single best pick, default) or `spread(N)` (one
+   candidate per top tier). One sentence each is enough.
+2. **Additive modifiers (pick any number, or none)**: `wildcard`, `quick-win`,
+   `category-rotation`, `max-options(N)` — each stacks on top of whichever base mode was picked.
+   One sentence each; mention `max-options(N)` defaults to 4 and controls how many of the base
+   mode's own picks show (close contenders / tier picks) — `wildcard` and `quick-win` are separate
+   fixed extras it doesn't count, so it's not a literal cap on everything shown.
+
+Then show at least one worked example of combining a base mode with modifiers, so the free-text
+combination syntax itself is demonstrated rather than left implicit — e.g. "so if you wanted the
+top pick from each of the top 3 tiers, plus a rotating wildcard, plus the cheapest outstanding
+option, that'd be written `spread(3) + wildcard(rotate) + quick-win`." This is opt-in enrichment,
+not a mandatory extra setup burden — don't turn it into another long interrogation; a plain
+`top-tier` with no modifiers is a completely fine answer if the user doesn't care. Write their
+choice as the `Selection strategy:` line, using the combinable space- or `+`-separated syntax
+described above.
 
 ## Changing it later (from `SKILL.md` Step 0.5)
 
@@ -82,14 +136,28 @@ need to re-run the full `setup.md` interrogation.
 
 ## Capping combined output
 
-Combined strategies stack their additions, but **cap total presented options at ~4** and always
-mark exactly one as *the* top recommendation — supplementary options (wildcard, quick-win,
-spread picks) are things to consider alongside it, not an unranked pile that reintroduces the
-decision paralysis this skill exists to avoid.
+`max-options(N)` (default 4) caps the **base mode's own picks** — `top-tier`'s close contenders,
+or `spread(N)`'s tier picks — not the total shown. `wildcard` and `quick-win` are separate, fixed
+extras: each shows at most once, whenever its own gate passes, and neither is trimmed for or
+counted by `max-options(N)`. So the actual total on screen can be `max-options(N)` +1 (wildcard)
++1 (quick-win) at most — a small, bounded, predictable overshoot, not the unranked pile this skill
+exists to avoid; always mark exactly one pick as *the* top recommendation regardless of how many
+supplementary lines accompany it.
 
-When combined strategies would produce more than the cap, drop options in this order, most
-disposable first, until back under the cap: 1) `wildcard` (most exploratory/optional by design);
-2) `quick-win`; 3) `spread(N)`'s tier picks, lowest tier first. An unresolved tied-goal
-conflict's co-contenders are never dropped — they're a real ranking ambiguity, handled in
-`SKILL.md` Step 3/Step 4, and take priority over every strategy-driven addition. In practice this
-rarely bites — most combinations stay under 4.
+When the base mode alone would produce more than `max-options(N)`, trim it down: for `spread(N)`,
+drop tier picks lowest-tier-first; for `top-tier`, drop close contenders weakest-first. An
+unresolved tied-goal conflict's co-contenders are never dropped — they're a real ranking
+ambiguity, handled in `SKILL.md` Step 3/Step 4, and take priority over `max-options(N)` even if
+honouring it means exceeding the cap (by one per unresolved tie in play — two co-contenders
+replacing what would otherwise be a single slot; more than one simultaneous tie is rare but
+follows the same rule).
+
+**Degenerate values.** Every `N` here (`spread(N)`, `max-options(N)`,
+`category-rotation(window=N)`) means what it says only for N ≥ 1; treat 0, negative, or
+non-numeric input as a typo, not a valid "show nothing" instruction — clamp to 1 and mention the
+correction rather than silently presenting an empty list or erroring. There's always at least one
+slot: the single top recommendation is never trimmed away by any cap, so `max-options(N)` below
+what's needed to hold it still shows that one pick, even if that means showing fewer than N when
+N was set to something like 1 — `max-options(N)` never zeroes out the base recommendation itself.
+`wildcard` and `quick-win` are unaffected by any of this since `max-options(N)` doesn't govern
+them at all (see above).

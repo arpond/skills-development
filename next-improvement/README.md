@@ -99,10 +99,10 @@ Claude: [sets Selection strategy: spread(3) + wildcard(rotate) and Feedback: on
 
 ...next run...
 
-Claude: Tier 1 pick: "Fix pagination bug" — because X.
-        Tier 2 pick: "Add dark mode" — because Y.
-        Wildcard: "Rewrite the CSV export" — oldest idea in the backlog, worth
-        a second look.
+Claude: 1. Tier 1 pick: "Fix pagination bug" — because X.
+        2. Tier 2 pick: "Add dark mode" — because Y.
+        3. Wildcard: "Rewrite the CSV export" — oldest idea in the backlog, worth
+           a second look.
         Also: last shipped "Add retry logic" (3 weeks ago) — deliver as expected,
         mixed, or miss?
 ```

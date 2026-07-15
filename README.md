@@ -57,6 +57,16 @@ Principles applied consistently across the skills in this repo:
   about what Claude loads into context); this is about what a human still has once the skill is
   installed elsewhere. The top-level README stays a thin index pointing into each skill's own
   docs, rather than duplicating them.
+- **Numbered choices, not just labels.** When presenting two or more options for the user to
+  pick from, number them `1.`, `2.`, `3.`... in a single sequential list, regardless of what other
+  labels each option carries (a tier name, "wildcard", a category). A descriptive label explains
+  an option; it isn't a substitute for a number the user can just say back ("go with 2") to
+  confirm unambiguously.
+- **Independent knobs, not piggybacked defaults.** When a skill has multiple configurable
+  quantities that interact — how many items a sub-mode generates vs. an overall cap on the total,
+  say — keep each one separately named and settable rather than hardcoding one to silently ride on
+  another's number or on an unstated constant. A user changing one shouldn't have to reason about
+  which other knobs secretly moved with it.
 - **State hard dependencies explicitly, distinguish them from what degrades gracefully.** If a
   skill can't function at all without something external (an MCP server, a specific tool), that
   belongs up front in its own docs — not just handled gracefully at runtime once someone's already

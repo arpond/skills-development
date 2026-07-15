@@ -13,15 +13,20 @@ judgement — without turning into a nagging, ever-growing chore.
 In the Goals block:
 
 ```markdown
-Feedback: on (bulk-offer last: <N>)
+Feedback: on(wait=7, bulk=5) (bulk-offer last: <N>)
 ```
 
 `on`/`off`, default `on`. `off` disables the whole feedback check in Step 0.5 — no prompts, no
-pending count shown. The `(bulk-offer last: N)` note records the eligible-count at which the
-most recent bulk offer was made or declined (0 if never) — this is what lets Step 0.5 know not
-to re-offer until the count has grown a full threshold-step past that point (see below); it's a
-real stored field, not something inferred from the eligible count alone, since that count
-fluctuates as items get answered or new ones ship.
+pending count shown. `wait` and `bulk` are optional and independently settable (unset means the
+defaults shown, 7 and 5 respectively) — plain `Feedback: on` with no parens is equivalent to
+`Feedback: on(wait=7, bulk=5)` and is the normal way to write it when neither needs changing; only
+spell out the parens when overriding one. `wait` is the eligibility window in days (see Checking
+in), `bulk` is the bulk-offer threshold (same section) — two unrelated numbers, set independently,
+same as the `Selection strategy:` counts. The `(bulk-offer last: N)` note records the
+eligible-count at which the most recent bulk offer was made or declined (0 if never) — this is
+what lets Step 0.5 know not to re-offer until the count has grown a full `bulk`-step past that
+point (see below); it's a real stored field, not something inferred from the eligible count alone,
+since that count fluctuates as items get answered or new ones ship.
 
 Done entries extend the base format (see `SKILL.md`) with a ship date and an `outcome:` value:
 
@@ -46,25 +51,26 @@ just the category.
 
 ## Checking in (from `SKILL.md` Step 0.5)
 
-A Done entry is **eligible** once it's shipped ≥7 days ago and still has `outcome: pending` —
-enough time has passed to actually judge it. Count eligible entries; this costs nothing extra
-since Step 0.5 already reads the tracker.
+A Done entry is **eligible** once it's shipped ≥`wait` days ago (default 7) and still has
+`outcome: pending` — enough time has passed to actually judge it. Count eligible entries; this
+costs nothing extra since Step 0.5 already reads the tracker.
 
 - **Always surface the count** when it's nonzero, even if nothing else here triggers — e.g. a
   trailing "(3 ships pending feedback)" note. This is what stops the backlog from silently
   growing unnoticed; a visible number is enough on its own even between prompts.
-- **Below the bulk threshold (default 5 eligible)**: drip mode. Ask about the single oldest
+- **Below the `bulk` threshold (default 5 eligible)**: drip mode. Ask about the single oldest
   eligible item, one short question — "Last shipped '<idea>' (<date>) — deliver as expected,
   mixed, or miss?" Any answer, including "skip," gets written back as its `outcome:` value
   immediately (skip -> `outcome: skipped`), so that item is never asked about again. At most one
   such question per invocation.
-- **At or above the threshold, and the eligible count exceeds `bulk-offer last:` by at least the
-  threshold**: make a single bulk offer instead of the drip question — "N ships pending
-  feedback — want to clear them now, or keep going one at a time?" Either way (accepted or
-  declined), update `bulk-offer last:` to the current eligible count immediately. If accepted,
-  list every eligible item (idea name + ship date, oldest first, no cap) and let the user answer
-  all of them in one pass (terse per-item tags are fine); write all tags back in one edit. If
-  declined, or if the threshold condition isn't yet met, fall back to drip mode for this run.
+- **At or above `bulk`, and the eligible count exceeds `bulk-offer last:` by at least `bulk`**:
+  make a single bulk offer instead of the drip question — "N ships pending feedback — want to
+  clear them now, or keep going one at a time?" Either way (accepted or declined), update
+  `bulk-offer last:` to the current eligible count immediately. If accepted, list every eligible
+  item as a numbered list (idea name + ship date, oldest first, no cap — see `SKILL.md` Step 4's
+  numbering rule, which applies to this list too) and let the user answer all of them in one pass
+  by number (terse per-item tags are fine); write all tags back in one edit. If declined, or if
+  the threshold condition isn't yet met, fall back to drip mode for this run.
 - Answered items (any outcome, including `skipped`) drop out of the eligible count permanently —
   the backlog can only shrink or hold steady between offers, never balloon unnoticed.
 

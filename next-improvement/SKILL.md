@@ -83,6 +83,21 @@ Feedback: on                   <!-- optional, see feedback.md -->
   project's domain. Discover them by reading the file; don't assume fixed category names.
 - A category may carry an optional `(dry runs: N — last: DATE)` note right under its header —
   see Step 2 for when it's added, incremented, cleared, and surfaced to the user.
+- **Retiring or merging a category** (offered at `dry runs: 2+`, see Step 2): if the user
+  confirms retirement, delete that category's `##` header and its (by then empty, or otherwise
+  moved) item list from the active section — but never touch **Done**/**Rejected** entries
+  already tagged with that category name; they're history, not live state, and stay exactly as
+  written. If the user confirms a merge into an existing category instead, move any remaining
+  outstanding items under the surviving category's header (dropping the retired one), and don't
+  rewrite old Done/Rejected tags to the new name — a mismatched historical tag is expected and
+  fine, not a bug to fix. **Narrowing scope instead** means renaming the category's `##` header to
+  a more specific name (the tracker format has no separate scope/description field — the name
+  *is* the scope) and treating that narrower name as the brief for future brainstorming in Step 2;
+  existing outstanding items stay under it unless they no longer fit, in which case handle them
+  like any other Step 2 judgement call (re-propose to a different category, or drop with a
+  Rejected note) rather than silently discarding them. All three (retire, merge, narrow) are still
+  a write to the tracker and need confirmation first, same as any other Step 2 change (see the
+  hard-rules table).
 - **Done** is append-only history, never deleted from. Prefix each entry with its origin
   category in parens — useful bookkeeping regardless of any optional subsystem; legacy entries
   without a tag just aren't counted by anything that relies on it, no migration needed.
@@ -94,7 +109,7 @@ Feedback: on                   <!-- optional, see feedback.md -->
 
 | Step | Hard rule |
 |---|---|
-| 2 | Show proposed new ideas and wait for confirmation before appending anything |
+| 2 | Show proposed new ideas, or a category retirement/merge/narrow, and wait for confirmation before writing anything |
 | 4 | Do not start planning or implementing until the user confirms which one (if any) to build |
 | 4.5 | Get the plan approved before writing any code |
 
@@ -114,6 +129,16 @@ one-time-per-project bootstrap, kept out of this file since most invocations don
 
 If it does exist, read it as-is and continue — don't re-ask full setup questions on later runs.
 Goals aren't fixed forever though: see Step 0.5.
+
+**If it exists but is malformed** (no `## Goals` section, a tier line that doesn't parse as
+priority order, an unrecognised `Selection strategy:`/`Feedback:` value) — this is a case of
+"unreachable isn't resolved," not a normal empty/stale tracker: don't silently rewrite it back
+into shape (that guesses at intent the user never confirmed) and don't refuse to proceed either.
+Name the specific thing that doesn't parse and ask directly: fix it by hand, or walk through
+re-doing just that broken piece (e.g. re-running the Goals portion of `setup.md` if only Goals is
+broken, leaving categories/Done/Rejected untouched). Never fabricate a plausible-looking Goals
+list to paper over a missing one — a wrong guess here silently misranks every candidate for as
+long as the tracker lives, the exact failure mode Step 0.5 already exists to prevent for staleness.
 
 ## Step 0.5: Check whether goals are stale
 
@@ -149,8 +174,13 @@ Count remaining (not-in-Done) items in each idea category.
 ## Step 2: Top up any category running low
 
 If a category has fewer than ~3 items, or is empty, it needs fresh ideas before ranking makes
-sense — there's nothing meaningful to weigh against the goals otherwise. Ground new ideas in
-the project's actual current state rather than inventing from nowhere:
+sense — there's nothing meaningful to weigh against the goals otherwise. When topping up, aim for
+a bigger buffer than the trigger — target ~6-8 outstanding items in the category, not just enough
+to clear the ~3 floor — so picking one or two off the top doesn't immediately drop it back into
+top-up territory next run. This is a target, not a quota: it raises how much ground to search
+before stopping, it never lowers the bar on any individual idea (see "exhausted is a valid
+outcome" below) — a category that only has 4 solid ideas stays at 4. Ground new ideas in the
+project's actual current state rather than inventing from nowhere:
 
 - What's been built or changed recently (recent commits, new modules, new files)?
 - What's untested, fragile, or has a noted rough edge (TODO-style comments, test coverage gaps,
@@ -167,8 +197,9 @@ usually doesn't. When genuinely unsure, it's fine to re-propose with a note ("th
 before for X — has that changed?") rather than silently suppressing or silently repeating it.
 
 **Show the proposed new ideas and wait for confirmation before appending anything.** This is one
-of the skill's hard rules (see the table above): brainstorming is a recommendation, not a decision — the user
-may accept all of it, drop some, tweak wording, or say none of it's worth keeping. Don't write to
+of the skill's hard rules (see the table above): brainstorming is a recommendation, not a
+decision — the user may accept all of it, drop some, tweak wording, or say none of it's worth
+keeping. Don't write to
 the tracker until they've had a chance to react. Whatever gets declined, add it to **Rejected**
 with the reason given (or your best summary of it if the user was terse) — don't just drop it
 silently, that's what lets the check above work next time. Match that file's existing format and
@@ -226,26 +257,34 @@ qualitatively when judging candidates here too — see `feedback.md`.
 
 ## Step 4: Propose, then wait
 
+**Whenever more than one option is presented, number them `1.`, `2.`, `3.`... in a single
+sequential list, in the order listed below** — regardless of strategy (top-tier close
+contenders, spread's tier picks, wildcard/quick-win additions, tied-goal co-contenders). This is
+so the user can confirm by number ("go with 2") instead of by re-typing a name. Any descriptive
+label a mode adds (`Tier 1 pick:`, `Wildcard:`, `Quick win:`) stays as text within that numbered
+line — it's a label, not the list number. A single, unambiguous top pick with nothing else to
+choose between doesn't need a number, since there's no distinct option to point at.
+
 Default (no `Selection strategy:` set, or set to plain `top-tier`): present the top candidate,
-or 2-3 close contenders if the ranking is genuinely close, with reasoning tied to specific tiers —
-not "this seems good" but "this serves tier 1 because X" or "this is tier-3 maintenance work
-but nothing above it is ready to build, since Y."
+or up to 4 total (winner + close contenders) if the ranking is genuinely close, with reasoning
+tied to specific tiers — not "this seems good" but "this serves tier 1 because X" or "this is
+tier-3 maintenance work but nothing above it is ready to build, since Y." The close-contender cap
+is configurable (`max-options(N)`) — see `strategies.md`.
 
 If `Selection strategy:` is set to anything else, read `strategies.md` and build the
 presentation as it describes instead.
 
 If Step 3 carried forward an unresolved tied-goal conflict, present that as its own distinct
-case regardless of strategy — the user needs to know which situation they're looking at. E.g.:
-"X and Y are tied-priority; candidate A serves X, candidate B serves Y, and no stored rule
-resolves it automatically — which matters more for this one?" Close contenders are about
-candidates scoring similarly; a tied-goal conflict is about the tier ranking itself being unable
-to pick a winner.
+case regardless of strategy — the user needs to know which situation they're looking at, and the
+co-contenders still get numbered like any other multi-option list. E.g.: "X and Y are
+tied-priority — which matters more for this one? 1. Candidate A (serves X) 2. Candidate B
+(serves Y)." Close contenders are about candidates scoring similarly; a tied-goal conflict is
+about the tier ranking itself being unable to pick a winner.
 
 **Do not start planning or implementing until the user confirms which one (if any) to build.**
 This is one of the skill's hard rules (see the table above): the ranking is a recommendation, not
-a decision. The user may
-pick something other than the top candidate, ask for a different combination, or say none of it
-is worth doing right now — all of those are fine outcomes.
+a decision. The user may pick something other than the top candidate, ask for a different
+combination, or say none of it is worth doing right now — all of those are fine outcomes.
 
 ## Step 4.5: Plan the confirmed pick
 

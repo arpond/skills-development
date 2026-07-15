@@ -16,8 +16,8 @@ In the Goals block:
 Feedback: on(wait=7, bulk=5) (bulk-offer last: <N>)
 ```
 
-`on`/`off`, default `on`. `off` disables the whole feedback check in Step 0.5 — no prompts, no
-pending count shown. `wait` and `bulk` are optional and independently settable (unset means the
+`on`/`off`, default `on`. `off` disables the whole feedback check in `session-start.md`'s Step 0.5
+— no prompts, no pending count shown. `wait` and `bulk` are optional and independently settable (unset means the
 defaults shown, 7 and 5 respectively) — plain `Feedback: on` with no parens is equivalent to
 `Feedback: on(wait=7, bulk=5)` and is the normal way to write it when neither needs changing; only
 spell out the parens when overriding one. `wait` is the eligibility window in days (see Checking
@@ -49,7 +49,7 @@ When moving an item to Done, extend the base `(Category)` parenthetical with a s
 the outcome tag are specific to `Feedback: on` — if it's off, use the plain base format with
 just the category.
 
-## Checking in (from `SKILL.md` Step 0.5)
+## Checking in (from `session-start.md` Step 0.5)
 
 A Done entry is **eligible** once it's shipped ≥`wait` days ago (default 7) and still has
 `outcome: pending` — enough time has passed to actually judge it. Count eligible entries; this

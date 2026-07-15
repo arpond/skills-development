@@ -128,7 +128,7 @@ not a mandatory extra setup burden — don't turn it into another long interroga
 choice as the `Selection strategy:` line, using the combinable space- or `+`-separated syntax
 described above.
 
-## Changing it later (from `SKILL.md` Step 0.5)
+## Changing it later (from `session-start.md` Step 0.5)
 
 Not fixed at setup. The user can change it any time by just saying so (e.g. "show me more
 options next time", "add a wildcard", "drop category-rotation") — edit the line in place, no

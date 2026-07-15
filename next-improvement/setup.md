@@ -1,8 +1,9 @@
 # Bootstrap setup (one-time per project)
 
-Read this file only when `SKILL.md` Step 0 finds no `IMPROVEMENT_TRACKER.md` for the current
-project. This is a one-time-per-project interrogation — once the file exists, later runs never
-need this file again (see `SKILL.md` Step 0.5 for ongoing staleness checks instead).
+Read this file only when `session-start.md`'s Step 0 finds no `IMPROVEMENT_TRACKER.md` for the
+current project. This is a one-time-per-project interrogation — once the file exists, later runs
+never need this file again (see `session-start.md`'s Step 0.5 for ongoing staleness checks
+instead).
 
 Look for `IMPROVEMENT_TRACKER.md` at the root of whichever project the user is currently working
 in (use judgement on project boundary: the nearest enclosing directory with its own README,

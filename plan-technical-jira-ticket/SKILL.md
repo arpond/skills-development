@@ -222,7 +222,12 @@ path pinned down in Step 4 for each repo, and repeating the following per repo:
   thing that looks like verified ground truth but isn't. If this check can't actually be run — no
   git tooling, not a git repo, no remote configured to compare against — say so and note the
   limitation in the plan rather than treating an unverifiable checkout as freshness confirmed by
-  default.
+  default. Use the narrowest command that answers the freshness question (`git status` alone
+  usually already says whether the branch is ahead/behind/up to date with its tracking branch) —
+  don't reach for broader ones like `git remote -v` unless the remote's actual URL is genuinely
+  needed, since remotes configured with credentials embedded in the URL will print them in plain
+  text; that's a real, recurring way to leak a token into a transcript or shell history for a
+  check that didn't need the URL at all.
 - Check whether anyone's already started this work before assuming a clean slate: search recent
   branches and commit messages for the ticket key (e.g. `git branch -a --list "*<KEY>*"`,
   `git log --all --grep=<KEY>`). If something turns up, stop and ask the user how they want to
@@ -301,3 +306,14 @@ change how you write code once that's done.
 If the user wants the plan recorded on the ticket itself (e.g. as a comment via
 `mcp__jira__addCommentToJiraIssue`), treat that as a write to shared state like any other —
 confirm with the user before posting, don't do it automatically just because a plan now exists.
+
+When composing that comment, write it to stand on its own for anyone reading the ticket later,
+not for someone who was in this conversation. Two things that means in practice:
+
+- **Label it clearly as an AI-drafted proposal**, not as an already-agreed plan — a reader
+  encountering it cold has no way to tell a confidently-worded plan from an approved one unless
+  the comment says so itself.
+- **Don't reference anything that only exists in this session** ("per our discussion," "as you
+  said," "sticking with X for now" without saying why). Restate any decision that shaped the plan
+  as part of the plan itself — e.g. "proposed scope: X, because Y" — so the comment is
+  self-contained rather than leaning on context nobody else in Jira has access to.

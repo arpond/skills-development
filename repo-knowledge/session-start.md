@@ -21,7 +21,8 @@ team will see, not a private note — propose creating it, with a one-line expla
 for (a place for repo gotchas/quirks/root-causes that cost real time to discover and aren't
 recorded anywhere else), and wait for confirmation. This is one of the skill's hard rules (see the
 table in `SKILL.md`). If confirmed, create it with an empty `## Entries` section and today's date
-as `Last reviewed:`.
+as `Last reviewed:` — no `## Declined` section yet; that gets added the first time a proposal is
+actually declined (see `SKILL.md` Step 2), not pre-created empty.
 
 If the project has a `CLAUDE.md`, also propose adding a single pointer line to it (e.g. "See
 `KNOWLEDGE.md` for known repo gotchas and quirks") at the same time — this keeps the two files DRY

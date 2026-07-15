@@ -65,11 +65,14 @@ Last reviewed: <YYYY-MM-DD>
 - **No archive section for removed entries.** The file is git-tracked, so a removed entry is fully
   recoverable via `git log`/`git blame` — don't build a second history mechanism for something git
   already gives for free.
-- **Declined** is append-only history for capture *proposals* that never became entries — distinct
-  from removed entries (which have git history) because a declined proposal was never written
-  anywhere, so without this there'd be nothing to check before re-proposing the same thing later.
-  Mirrors `next-improvement`'s `Rejected` section: the reason is what matters, not just the fact of
-  the decline (see Step 2).
+- **Declined** is append-only history, never deleted from, for capture *proposals the user
+  explicitly turned down* — not for candidates the capture bar itself filtered out before ever
+  reaching the user (those aren't logged anywhere; that's the capture bar doing its job, not a
+  decline). Distinct from removed entries (which have git history) because a declined proposal was
+  never written anywhere, so without this there'd be nothing to check before re-proposing the same
+  thing later. An entry that eventually gets captured after an earlier decline doesn't retroactively
+  remove that old `Declined` line — it stays as-is, same as `next-improvement`'s `Rejected` (see
+  Step 2). Whatever gets written here is still subject to the same secrets/PII rule as entries.
 
 **Hard rules by step, so a review can check none have gone missing:**
 
@@ -78,7 +81,7 @@ Last reviewed: <YYYY-MM-DD>
 | 0 (session-start.md) | Confirm with the user before creating `KNOWLEDGE.md` for the first time |
 | 0 (session-start.md) | If the file exists but is malformed, ask the user rather than silently rewriting |
 | 2 | Show the proposed new entry (or edit to an existing one) and wait for confirmation before writing it |
-| 2 | Never write secrets, credentials, or PII into an entry — ask if uncertain |
+| 2 | Never write secrets, credentials, or PII into an entry or a Declined line — ask if uncertain |
 | 3 | Confirm before removing an entry for staleness (a failed mechanical check alone isn't enough) |
 | review.md | Present prune/needs-review candidates and wait for confirmation before removing anything |
 
@@ -115,6 +118,9 @@ right now, when they're about to be relied on.
   than assuming the flag is still accurate — it may have been fixed (Evidence updated, or the
   underlying thing restored) without anyone clearing the flag. Re-checking is cheap; don't nag
   about the same flag more than once per session, though — surface it, then move on.
+- If more than one relevant entry needs a decision from the user in the same pass (e.g. two
+  touched entries both flagged `needs-review`), number them in one list rather than asking about
+  each in turn — same convention as `review.md`'s candidate list.
 - Two special cases where "check it still resolves" needs care: Evidence **pointing outside the
   current checkout** (another repo — common for cross-repo entries) can't be checked from here at
   all, treat as "unreachable isn't resolved" and say so, rather than passing, failing, or silently
@@ -160,15 +166,17 @@ changed?").
 
 If it clears the bar, propose a concise entry (title, description, Evidence, Captured) and wait
 for confirmation before writing anything — this is one of the skill's hard rules (see the table
-above): capture is a recommendation, not a decision. Match `KNOWLEDGE.md`'s existing format and
-voice for whatever gets added. **If declined, add it to `Declined` with the reason given** (or
-your best summary of it if terse) rather than just dropping it — that's what makes the check above
-work next time.
+above): capture is a recommendation, not a decision. If more than one candidate clears the bar in
+the same pass, number them in one list rather than proposing them one at a time. Match
+`KNOWLEDGE.md`'s existing format and voice for whatever gets added. **If declined, add it to
+`Declined` with the reason given** (or your best summary of it if terse) rather than just dropping
+it — that's what makes the check above work next time.
 
-**Never write secrets, credentials, or PII into an entry.** If a capture candidate touches
-something sensitive (an internal URL, a credential, customer data specifics), say so explicitly
-and ask how to phrase it safely rather than writing the sensitive detail verbatim. This is a hard
-rule, not a judgment call to skip under time pressure.
+**Never write secrets, credentials, or PII into an entry or a `Declined` line.** If a capture
+candidate — or the reason for declining one — touches something sensitive (an internal URL, a
+credential, customer data specifics), say so explicitly and ask how to phrase it safely rather than
+writing the sensitive detail verbatim. This is a hard rule, not a judgment call to skip under time
+pressure.
 
 ## Step 3: Removal
 
@@ -176,7 +184,14 @@ Three triggers, and only these three — removal is never time-based or automati
 
 - **A fix supersedes the entry.** When a change fixes the root cause an entry describes, remove
   the entry as part of that same change. Mention it in the session rather than doing it invisibly
-  — low-stakes given git history, but still a change worth naming.
+  — low-stakes given git history, but still a change worth naming. **Don't rely solely on Step 1
+  having already surfaced the entry** — a root-cause fix often lands in a different file than the
+  entry's Evidence points at (Evidence tends to record where the symptom showed up, not
+  necessarily where the eventual fix happens), so Step 1's file-overlap check can miss it
+  entirely. When wrapping up a fix for something that felt like the kind of thing that might have
+  an entry, take a moment to check `KNOWLEDGE.md` for a match before moving on — the mechanical
+  check in Step 1 only verifies a pointer still resolves, not that the behavior it describes is
+  still true, so a genuinely-fixed bug won't flag itself on its own.
 - **The mechanical check fails and the user confirms it's actually gone.** Step 1 flagging
   `Status: needs-review` isn't enough on its own (a failed pointer check could mean the thing
   moved, not that it's resolved) — confirm with the user before removing.

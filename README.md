@@ -114,4 +114,8 @@ stay available even once it's installed elsewhere.
   well-scoped technical Jira ticket into an implementation plan grounded in the actual
   codebase(s) it touches, verifying the ticket's claims against real code before proposing a
   plan for approval.
+- **[repo-knowledge](repo-knowledge/README.md)** — captures repo gotchas, root-causes, and
+  dependency/environment quirks into a per-project `KNOWLEDGE.md` at the moment they're
+  discovered, applies a capture bar to keep it noise-free, and runs an occasional review to
+  prune entries that have gone stale or never proved useful.
 

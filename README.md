@@ -18,7 +18,13 @@ Principles applied consistently across the skills in this repo:
 - **Progressive disclosure.** The always-loaded core file stays lean; anything one-time
   (a bootstrap/setup step) or opt-in (a feature most projects won't touch) lives in a companion
   file read only when its trigger condition is actually met. A file's size is a signal — if a
-  section only matters rarely, it usually belongs somewhere that's only read rarely too.
+  section only matters rarely, it usually belongs somewhere that's only read rarely too. The
+  diagnostic here is temporal (does this run every time, or only once/rarely), not proportional to
+  how much configuration or setup logic a skill happens to have — a skill with nothing to
+  negotiate at bootstrap can still accumulate real one-time content over time (a pointer to add
+  elsewhere, a migration/import step, a first-run question), and each addition needs the
+  every-run-vs-once question re-asked on its own merits, not skipped because an earlier version of
+  the skill didn't need the split.
 - **Re-ground, don't cache.** Judgements (priorities, rejected ideas, plans) can go stale as a
   project changes. Rather than trusting a cached decision indefinitely, skills re-check it
   against current state — but the check itself should be cheap and only interrupt the user when
@@ -87,6 +93,13 @@ Principles applied consistently across the skills in this repo:
   is about re-checking a stored judgement before trusting it): this is about *not storing* the
   judgement in the first place when recomputing it each time costs little and the value doesn't
   come from accumulating across runs.
+- **Reuse a judgment test, don't invent a parallel one.** When a skill needs to classify or filter
+  something in a new context — deciding whether existing documentation belongs somewhere else,
+  say, rather than a fresh capture candidate — check first whether an existing test elsewhere in
+  the skill already answers the same underlying question, just pointed at different input, before
+  drafting a new one. A second, slightly-different test for what is structurally the same judgment
+  call is harder to keep consistent than one test applied twice, and the two versions will
+  eventually drift from each other as one gets refined and the other doesn't.
 
 ## Installation
 

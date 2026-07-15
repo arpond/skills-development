@@ -54,11 +54,26 @@ move (don't duplicate) each one into `KNOWLEDGE.md` as a proper entry, filling i
 what's described and noting `Captured: <today> — migrated from <source file>` (the original
 discovery date isn't recoverable, so don't guess one), and remove it from the source file.
 
-This check runs automatically the first time `KNOWLEDGE.md` is created, and is also available on
-request at any later point (e.g. "check CLAUDE.md for things that should move to repo knowledge")
-for projects that adopted this skill before this check existed, or where one of these files picked
-up new gotcha-shaped content since. It isn't re-run automatically every session — same reasoning as
-Step 0.5's staleness check being event/request-triggered rather than a standing sweep.
+**The curated list is a bet on common conventions, not a claim that it's exhaustive.** A project
+could keep this kind of content somewhere the list doesn't anticipate — an internal wiki export, a
+team-specific notes file, anything not named like one of the conventional locations above. Rather
+than trying to keep growing the list to cover every possibility, ask once, the first time
+`KNOWLEDGE.md` is created: "anywhere else worth checking for this kind of thing?" — folded into the
+same message as the migration-candidate proposal above, whether or not that scan found anything, so
+it's one check-in, not two. This is one of the skill's hard rules (see the table in `SKILL.md`):
+don't silently assume the curated list was enough. If the user names something, check it with the
+same classification test and propose whatever turns up as its own follow-up confirmation (this is
+new information arriving after the first answer, not a second ask of the same question). If they
+say there's nothing else, proceed — this question doesn't get asked again on later runs.
+
+This whole check (curated scan plus the "anywhere else?" question) runs automatically the first
+time `KNOWLEDGE.md` is created. The curated-file part of it is also available on request at any
+later point (e.g. "check CLAUDE.md for things that should move to repo knowledge") for projects
+that adopted this skill before this check existed, or where one of these files picked up new
+gotcha-shaped content since — but the open-ended question is bootstrap-only, since by then the
+user can always just name a file directly instead of being asked in the abstract. Neither part is
+re-run automatically every session — same reasoning as Step 0.5's staleness check being
+event/request-triggered rather than a standing sweep.
 
 **If it exists, read it as-is and continue** — don't re-ask whether to create it. Judgment-drift
 review timing is handled separately below, not here.

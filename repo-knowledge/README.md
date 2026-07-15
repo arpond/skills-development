@@ -61,11 +61,20 @@ Claude: [creates KNOWLEDGE.md with the entry, adds the CLAUDE.md pointer]
         decisions or curated guidance: 1. CLAUDE.md: "remember to bump the cache version
         after touching config/" — 2. docs/TSG.md: "if the export job silently no-ops,
         check AWS creds are in env." Want me to move these into KNOWLEDGE.md instead of
-        leaving them where they are?
+        leaving them where they are? Also — is there anywhere else worth checking for this
+        kind of thing (an internal wiki, a notes file that doesn't match a standard name)?
 
-You: Yes, move both.
+You: Yes, move both. And yeah, we keep an onboarding doc at team-wiki/gotchas.md exported
+     into the repo — check that too.
 
-Claude: [adds both as entries to KNOWLEDGE.md, removes them from CLAUDE.md and docs/TSG.md]
+Claude: [adds the two confirmed entries, removes them from CLAUDE.md and docs/TSG.md,
+         then reads team-wiki/gotchas.md]
+        Found one more candidate there: "staging deploys need the feature flag toggled
+        manually first, the pipeline doesn't do it." Move that one too?
+
+You: Yes.
+
+Claude: [adds it, removes it from team-wiki/gotchas.md]
 ```
 
 ## Example: referencing an existing entry

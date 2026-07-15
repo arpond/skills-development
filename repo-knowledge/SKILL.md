@@ -81,6 +81,7 @@ Last reviewed: <YYYY-MM-DD>
 | 0 (session-start.md) | Confirm with the user before creating `KNOWLEDGE.md` for the first time |
 | 0 (session-start.md) | If the file exists but is malformed, ask the user rather than silently rewriting |
 | 0 (session-start.md) | Show migration candidates from existing docs and wait for confirmation before moving anything |
+| 0 (session-start.md) | At first-time bootstrap, ask whether there's anywhere else worth checking, don't assume the curated list is exhaustive |
 | 2 | Show the proposed new entry (or edit to an existing one) and wait for confirmation before writing it |
 | 2 | Never write secrets, credentials, or PII into an entry or a Declined line — ask if uncertain |
 | 3 | Confirm before removing an entry for staleness (a failed mechanical check alone isn't enough) |

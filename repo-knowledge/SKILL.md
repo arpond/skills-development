@@ -12,12 +12,15 @@ captured in commit messages (commit quality varies by author, so "it's probably 
 isn't a safe assumption). This skill is project-agnostic: everything project-specific lives in
 `KNOWLEDGE.md` inside that project, not in this skill.
 
-This file covers Steps 1-3, the steady-state reference/capture/removal loop. Two companion files
+This file covers Steps 1-3, the steady-state reference/capture/removal loop. Three companion files
 live alongside it:
 
-- `session-start.md` — Step 0 (find or bootstrap `KNOWLEDGE.md`). **Not optional** — read it every
-  run, right after this intro, before Step 1. Split out purely to keep this file's common-case
-  read focused on the reference/capture/removal loop.
+- `session-start.md` — Step 0 (find `KNOWLEDGE.md`, or defer to `setup.md` to bootstrap it).
+  **Not optional** — read it every run, right after this intro, before Step 1. Split out purely to
+  keep this file's common-case read focused on the reference/capture/removal loop.
+- `setup.md` — the one-time-per-project bootstrap: creating `KNOWLEDGE.md`, the `CLAUDE.md`
+  pointer, and the doc-migration scan. Read only the first time `session-start.md` finds no
+  `KNOWLEDGE.md` yet — never on later runs.
 - `review.md` — the occasional judgment-drift review/prune pass. Read it when `KNOWLEDGE.md`'s
   `Last reviewed:` date says it's due (see `session-start.md`), or when the user explicitly asks
   to review/prune repo knowledge.
@@ -78,10 +81,9 @@ Last reviewed: <YYYY-MM-DD>
 
 | Step | Hard rule |
 |---|---|
-| 0 (session-start.md) | Confirm with the user before creating `KNOWLEDGE.md` for the first time |
+| 0 (setup.md) | Propose creating `KNOWLEDGE.md`, migration candidates, and the CLAUDE.md pointer in one message, and wait for confirmation before writing/moving anything |
+| 0 (setup.md) | Ask whether there's anywhere else worth checking, don't assume the curated list is exhaustive |
 | 0 (session-start.md) | If the file exists but is malformed, ask the user rather than silently rewriting |
-| 0 (session-start.md) | Show migration candidates from existing docs and wait for confirmation before moving anything |
-| 0 (session-start.md) | At first-time bootstrap, ask whether there's anywhere else worth checking, don't assume the curated list is exhaustive |
 | 2 | Show the proposed new entry (or edit to an existing one) and wait for confirmation before writing it |
 | 2 | Never write secrets, credentials, or PII into an entry or a Declined line — ask if uncertain |
 | 3 | Confirm before removing an entry for staleness (a failed mechanical check alone isn't enough) |
@@ -93,10 +95,11 @@ scattered cross-references.
 
 ## Step 0: Find/bootstrap the knowledge file
 
-Read `session-start.md` and follow it before continuing — it covers finding or bootstrapping
-`KNOWLEDGE.md`, including the malformed-file case, and checking whether a judgment-drift review is
-due. This is the one companion file that's read every run, not gated behind a trigger condition;
-see the intro above for why it's split out. Once it says to, continue to Step 1 below.
+Read `session-start.md` and follow it before continuing — it covers finding `KNOWLEDGE.md`
+(deferring to `setup.md` to bootstrap it if missing), the malformed-file case, and checking
+whether a judgment-drift review is due. This is the one companion file that's read every run, not
+gated behind a trigger condition; see the intro above for why it's split out. Once it says to,
+continue to Step 1 below.
 
 ## Step 1: Reference existing knowledge
 

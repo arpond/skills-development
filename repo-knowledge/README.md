@@ -15,11 +15,14 @@ Files:
   capture bar (checking a `Declined` history first so the same idea isn't silently re-proposed or
   silently re-suppressed), and remove entries under three specific conditions. Always loaded when
   the skill triggers.
-- `session-start.md` — finding or bootstrapping `KNOWLEDGE.md`, checking a bounded set of the
-  project's existing docs (README, CLAUDE.md/AGENTS.md, a troubleshooting guide/runbook, and their
-  `docs/`-folder equivalents) for gotcha-shaped content that should migrate over instead, and
-  checking whether a judgment-drift review is due. Read every run, right after `SKILL.md`'s intro —
-  not optional, just split out to keep `SKILL.md` itself focused on the loop.
+- `session-start.md` — finding `KNOWLEDGE.md` and checking whether a judgment-drift review is due.
+  Read every run, right after `SKILL.md`'s intro — not optional, just split out to keep `SKILL.md`
+  itself focused on the loop.
+- `setup.md` — the one-time-per-project bootstrap: creating `KNOWLEDGE.md`, checking a bounded set
+  of the project's existing docs (README, CLAUDE.md/AGENTS.md, a troubleshooting guide/runbook, and
+  their `docs/`-folder equivalents) for gotcha-shaped content that should migrate over instead, and
+  asking whether there's anywhere else worth checking. Only read the first time the skill runs for
+  a project, before `KNOWLEDGE.md` exists.
 - `review.md` — the occasional judgment-drift review/prune pass (mechanical staleness is handled
   inline in `SKILL.md`; this is the human-judgment pass on top of it). Read when a review is due,
   or on explicit request.
@@ -51,24 +54,20 @@ You: [after a long debugging session] Ah — it was because the migration runner
 
 Claude: No KNOWLEDGE.md yet for this project — this seems worth capturing (cost real
         debugging time, isn't obvious from the code, and would trip up anyone else running
-        migrations locally). Want me to create KNOWLEDGE.md and add it? I'd also add a
-        one-line pointer to it from CLAUDE.md.
+        migrations locally). I also checked CLAUDE.md and docs/TSG.md and found a couple of
+        bullets that read more like gotchas than design decisions: 1. CLAUDE.md: "remember
+        to bump the cache version after touching config/" — 2. docs/TSG.md: "if the export
+        job silently no-ops, check AWS creds are in env." Want me to create KNOWLEDGE.md
+        with the migration entry, add a CLAUDE.md pointer, and migrate these two as well?
+        Also — is there anywhere else worth checking for this kind of thing (an internal
+        wiki, a notes file that doesn't match a standard name)?
 
-You: Yes to both.
+You: Yes to all of that. And yeah, we keep an onboarding doc at team-wiki/gotchas.md
+     exported into the repo — check that too.
 
-Claude: [creates KNOWLEDGE.md with the entry, adds the CLAUDE.md pointer]
-        While I'm here — a couple of bullets elsewhere read more like gotchas than design
-        decisions or curated guidance: 1. CLAUDE.md: "remember to bump the cache version
-        after touching config/" — 2. docs/TSG.md: "if the export job silently no-ops,
-        check AWS creds are in env." Want me to move these into KNOWLEDGE.md instead of
-        leaving them where they are? Also — is there anywhere else worth checking for this
-        kind of thing (an internal wiki, a notes file that doesn't match a standard name)?
-
-You: Yes, move both. And yeah, we keep an onboarding doc at team-wiki/gotchas.md exported
-     into the repo — check that too.
-
-Claude: [adds the two confirmed entries, removes them from CLAUDE.md and docs/TSG.md,
-         then reads team-wiki/gotchas.md]
+Claude: [creates KNOWLEDGE.md with the entry, adds the CLAUDE.md pointer, migrates the two
+         confirmed candidates and removes them from CLAUDE.md and docs/TSG.md, then reads
+         team-wiki/gotchas.md]
         Found one more candidate there: "staging deploys need the feature flag toggled
         manually first, the pipeline doesn't do it." Move that one too?
 

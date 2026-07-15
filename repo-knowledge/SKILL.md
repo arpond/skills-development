@@ -44,6 +44,9 @@ Last reviewed: <YYYY-MM-DD>
 - Captured: <YYYY-MM-DD> — <what surfaced it, one line: incident, debugging session, PR>
 - Last referenced: <YYYY-MM-DD> (referenced: <N>)
 - Status: active | needs-review
+
+## Declined
+- **<Short title>** (<YYYY-MM-DD>) — one-line reason it was declined.
 ```
 
 - **Entries** is a flat list — no category headers. Grouping can be added later if the file grows
@@ -59,9 +62,14 @@ Last reviewed: <YYYY-MM-DD>
   a flag for a human to look at, never a silent deletion.
 - **Last reviewed:** at the top drives `review.md`'s occasional judgment-drift prompt — same
   mechanism as `next-improvement`'s Goals staleness date.
-- **No archive section.** The file is git-tracked, so a removed entry is fully recoverable via
-  `git log`/`git blame` — don't build a second history mechanism for something git already gives
-  for free.
+- **No archive section for removed entries.** The file is git-tracked, so a removed entry is fully
+  recoverable via `git log`/`git blame` — don't build a second history mechanism for something git
+  already gives for free.
+- **Declined** is append-only history for capture *proposals* that never became entries — distinct
+  from removed entries (which have git history) because a declined proposal was never written
+  anywhere, so without this there'd be nothing to check before re-proposing the same thing later.
+  Mirrors `next-improvement`'s `Rejected` section: the reason is what matters, not just the fact of
+  the decline (see Step 2).
 
 **Hard rules by step, so a review can check none have gone missing:**
 
@@ -107,15 +115,12 @@ right now, when they're about to be relied on.
   than assuming the flag is still accurate — it may have been fixed (Evidence updated, or the
   underlying thing restored) without anyone clearing the flag. Re-checking is cheap; don't nag
   about the same flag more than once per session, though — surface it, then move on.
-- **Evidence that points outside the current checkout** (a path or symbol in a different repo —
-  common for entries describing a cross-repo relationship) can't be mechanically checked from
-  here. Treat that as "unreachable isn't resolved," not a pass or a fail: say plainly that this
-  entry's Evidence isn't checkable from this repo, and use it with that caveat rather than either
-  silently trusting it or wrongly flagging it `needs-review` for a check that was never possible.
-- **For Evidence that's a command with side effects** (a migration, a deploy, anything
-  non-idempotent), "check it still resolves" means confirming the command is still defined/
-  reachable (e.g. the script still exists in `package.json`/a `Makefile`/CI config) — never
-  actually run it just to verify an entry.
+- Two special cases where "check it still resolves" needs care: Evidence **pointing outside the
+  current checkout** (another repo — common for cross-repo entries) can't be checked from here at
+  all, treat as "unreachable isn't resolved" and say so, rather than passing, failing, or silently
+  skipping it. Evidence that's a **side-effectful command** (a migration, a deploy) should only be
+  checked for still being defined/reachable (e.g. still present in `package.json`/a `Makefile`) —
+  never actually run to verify it.
 
 ## Step 2: Capture new knowledge
 
@@ -146,10 +151,19 @@ with noise:
 4. **Recurrence likelihood.** Structural and likely to bite someone else again, or a genuine
    one-off? One-offs are weak candidates even when they were painful.
 
+**Check Declined before proposing.** If a candidate closely resembles something already in
+`Declined`, don't silently re-propose it or silently suppress it — read the recorded reason and
+judge whether it still applies. A timing reason ("not sure yet, wait and see") can go stale; a
+substance reason ("too narrow to be useful," "not actually surprising") usually doesn't. When
+genuinely unsure, it's fine to re-propose with a note ("this was declined before for X — has that
+changed?").
+
 If it clears the bar, propose a concise entry (title, description, Evidence, Captured) and wait
 for confirmation before writing anything — this is one of the skill's hard rules (see the table
 above): capture is a recommendation, not a decision. Match `KNOWLEDGE.md`'s existing format and
-voice for whatever gets added.
+voice for whatever gets added. **If declined, add it to `Declined` with the reason given** (or
+your best summary of it if terse) rather than just dropping it — that's what makes the check above
+work next time.
 
 **Never write secrets, credentials, or PII into an entry.** If a capture candidate touches
 something sensitive (an internal URL, a credential, customer data specifics), say so explicitly

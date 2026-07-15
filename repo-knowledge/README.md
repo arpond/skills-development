@@ -12,8 +12,9 @@ stale or never turned out to matter.
 Files:
 - `SKILL.md` — the steady-state loop: reference existing entries when relevant work touches them
   (with a mechanical check that they still hold), capture new entries when something clears the
-  capture bar, and remove entries under three specific conditions. Always loaded when the skill
-  triggers.
+  capture bar (checking a `Declined` history first so the same idea isn't silently re-proposed or
+  silently re-suppressed), and remove entries under three specific conditions. Always loaded when
+  the skill triggers.
 - `session-start.md` — finding or bootstrapping `KNOWLEDGE.md`, and checking whether a
   judgment-drift review is due. Read every run, right after `SKILL.md`'s intro — not optional,
   just split out to keep `SKILL.md` itself focused on the loop.
@@ -81,19 +82,29 @@ You: Yeah, we replaced FlakyClient entirely last quarter, that note's dead.
 Claude: [removes the entry]
 ```
 
+## Example: a proposed capture gets declined
+
+```
+You: [after fixing a minor test flake] That was just a bad test, nothing repo-worthy.
+
+Claude: Fair — noting it as declined (too narrow/one-off) so it doesn't get re-proposed
+        if something similar comes up again.
+```
+
 ## Example: occasional review
 
 ```
 You: Review repo knowledge.
 
-Claude: KNOWLEDGE.md last reviewed 74 days ago. 2 entries are flagged needs-review
-        (Evidence no longer resolves), 1 hasn't been referenced since it was added 3 months
-        ago. Want to prune any of these, or keep them as-is? Separately, "flaky CI on the
+Claude: KNOWLEDGE.md last reviewed 74 days ago. 3 entries could use a look:
+        1. "old S3 bucket permissions quirk" — needs-review, Evidence no longer resolves.
+        2. "staging DB seed script order" — needs-review, Evidence no longer resolves.
+        3. "webhook retry timing" — never referenced since it was added 3 months ago.
+        Want to prune any of these, or keep them as-is? Separately, "flaky CI on the
         payments spec" has been referenced 5 times — might be worth fixing properly or
         adding to CLAUDE.md instead of staying a workaround note.
 
-You: Prune the two needs-review ones, keep the unreferenced one for now, and yes let's
-     look at actually fixing the flaky spec.
+You: Prune 1 and 2, keep 3 for now, and yes let's look at actually fixing the flaky spec.
 
 Claude: [removes the two confirmed-gone entries, leaves the unreferenced one as-is,
          bumps Last reviewed to today]

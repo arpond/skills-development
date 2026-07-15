@@ -25,11 +25,18 @@ Read every entry in `KNOWLEDGE.md` and collect, without editing anything yet:
 
 ## Present, then wait
 
-Fold everything into a single check-in message, one per review, not one prompt per entry — e.g.:
-"3 entries are flagged needs-review (Evidence no longer resolves), 2 haven't been referenced since
-they were added <dates>. Want to prune any of these, or keep them as-is? Separately, '<title>' has
-been referenced 6 times — might be worth promoting into CLAUDE.md or fixing properly instead of
-staying a workaround note."
+Fold everything into a single check-in message, one per review, not one prompt per entry.
+**Number every candidate in one sequential list** (needs-review and zero-reference entries
+together, in whatever order), so the user can respond by number ("prune 1 and 3, keep 2") instead
+of re-typing titles — e.g.:
+
+"5 entries could use a look: 1. '<title>' — needs-review, Evidence no longer resolves.
+2. '<title>' — needs-review, Evidence no longer resolves. 3. '<title>' — never referenced since
+<date>. 4. '<title>' — never referenced since <date>. Want to prune any of these, or keep them
+as-is? Separately, '<title>' has been referenced 6 times — might be worth promoting into
+CLAUDE.md or fixing properly instead of staying a workaround note." (The high-reference-count
+suggestion stays outside the numbered list — nothing is being removed there, so there's no
+selection to make.)
 
 **Wait for confirmation before removing or archiving anything** — this is one of the skill's hard
 rules (see the table in `SKILL.md`). A needs-review flag or a zero reference count is a candidate,

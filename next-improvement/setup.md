@@ -22,7 +22,8 @@ the user has to remember to do first:
    things that aren't necessary. But don't just default to this without thinking — a project
    that's a library has different natural tiers than one that's an end-user tool.
 3. **Interrogate this with the user before writing anything — don't just show a list and wait
-   for a thumbs-up.** Walk through the proposed tiers and actively ask: does this order match
+   for a thumbs-up.** This is one of the skill's hard rules (see the table in `SKILL.md`). Walk
+   through the proposed tiers and actively ask: does this order match
    what actually matters right now, is anything missing, is anything here not actually a
    priority, would any two tiers swap if a candidate pitted them against each other? Use
    AskUserQuestion for the ranking itself (e.g. "which matters more right now: A or B?") rather

@@ -13,17 +13,22 @@ the priority tiers are, what's already been decided) lives in a file inside the 
 not in this skill. That file is what makes this skill reusable across every project rather than
 rewritten per repo.
 
-This file covers the steady-state loop only. Three companion files live alongside it and are
-only worth reading when actually in play — **don't read them unless the trigger condition
-below says to**, they exist to keep this file lean for the common case:
+This file covers Steps 1-6, the steady-state propose/build/record loop. Four companion files live
+alongside it:
 
-- `setup.md` — the one-time-per-project bootstrap interrogation. Read it when Step 0 finds no
-  `IMPROVEMENT_TRACKER.md` yet.
+- `session-start.md` — Steps 0 and 0.5 (find/bootstrap the tracker, then check whether Goals need
+  a check-in). **Not optional** — read it every run, right after this intro, before Step 1.
+  Split out purely to keep this file's common-case read focused on the propose/build/record loop.
+- `setup.md` — the one-time-per-project bootstrap interrogation. Read it when `session-start.md`'s
+  Step 0 finds no `IMPROVEMENT_TRACKER.md` yet.
 - `strategies.md` — alternate ways of presenting candidates in Step 4, beyond the default
   single top pick. Read it when `Selection strategy:` is set to anything other than `top-tier`,
   or when setting/changing it.
 - `feedback.md` — an optional loop that asks how past ships actually landed and feeds that back
   into future judgement. Read it when `Feedback: on`, or when setting/changing it.
+
+Of these, only `session-start.md` is unconditional — the other three are read only when their
+trigger condition says to, to keep the common-case read lean.
 
 ## The tracker file
 
@@ -109,6 +114,9 @@ Feedback: on                   <!-- optional, see feedback.md -->
 
 | Step | Hard rule |
 |---|---|
+| 0 (setup.md) | Interrogate the proposed categories/tiers with the user before writing the initial tracker |
+| 0 (session-start.md) | If the tracker exists but is malformed, ask the user rather than silently rewriting or refusing |
+| 0.5 (session-start.md) | Confirm goal changes with the user before updating Goals / bumping `Last reviewed:` |
 | 2 | Show proposed new ideas, or a category retirement/merge/narrow, and wait for confirmation before writing anything |
 | 4 | Do not start planning or implementing until the user confirms which one (if any) to build |
 | 4.5 | Get the plan approved before writing any code |
@@ -117,55 +125,12 @@ Feedback: on                   <!-- optional, see feedback.md -->
 mirror of the steps, not independent prose, so it's the one place to check rather than three
 scattered cross-references.
 
-## Step 0: Find or bootstrap the tracker
+## Step 0 and Step 0.5: Find/bootstrap the tracker, check staleness
 
-Look for `IMPROVEMENT_TRACKER.md` at the root of whichever project the user is currently working
-in (use judgement on project boundary: the nearest enclosing directory with its own README,
-package manifest, or similar — not necessarily the git repo root, since one repo can contain
-several projects with different concerns).
-
-If it doesn't exist yet, read `setup.md` and follow it before doing anything else — that's a
-one-time-per-project bootstrap, kept out of this file since most invocations don't need it.
-
-If it does exist, read it as-is and continue — don't re-ask full setup questions on later runs.
-Goals aren't fixed forever though: see Step 0.5.
-
-**If it exists but is malformed** (no `## Goals` section, a tier line that doesn't parse as
-priority order, an unrecognised `Selection strategy:`/`Feedback:` value) — this is a case of
-"unreachable isn't resolved," not a normal empty/stale tracker: don't silently rewrite it back
-into shape (that guesses at intent the user never confirmed) and don't refuse to proceed either.
-Name the specific thing that doesn't parse and ask directly: fix it by hand, or walk through
-re-doing just that broken piece (e.g. re-running the Goals portion of `setup.md` if only Goals is
-broken, leaving categories/Done/Rejected untouched). Never fabricate a plausible-looking Goals
-list to paper over a missing one — a wrong guess here silently misranks every candidate for as
-long as the tracker lives, the exact failure mode Step 0.5 already exists to prevent for staleness.
-
-## Step 0.5: Check whether goals are stale
-
-Goals can drift as the project evolves, even without a formal re-setup. Check the `Last
-reviewed:` date under Goals:
-
-- **Missing** (tracker predates this field): treat as stale, ask now.
-- **Older than ~30 days, or the Done list has grown noticeably since the last review**: prompt
-  the user with a short check-in — e.g. "Goals were last confirmed on <date> and N items have
-  shipped since. Still the right order, or has anything changed?" Offer to keep as-is, reorder,
-  add/remove a tier, or fold in a new priority entirely.
-- **Recently reviewed and nothing suggests drift**: skip the prompt, proceed straight to Step 1.
-
-If the user changes anything, update the Goals section and bump `Last reviewed:` to today. If
-they confirm as-is, still bump the date so the next run doesn't re-ask right away. This check is
-a single short question, not a repeat of the full `setup.md` interrogation — don't re-litigate
-every tier from scratch unless the user wants to.
-
-The user can also trigger this at any time outside of a normal run — e.g. "reprioritise" or
-"goals have changed" — by jumping straight to this step, editing Goals, and bumping the date.
-This is also where an existing tie can be broken into a strict order, or a new tie formed between
-previously-distinct tiers — same edit-and-bump mechanism as any other reprioritisation.
-
-If `Selection strategy:` is present (or the user wants to add/change it), see `strategies.md` —
-it's not fixed at setup either and is edited the same lightweight way. If `Feedback:` is present
-(or the user wants to add/change it), see `feedback.md`, which also runs its own short check-in
-from this step when relevant.
+Read `session-start.md` and follow it before continuing — it covers finding or bootstrapping the
+tracker (including the malformed-tracker case) and checking whether Goals are stale. This is the
+one companion file that's read every run, not gated behind a trigger condition; see the intro
+above for why it's split out. Once it says to, continue to Step 1 below.
 
 ## Step 1: Count what's outstanding
 

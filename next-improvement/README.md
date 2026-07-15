@@ -11,11 +11,15 @@ planning, or starts building anything without the user confirming first.
 Files:
 - `SKILL.md` — the steady-state loop (ties, idea top-up, ranking, propose/
   confirm/plan/build/record). Always loaded when the skill triggers.
+- `session-start.md` — finding/bootstrapping the tracker and checking whether Goals are stale.
+  Read every run, right after `SKILL.md`'s intro — unlike the other companion files below, it's
+  not optional or one-time, just split out to keep `SKILL.md` itself focused on the loop.
 - `setup.md` — the one-time-per-project bootstrap interrogation. Only read the
   first time the skill runs for a project, before its tracker file exists.
 - `strategies.md` — optional alternate ways of presenting candidates (spread
   across tiers, a wildcard slot, a quick-win lane, category rotation). Only read when a project
-  actually configures a `Selection strategy:` beyond the default.
+  actually configures a `Selection strategy:` beyond the default. See that file for the full
+  option reference (syntax, defaults, and how modes combine).
 - `feedback.md` — an optional loop that asks how past ships actually landed
   (delivered / mixed / missed) and feeds that back into future judgement, capped so it never
   turns into a nagging backlog. Only read when a project has `Feedback: on`.
@@ -99,10 +103,16 @@ Claude: [sets Selection strategy: spread(3) + wildcard(rotate) and Feedback: on
 
 ...next run...
 
+Claude: Last shipped "Add retry logic" (3 weeks ago) — deliver as expected, mixed, or miss?
+
+You: Delivered as expected.
+
 Claude: 1. Tier 1 pick: "Fix pagination bug" — because X.
         2. Tier 2 pick: "Add dark mode" — because Y.
         3. Wildcard: "Rewrite the CSV export" — oldest idea in the backlog, worth
            a second look.
-        Also: last shipped "Add retry logic" (3 weeks ago) — deliver as expected,
-        mixed, or miss?
 ```
+
+(The feedback check-in runs at session start, before candidates are ranked — not appended after
+the proposal. If Goals were also due a check-in this run, both questions would be folded into
+that same opening message instead of asked one after another.)

@@ -131,4 +131,8 @@ stay available even once it's installed elsewhere.
   dependency/environment quirks into a per-project `KNOWLEDGE.md` at the moment they're
   discovered, applies a capture bar to keep it noise-free, and runs an occasional review to
   prune entries that have gone stale or never proved useful.
+- **[operational-requirements-audit](operational-requirements-audit/README.md)** — audits a repo
+  against Findmypast's Operational Requirements (bundled from Discourse, not re-derived from
+  memory) and produces a per-requirement Met/Partial/Not Met/N/A/Unverifiable report backed by
+  concrete evidence from the codebase.
 

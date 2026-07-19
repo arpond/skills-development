@@ -96,8 +96,9 @@ Each entry below covers what the mode means *and* what Step 4 does with it — o
   quick-win always shows, uncounted by `max-options(N)`.
 - **`category-rotation`** or **`category-rotation(window=N)`** (default N=5) — when the base
   pick's ranking has a genuine close call, Step 4 prefers whichever candidate's category hasn't
-  appeared in the last N Done entries (across all categories combined, oldest-first count; fewer
-  than N total Done entries -> insufficient history, skip the bias), and says so ("Y also serves
+  appeared in the last N Done entries (across all categories combined, oldest-first count, live
+  tracker only — never `IMPROVEMENT_TRACKER_DONE.md`, see `SKILL.md` Step 6; fewer than N total
+  Done entries -> insufficient history, skip the bias), and says so ("Y also serves
   tier 1 equally well and its category hasn't shipped recently"). Only affects the base
   `top-tier`/`spread(N)` pick's own close-call, not each `spread(N)` tier independently; never
   overrides a clear tier-1-vs-lower-tier win, only breaks ties. **Precedence**: three things can

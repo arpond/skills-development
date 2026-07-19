@@ -30,6 +30,11 @@ alongside it:
 Of these, only `session-start.md` is unconditional — the other three are read only when their
 trigger condition says to, to keep the common-case read lean.
 
+A project's tracker may also grow a sibling `IMPROVEMENT_TRACKER_DONE.md` — the overflow of old
+**Done** history moved out of the live tracker (see Step 6). It's not a companion file of this
+skill (no fixed content to read every run) and stays untouched unless something specifically
+needs older shipped history.
+
 ## The tracker file
 
 Each project that uses this skill has its own `IMPROVEMENT_TRACKER.md` at that project's root
@@ -61,6 +66,7 @@ Feedback: on                   <!-- optional, see feedback.md -->
 - ...
 
 ## Done
+(archived before <YYYY-MM-DD>: see IMPROVEMENT_TRACKER_DONE.md)  <!-- optional, only present once an archive exists -->
 - **Idea name** (Category) — one-line note on what actually shipped (may differ from the
   original idea's exact wording if the implementation took a different shape).
 
@@ -106,6 +112,11 @@ Feedback: on                   <!-- optional, see feedback.md -->
 - **Done** is append-only history, never deleted from. Prefix each entry with its origin
   category in parens — useful bookkeeping regardless of any optional subsystem; legacy entries
   without a tag just aren't counted by anything that relies on it, no migration needed.
+- **Done grows unbounded over a project's life, so it's kept trimmed to a recent window in the
+  live tracker, with the rest moved out to a sibling `IMPROVEMENT_TRACKER_DONE.md`** — same
+  directory, same project, read only when Step 2's history-check or an explicit user question
+  actually needs older history (see Step 6 for exactly when this move happens and what it must
+  never move).
 - **Rejected** is append-only, same as Done — an idea proposed in Step 2 and declined by the
   user goes here with the reason, not just dropped. See Step 2 for how this gets checked before
   re-proposing something similar; the reason is what matters, not the mere fact of rejection.
@@ -160,6 +171,12 @@ whether it still applies. A timing/priority reason ("not now, focused on X") can
 stop applying; a substance reason ("doesn't fit this project," "already tried, didn't work")
 usually doesn't. When genuinely unsure, it's fine to re-propose with a note ("this was declined
 before for X — has that changed?") rather than silently suppressing or silently repeating it.
+
+**Same check, extended to "already shipped."** A candidate can also closely resemble something
+already in **Done** — check the live tracker's Done section same as Rejected. If it's plausible
+but not certain the same thing already shipped, and `IMPROVEMENT_TRACKER_DONE.md` exists (see
+Step 6), it's fine to open it for this one lookup rather than guessing — that's exactly the kind
+of "something actually needs older history" case Step 6 has in mind, not a normal-loop read.
 
 **Show the proposed new ideas and wait for confirmation before appending anything.** This is one
 of the skill's hard rules (see the table above): brainstorming is a recommendation, not a
@@ -324,3 +341,32 @@ note on what was actually built. If `Feedback: on`, see `feedback.md` for the ex
 add at this step. Leave everything else in the file untouched. If the work surfaced new
 follow-on ideas that weren't there before, add them to the relevant category now rather than
 losing them — that's the loop closing, not scope creep.
+
+**After appending, check whether Done needs trimming.** If the live tracker's Done section now
+holds more than ~20 entries, archive the oldest down to a working set of ~15 (a target, same
+spirit as Step 2's buffer — trim generously so this doesn't refire every single run): move them,
+unedited and in their existing order, to the end of `IMPROVEMENT_TRACKER_DONE.md` (create it,
+same directory as `IMPROVEMENT_TRACKER.md`, with a one-line `# <Project> — archived Done history`
+header if it doesn't exist yet). Update the archive-pointer note under the live `## Done` header
+to the cutoff date of the oldest entry now remaining live. This is mechanical bookkeeping, not a
+judgement call about ideas or priorities, so it doesn't need user confirmation the way Steps 2/4/
+4.5 do.
+
+**Never archive an entry whose outcome is still `pending`** (`Feedback: on` — see `feedback.md`)
+— it's still awaiting a check-in, and `feedback.md`'s eligible-count and bulk-offer logic only
+ever look at the live tracker. If trimming the oldest ~5 would sweep up a `pending` entry, skip
+that one and reach further back for a resolved entry instead, so the live Done section can end up
+holding slightly more than ~15 when older pending entries are in the mix — that's expected, not a
+bug. Once an entry's outcome is later filled in (`delivered`/`mixed`/`missed`/`skipped`), it
+becomes archivable on the next trim like any other.
+
+`category-rotation` (`strategies.md`) counts only the live tracker's Done entries, never the
+archive — its default window (5) is well inside the ~15-20 kept live, so this practically never
+runs short, but if a project sets a much larger window than the live Done section holds, treat it
+the same as "fewer than N total" (insufficient history, skip the bias) rather than reading the
+archive file to fill the count.
+
+**Reading the archive.** Only open `IMPROVEMENT_TRACKER_DONE.md` when something actually needs
+older history — Step 2's Rejected-style history check extended to "has something like this
+already shipped," or the user explicitly asking about past work. Don't read it as part of the
+normal Step 0-6 loop; that's the whole point of moving entries out of the live tracker.

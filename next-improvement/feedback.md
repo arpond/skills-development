@@ -64,7 +64,10 @@ normally the next time the skill starts a new session.
 
 A Done entry is **eligible** once it's shipped ≥`wait` days ago (default 7) and still has
 `outcome: pending` — enough time has passed to actually judge it. Count eligible entries; this
-costs nothing extra since Step 0.5 already reads the tracker.
+costs nothing extra since Step 0.5 already reads the tracker. This count only ever covers the
+live tracker's Done section, never `IMPROVEMENT_TRACKER_DONE.md` (`SKILL.md` Step 6) — moot in
+practice, since a `pending` entry is never archived in the first place, so nothing eligible can
+end up sitting out of view there.
 
 - **Always surface the count** when it's nonzero, even if nothing else here triggers — e.g. a
   trailing "(3 ships pending feedback)" note. This is what stops the backlog from silently

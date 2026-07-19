@@ -24,6 +24,11 @@ Files:
   (delivered / mixed / missed) and feeds that back into future judgement, capped so it never
   turns into a nagging backlog. Only read when a project has `Feedback: on`.
 
+A project's tracker may also grow a sibling `IMPROVEMENT_TRACKER_DONE.md` once its Done history
+gets long — older shipped entries move there automatically (Step 6) so the live tracker stays a
+manageable read; it's only opened when older history is actually needed, never as part of the
+normal loop.
+
 ## Requires
 
 Nothing beyond local file read/write — no MCP server, no external service. The one optional

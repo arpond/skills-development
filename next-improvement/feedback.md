@@ -63,11 +63,15 @@ eligible" note either. Silence by default beats a repeat announcement of the sam
 normally the next time the skill starts a new session.
 
 A Done entry is **eligible** once it's shipped ≥`wait` days ago (default 7) and still has
-`outcome: pending` — enough time has passed to actually judge it. Count eligible entries; this
-costs nothing extra since Step 0.5 already reads the tracker. This count only ever covers the
-live tracker's Done section, never `IMPROVEMENT_TRACKER_DONE.md` (`SKILL.md` Step 6) — moot in
-practice, since a `pending` entry is never archived in the first place, so nothing eligible can
-end up sitting out of view there.
+`outcome: pending` — enough time has passed to actually judge it. Count eligible entries from the
+live tracker's Done section for free, since Step 0.5 already reads it. Then also check whether
+`IMPROVEMENT_TRACKER_DONE.md` exists (`SKILL.md` Step 6 archives entries regardless of `outcome`,
+so a `pending` entry can end up there if the feedback loop hasn't caught up to it yet) — if it
+exists, open it and fold any `pending` entries in as eligible too. Treat the two files as one
+combined pool: eligible count is the sum, and "oldest eligible" (drip mode, below) is the oldest
+across both, not just whichever file it happens to live in. This is the one place in the normal
+Step 0-6 loop that reads the archive, and only when `Feedback: on` — see `SKILL.md`'s "Reading the
+archive" note.
 
 - **Always surface the count** when it's nonzero, even if nothing else here triggers — e.g. a
   trailing "(3 ships pending feedback)" note. This is what stops the backlog from silently
@@ -75,18 +79,21 @@ end up sitting out of view there.
   fires once per session, per the throttle above — it's about not going silent forever across
   separate sessions, not about repeating every round within one.
 - **Below the `bulk` threshold (default 5 eligible)**: drip mode. Ask about the single oldest
-  eligible item, one short question — "Last shipped '<idea>' (<date>) — deliver as expected,
-  mixed, or miss?" Any answer, including "skip," gets written back as its `outcome:` value
-  immediately (skip -> `outcome: skipped`), so that item is never asked about again. At most one
-  such question per session, per the throttle above.
+  eligible item across both files, one short question — "Last shipped '<idea>' (<date>) — deliver
+  as expected, mixed, or miss?" Any answer, including "skip," gets written back as its `outcome:`
+  value immediately (skip -> `outcome: skipped`) in whichever file the item actually lives in
+  (live tracker or `IMPROVEMENT_TRACKER_DONE.md`), so that item is never asked about again. At
+  most one such question per session, per the throttle above.
 - **At or above `bulk`, and the eligible count exceeds `bulk-offer last:` by at least `bulk`**:
   make a single bulk offer instead of the drip question — "N ships pending feedback — want to
   clear them now, or keep going one at a time?" Either way (accepted or declined), update
   `bulk-offer last:` to the current eligible count immediately. If accepted, list every eligible
-  item as a numbered list (idea name + ship date, oldest first, no cap — see `SKILL.md` Step 4's
-  numbering rule, which applies to this list too) and let the user answer all of them in one pass
-  by number (terse per-item tags are fine); write all tags back in one edit. If declined, or if
-  the threshold condition isn't yet met, fall back to drip mode for this run.
+  item as a numbered list (idea name + ship date, oldest first across both files, no cap — see
+  `SKILL.md` Step 4's numbering rule, which applies to this list too) and let the user answer all
+  of them in one pass by number (terse per-item tags are fine); write each tag back into whichever
+  file that item is actually in — this may mean one edit to the live tracker and one to the
+  archive if eligible items span both. If declined, or if the threshold condition isn't yet met,
+  fall back to drip mode for this run.
 - Answered items (any outcome, including `skipped`) drop out of the eligible count permanently —
   the backlog can only shrink or hold steady between offers, never balloon unnoticed.
 

@@ -352,13 +352,13 @@ to the cutoff date of the oldest entry now remaining live. This is mechanical bo
 judgement call about ideas or priorities, so it doesn't need user confirmation the way Steps 2/4/
 4.5 do.
 
-**Never archive an entry whose outcome is still `pending`** (`Feedback: on` — see `feedback.md`)
-— it's still awaiting a check-in, and `feedback.md`'s eligible-count and bulk-offer logic only
-ever look at the live tracker. If trimming the oldest ~5 would sweep up a `pending` entry, skip
-that one and reach further back for a resolved entry instead, so the live Done section can end up
-holding slightly more than ~15 when older pending entries are in the mix — that's expected, not a
-bug. Once an entry's outcome is later filled in (`delivered`/`mixed`/`missed`/`skipped`), it
-becomes archivable on the next trim like any other.
+**Trimming doesn't wait on `outcome`** (`Feedback: on` — see `feedback.md`). Archive the oldest
+entries on the normal ~20→~15 schedule regardless of whether their outcome is still `pending` —
+otherwise a feedback loop that can't keep pace with shipping would let the live Done section grow
+without bound. `feedback.md`'s eligible-count and drip/bulk logic treat the live tracker and
+`IMPROVEMENT_TRACKER_DONE.md` as one combined pool of pending entries, oldest-first, so an entry
+crossing into the archive while still `pending` doesn't drop it from consideration — it's still
+askable, just from the other file.
 
 `category-rotation` (`strategies.md`) counts only the live tracker's Done entries, never the
 archive — its default window (5) is well inside the ~15-20 kept live, so this practically never
@@ -368,5 +368,7 @@ archive file to fill the count.
 
 **Reading the archive.** Only open `IMPROVEMENT_TRACKER_DONE.md` when something actually needs
 older history — Step 2's Rejected-style history check extended to "has something like this
-already shipped," or the user explicitly asking about past work. Don't read it as part of the
-normal Step 0-6 loop; that's the whole point of moving entries out of the live tracker.
+already shipped," the user explicitly asking about past work, or (`Feedback: on`) `feedback.md`'s
+Step 0.5 check-in scanning for `pending` entries that got archived before being answered. Otherwise
+don't read it as part of the normal Step 0-6 loop; that's most of the point of moving entries out
+of the live tracker.

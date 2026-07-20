@@ -16,6 +16,14 @@ Files:
   one-time or opt-in the way `next-improvement`'s companion files are, so there's nothing to split
   out; every step runs on every ticket.
 
+## Cost
+
+This is a heavier-weight skill, not a quick lookup — it fetches the ticket plus its linked
+issues/remote docs/parent epic, then explores and verifies claims against real code in every repo
+confirmed in scope (Step 5). Expect noticeably more tool calls and tokens than a single-shot
+question, in exchange for a plan actually grounded in the current codebase rather than a restated
+ticket. The skill itself flags this to the user before Step 1 starts.
+
 ## Requires
 
 - **A Jira MCP server, configured and authenticated** — this is a hard dependency. Every step

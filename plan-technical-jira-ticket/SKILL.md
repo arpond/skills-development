@@ -24,6 +24,14 @@ handled differently (flagged, not planned) — see Step 1 for why and how.
 This skill produces a plan. It does not execute one — see Step 7 for the handoff once a plan is
 approved.
 
+**Tell the user up front that this is a heavier-weight run than a quick answer**, before starting
+Step 1 — one line is enough ("this involves a fair bit of investigation — fetching the ticket and
+its linked context, then exploring the codebase(s) to verify it — so it'll take a bit and use more
+tool calls than a quick question would"). This isn't a confirm-point to wait on (see the table
+below for those), just a heads-up so the cost isn't a surprise: every step from Step 2 onward reads
+linked issues, remote docs, and a parent epic, and Step 5 explores and verifies claims against real
+code per repo in scope — real investigation, not a single-shot lookup.
+
 **Confirm-points by step, so a review can check none have gone missing:**
 
 | Step | Confirm-point(s) |

@@ -134,11 +134,33 @@ not a mandatory extra setup burden — don't turn it into another long interroga
 choice as the `Selection strategy:` line, using the combinable space- or `+`-separated syntax
 described above.
 
+**This is a single message, not a negotiation** — show the menu below (or an equivalent one
+covering the same ground) once, then wait for their pick; don't ask a bare "want a selection
+strategy?" first and only reveal the options if they say yes. Something along these lines
+satisfies it:
+
+> By default I'll always present the single top-ranked idea (`top-tier`). A few optional ways to
+> change that:
+> - `spread(N)` — show the top pick from each of the top N tiers instead of just one (default 3)
+> - `wildcard` — add one extra pick outside the ranking (rotates through oldest / random / low-tier)
+> - `quick-win` — add the cheapest outstanding candidate regardless of tier
+> - `category-rotation` — break close ties in favour of a category that hasn't shipped recently
+> - `max-options(N)` — cap how many of the base mode's own picks are shown (default 4)
+>
+> These combine, e.g. `spread(3) + wildcard(rotate) + quick-win`. Happy with the default
+> (`top-tier`), or want to combine some of these?
+
+Reusing this wording verbatim is fine — the point is that every option is named and described
+before the user answers, not that the phrasing is original each time.
+
 ## Changing it later (from `session-start.md` Step 0.5)
 
 Not fixed at setup. The user can change it any time by just saying so (e.g. "show me more
 options next time", "add a wildcard", "drop category-rotation") — edit the line in place, no
-need to re-run the full `setup.md` interrogation.
+need to re-run the full `setup.md` interrogation. If they name a concrete mode/modifier, just
+apply it. If instead they ask to change it but aren't specific about what's available (e.g. "what
+else can I do here?", "show me the options"), show the same menu from the Setup section above
+rather than guessing at what they mean — don't make them already know the syntax to ask about it.
 
 ## Capping combined output
 

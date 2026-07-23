@@ -50,12 +50,12 @@ Claude reaches for this skill when you say things like:
 You: What should we work on next?
 
 Claude: No IMPROVEMENT_TRACKER.md yet for this project — let's set one up.
-        Based on the codebase, I'd propose these idea categories: Features, Refactors.
-        And this priority order: (1) fix broken/flaky behaviour, (2) ship features users
-        are waiting on, (3) pay down debt that's slowing things down. Does that order
+        Based on the codebase, I'd propose these idea categories: Refactors, Features.
+        And this priority order: (1) fix broken/flaky behaviour, (2) pay down debt that's
+        slowing things down, (3) ship features users are waiting on. Does that order
         match what actually matters right now, or would anything swap?
 
-You: Swap 1 and 2, we don't have anything broken right now.
+You: Actually features matter more to us right now than debt — swap 2 and 3.
 
 Claude: [writes IMPROVEMENT_TRACKER.md with confirmed tiers, then brainstorms ideas
          for both categories grounded in the actual codebase]

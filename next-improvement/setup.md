@@ -14,13 +14,22 @@ several projects with different concerns).
 the user has to remember to do first:
 
 1. Propose 2-4 idea categories based on what this project actually is (read its README/CLAUDE.md/
-   directory structure to ground this, don't guess blind). If genuinely unsure, "Features" and
-   "Refactors" are a safe universal default that can be renamed or split later.
+   directory structure to ground this, don't guess blind). If genuinely unsure, "Refactors" and
+   "Features" are a safe universal default that can be renamed or split later.
 2. Propose a tiered goal list, again grounded in what the project seems to be for. A reasonable
    generic starting point, if nothing more specific is obvious: (1) improve the actual
    user-facing output/quality of the thing this project produces, (2) automate/streamline the
    process of producing it, (3) keep the system maintainable and readable, (4) avoid building
-   things that aren't necessary. But don't just default to this without thinking — a project
+   things that aren't necessary. Notice none of these tiers is phrased as "add new features" —
+   that's deliberate, not an oversight to fix. The typical use case for this skill leans toward
+   maintenance and improving what already exists rather than expanding scope, and new-feature
+   work is also the area where users most want direct say over scope and direction rather than
+   a generically-proposed tier speaking for them. If the project genuinely calls for a
+   features-focused tier (e.g. it's early-stage and clearly still building out core
+   functionality), it's fine to propose one — this is about not defaulting to it, not about
+   treating feature work as invalid — but don't rank it above maintenance/quality tiers by
+   default; let the user actively push it up during interrogation if that's really where their
+   priority is. But don't just default to any of this without thinking — a project
    that's a library has different natural tiers than one that's an end-user tool.
 3. **Interrogate this with the user before writing anything — don't just show a list and wait
    for a thumbs-up.** This is one of the skill's hard rules (see the table in `SKILL.md`). Walk
@@ -30,7 +39,10 @@ the user has to remember to do first:
    AskUserQuestion for the ranking itself (e.g. "which matters more right now: A or B?") rather
    than a single open-ended "sound good?" — it's cheap now and wrong tiers quietly misrank
    every candidate for as long as the tracker lives. This is a one-time setup cost per project;
-   getting it right once is worth a real back-and-forth rather than silently guessing.
+   getting it right once is worth a real back-and-forth rather than silently guessing. If a
+   features-type tier ends up ranked at or above maintenance/quality tiers, confirm that's
+   actually intended rather than letting it pass silently — it's the one case in this step
+   worth double-checking given the default lean described above.
    If the user resists ranking two tiers against each other — "they're both important",
    "depends on the week" — that's a signal for a genuine tie, not a cue to keep pushing for a
    forced order. Confirm it's a real tie, then ask directly for the tie-break rule to store

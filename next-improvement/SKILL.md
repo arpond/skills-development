@@ -281,6 +281,16 @@ for Y") — it's part of the reasoning, not a separate line item.
 If `Selection strategy:` is set to anything else, read `strategies.md` and build the
 presentation as it describes instead.
 
+**Flag feature-type picks explicitly.** If the top pick (or a close contender) comes from a
+features/new-functionality category rather than maintenance/quality/refactor-style work, say so
+plainly as part of its reasoning line (e.g. "this is a new feature, not a maintenance item — ...")
+rather than leaving the category implicit. This doesn't change the presentation format above or
+add a new confirmation gate — it's one clause within the existing line, same as any other
+reasoning. The reason it's worth calling out: users tend to want more direct say over feature
+scope/direction than over maintenance work, and Step 4.5's plan-approval step is where that
+input actually happens — flagging it here just makes sure the user notices *before* reaching that
+step, instead of registering it only once a plan is already drafted.
+
 If Step 3 carried forward an unresolved tied-goal conflict, present that as its own distinct
 case regardless of strategy — the user needs to know which situation they're looking at, and the
 co-contenders still get numbered like any other multi-option list. E.g.: "X and Y are

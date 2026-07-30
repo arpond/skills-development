@@ -135,4 +135,8 @@ stay available even once it's installed elsewhere.
   against Findmypast's Operational Requirements (bundled from Discourse, not re-derived from
   memory) and produces a per-requirement Met/Partial/Not Met/N/A/Unverifiable report backed by
   concrete evidence from the codebase.
+- **[commit-message-check](commit-message-check/README.md)** — a mandatory pre-commit gate that
+  re-reads the live commit-message conventions and walks a literal checklist (ticket prefix,
+  subject rules, whether a body is even needed, a strip-test on every bullet, an AI-reference
+  scan) before any commit message is shown or committed.
 

@@ -12,8 +12,13 @@ judges whether a ticket is *fit to hand to an engineer* before anyone starts; th
 ticket already judged sound and grounds an implementation plan in the actual codebase.
 
 Files:
-- `SKILL.md` — the whole flow (resolve, gather context, assess five dimensions, report). Single
-  file — every step runs on every audit, nothing here is one-time or opt-in.
+- `SKILL.md` — the whole flow (resolve, gather context, assess five dimensions, report). Every
+  step runs on every audit, nothing here is one-time or opt-in.
+- `references/stage-expectations.md` — per-Jira-project lookup of what's realistically expected to
+  be filled in at a ticket's current workflow stage, so administrative placeholders (a blank
+  "Codebases" field, an unresolved "should this pass UAT?" flag) aren't reported as gaps before a
+  team's own process would normally resolve them. Grows over time: the skill asks once per new
+  project key it encounters and offers to append the answer here.
 
 ## Cost
 

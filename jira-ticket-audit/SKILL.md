@@ -157,9 +157,22 @@ Whether the ticket reads as more than one independently-shippable piece of work 
 several unrelated behavior changes, multiple integrations/systems, or scope that would span many
 unrelated files/services. Contrast this against the ticket's own stated type: a ticket that's
 already an epic isn't "oversized" by this check (Step 1 already routes epics differently); this
-flags a *single-ticket* item that has quietly grown epic-shaped. If found, note roughly where a
-natural split line would fall (e.g. "the API change and the UI change here could ship separately"),
-since a raw "too big" verdict without a suggested cut isn't actionable.
+flags a *single-ticket* item that has quietly grown epic-shaped.
+
+If found, note roughly where a natural split line would fall — a raw "too big" verdict without a
+suggested cut isn't actionable — but favor a **vertical** cut over a **horizontal** one. A vertical
+slice splits by independently valuable, end-to-end behavior (e.g. "the mobile presentation could
+ship separately from the desktop one, since each is independently useful on its own"): each
+resulting ticket is still demoable and delivers real user value by itself. A horizontal slice
+splits by technical layer (frontend vs. backend, UI vs. API, "the card design" vs. "the
+data-fetching pipeline behind it") — this is usually the *wrong* cut to suggest, since neither half
+is independently shippable or valuable on its own: a backend-only ticket has no observable
+behavior, and a frontend-only ticket has nothing real to render. Don't default to a layer split
+just because it's the most visible fault line in the ticket's own AC (a UI part and an
+infrastructure part) — look for a vertical cut first. Only suggest a layer split, and flag it
+explicitly as one with this caveat, when there's a concrete reason the layers really are
+independently deliverable (e.g. the backend piece is a shared capability multiple other tickets
+already depend on, not just this ticket's own two ends).
 
 ### Epic linkage
 

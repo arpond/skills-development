@@ -28,6 +28,8 @@ Next id: R<N>
 ## Active
 - **Theme** (Category, id: R1, status: active) — at-risk: I7, I12; mitigated-by: I23 (outcome:
   pending) — one-line note on the pattern and what it actually is.
+- **Theme B** (Category, id: R3, status: active) — at-risk: (none); mitigated-by: I31 (outcome:
+  planned) — a fix is already proposed (I31) but not yet built.
 
 ## Archived
 - **Theme** (Category, id: R2, status: archived) — at-risk: (none); mitigated-by: I19 (outcome:
@@ -43,12 +45,14 @@ Next id: R<N>
 - **`at-risk:`** — ids of currently *outstanding* ideas judged to share this risk (same
   category/theme/cause). References ideas by id, not name, for the same reason `fixes:`/
   `reworked:` do (`SKILL.md`) — a name can get reworded, an id can't drift.
-- **`mitigated-by:`** — id(s) of idea(s) built *specifically to address* this risk, each with its
-  own `outcome:` value (`pending`/`effective`/`partial`/`ineffective`) using the exact same
-  vocabulary and check-in mechanics as `feedback.md`'s ship outcomes — reused, not reinvented, see
-  Checking on mitigations below. Distinct meaning from `at-risk:`: `at-risk` is "exposed to this,"
-  `mitigated-by` is "built against this" — don't conflate the two in reasoning text (`SKILL.md`
-  Step 3/4 already calls this out).
+- **`mitigated-by:`** — id(s) of idea(s) built, or *intended*, *specifically to address* this
+  risk, each with its own `outcome:` value: `planned`/`pending`/`effective`/`partial`/
+  `ineffective`. `planned` is this field's own first state, for an idea that's still outstanding —
+  proposed at Step 2 specifically as the fix for this risk, not yet built. The remaining four reuse
+  `feedback.md`'s exact ship-outcome vocabulary and check-in mechanics once it ships — see Recording
+  a planned mitigation and Checking on mitigations below. Distinct meaning from `at-risk:`: `at-risk`
+  is "exposed to this," `mitigated-by` is "meant to fix this, whether or not it's shipped yet" —
+  don't conflate the two in reasoning text (`SKILL.md` Step 3/4 already calls this out).
 - **No `cause:`/`fixes:` list is stored on the entry.** Which specific `fixes:`/`reworked:` links
   originally evidenced the pattern is cheap to recompute on demand — scan Done for links whose
   origin's category matches this entry's category — so it isn't persisted here; storing it would
@@ -111,12 +115,36 @@ doesn't care which trigger noticed it first:
 Before presenting a newly-proposed idea, check it against every **active** entry's category/theme.
 On a match, say so as part of presenting the idea (not a separate confirmation step) — e.g. "this
 also touches R1 — <theme> — past ships here needed 2 follow-up fixes, worth extra care on scope/
-tests upfront." If the user accepts the idea, add its id to that entry's `at-risk:` list in the
-same write as appending the idea itself. Archived entries are skipped for this check — that's the
-point of archiving; a new match against an archived theme is instead a **reactivation** trigger
-(see below), not a routine at-risk tag.
+tests upfront." Then ask one follow-up, distinct from the caution above: is this candidate merely
+*exposed* to the risk, or is it *meant to fix it*? That distinction decides which field it goes in:
+
+- **Exposed, not a fix** (the normal case): if the user accepts the idea, add its id to that
+  entry's `at-risk:` list in the same write as appending the idea itself.
+- **Meant to fix it**: if the user accepts the idea, tag it `mitigated-by: I<N> (outcome: planned)`
+  on the risk entry instead — this is the idea's status *before* it's built, distinct from the
+  `pending` it gets once shipped (see Recording a planned mitigation below). Don't also add it to
+  `at-risk:` — a candidate is either the fix or exposed to the problem, not both at once.
+
+Archived entries are skipped for this check — that's the point of archiving; a new match against an
+archived theme is instead a **reactivation** trigger (see below), not a routine at-risk tag or a new
+planned mitigation.
+
+## Recording a planned mitigation (from `SKILL.md` Step 6)
+
+A `mitigated-by:` entry tagged `outcome: planned` was proposed at Step 2 specifically to fix an
+active risk, but hasn't shipped yet. When *that specific idea* is the one being recorded in Step 6,
+flip `outcome: planned → pending` on the risk entry (not a new tag — the same `mitigated-by: I<N>`
+reference, just its state advancing) — this is what starts the real wait/bulk outcome-check timing
+from the actual ship date, same as any other mitigation reaching `pending`. If the idea shipped in a
+substantially different shape than originally planned, or turned out not to actually address the
+risk, say so rather than mechanically flipping the state — that's a judgement call worth a word, not
+silent bookkeeping.
 
 ## Checking on mitigations
+
+A `planned` mitigation isn't eligible for any check-in yet — it hasn't shipped, so there's nothing
+to ask about (see Recording a planned mitigation above for how it becomes `pending`). Everything
+below applies from `pending` onward only.
 
 A `mitigated-by:` idea's `outcome:` follows the exact same eligibility/check-in machinery as
 `feedback.md`'s ship outcomes (`wait`/`bulk`/`batch` windows, drip/batched/continuous-drip/

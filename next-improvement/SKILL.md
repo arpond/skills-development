@@ -243,8 +243,10 @@ resolves correctly. Only mint fresh for an idea that's never been appended befor
 presenting it — read `RISK_REGISTER.md`'s active entries and check whether the candidate's
 category/theme matches one **or more** (check all active entries, not just until the first hit).
 If any match, say so when presenting it (see `risk-register.md`) rather than leaving the match
-implicit, and if the user accepts the idea, add its id to every matching risk area's `at-risk:`
-list in the same write.
+implicit, and ask whether the candidate is merely exposed to the risk or specifically meant to fix
+it — the answer decides whether it lands on that risk area's `at-risk:` list or its `mitigated-by:`
+list as a `planned` mitigation, not both (see `risk-register.md`'s Cross-referencing new ideas
+section). Either way, the write happens in the same write as appending the idea itself.
 
 **Check Rejected before proposing.** If a candidate closely resembles something already in
 Rejected, don't just skip it or blindly re-propose it — read the recorded reason and judge
@@ -318,7 +320,12 @@ swung the pick.
 **If `Risk register: on`, a candidate that mitigates an active risk is a distinct, stronger signal
 than synergy** — it's not "these two ideas help each other," it's "this specific candidate is what
 an already-persisted risk area names as its mitigation," which was itself already confirmed through
-its own gate when the risk entry was created. It still only breaks ties within a tier, never
+its own gate when the risk entry was created. This covers a candidate tagged `mitigated-by:
+... (outcome: planned)` (proposed at Step 2 specifically as the fix, not yet built) the same as one
+already shipped and proven `effective` — both are "this candidate is the named fix," just at
+different lifecycle stages; word the reasoning accordingly ("this is the planned fix for R3" vs.
+"this already proved effective against R3" if it's a repeat build). It still only breaks ties within
+a tier, never
 promotes across tiers, same as synergy — but when a risk-mitigation signal and a synergy signal
 disagree on the same close call, risk-mitigation wins (see `strategies.md`'s `category-rotation`
 precedence note, which covers all of tie-break rule / synergy / risk-mitigation / category-rotation
@@ -502,6 +509,12 @@ outstanding regardless of how it shipped. Then, separately: if this ship needed 
 `reworked:` tag of its own, that clean ship is itself counter-evidence against the risk (see
 `risk-register.md`'s archival trigger) — note it there rather than just silently removing the id
 and moving on.
+
+**Also check whether this ship's id is tagged `mitigated-by: ... (outcome: planned)` on any active
+risk entry** — a candidate proposed at Step 2 specifically as a risk's planned fix. If so, flip
+`planned → pending` there (see `risk-register.md`'s Recording a planned mitigation) — this is what
+starts the real outcome-check timing, distinct from the routine `fixes:`/`reworked:` handling above,
+which is about *unplanned* fixes discovered after the fact.
 
 **After appending, check whether Done needs trimming.** If the live tracker's Done section now
 holds more than ~20 entries, archive the oldest down to a working set of ~15 (a target, same

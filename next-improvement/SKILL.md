@@ -214,13 +214,18 @@ rather than inventing from nowhere:
 **Assign an id when a proposed idea is actually appended.** Not at brainstorm time — only once the
 user has confirmed it's going in (see the confirmation rule below), take the current `Next id:`
 value, write it onto the new entry, and bump the counter. Declined ideas that go to Rejected don't
-consume an id.
+consume an id — **unless the idea already has one**, e.g. it was outstanding, dropped to Rejected
+(a category retirement, or a plain decline of something already appended), and is now being
+proposed again: reuse its existing id rather than minting a new one for what's the same idea
+reappearing, so anything that referenced it by id (an `at-risk:` list, a `fixes:` link) still
+resolves correctly. Only mint fresh for an idea that's never been appended before.
 
 **If `Risk register: on`, cross-reference each candidate against active risk areas** before
 presenting it — read `RISK_REGISTER.md`'s active entries and check whether the candidate's
-category/theme matches one. If it does, say so when presenting it (see `risk-register.md`) rather
-than leaving the match implicit, and if the user accepts the idea, add its id to that risk area's
-`at-risk:` list in the same write.
+category/theme matches one **or more** (check all active entries, not just until the first hit).
+If any match, say so when presenting it (see `risk-register.md`) rather than leaving the match
+implicit, and if the user accepts the idea, add its id to every matching risk area's `at-risk:`
+list in the same write.
 
 **Check Rejected before proposing.** If a candidate closely resembles something already in
 Rejected, don't just skip it or blindly re-propose it — read the recorded reason and judge
@@ -287,13 +292,17 @@ nothing else here does by default), saying it implies it mattered when it didn't
 factor if it's tier fit, a genuine synergy (below), or an active strategy signal that actually
 swung the pick.
 
-**If `Risk register: on`, a candidate that mitigates an active risk is a distinct signal from
-synergy** — it's not "these two ideas help each other," it's "this specific candidate is what an
-already-persisted risk area names as its mitigation." Treat it the same weight class as synergy for
-tie-breaking (see `risk-register.md`), but keep the reasoning text distinct: "mitigates R3" is a
-different claim than "also lays groundwork for Y," and a candidate that's merely `at-risk:`-tagged
-(exposed to a risk, not building against it) is a caution flag, not a tie-break in its favour —
-don't conflate the three in Step 4's presentation.
+**If `Risk register: on`, a candidate that mitigates an active risk is a distinct, stronger signal
+than synergy** — it's not "these two ideas help each other," it's "this specific candidate is what
+an already-persisted risk area names as its mitigation," which was itself already confirmed through
+its own gate when the risk entry was created. It still only breaks ties within a tier, never
+promotes across tiers, same as synergy — but when a risk-mitigation signal and a synergy signal
+disagree on the same close call, risk-mitigation wins (see `strategies.md`'s `category-rotation`
+precedence note, which covers all of tie-break rule / synergy / risk-mitigation / category-rotation
+together). Keep the reasoning text distinct regardless: "mitigates R3" is a different claim than
+"also lays groundwork for Y," and a candidate that's merely `at-risk:`-tagged (exposed to a risk,
+not building against it) is a caution flag, not a tie-break in its favour — don't conflate the
+three in Step 4's presentation.
 
 **Synergies are a soft signal, judged fresh each run, not tracked data.** While ranking, notice if
 a candidate is a genuine stepping stone toward another outstanding candidate, would make one
@@ -343,12 +352,15 @@ is configurable (`max-options(N)`) — see `strategies.md`. If Step 3 noticed a 
 synergy with another outstanding candidate, mention it here too ("this also lays the groundwork
 for Y") — it's part of the reasoning, not a separate line item.
 
-**Flag risk-register signals explicitly, and don't conflate them.** If `Risk register: on` and the
-pick mitigates an active risk area, say so plainly ("this also mitigates R3 — <theme>"). If instead
-it's merely `at-risk:`-tagged (touches a category with an active risk but isn't building against
-it), flag that too but as a caution, not a point in its favour ("this touches R3's risk area —
-worth extra care on <what the risk actually is>"). These are two different claims; use the wording
-that matches which one actually applies — see `risk-register.md`.
+**Flag risk-register signals explicitly, and don't conflate them.** If `Risk register: on`, check
+**every candidate being presented this round** — not just the top pick, every numbered option in a
+multi-option list (close contenders, `spread(N)` tier picks, wildcard, quick-win alike) — against
+active risk areas. One that mitigates an active risk gets flagged plainly ("this also mitigates
+R3 — <theme>"). One that's merely `at-risk:`-tagged (touches a category with an active risk but
+isn't building against it) gets flagged too, but as a caution, not a point in its favour ("this
+touches R3's risk area — worth extra care on <what the risk actually is>"). These are two
+different claims; use the wording that matches which one actually applies for each candidate — see
+`risk-register.md`.
 
 If `Selection strategy:` is set to anything else, read `strategies.md` and build the
 presentation as it describes instead.

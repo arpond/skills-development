@@ -101,16 +101,20 @@ Each entry below covers what the mode means *and* what Step 4 does with it — o
   Done entries -> insufficient history, skip the bias), and says so ("Y also serves
   tier 1 equally well and its category hasn't shipped recently"). Only affects the base
   `top-tier`/`spread(N)` pick's own close-call, not each `spread(N)` tier independently; never
-  overrides a clear tier-1-vs-lower-tier win, only breaks ties. **Precedence**: three things can
+  overrides a clear tier-1-vs-lower-tier win, only breaks ties. **Precedence**: four things can
   all bear on the same within-tier close call — a tied-tier's stored tie-break rule (`SKILL.md`
-  Step 3), Step 3's synergy signal, and this mode — and they don't all carry equal weight. A
-  stored tie-break rule always wins when it applies: it's the user's explicit, deliberate call,
-  and both synergy and category-rotation are generic fallbacks that only kick in when no such rule
-  is in play. Between synergy and category-rotation, synergy wins when both apply to the same
-  close call and disagree: it's grounded in something concrete about the actual candidates (a
-  named shared file/module/step), where category-rotation is a content-blind diversity heuristic
-  — concrete beats generic, the same reasoning "concrete over vague" applies everywhere else in
-  this skill.
+  Step 3), Step 3's synergy signal, Step 3's risk-mitigation signal (`Risk register: on` — see
+  `risk-register.md`), and this mode — and they don't all carry equal weight. A stored tie-break
+  rule always wins when it applies: it's the user's explicit, deliberate call, and the other three
+  are fallbacks that only kick in when no such rule is in play. Next, a candidate that mitigates an
+  active risk beats both synergy and category-rotation: it's not just "these two ideas relate" or
+  "this category hasn't shipped lately," it's a previously-confirmed judgement (the risk entry
+  itself was proposed and accepted through its own confirm gate) that this specific problem needs
+  addressing — a stronger claim than either generic fallback. Between synergy and category-rotation,
+  synergy wins when both apply to the same close call and disagree: it's grounded in something
+  concrete about the actual candidates (a named shared file/module/step), where category-rotation
+  is a content-blind diversity heuristic — concrete beats generic, the same reasoning "concrete over
+  vague" applies everywhere else in this skill.
 
 ## Setup (from `setup.md`)
 

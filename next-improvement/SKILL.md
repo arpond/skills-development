@@ -156,6 +156,10 @@ Risk register: on              <!-- optional, see risk-register.md -->
   entry's `at-risk:` list) purely by id, and dropping it to Rejected doesn't retract that reference;
   if `Risk register: on`, also remove the id from any `at-risk:` list it appears on, same as any
   other idea leaving the outstanding pool (see Step 6's clean-ship handling for the parallel case).
+  **This applies to any outstanding idea dropped to Rejected, not just a category-retirement drop**
+  — including one tagged `mitigated-by: ... (outcome: planned)` on a risk entry (`risk-register.md`):
+  if the idea it names is dropped instead of shipped, remove that `mitigated-by:` tag too rather
+  than leaving a dangling reference to a fix that will never ship.
 - **Done** is append-only history, never deleted from. Prefix each entry with its origin
   category in parens — useful bookkeeping regardless of any optional subsystem; legacy entries
   without a tag just aren't counted by anything that relies on it, no migration needed.

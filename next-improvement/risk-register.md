@@ -115,15 +115,18 @@ doesn't care which trigger noticed it first:
 Before presenting a newly-proposed idea, check it against every **active** entry's category/theme.
 On a match, say so as part of presenting the idea (not a separate confirmation step) — e.g. "this
 also touches R1 — <theme> — past ships here needed 2 follow-up fixes, worth extra care on scope/
-tests upfront." Then ask one follow-up, distinct from the caution above: is this candidate merely
-*exposed* to the risk, or is it *meant to fix it*? That distinction decides which field it goes in:
+tests upfront." Then, **for each matching entry separately** (a candidate can match more than one —
+it may be the intended fix for one and merely exposed to another; don't ask one global question
+covering all matches at once), ask the exposed-vs-fix follow-up: is this candidate merely *exposed*
+to that risk, or *meant to fix it*? The answer decides which field it goes in, per entry:
 
 - **Exposed, not a fix** (the normal case): if the user accepts the idea, add its id to that
   entry's `at-risk:` list in the same write as appending the idea itself.
 - **Meant to fix it**: if the user accepts the idea, tag it `mitigated-by: I<N> (outcome: planned)`
-  on the risk entry instead — this is the idea's status *before* it's built, distinct from the
+  on that entry instead — this is the idea's status *before* it's built, distinct from the
   `pending` it gets once shipped (see Recording a planned mitigation below). Don't also add it to
-  `at-risk:` — a candidate is either the fix or exposed to the problem, not both at once.
+  the same entry's `at-risk:` — for *that entry* it's either the fix or exposed, not both (it can
+  still be `at-risk:` on a *different* matching entry).
 
 Archived entries are skipped for this check — that's the point of archiving; a new match against an
 archived theme is instead a **reactivation** trigger (see below), not a routine at-risk tag or a new
@@ -173,6 +176,13 @@ disclosure rather than a silently-dead feature.
 note above). On confirmation: flip `status: active → archived`, move the entry from `## Active` to
 `## Archived`, clear its `at-risk:` list (outstanding ideas stop being flagged against a resolved
 risk), and note the archival date and reason inline.
+
+**Don't archive while any `mitigated-by:` on that entry is still `outcome: planned`.** A fix is
+already in flight — archiving now would mean Step 6's flip-check (which only scans **active**
+entries for a matching `planned` tag) could never find it once it ships, leaving that mitigation
+permanently stuck. Wait for it to ship and reach a real outcome (or get dropped, see the note below)
+before considering archival, even if a separate, earlier `mitigated-by:` on the same entry already
+came back `effective`.
 
 **A clean ship of an `at-risk:`-tagged idea is counter-evidence too** (`SKILL.md` Step 6): if an
 idea on an active entry's `at-risk:` list ships with no `fixes:`/`reworked:` tag of its own, that's

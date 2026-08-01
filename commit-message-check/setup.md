@@ -41,21 +41,17 @@ something specific, not a vague gesture at "standard practice."
      always names the object of the verb (`Fix broken retry loop`, not bare `Fix`). Show this
      concretely, ask if it fits or if anything should change or be added (e.g. a language/spelling
      convention belongs under Whole-message instead, not here — see below).
-   - **Body.** Built-in default (kept deliberately light, to avoid biasing the user toward one
-     specific style): no body unless the subject genuinely can't carry the why; when present, no
-     structure imposed, each entry stating why rather than what/how. Show this concretely, ask if
-     it fits or if this user wants something else — always a body, never a body, a specific
-     template. Separately, ask what **format** the body should take when one is written — bulleted
-     list, free prose, a specific template — there's no built-in default here, since that's purely
-     a formatting preference. Also offer one optional, more rigorous technique
-     for checking a bullet actually holds to "why not what": the **strip-test** — delete every
-     proper noun/class/function/library/config-key name from a bullet, check what's left still
-     reads as a complete, standalone rationale, rewrite if not. This isn't a `SKILL.md` built-in —
-     it's a specific stylistic discipline, offered here as one option, not assumed. If the user
-     wants it, write the full procedure into `## Body` (not just "strip-test: on" — the conventions
-     file is the only place this technique's definition lives, so it needs to be spelled out in
-     full, same as any other rule under any other heading). If they don't, skip it — the light
-     default alone is a complete, valid choice.
+   - **Body — whether one's needed.** Built-in default: no body unless the subject genuinely can't
+     carry the why. Ask if that fits, or whether this user wants something else (always a body,
+     never a body, a specific template).
+   - **Body — format.** No built-in default (a formatting choice, not a git convention): bulleted
+     list, free prose, or something else? Ask directly.
+   - **Body — strip-test (optional).** Not a `SKILL.md` built-in, just an option to offer: delete
+     every proper noun/class/function/library/config-key name from a bullet, check what's left
+     still reads as a complete, standalone rationale, rewrite if not. If wanted, write the full
+     procedure into `## Body` — the conventions file is the only place this technique's definition
+     lives, so spell it out in full rather than "strip-test: on". If not wanted, skip it; the light
+     default above is already a complete, valid choice on its own.
    - **Footer.** No built-in default. Does this user want anything appended after the body —
      a required link (ticket, PR, doc), a co-author trailer policy, anything else that goes at the
      end? If no: record that explicitly rather than leaving it blank and ambiguous.

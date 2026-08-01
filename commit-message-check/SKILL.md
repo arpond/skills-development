@@ -17,15 +17,13 @@ kept in a conventions file this skill reads fresh every run and bootstraps on fi
 doesn't exist yet. That split is deliberate: this skill is the mechanical checklist, portable
 across users; the conventions file is one person's preferences, specific to them.
 
-**The checklist is organized around the structural parts of a commit message, not around a fixed
-list of named rules.** A commit message is made of a prefix (optional), a subject, a body
-(optional), and a footer (optional) — plus rules that apply across the whole message rather than
-to one part, and rules that don't cleanly attach to any single part. Each part gets exactly one
-kind of step: *iterate every rule the conventions file lists for this part, check the draft
-against each one individually.* That's the same mechanism reused six times, not six different
-mechanisms — so a brand new rule (a spelling/language convention, a required footer link, a rule
-that only makes sense when both subject and body are considered together) always has a home and
-always gets the same enforced check, without SKILL.md itself needing to change to accommodate it.
+**The checklist is organized around the structural parts of a commit message — Prefix, Subject,
+Body, Footer, Whole-message, Miscellaneous — matching the conventions file's six headings, not
+around a fixed list of named rules.** Every step below does exactly the same thing: *iterate every
+rule the conventions file lists under that heading, check the draft against each one
+individually.* Same mechanism, six times, not six bespoke ones — so a brand new rule always has a
+home and always gets checked, without SKILL.md needing to change to accommodate it. This is stated
+once, here; the steps below don't repeat it.
 
 One companion file:
 
@@ -42,15 +40,11 @@ machine or account).
   the user can edit it any time, and a stale mental copy defeats the point of keeping it external.
 - **Doesn't exist** → read `setup.md` and run the bootstrap interrogation before continuing.
   Don't improvise conventions from general commit-message knowledge or from this skill's own
-  worked examples — those illustrate the mechanism, they aren't a default ruleset. Every "safe
-  general default" referenced in Steps 2-6 below gets explicitly shown and confirmed during that
-  interrogation, not silently assumed — see `setup.md`. A default a user never saw isn't really a
-  default, it's undisclosed forced behavior.
+  worked examples — those illustrate the mechanism, they aren't a default ruleset. `setup.md`
+  covers why every built-in default below gets shown and confirmed there rather than assumed.
 
-The conventions file is organized under six headings, matching the parts below: `## Prefix`,
-`## Subject`, `## Body`, `## Footer`, `## Whole-message`, `## Miscellaneous`. Any heading can be
-empty or absent (e.g. most users have no `## Prefix` rules) — an empty/absent section means that
-step below has nothing to check, not that the step gets skipped without looking.
+Any of the six headings can be empty or absent (e.g. most users have no `## Prefix` rules) — that
+means the matching step has nothing to check, not that the step gets skipped without looking.
 
 ## Step 1 — Prefix
 
@@ -92,9 +86,8 @@ subject.
 First: does this commit even need a body? Check `## Body` for a stated policy; the built-in
 default is *no, unless the why genuinely isn't recoverable from the subject alone*.
 
-If a body is written, check it against every rule listed under `## Body`, individually — same as
-every other step, no special-cased technique hardcoded here. Built-in default (deliberately light
-— no format imposed, applies only to whatever isn't overridden):
+If a body is written, check it against every rule listed under `## Body`, individually. Built-in
+default (deliberately light — no format imposed, applies only to whatever isn't overridden):
 
 - Explain *why* the change happened, not what changed or how — the diff already shows the
   mechanism, so text that just narrates the diff isn't adding anything.
@@ -102,18 +95,14 @@ every other step, no special-cased technique hardcoded here. Built-in default (d
   a universal git convention, so it's asked at setup rather than assumed here.
 
 If `## Body` defines a specific technique for checking that (e.g. a strip-test — see `setup.md`
-for what that looks like, and `README.md` for a worked example), apply exactly what's written
-there, the same way Step 1 applies whatever prefix rule is written under `## Prefix`.
+and `README.md`), apply exactly what's written there.
 
 ## Step 4 — Footer
 
 Check for any rules under `## Footer` — trailers, required links, co-author lines, anything that
-goes after the body. This has no built-in default content (most users have none), but it always
-gets checked: if `## Footer` lists something (e.g. "append a link to the relevant ticket/PR"),
-apply it; if it's empty, there's no footer to add.
-
-Note the built-in AI-authorship scan (Step 5) also touches trailer-shaped text but is checked
-separately, since it applies regardless of whether this user has any footer rules of their own.
+goes after the body. No built-in default content (most users have none): if `## Footer` lists
+something (e.g. "append a link to the relevant ticket/PR"), apply it; if it's empty, there's no
+footer to add.
 
 ## Step 5 — Whole-message
 
@@ -130,12 +119,9 @@ commit:
 
 ## Step 6 — Miscellaneous
 
-Check every rule listed under `## Miscellaneous` — this is for rules that don't cleanly attach to
-one structural part (e.g. how revert messages should read, how a sequence of iteration commits on
-the same piece of work should relate to each other, a rule conditional on more than one part at
-once). This section exists because not every rule fits Steps 1-5 cleanly, not as a place rules go
-to avoid being checked — it gets the same individual, one-by-one check as every other section, not
-a skim.
+Check every rule listed under `## Miscellaneous` — rules that don't cleanly attach to one
+structural part (e.g. how revert messages should read, how iteration commits within one piece of
+work should relate to each other, a rule conditional on more than one part at once).
 
 ## Step 7 — Only now, show it or commit it
 

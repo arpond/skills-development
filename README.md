@@ -2,6 +2,48 @@
 
 A collection of custom skills for [Claude Code](https://claude.com/product/claude-code).
 
+## Skills
+
+- **[next-improvement](next-improvement/README.md)** — a repeatable "what should we work on
+  next" loop that maintains a per-project priority tracker, brainstorms and ranks ideas against
+  it, and proposes the next thing to build before ever planning or coding anything.
+- **[plan-technical-jira-ticket](plan-technical-jira-ticket/README.md)** — turns a single,
+  well-scoped technical Jira ticket into an implementation plan grounded in the actual
+  codebase(s) it touches, verifying the ticket's claims against real code before proposing a
+  plan for approval.
+- **[repo-knowledge](repo-knowledge/README.md)** — captures repo gotchas, root-causes, and
+  dependency/environment quirks into a per-project `KNOWLEDGE.md` at the moment they're
+  discovered, applies a capture bar to keep it noise-free, and runs an occasional review to
+  prune entries that have gone stale or never proved useful.
+- **[operational-requirements-audit](operational-requirements-audit/README.md)** — audits a repo
+  against Findmypast's Operational Requirements (bundled from Discourse, not re-derived from
+  memory) and produces a per-requirement Met/Partial/Not Met/N/A/Unverifiable report backed by
+  concrete evidence from the codebase.
+- **[commit-message-check](commit-message-check/README.md)** — a mandatory pre-commit gate that
+  re-reads the live commit-message conventions and walks a literal checklist (ticket prefix,
+  subject rules, whether a body is even needed, a strip-test on every bullet, an AI-reference
+  scan) before any commit message is shown or committed.
+- **[jira-ticket-audit](jira-ticket-audit/README.md)** — audits a single Jira ticket for
+  ambiguity, internal inconsistency, gaps, oversized scope, and missing links to sibling tickets
+  in its epic, producing per-dimension findings backed by evidence quoted from the ticket.
+
+## Installation
+
+Claude Code loads skills from `~/.claude/skills/<name>/` (user-level, available in every
+project) or `<project>/.claude/skills/<name>/` (project-level, that project only). To install
+a skill from this repo:
+
+1. Copy the skill's folder into one of those locations, e.g.:
+   ```
+   cp -r next-improvement ~/.claude/skills/next-improvement
+   ```
+2. That's it — no restart needed. Claude Code picks up skills from disk each time it looks for
+   one to trigger.
+
+To update an installed skill after pulling changes from this repo, repeat step 1 (overwrite the
+existing folder). Each skill's own `README.md` travels with it, so the usage docs and examples
+stay available even once it's installed elsewhere.
+
 ## Design philosophy
 
 Principles applied consistently across the skills in this repo:
@@ -29,7 +71,7 @@ Principles applied consistently across the skills in this repo:
   project changes. Rather than trusting a cached decision indefinitely, skills re-check it
   against current state — but the check itself should be cheap and only interrupt the user when
   there's real reason to think something's drifted, not on every run.
-- **Reasons over blacklists.** When something gets declined, record *why*, not just *that* it
+- **Reasons over blacklists.** When something gets declined, record _why_, not just _that_ it
   was declined. A flat suppression list risks permanently hiding something that was only
   rejected for timing, not substance — the reason is what lets a future judgement call be made
   correctly.
@@ -80,7 +122,7 @@ Principles applied consistently across the skills in this repo:
   per "unreachable isn't resolved") don't need the same billing; conflating the two either buries
   a real blocker behind a wall of caveats or overstates how fragile the skill actually is.
 - **Moving content means re-pointing every reference to it, not just the file it moved from/to.**
-  Progressive disclosure says *where* something should live; it doesn't guarantee every other file
+  Progressive disclosure says _where_ something should live; it doesn't guarantee every other file
   gets updated when it moves. A companion file can cross-reference another step/section by name
   without either file being touched in the edit that relocates it — that reference goes stale
   silently. Grep the whole skill for the old location whenever content is split out or merged, and
@@ -90,7 +132,7 @@ Principles applied consistently across the skills in this repo:
   keep it in sync. Stored state (a tracker annotation, a cached judgement) needs its own
   staleness-handling the moment it's written — an idea gets reworded, merged, or shipped, and
   whatever referenced it by name is now wrong. This is distinct from "re-ground, don't cache" (which
-  is about re-checking a stored judgement before trusting it): this is about *not storing* the
+  is about re-checking a stored judgement before trusting it): this is about _not storing_ the
   judgement in the first place when recomputing it each time costs little and the value doesn't
   come from accumulating across runs.
 - **Reuse a judgment test, don't invent a parallel one.** When a skill needs to classify or filter
@@ -100,45 +142,3 @@ Principles applied consistently across the skills in this repo:
   drafting a new one. A second, slightly-different test for what is structurally the same judgment
   call is harder to keep consistent than one test applied twice, and the two versions will
   eventually drift from each other as one gets refined and the other doesn't.
-
-## Installation
-
-Claude Code loads skills from `~/.claude/skills/<name>/` (user-level, available in every
-project) or `<project>/.claude/skills/<name>/` (project-level, that project only). To install
-a skill from this repo:
-
-1. Copy the skill's folder into one of those locations, e.g.:
-   ```
-   cp -r next-improvement ~/.claude/skills/next-improvement
-   ```
-2. That's it — no restart needed. Claude Code picks up skills from disk each time it looks for
-   one to trigger.
-
-To update an installed skill after pulling changes from this repo, repeat step 1 (overwrite the
-existing folder). Each skill's own `README.md` travels with it, so the usage docs and examples
-stay available even once it's installed elsewhere.
-
-## Skills
-
-- **[next-improvement](next-improvement/README.md)** — a repeatable "what should we work on
-  next" loop that maintains a per-project priority tracker, brainstorms and ranks ideas against
-  it, and proposes the next thing to build before ever planning or coding anything.
-- **[plan-technical-jira-ticket](plan-technical-jira-ticket/README.md)** — turns a single,
-  well-scoped technical Jira ticket into an implementation plan grounded in the actual
-  codebase(s) it touches, verifying the ticket's claims against real code before proposing a
-  plan for approval.
-- **[repo-knowledge](repo-knowledge/README.md)** — captures repo gotchas, root-causes, and
-  dependency/environment quirks into a per-project `KNOWLEDGE.md` at the moment they're
-  discovered, applies a capture bar to keep it noise-free, and runs an occasional review to
-  prune entries that have gone stale or never proved useful.
-- **[operational-requirements-audit](operational-requirements-audit/README.md)** — audits a repo
-  against Findmypast's Operational Requirements (bundled from Discourse, not re-derived from
-  memory) and produces a per-requirement Met/Partial/Not Met/N/A/Unverifiable report backed by
-  concrete evidence from the codebase.
-- **[commit-message-check](commit-message-check/README.md)** — a mandatory pre-commit gate that
-  re-reads the live commit-message conventions and walks a literal checklist (ticket prefix,
-  subject rules, whether a body is even needed, a strip-test on every bullet, an AI-reference
-  scan) before any commit message is shown or committed.
-- **[jira-ticket-audit](jira-ticket-audit/README.md)** — audits a single Jira ticket for
-  ambiguity, internal inconsistency, gaps, oversized scope, and missing links to sibling tickets
-  in its epic, producing per-dimension findings backed by evidence quoted from the ticket.

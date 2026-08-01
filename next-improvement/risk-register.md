@@ -110,6 +110,24 @@ doesn't care which trigger noticed it first:
 5. **Ad hoc, any time** — the user names a risk directly ("flag X as a risk area"), same as Goals'
    "reprioritise" jump (`session-start.md` Step 0.5) — no need to wait for a mechanical trigger.
 
+### A mitigation needing its own fix
+
+Distinct from trigger 1's ordinary same-category evidence: if the id getting a `fixes:`/
+`reworked:` link (`SKILL.md` Step 6) is itself tagged `mitigated-by:` on some risk entry — the
+thing that was supposed to fix that risk just needed fixing itself — that's not just another data
+point toward a *new* pattern, it's direct evidence the *existing* mitigation didn't hold. Handle it
+as its own case, not folded into trigger 1's generic "2nd+ link" counting:
+
+- If that `mitigated-by:` was `effective` or `partial`, propose downgrading it — to `partial` or
+  `ineffective` respectively — rather than leaving the old rating standing next to contradicting
+  evidence. This is a reassessment, same confirm-before-write gate as any other risk-register
+  change, not a silent overwrite.
+- If the risk entry had already been archived on the strength of that mitigation, this is also a
+  **reactivation** trigger (see Archival and reactivation below) — the evidence that justified
+  archiving it just got contradicted.
+- If it was still `pending`, this is simply strong early signal for however that check-in eventually
+  resolves — mention it when the outcome check finally happens rather than pre-deciding the answer.
+
 ## Cross-referencing new ideas (from `SKILL.md` Step 2)
 
 Before presenting a newly-proposed idea, check it against every **active** entry's category/theme.

@@ -502,6 +502,11 @@ If confirmed:
   lightweight one-off surfacing, no persistent answer required).
 - If `Risk register: on`, this link is also one of `risk-register.md`'s creation/update triggers —
   follow it there (propose creating or extending a risk area, confirm before writing).
+- **If `Risk register: on`, also check whether the origin's id is itself a `mitigated-by:` entry
+  on any risk area** — i.e., the thing that was supposed to *fix* a risk just needed fixing itself.
+  This is stronger, more specific evidence than an ordinary same-category `fixes:` link (trigger 1)
+  — see `risk-register.md`'s "A mitigation needing its own fix" note for how it's surfaced and
+  what it does to that mitigation's `outcome:`.
 
 If the user says this ship is *not* a fix/rework of anything, or the auto-detect had nothing
 plausible, record the ship normally with no `fixes:`/`reworked:` tag — don't force a link that

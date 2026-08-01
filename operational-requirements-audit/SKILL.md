@@ -37,18 +37,23 @@ with the rest, and don't force a written report file for a single quick question
 If the repo is a monorepo holding several independently-deployed services (common in Findmypast
 repos — check for multiple deployment manifests, separate `Dockerfile`s, or a services/apps-style
 top-level layout), ORs apply per-service, not per-repo: a top-tier-only OR like database failover
-might apply to one service and not another in the same checkout. Ask which service(s) are in scope
-rather than guessing or silently auditing everything as one blob — fold this into the same
-scope question as full-vs-subset above, one check-in rather than two. Whatever's chosen, the
+might apply to one service and not another in the same checkout. List the discovered services as
+a numbered choice and ask which are in scope, rather than guessing or silently auditing everything
+as one blob — fold this into the same scope question as full-vs-subset above, one check-in rather
+than two. Whatever's chosen, the
 eventual report (if one is written) lands at that scope's own root — the repo root for a
 whole-repo/single-service repo, or the specific service's subdirectory when scoped to one service
 within a monorepo.
 
-**Check for a prior audit first.** If a report from an earlier run already exists at that location,
-treat its verdicts as a starting hypothesis, not a rubber stamp — cheaply re-check whether each
-cited evidence path still exists and still says what it did, the same "mechanical check" discipline
-as re-grounding any stored judgement. Verdicts whose evidence still holds can be carried forward
-without re-deriving them from scratch; anything whose evidence has moved, changed, or disappeared
+**Check for a prior audit first.** If a report from an earlier run already exists at that location
+but doesn't match the per-OR table structure in Step 4 (hand-edited, partial, an older format) —
+a different failure mode from "no prior report" — don't feed it into the re-verify step as if it
+were valid: say what was found and ask whether to re-derive from scratch or attempt to re-verify
+it anyway. Otherwise, treat its verdicts as a starting hypothesis, not a rubber stamp — cheaply
+re-check whether each cited evidence path still exists and still says what it did, the same
+"mechanical check" discipline as re-grounding any stored judgement. Verdicts whose evidence still
+holds can be carried forward without re-deriving them from scratch; anything whose evidence has
+moved, changed, or disappeared
 needs a fresh look. This keeps repeat audits fast and consistent instead of silently drifting from
 run to run — but only applies when a prior report is actually found; don't go looking for one that
 isn't there, and always do a full fresh investigation if the user explicitly asks for one.

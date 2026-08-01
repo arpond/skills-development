@@ -38,9 +38,11 @@ Done entries extend the base format (see `SKILL.md`) with a ship date and an `ou
 
 ## Setup (from `setup.md`)
 
-Ask one short yes/no: want the skill to occasionally check back on how shipped work actually
-landed (delivered / mixed / missed)? Default `Feedback: on` if they don't care — it's capped and
-skippable per the mechanics below, so opting in is low-risk.
+Ask one short yes/no: want the skill to check back on how shipped work actually landed (delivered
+/ mixed / missed) — at most once per session, starting 7 days after an item ships, and offered as
+a single bulk prompt once 5 are eligible at once rather than asked one at a time? Default
+`Feedback: on(wait=7, bulk=5)` if they don't care — both numbers are changeable later without
+re-running setup, and it's capped and skippable per the mechanics below, so opting in is low-risk.
 
 ## Recording a ship (from `SKILL.md` Step 6)
 

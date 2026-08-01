@@ -42,9 +42,9 @@ If the Jira MCP tools aren't available or auth fails, say so plainly rather than
 ticket contents from the key alone — point at whatever MCP setup docs exist in this environment
 (e.g. an `atlassian-mcp` skill), the same as `plan-technical-jira-ticket` does.
 
-If the ticket turns out to be an epic itself rather than a single ticket, say so and ask whether
-the user wants this audit run per-child-ticket, or wants a different kind of epic-level review —
-this skill is built around auditing one ticket's own writing, not an epic's overall shape.
+If the ticket turns out to be an epic itself rather than a single ticket, say so and ask which the
+user wants: 1) run this audit per-child-ticket, or 2) a different kind of epic-level review — this
+skill is built around auditing one ticket's own writing, not an epic's overall shape.
 
 ## Step 2: Gather context
 
@@ -66,10 +66,13 @@ Pull everything that bears on whether the ticket, as written, is fit to hand to 
 "should this pass UAT?" flag, sad-path scenarios) at different points in their own refinement
 workflow — a field left blank isn't a gap if the ticket hasn't reached the stage where that field
 is normally decided. Look up the ticket's project key (the prefix before the dash, e.g. `SD` in
-`SD-4582`) in `references/stage-expectations.md`. If an entry exists **and** one of its signals
-matches the ticket's current status/label, use it to judge whether an unresolved process
-placeholder is expected at this point or is a genuine gap (see the Gaps subsection in Step 3 for
-how this is applied).
+`SD-4582`) in `references/stage-expectations.md`. If the file doesn't parse into per-project
+entries at all (corrupted, hand-edited into an unrecognizable shape), that's distinct from "no
+entry for this key" — don't silently reinterpret or skip past it: say what was found and ask
+whether to fix it up, or proceed for this audit only with "stage unknown" as if no file existed.
+If it parses and an entry exists **and** one of its signals matches the ticket's current
+status/label, use it to judge whether an unresolved process placeholder is expected at this point
+or is a genuine gap (see the Gaps subsection in Step 3 for how this is applied).
 
 If no entry exists for this project key, **or** an entry exists but none of its signals match the
 ticket's current status/label (the team's workflow may have changed since the entry was recorded),
@@ -199,24 +202,28 @@ Step 2) rather than folding it into either the "no epic" or "linked correctly" v
 **Check for a prior audit of this ticket first, in both places it could live.** A previous run of
 this skill might have written a local `TICKET-AUDIT-<KEY>.md` in whatever directory it was run
 from, or posted its report as a Jira comment on the ticket (comments already fetched in Step 2 —
-look for one labeled as an AI-drafted ticket audit). If either turns up, treat its verdicts as a
-starting hypothesis, not a rubber stamp or something to re-derive from scratch: cheaply re-check
-whether each cited piece of ticket evidence still reads the way it did (the ticket may have been
-edited, commented on, or re-linked since) rather than assuming it's still accurate just because it
-was true once. Findings whose evidence still holds carry forward without redoing the analysis;
-anything whose cited text has changed, or whose verdict a new comment/edit now contradicts, gets a
-fresh look. Skip this whenever neither turns up — don't go looking for what isn't there.
+look for one labeled as an AI-drafted ticket audit). If either turns up but doesn't match the
+report structure below (hand-edited, partial, a different/older format) — a different failure mode
+from "not found" — don't feed it into the re-verify step as if it were well-formed: say what was
+found and ask whether to re-derive from scratch or attempt to re-verify it anyway. Otherwise, treat
+its verdicts as a starting hypothesis, not a rubber stamp or something to re-derive from scratch:
+cheaply re-check whether each cited piece of ticket evidence still reads the way it did (the ticket
+may have been edited, commented on, or re-linked since) rather than assuming it's still accurate
+just because it was true once. Findings whose evidence still holds carry forward without redoing
+the analysis; anything whose cited text has changed, or whose verdict a new comment/edit now
+contradicts, gets a fresh look. Skip this whenever neither turns up — don't go looking for what
+isn't there.
 
 **A single ticket audit doesn't need a written report by default.** Answer conversationally: one
 verdict per dimension (including explicit "no issues found" ones), each finding backed by its
 cite. Offer to write a persistent report if the user wants one, but don't create one unasked.
 
 If the user asks for a written report, or is auditing several tickets in one pass, show the
-summary in conversation first and ask where they want it — a local file, a Jira comment, or both —
-rather than assuming a default; there's no natural anchor (like a repo root) for a report about a
-ticket rather than code. Wait for confirmation on both the destination and the content before
-writing anything: verdicts are judgment calls the user should get a chance to push back on before
-they're committed anywhere durable. If a same-named local file or an existing audit comment is
+summary in conversation first and ask where they want it as a numbered choice: 1) a local file,
+2) a Jira comment, or 3) both — rather than assuming a default; there's no natural anchor (like a
+repo root) for a report about a ticket rather than code. Wait for confirmation on both the
+destination and the content before writing anything: verdicts are judgment calls the user should
+get a chance to push back on before they're committed anywhere durable. If a same-named local file or an existing audit comment is
 already there at the chosen destination, say so explicitly in that same message rather than
 silently overwriting or duplicating it.
 

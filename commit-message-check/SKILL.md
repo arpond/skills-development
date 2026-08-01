@@ -29,9 +29,19 @@ once, here; the steps below don't repeat it.
 a rule against a built-in default — that's the same third state Step 1 already handles for an
 unclear prefix: not a coin flip. Don't silently pick whichever rule is more specific, more recent,
 or easier to satisfy. Stop, show the user the specific conflict (both rules, quoted), and ask.
-Whatever they say resolves it going forward is a conventions-file edit, confirmed the same way as
-any other (see Step 7) — not a one-off judgment call repeated silently on every future commit that
-hits the same conflict.
+Whatever they say resolves it going forward is a conventions-file edit — write gate 2 below — not
+a one-off judgment call repeated silently on every future commit that hits the same conflict.
+
+This skill has more than one point where it writes something consequential; per this repo's
+"propose, don't just do," each is gated on user confirmation and none skips it:
+
+| # | What gets written | Gated where |
+|---|---|---|
+| 1 | The conventions file itself, at bootstrap | `setup.md` steps 2-4 |
+| 2 | A correction to an existing conventions file (conflict resolution, or a rule the user says is wrong/stale) | Step 7 |
+| 3 | The commit message itself (shown or passed to `git commit`) | Step 7 |
+
+Update this table in the same edit that adds or moves a write gate.
 
 One companion file:
 
@@ -63,9 +73,9 @@ bootstrapped file ends up (repo-level or personal).
 
 **If a file exists but doesn't parse** — none of the six headings present, or content that doesn't
 resemble this structure at all — don't silently reinterpret it, discard it, or fall back to
-bootstrapping over it. Show the user what was found and ask whether it should be fixed up into the
-expected format, replaced via `setup.md`, or left as-is with a one-off manual read for this commit
-only.
+bootstrapping over it. Show the user what was found and ask them to pick, as a numbered choice:
+1) fix it up into the expected format, 2) replace it via `setup.md`, or 3) leave it as-is with a
+one-off manual read for this commit only.
 
 ## Step 1 — Prefix
 
@@ -151,7 +161,7 @@ walked through for *this* draft — not carried over from an earlier draft in th
 If the user pushes back on something you show them, that means the checklist was skipped or
 rushed: go back to Step 1 on the corrected version rather than only patching the specific
 complaint they happened to notice. If the pushback reveals a conventions file rule itself is wrong
-or out of date, that's a separate, explicit edit — confirm the change with the user before writing
-it, same as any other update to their stored preferences. With two possible files, also confirm
+or out of date, that's a separate, explicit edit — write gate 2 in the table above — confirm the
+change with the user before writing it. With two possible files, also confirm
 *which one*: a wrong team standard belongs in the repo-level file, a wrong personal preference in
 the personal one — don't assume based on which file happened to already define that heading.

@@ -66,8 +66,9 @@ something specific, not a vague gesture at "standard practice."
    - **Body — whether one's needed.** Built-in default: no body unless the subject genuinely can't
      carry the why. Ask if that fits, or whether this user wants something else (always a body,
      never a body, a specific template).
-   - **Body — format.** No built-in default (a formatting choice, not a git convention): bulleted
-     list, free prose, or something else? Ask directly.
+   - **Body — format.** No built-in default (a formatting choice, not a git convention): ask which
+     of 1) bulleted list, 2) free prose, or 3) something else (name it) — as a numbered choice, not
+     a prose "or" list.
    - **Body — strip-test (optional).** Not a `SKILL.md` built-in, just an option to offer: delete
      every proper noun/class/function/library/config-key name from a bullet, check what's left
      still reads as a complete, standalone rationale, rewrite if not. If wanted, write the full
@@ -79,9 +80,9 @@ something specific, not a vague gesture at "standard practice."
      end? If no: record that explicitly rather than leaving it blank and ambiguous.
    - **Whole-message.** Built-in default: always scan the finished message for `Claude`,
      `Anthropic`, `Generated with`, any AI-naming `Co-Authored-By`, `Claude-Session`, or similar,
-     and strip it. Show this list, ask if it should stay as-is, whether anything should be
-     added/removed, or whether this user actually wants an AI-attribution trailer included by
-     default (rare, but don't assume against it). Also ask here about anything that applies
+     and strip it. Show this list as a numbered choice: 1) stay as-is, 2) add/remove specific items
+     (name them), 3) this user actually wants an AI-attribution trailer included by default (rare,
+     but don't assume against it). Also ask here about anything that applies
      uniformly across the whole message rather than to one part — a language/spelling variant
      (e.g. British vs. American English), a tone rule, capitalization conventions that apply
      beyond just the subject.

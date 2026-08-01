@@ -32,7 +32,11 @@ docs, contributing guides):
 Fold all of the following into a single message rather than asking in stages — this is one of the
 skill's hard rules (see the table in `SKILL.md`):
 - Propose creating `KNOWLEDGE.md`, with a one-line explanation of what it's for (a place for repo
-  gotchas/quirks/root-causes that cost real time to discover and aren't recorded anywhere else).
+  gotchas/quirks/root-causes that cost real time to discover and aren't recorded anywhere else),
+  and mention that it'll periodically prompt a "judgment-drift review" on its own — roughly every
+  60-90 days, or sooner if entries have piled up — to prune stale entries (see
+  `session-start.md`), so accepting the default means agreeing to that occasional check-in, not
+  just to the file existing.
 - If the project has a `CLAUDE.md`, propose adding a single pointer line to it (e.g. "See
   KNOWLEDGE.md for known repo gotchas and quirks") — keeps the two files DRY without duplicating
   content.
@@ -51,6 +55,11 @@ actually declined, see `SKILL.md` Step 2); add the CLAUDE.md pointer if confirme
 duplicate) each confirmed migration candidate into `KNOWLEDGE.md` as a proper entry, filling in
 Evidence from what's described and noting `Captured: <today> — migrated from <source file>` (the
 original discovery date isn't recoverable, so don't guess one), removing it from the source file.
+
+**Check it's actually tracked.** The skill's "no archive needed, git history covers it" design
+(see `SKILL.md`) only holds if `KNOWLEDGE.md` is actually committed, not gitignored or left
+untracked. Right after creating it, check (`git status` on the path) that it isn't ignored; if it
+is, say so and suggest committing it — a one-time check here, not repeated on later runs.
 
 If the user names another location in answer to the open-ended question, check it with the same
 classification test and propose whatever turns up as its own follow-up confirmation — this is new

@@ -66,7 +66,10 @@ description if they don't have the key handy ("that ticket about the export timi
 Pull the ticket's summary, description, acceptance criteria, comments (they often carry
 clarifications the description doesn't), and linked issues.
 
-Then work through the checks that decide whether — and how — it's sensible to plan this at all:
+Then work through the checks that decide whether — and how — it's sensible to plan this at all.
+Run all of them before asking anything: if more than one fires on the same ticket (e.g. it's both
+blocked and an epic), fold them into one message per this repo's "one check-in, not two" rather
+than stopping the user once per check:
 
 - **Status and assignee**: check these while you're already looking at the ticket, since it costs
   nothing extra. If it's already Done (or otherwise resolved), or it's In Progress and assigned to
@@ -82,8 +85,8 @@ Then work through the checks that decide whether — and how — it's sensible t
   unreadable blocker as either resolved or unresolved by default. Softer links — "relates to",
   remote links, attachments, a parent epic — are context rather than a gate; see Step 2 for those.
 - **Ticket type** — three shapes need different handling from a routine technical ticket:
-  - **An epic** (bundles many independent pieces of work rather than one change): say so, and
-    check whether the user wants a single-ticket plan for one piece of it, or a broader epic
+  - **An epic** (bundles many independent pieces of work rather than one change): say so, and ask
+    which the user wants: 1) a single-ticket plan for one piece of it, or 2) a broader epic
     breakdown — this skill only does the former.
   - **A bug report** (describes something behaving incorrectly and asks for it to be fixed,
     rather than describing a known change to make): say so rather than planning it as though the
@@ -96,10 +99,10 @@ Then work through the checks that decide whether — and how — it's sensible t
     integrations or systems — a new UI plus a new API plus a third-party service, work a product
     manager scoped rather than an engineer): say so rather than planning it as though it were
     routine technical work. This skill hasn't been built out for scoping a multi-integration
-    feature well. Ask how the user wants to proceed: narrow the ask to one technical slice, use a
-    different process for the broader work, or explicitly confirm they want the full plan anyway
-    with that caveat. A feature-scale plan presented as if it were a routine technical one is the
-    kind of plan that looks confident but misses the complexity the ticket actually has.
+    feature well. Ask how the user wants to proceed: 1) narrow the ask to one technical slice,
+    2) use a different process for the broader work, or 3) explicitly confirm they want the full
+    plan anyway with that caveat. A feature-scale plan presented as if it were a routine technical
+    one is the kind of plan that looks confident but misses the complexity the ticket actually has.
 
 ## Step 2: Gather full context
 
@@ -271,10 +274,10 @@ spanning several files. Don't pad exploration to look thorough if the change is 
 touching far more files than the ticket implied, cascading into other repos or services, or
 effectively turning into a multi-integration feature — treat that the way Step 1 treats a ticket
 that already read as feature-scale from the text. Stop before drafting the plan, say what you're
-finding, and ask the user how to proceed: narrow to one slice, escalate to a broader process, or
-confirm the full scope is still wanted. The codebase is the more reliable source once you've
-actually looked, so don't keep treating this as routine technical work under a banner that no
-longer fits.
+finding, and ask the user how to proceed: 1) narrow to one slice, 2) escalate to a broader
+process, or 3) confirm the full scope is still wanted. The codebase is the more reliable source
+once you've actually looked, so don't keep treating this as routine technical work under a banner
+that no longer fits.
 
 ## Step 6: Write the plan, then wait
 

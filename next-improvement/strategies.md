@@ -144,7 +144,8 @@ satisfies it:
 > - `spread(N)` — show the top pick from each of the top N tiers instead of just one (default 3)
 > - `wildcard` — add one extra pick outside the ranking (rotates through oldest / random / low-tier)
 > - `quick-win` — add the cheapest outstanding candidate regardless of tier
-> - `category-rotation` — break close ties in favour of a category that hasn't shipped recently
+> - `category-rotation` — break close ties in favour of a category that hasn't shipped in the last
+>   5 Done entries (`category-rotation(window=N)` to change that number)
 > - `max-options(N)` — cap how many of the base mode's own picks are shown (default 4)
 >
 > These combine, e.g. `spread(3) + wildcard(rotate) + quick-win`. Happy with the default

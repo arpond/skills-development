@@ -40,19 +40,20 @@ something specific, not a vague gesture at "standard practice."
    skill's part-based structure won't already be organized that way, and won't already cover parts
    (like Footer) it never had reason to mention.
 
-2. **Ask where this should live.** Personal (`~/.claude/commit-message-conventions.md` —
-   applies for this user across every repo) or repo-level (`.claude/commit-message-conventions.md`
-   at the current repo's root — a team's shared, committed convention, applying to anyone who
-   works in this repo, not just this user). If the repo is clearly shared with a team, or the
-   conventions being set look like a team standard rather than personal taste, say so and suggest
-   repo-level rather than defaulting to personal without asking. Either file can exist alongside
-   the other — Step 0 in `SKILL.md` merges them per heading — so this is "which file gets this
-   content," not an exclusive choice for the whole setup. If a repo-level file is chosen, mention
-   it needs to actually be committed for the "shared" part to mean anything.
+2. **Show the full set of parts in one message, defaults included, then ask** — including where
+   the file should live. Per this project's "one check-in, not two": one combined message, not a
+   volley of separate questions, and that includes the location question below, not just the six
+   parts:
 
-3. **Show the full set of parts in one message, defaults included, then ask.** Per this project's
-   "one check-in, not two" — one combined message covering all of the below, not a volley of
-   separate questions:
+   - **Location.** Present as two numbered options: 1) personal
+     (`~/.claude/commit-message-conventions.md` — applies for this user across every repo), 2)
+     repo-level (`.claude/commit-message-conventions.md` at the current repo's root — a team's
+     shared, committed convention, applying to anyone who works in this repo). If the repo is
+     clearly shared with a team, or the conventions look like a team standard rather than personal
+     taste, say so and suggest repo-level rather than defaulting to personal without asking. Either
+     file can exist alongside the other — `SKILL.md`'s Step 0 merges them per heading — so this is
+     "which file gets this content," not an exclusive choice. If repo-level is chosen, mention it
+     needs to actually be committed for "shared" to mean anything.
 
    - **Prefix.** No built-in default (most users don't use one). Does this user's work involve
      ticket keys (Jira, Linear, GitHub issues) that should prefix commit subjects? If yes: what
@@ -94,7 +95,7 @@ something specific, not a vague gesture at "standard practice."
      a mandatory checklist item — but whatever does go here still gets checked every run (see
      `SKILL.md` Step 6), it is not a lower-priority bucket.
 
-4. **Write the file** at whichever path Step 2 settled on, under the six headings, with
+3. **Write the file** at whichever path the location question settled on, under the six headings, with
    the confirmed value for *every* part above — including the ones where the answer was "yes,
    keep the default." Write out what the default concretely does, don't just write "(default)" as
    a placeholder that points back at `SKILL.md` — that file may change later, and the conventions
@@ -125,6 +126,6 @@ something specific, not a vague gesture at "standard practice."
    <anything else volunteered, or omit the heading entirely if nothing was volunteered>
    ```
 
-5. Confirm the written file with the user before moving on to actually checking a commit message
+4. Confirm the written file with the user before moving on to actually checking a commit message
    — this is a stored preference file the skill will keep trusting on every future run, so it's
    worth getting right the first time rather than silently guessing and correcting later.

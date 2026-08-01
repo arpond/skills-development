@@ -46,7 +46,7 @@ executed:
 You: Create a commit.
 
 Claude: [invokes commit-message-check]
-        Re-read commit-message-conventions.md. This repo has SD-#### tickets in
+        Re-read the commit conventions in CLAUDE.md. This repo has SD-#### tickets in
         its history but none for this change, and it's a small, scoped fix, so
         the ticket key is SD-000.
 

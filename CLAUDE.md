@@ -23,10 +23,12 @@ If the user says yes, run these four checks in order, on whatever was just chang
 3. **Gaps.** Functional/logical holes, not wording — contradictory inputs, malformed stored state,
    ambiguous write targets when more than one file/location can hold state, claims about external
    facts (committed, installed, reachable) that are asserted but never checked, third states
-   collapsed into a binary. Distinct from pass 1: philosophy violations are "breaks a stated rule,"
-   gaps are "no rule covers this yet." On `DESIGN_PHILOSOPHY.md` itself, a gap looks like a
-   principle with no worked example, an ambiguous cross-reference, or two bullets that quietly
-   contradict each other.
+   collapsed into a binary, and whether the skill now covers more than one orthogonal capability
+   (different trigger, audience, or write target) that grew in gradually and was never deliberately
+   split (see `DESIGN_PHILOSOPHY.md`'s "Split along orthogonal triggers, not around size"). Distinct
+   from pass 1: philosophy violations are "breaks a stated rule," gaps are "no rule covers this
+   yet." On `DESIGN_PHILOSOPHY.md` itself, a gap looks like a principle with no worked example, an
+   ambiguous cross-reference, or two bullets that quietly contradict each other.
 4. **Philosophy additions.** Given what passes 1-3 turned up, is there a new pattern here that
    would generalize to other skills in this repo, not just this one? If yes, propose it as a new
    `DESIGN_PHILOSOPHY.md` bullet before writing it — same "propose, don't just do" gate as any

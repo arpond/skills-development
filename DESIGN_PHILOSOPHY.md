@@ -21,6 +21,7 @@ address rather than a flat unstructured list.
 - [Structure & reuse](#structure--reuse)
   - [Reuse a judgment test, don't invent a parallel one](#reuse-a-judgment-test-dont-invent-a-parallel-one)
   - [Structure around the domain's natural shape](#structure-around-the-domains-natural-shape)
+  - [Split along orthogonal triggers, not around size](#split-along-orthogonal-triggers-not-around-size)
   - [Concrete over vague](#concrete-over-vague)
   - [Ask when genuinely ambiguous, don't silently resolve](#ask-when-genuinely-ambiguous-dont-silently-resolve)
 - [Docs, portability & configuration](#docs-portability--configuration)
@@ -151,6 +152,21 @@ the domain's actual shape instead (the parts a thing is made of, the stages a pr
 through), with one genuinely-enforced miscellaneous bucket for whatever still doesn't fit. A
 miscellaneous bucket only satisfies this if it gets the same enforced check as every other part;
 otherwise it's just where rules go to be silently skipped.
+
+### Split along orthogonal triggers, not around size
+
+Before building a new skill, check whether it's actually one capability or several — different
+trigger conditions, different audiences, different write targets are the signal, not word count.
+If orthogonal, build separate skills and cross-reference each explicitly in its own description
+(which one handles what, where the handoff is) — as `jira-ticket-audit`/`plan-technical-jira-ticket`
+already do — rather than one skill with internal branching for unrelated use cases. The same
+question applies retrospectively, not just at birth: a skill that grew one feature at a time can
+drift into covering 2+ orthogonal triggers without anyone deciding that on purpose — the repo's
+review loop (see `CLAUDE.md`, check 3) treats "does this skill now cover more than one orthogonal
+capability" as one of the things a Gaps pass looks for, not something judged once and forgotten.
+The reverse mistake is splitting prematurely: steps that always fire together and share all state
+aren't separate capabilities, they're one skill's internal structure — that's what
+[progressive disclosure](#progressive-disclosure) (a companion file) is for, not a second skill.
 
 ### Concrete over vague
 

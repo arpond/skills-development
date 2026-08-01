@@ -68,9 +68,14 @@ OR "generally" says, since requirements get refined over time and the specific p
 "only *if* your service uses a database", "*if* top-tier service") drives whether something is
 even applicable.
 
-The file also carries its own extraction date implicitly via git history — if the audit surfaces
-something that looks out of date relative to what you know of current Findmypast practice, say so
-rather than silently trusting the bundled text; see "Keeping the ORs current" below.
+**Check the file's actual age before relying on it** — don't lean on "if it looks out of date" as
+the only signal, that's a soft heuristic easy to skip past. Run `git log -1 --format=%ai --
+references/operational-requirements.md` (from this skill's own install directory) once per audit;
+if it's been more than ~12 months since the last extraction, say so explicitly alongside the
+report as a caveat on every verdict, rather than silently trusting text that's plausibly stale —
+this is a cheap, mechanical check, not a judgment call, so it costs nothing to run every time. If
+the audit *also* surfaces something that reads as out of date relative to current Findmypast
+practice, say that too; see "Keeping the ORs current" below.
 
 ## Step 3: Investigate each OR with real evidence
 

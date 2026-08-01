@@ -2,10 +2,10 @@
 
 A mandatory pre-commit gate for any git commit message, in any repo. Rather than trusting a
 remembered summary of the user's commit-message conventions, it re-reads their conventions file
-every time and walks through a literal checklist — ticket-key prefix (if the user uses one),
-subject mood/length, whether a body is even needed, a strip-test on every body bullet, and a scan
-for AI-authorship references — before a message is ever shown to the user or passed to
-`git commit`.
+every time and checks the draft part by part — prefix, subject, body, footer, whole-message
+(e.g. an AI-authorship scan, a language/spelling convention), and a miscellaneous bucket for
+anything that doesn't cleanly attach to one part — before a message is ever shown to the user or
+passed to `git commit`.
 
 This exists because the failure it prevents kept recurring even though the rules were already
 written down: a commit message gets drafted from whatever vocabulary is fresh in context (the
@@ -15,15 +15,20 @@ Turning "remember to check" into an explicit, ordered procedure is the fix.
 The conventions themselves are **not part of this skill** — they're the user's own preferences,
 kept in a standalone conventions file this skill reads fresh every run and bootstraps (via a short
 interrogation) the first time it doesn't find one. That's what makes the skill itself portable
-across users rather than tied to one person's ruleset.
+across users rather than tied to one person's ruleset. The conventions file is organized under six
+headings — `Prefix`, `Subject`, `Body`, `Footer`, `Whole-message`, `Miscellaneous` — matching the
+structural parts of a commit message, so a new rule (a required footer link, a spelling
+convention, anything) always has an obvious home and always gets checked, rather than landing in
+an unstructured pile that only sometimes gets read.
 
 Files:
-- `SKILL.md` — the whole flow (find/bootstrap conventions, ticket prefix, subject checks,
-  body-or-not, strip-test, AI-reference scan, final gate). Single file — every step runs on every
-  commit message, nothing here is one-time or opt-in.
+- `SKILL.md` — the whole flow: find/bootstrap the conventions file, then one step per structural
+  part (prefix, subject, body, footer, whole-message, miscellaneous), each checking every rule
+  listed under its heading individually, then a final gate. Single file — every step runs on
+  every commit message, nothing here is one-time or opt-in.
 - `setup.md` — the one-time bootstrap interrogation, read only when no conventions file exists
   yet. Offers to seed from an existing "Commit message conventions" section in the user's
-  `CLAUDE.md` if one's already there, otherwise asks from scratch.
+  `CLAUDE.md` if one's already there, otherwise asks through all six parts from scratch.
 
 ## Cost
 
@@ -79,5 +84,6 @@ Claude: [invokes commit-message-check — conventions file already exists]
 
 On a brand new machine/user with no conventions file yet, the first invocation instead runs the
 `setup.md` bootstrap — offering to seed from an existing `CLAUDE.md` conventions section if found,
-otherwise asking a short set of questions (ticket prefix, subject style, body policy, co-author
-trailer policy) — before checking any commit message.
+otherwise asking through all six parts (prefix, subject, body, footer, whole-message,
+miscellaneous), defaults shown explicitly rather than silently assumed — before checking any
+commit message.

@@ -1,6 +1,6 @@
 ---
 name: commit-message-check
-description: Mandatory pre-commit gate for any git commit message drafted on this user's behalf, in any repo. Loads the user's own conventions from a per-user conventions file (bootstrapped on first use if it doesn't exist yet) and walks through a literal checklist — ticket-key prefix (if the user's conventions use one), subject mood/length, whether a body is even needed, a strip-test on every body bullet, and a scan for AI-authorship references — before the message is ever shown to the user or passed to `git commit`. Invoke this every time a commit message is about to be drafted, presented, or executed: before running `git commit` or `git commit --amend`, when asked to "give me a commit message" or "write the commit", or right before typing one out in a Bash/PowerShell call. Also invoke it if the user pushes back on a message you've shown them ("that's not right", "check this against conventions", "why did you skip x") — that pushback is a signal the checklist wasn't actually applied, not just a style nitpick. Do not skip this because the change "looks simple" or the draft "already looks like intent" — that exact self-assessment is what this skill exists to catch instead of relying on memory alone.
+description: Mandatory pre-commit gate for any git commit message drafted on this user's behalf, in any repo. Loads the user's own conventions from a per-user conventions file (bootstrapped on first use if it doesn't exist yet), organized by the structural parts of a commit message — prefix, subject, body, footer, whole-message, and miscellaneous — and checks the draft against every rule listed under each part before the message is ever shown to the user or passed to `git commit`. Invoke this every time a commit message is about to be drafted, presented, or executed: before running `git commit` or `git commit --amend`, when asked to "give me a commit message" or "write the commit", or right before typing one out in a Bash/PowerShell call. Also invoke it if the user pushes back on a message you've shown them ("that's not right", "check this against conventions", "why did you skip x") — that pushback is a signal the checklist wasn't actually applied, not just a style nitpick. Do not skip this because the change "looks simple" or the draft "already looks like intent" — that exact self-assessment is what this skill exists to catch instead of relying on memory alone.
 ---
 
 # Commit message check
@@ -16,6 +16,16 @@ The rules themselves are **not baked into this skill** — they're the user's ow
 kept in a conventions file this skill reads fresh every run and bootstraps on first use if it
 doesn't exist yet. That split is deliberate: this skill is the mechanical checklist, portable
 across users; the conventions file is one person's preferences, specific to them.
+
+**The checklist is organized around the structural parts of a commit message, not around a fixed
+list of named rules.** A commit message is made of a prefix (optional), a subject, a body
+(optional), and a footer (optional) — plus rules that apply across the whole message rather than
+to one part, and rules that don't cleanly attach to any single part. Each part gets exactly one
+kind of step: *iterate every rule the conventions file lists for this part, check the draft
+against each one individually.* That's the same mechanism reused six times, not six different
+mechanisms — so a brand new rule (a spelling/language convention, a required footer link, a rule
+that only makes sense when both subject and body are considered together) always has a home and
+always gets the same enforced check, without SKILL.md itself needing to change to accommodate it.
 
 One companion file:
 
@@ -33,19 +43,24 @@ machine or account).
 - **Doesn't exist** → read `setup.md` and run the bootstrap interrogation before continuing.
   Don't improvise conventions from general commit-message knowledge or from this skill's own
   worked examples — those illustrate the mechanism, they aren't a default ruleset. Every "safe
-  general default" referenced in Steps 2-5 below gets explicitly shown and confirmed during that
+  general default" referenced in Steps 2-6 below gets explicitly shown and confirmed during that
   interrogation, not silently assumed — see `setup.md`. A default a user never saw isn't really a
   default, it's undisclosed forced behavior.
 
-## Step 1 — Ticket-key prefix (only if the conventions file defines one)
+The conventions file is organized under six headings, matching the parts below: `## Prefix`,
+`## Subject`, `## Body`, `## Footer`, `## Whole-message`, `## Miscellaneous`. Any heading can be
+empty or absent (e.g. most users have no `## Prefix` rules) — an empty/absent section means that
+step below has nothing to check, not that the step gets skipped without looking.
 
-Not every user or repo uses a ticket-key prefix — treat this step as conditional on what the
-conventions file actually says, not as a universal requirement.
+## Step 1 — Prefix
 
-If the conventions file defines a prefix convention, it should specify: which repos it applies
-to (a detection rule, e.g. "repos with existing TICKET-#### style history"), the format, and what
-to do when no ticket key is known (a placeholder value, and/or a threshold for when to stop and
-ask instead of defaulting). Apply exactly that rule:
+Not every user or repo uses a ticket-key or other prefix — this step is conditional on whether
+`## Prefix` has any rules, not a universal requirement.
+
+If it does, it should specify: which repos it applies to (a detection rule, e.g. "repos with
+existing TICKET-#### style history"), the format, and what to do when no ticket key is known (a
+placeholder value, and/or a threshold for when to stop and ask instead of defaulting). Apply
+exactly that rule, checking each listed condition individually:
 
 - Repo matches the convention's detection rule → prefix required, following its format/placeholder
   rules.
@@ -54,14 +69,13 @@ ask instead of defaulting). Apply exactly that rule:
   third state, not a coin flip. Don't silently default to "no prefix" just because nothing
   confirmed "yes" — say what you checked and ask the user directly which convention applies.
 
-If the conventions file has no ticket-prefix section at all, skip this step — the user doesn't
-use one.
+If `## Prefix` is empty, skip straight to Step 2.
 
-## Step 2 — Subject line
+## Step 2 — Subject
 
-Check the drafted subject against each rule the conventions file lists for subject lines,
-individually — don't eyeball the whole line at once and call it good. If the conventions file is
-silent on a point, these are safe general defaults:
+Check the drafted subject against every rule listed under `## Subject`, individually — don't
+eyeball the whole line at once and call it good. If that section is silent on a point, these are
+the skill's built-in defaults (shown and confirmed at setup, not assumed here):
 
 - Imperative, present tense (`Add`, `Fix`, `Remove` — not `Added`, `Fixed`, `Adding`).
 - No trailing period.
@@ -73,16 +87,16 @@ silent on a point, these are safe general defaults:
 If anything here fails, rewrite the subject before touching the body — a body can't rescue a bad
 subject.
 
-## Step 3 — Does this even need a body?
+## Step 3 — Body
 
-Default assumption: no. Only add one if the *why* genuinely isn't recoverable from the subject
-alone. When in doubt, leave it out, unless the conventions file says otherwise for this user.
+First: does this commit even need a body? Check `## Body` for a stated policy; the built-in
+default is *no, unless the why genuinely isn't recoverable from the subject alone*.
 
-## Step 4 — If a body is written, strip-test every bullet
+If a body is written, check it against every rule listed under `## Body`, individually. Built-in
+defaults (apply to whatever isn't overridden):
 
-- Format is `-`-bulleted, never a prose paragraph, unless the conventions file specifies
-  something different.
-- For each bullet, actually run this sequence (in your own reasoning, not silently skipped):
+- Format is `-`-bulleted, never a prose paragraph.
+- Each bullet passes the strip-test:
   1. List every proper noun, class name, function name, library name, header name, or config key
      that appears in it.
   2. Delete them from the sentence.
@@ -103,16 +117,41 @@ alone. When in doubt, leave it out, unless the conventions file says otherwise f
 > "console warning"/"ref"/"element" and it still reads as a complete reason for the change; no
 > class, function, or library name is load-bearing in the sentence.
 
-## Step 5 — Scan for AI-authorship references
+## Step 4 — Footer
 
-Check the fully composed subject + body for `Claude`, `Anthropic`, `Generated with`, any
-`Co-Authored-By` naming an AI, `Claude-Session`, or any other harness-injected trailer. Strip it
-immediately unless the conventions file explicitly says to include one for this commit — this
-applies even when a tool/template tries to add it automatically, every time, without being asked.
+Check for any rules under `## Footer` — trailers, required links, co-author lines, anything that
+goes after the body. This has no built-in default content (most users have none), but it always
+gets checked: if `## Footer` lists something (e.g. "append a link to the relevant ticket/PR"),
+apply it; if it's empty, there's no footer to add.
 
-## Step 6 — Only now, show it or commit it
+Note the built-in AI-authorship scan (Step 5) also touches trailer-shaped text but is checked
+separately, since it applies regardless of whether this user has any footer rules of their own.
 
-The message may only be shown to the user or passed to `git commit` once steps 1–5 have all been
+## Step 5 — Whole-message
+
+Check the fully composed message (prefix + subject + body + footer together) against every rule
+listed under `## Whole-message` — rules that apply uniformly across the entire text rather than to
+one part (e.g. a language/spelling convention, a tone rule). One built-in default always applies
+here regardless of what the conventions file says, unless it explicitly opts out for a specific
+commit:
+
+- Scan for `Claude`, `Anthropic`, `Generated with`, any `Co-Authored-By` naming an AI,
+  `Claude-Session`, or any other harness-injected AI-authorship trailer. Strip it immediately —
+  this applies even when a tool/template tries to add it automatically, every time, without being
+  asked, unless this specific commit was explicitly asked to include one.
+
+## Step 6 — Miscellaneous
+
+Check every rule listed under `## Miscellaneous` — this is for rules that don't cleanly attach to
+one structural part (e.g. how revert messages should read, how a sequence of iteration commits on
+the same piece of work should relate to each other, a rule conditional on more than one part at
+once). This section exists because not every rule fits Steps 1-5 cleanly, not as a place rules go
+to avoid being checked — it gets the same individual, one-by-one check as every other section, not
+a skim.
+
+## Step 7 — Only now, show it or commit it
+
+The message may only be shown to the user or passed to `git commit` once Steps 1-6 have all been
 walked through for *this* draft — not carried over from an earlier draft in the same conversation.
 If the user pushes back on something you show them, that means the checklist was skipped or
 rushed: go back to Step 1 on the corrected version rather than only patching the specific

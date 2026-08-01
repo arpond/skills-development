@@ -45,13 +45,15 @@ something specific, not a vague gesture at "standard practice."
      specific style): no body unless the subject genuinely can't carry the why; when present,
      always `-`-bulleted, each bullet stating why rather than what/how. Show this concretely, ask
      if it fits or if this user wants something else — always a body, never a body, a specific
-     template, a different body format entirely. Separately, offer the **strip-test** as an
-     opt-in, more rigorous technique (not the default): delete every proper noun/function/class/
-     library name from a bullet, check what's left still reads as a complete rationale on its own,
-     rewrite if not. Show a one-line example, ask if they want this applied on top of the light
-     default or skip it — don't bundle it into the default silently just because it's a good
-     technique; it's a specific stylistic discipline one person happened to like, not something
-     every user would necessarily want imposed on their own judgment.
+     template, a different body format entirely. Also offer one optional, more rigorous technique
+     for checking a bullet actually holds to "why not what": the **strip-test** — delete every
+     proper noun/class/function/library/config-key name from a bullet, check what's left still
+     reads as a complete, standalone rationale, rewrite if not. This isn't a `SKILL.md` built-in —
+     it's a specific stylistic discipline, offered here as one option, not assumed. If the user
+     wants it, write the full procedure into `## Body` (not just "strip-test: on" — the conventions
+     file is the only place this technique's definition lives, so it needs to be spelled out in
+     full, same as any other rule under any other heading). If they don't, skip it — the light
+     default alone is a complete, valid choice.
    - **Footer.** No built-in default. Does this user want anything appended after the body —
      a required link (ticket, PR, doc), a co-author trailer policy, anything else that goes at the
      end? If no: record that explicitly rather than leaving it blank and ambiguous.

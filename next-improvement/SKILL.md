@@ -116,6 +116,13 @@ Risk register: on              <!-- optional, see risk-register.md -->
   entry just because the field now exists, and don't treat a missing id as a malformed-tracker case
   either (contrast `session-start.md`'s Step 0 malformed-tracker handling) — it's the expected
   steady state for anything that hasn't needed a reference yet, not an error to flag.
+  **Before minting any id** (lazy-backfill or a fresh Step 2 append), check it isn't already in use
+  anywhere in the tracker — a hand-typed `id: I5` can exist on some entry while `Next id:` is still
+  sitting at `I5` or lower, e.g. from manual editing. If the value about to be minted collides,
+  skip forward past every id already in use (checking the live tracker, and
+  `IMPROVEMENT_TRACKER_DONE.md`/`RISK_REGISTER.md` if either exists) and mint the first free one
+  instead, then set `Next id:` to one past whatever got minted — this is the same mechanical,
+  no-confirmation bookkeeping as the rest of id assignment, not a new judgement call.
 - **A ship that fixes or reworks an earlier Done item** tags itself with `fixes: I<N>` (bug fix) or
   `reworked: I<N>` (broader rework), referencing the origin's id — see Step 6. This also sets
   `reassess: pending` on the *origin* entry, standalone of whether `Feedback:` is on (see

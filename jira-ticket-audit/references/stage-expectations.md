@@ -11,13 +11,14 @@ administrative fields) — **content gaps** (missing acceptance criteria, unhand
 ticket's own scope implies) are always reported regardless of stage; they're out of scope for this
 file.
 
-## SD (Search & Discovery)
+No entries yet — this file starts empty and grows per-installation as `SKILL.md` Step 2 asks
+about and records each new project key it encounters. Shape of an entry, once one exists:
 
-Confirmed by Andrew Pond, 2026-07-31.
+```markdown
+## <PROJECT-KEY> (<team/project name>)
 
 | Signal | Meaning |
 |---|---|
-| Status = "Waiting for Three Amigos" | No technical review yet. Process placeholders are expected to still be unresolved — don't report as gaps. |
-| Status = "For refinement" AND no "Pre-refined" label | Still pre-technical-review. Same as above — placeholders not yet expected to be resolved. |
-| Status = "For refinement" AND "Pre-refined" label present | Technical review has happened. Process placeholders left unresolved now count as real gaps. |
-| Later statuses (e.g. "Ready for Dev", "In Progress") | Fully past technical review — all placeholder/process fields should be resolved; flag any that aren't. |
+| Status = "<pre-review status>" | No technical review yet — process placeholders expected unresolved, don't report as gaps. |
+| Status = "<post-review status/label>" | Technical review has happened — unresolved placeholders now count as real gaps. |
+```

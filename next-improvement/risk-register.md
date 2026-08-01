@@ -52,9 +52,15 @@ Next id: R<N>
 - **No `cause:`/`fixes:` list is stored on the entry.** Which specific `fixes:`/`reworked:` links
   originally evidenced the pattern is cheap to recompute on demand — scan Done for links whose
   origin's category matches this entry's category — so it isn't persisted here; storing it would
-  just be a second copy to keep in sync every time a new link lands. When reasoning about an
-  entry (Step 2/3/4, or deciding whether to archive), pull that evidence live rather than trusting
-  a stored snapshot.
+  just be a second copy to keep in sync every time a new link lands. **Scan both the live
+  tracker's Done section and `IMPROVEMENT_TRACKER_DONE.md` if it exists** — same combined-pool
+  treatment `feedback.md` already applies to its own outcome checks (`SKILL.md`'s "Reading the
+  archive" note): evidence for an old, slow-moving risk pattern is exactly the kind of thing that's
+  likely to have aged into the archive by the time it matters, and missing it there would silently
+  undercount evidence or, worse, wrongly clear an active entry for archival on a false "nothing new"
+  read. When reasoning about an entry (Step 2/3/4, or deciding whether to archive), pull that
+  evidence live from both files rather than trusting a stored snapshot or only checking the live
+  one.
 
 ## Malformed file
 

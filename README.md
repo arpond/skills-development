@@ -21,9 +21,8 @@ A collection of custom skills for [Claude Code](https://claude.com/product/claud
   concrete evidence from the codebase.
 - **[commit-message-check](commit-message-check/README.md)** — a mandatory pre-commit gate that
   re-reads the user's own conventions file (bootstrapped via interrogation on first use) and
-  walks a literal checklist (ticket prefix, subject rules, whether a body is even needed, a
-  strip-test on every bullet, an AI-reference scan) before any commit message is shown or
-  committed.
+  checks a draft message part by part (prefix, subject, body, footer, whole-message,
+  miscellaneous) before it's ever shown or committed.
 - **[jira-ticket-audit](jira-ticket-audit/README.md)** — audits a single Jira ticket for
   ambiguity, internal inconsistency, gaps, oversized scope, and missing links to sibling tickets
   in its epic, producing per-dimension findings backed by evidence quoted from the ticket.

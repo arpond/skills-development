@@ -432,7 +432,17 @@ losing them — that's the loop closing, not scope creep.
 **Ask whether this ship fixes or reworks an earlier one.** Every recording, ask directly — with an
 auto-detect suggestion, not a blind open question: scan recent Done entries (and the branch/commit
 context, if this session touched a specific bug or reopened specific files) for a plausible origin,
-propose it, and let the user confirm, correct, or say no. If confirmed:
+propose it, and let the user confirm, correct, or say no.
+
+**One-time heads-up on a tracker that predates this feature.** If `Next id:` was missing before
+this recording (the lazy-init case, tracker-format section above) — meaning this is the first time
+this project has ever seen this question — say so in one clause before asking it, e.g. "(this
+tracker's picking up a new feature: every ship now gets asked if it fixes/reworks an earlier one,
+used to flag the origin for a second look)" — same disclosure `setup.md` gives a brand-new
+tracker at bootstrap, given once here since an existing tracker never goes through `setup.md`
+again. Don't repeat it on later ships once `Next id:` exists.
+
+If confirmed:
 - Tag the new entry `fixes: I<N>` (bug fix) or `reworked: I<N>` (broader rework), referencing the
   origin's id (mint one for the origin now if it predates the id field — see the tracker-format
   section above).

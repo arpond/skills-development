@@ -104,18 +104,7 @@ defaults (apply to whatever isn't overridden):
   4. If yes, keep it. If no, it was describing the mechanism rather than the intent — rewrite it
      as pure "why," then run the test again on the new version.
 - The diff already shows the mechanism; the message's only job is the part the diff can't show —
-  why the change happened.
-
-**Worked example** — drafting a fix to how a shared UI component forwards refs:
-
-> Not compliant (mechanism, prose): "Radix's internal Slot/Portal machinery attaches a ref to
-> whatever child is rendered inside `<Dialog.Portal>`, but these were plain function components
-> rather than `React.forwardRef`, so any ref never reached the DOM node."
->
-> Compliant (bulleted, survives the strip-test): "- Without it, consumers hit a console warning
-> and any ref passed through it was silently dropped instead of reaching the element." — remove
-> "console warning"/"ref"/"element" and it still reads as a complete reason for the change; no
-> class, function, or library name is load-bearing in the sentence.
+  why the change happened. See `README.md` for a worked example of the strip-test in practice.
 
 ## Step 4 — Footer
 

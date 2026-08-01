@@ -59,14 +59,13 @@ executed:
 ```
 You: Create a commit.
 
-Claude: [invokes commit-message-check — conventions file already exists]
-        Re-read commit-message-conventions.md. This repo has SD-#### tickets in
-        its history but none for this change, and it's a small, scoped fix, so
-        the ticket key is SD-000.
+Claude: [invokes commit-message-check — conventions file already exists, no
+        Prefix rules for this repo]
+        Re-read commit-message-conventions.md.
 
-        Drafted subject: "SD-000: Forward refs through Dialog's overlay and
-        content components" — imperative, capitalized, no trailing period,
-        under 72 chars, names the object of the verb.
+        Drafted subject: "Forward refs through Dialog's overlay and content
+        components" — imperative, capitalized, no trailing period, under 72
+        chars, names the object of the verb.
 
         Considered a body — the why isn't fully obvious from the subject, so
         added one bullet and ran the strip-test: removing "console warning"
@@ -74,13 +73,17 @@ Claude: [invokes commit-message-check — conventions file already exists]
 
         No AI-authorship references present.
 
-        SD-000: Forward refs through Dialog's overlay and content components
+        Forward refs through Dialog's overlay and content components
 
         - Without it, consumers hit a console warning and any ref passed
           through it was silently dropped instead of reaching the element
 
         Want me to commit this?
 ```
+
+(A repo whose conventions file *does* define a `Prefix` rule would get a ticket key prepended
+here per Step 1 — this example just shows the no-prefix case, since not using one is the more
+common default across users.)
 
 On a brand new machine/user with no conventions file yet, the first invocation instead runs the
 `setup.md` bootstrap — offering to seed from an existing `CLAUDE.md` conventions section if found,

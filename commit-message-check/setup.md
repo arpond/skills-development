@@ -42,10 +42,12 @@ something specific, not a vague gesture at "standard practice."
      concretely, ask if it fits or if anything should change or be added (e.g. a language/spelling
      convention belongs under Whole-message instead, not here — see below).
    - **Body.** Built-in default (kept deliberately light, to avoid biasing the user toward one
-     specific style): no body unless the subject genuinely can't carry the why; when present,
-     always `-`-bulleted, each bullet stating why rather than what/how. Show this concretely, ask
-     if it fits or if this user wants something else — always a body, never a body, a specific
-     template, a different body format entirely. Also offer one optional, more rigorous technique
+     specific style): no body unless the subject genuinely can't carry the why; when present, no
+     structure imposed, each entry stating why rather than what/how. Show this concretely, ask if
+     it fits or if this user wants something else — always a body, never a body, a specific
+     template. Separately, ask what **format** the body should take when one is written — bulleted
+     list, free prose, a specific template — there's no built-in default here, since that's purely
+     a formatting preference. Also offer one optional, more rigorous technique
      for checking a bullet actually holds to "why not what": the **strip-test** — delete every
      proper noun/class/function/library/config-key name from a bullet, check what's left still
      reads as a complete, standalone rationale, rewrite if not. This isn't a `SKILL.md` built-in —

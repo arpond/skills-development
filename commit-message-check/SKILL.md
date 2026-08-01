@@ -93,12 +93,13 @@ First: does this commit even need a body? Check `## Body` for a stated policy; t
 default is *no, unless the why genuinely isn't recoverable from the subject alone*.
 
 If a body is written, check it against every rule listed under `## Body`, individually — same as
-every other step, no special-cased technique hardcoded here. Built-in default (light, deliberately
-— applies only to whatever isn't overridden):
+every other step, no special-cased technique hardcoded here. Built-in default (deliberately light
+— no format imposed, applies only to whatever isn't overridden):
 
-- Format is `-`-bulleted, never a prose paragraph.
-- Each bullet explains *why* the change happened, not what changed or how — the diff already shows
-  the mechanism, so a bullet that just narrates the diff in prose isn't adding anything.
+- Explain *why* the change happened, not what changed or how — the diff already shows the
+  mechanism, so text that just narrates the diff isn't adding anything.
+- No mandated structure (bulleted vs. prose vs. something else) — that's a formatting choice, not
+  a universal git convention, so it's asked at setup rather than assumed here.
 
 If `## Body` defines a specific technique for checking that (e.g. a strip-test — see `setup.md`
 for what that looks like, and `README.md` for a worked example), apply exactly what's written

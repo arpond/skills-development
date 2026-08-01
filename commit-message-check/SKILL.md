@@ -32,7 +32,10 @@ machine or account).
   the user can edit it any time, and a stale mental copy defeats the point of keeping it external.
 - **Doesn't exist** → read `setup.md` and run the bootstrap interrogation before continuing.
   Don't improvise conventions from general commit-message knowledge or from this skill's own
-  worked examples — those illustrate the mechanism, they aren't a default ruleset.
+  worked examples — those illustrate the mechanism, they aren't a default ruleset. Every "safe
+  general default" referenced in Steps 2-5 below gets explicitly shown and confirmed during that
+  interrogation, not silently assumed — see `setup.md`. A default a user never saw isn't really a
+  default, it's undisclosed forced behavior.
 
 ## Step 1 — Ticket-key prefix (only if the conventions file defines one)
 

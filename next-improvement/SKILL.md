@@ -16,9 +16,10 @@ rewritten per repo.
 This file covers Steps 1-6, the steady-state propose/build/record loop. Four companion files live
 alongside it:
 
-- `session-start.md` — Steps 0 and 0.5 (find/bootstrap the tracker, then check whether Goals need
-  a check-in). **Not optional** — read it every run, right after this intro, before Step 1.
-  Split out purely to keep this file's common-case read focused on the propose/build/record loop.
+- `session-start.md` — Steps 0 through 0.7 (find/bootstrap the tracker, check whether Goals need a
+  check-in, surface standalone reassess flags and due Rejected revisits). **Not optional** — read
+  it every run, right after this intro, before Step 1. Split out purely to keep this file's
+  common-case read focused on the propose/build/record loop.
 - `setup.md` — the one-time-per-project bootstrap interrogation. Read it when `session-start.md`'s
   Step 0 finds no `IMPROVEMENT_TRACKER.md` yet.
 - `strategies.md` — alternate ways of presenting candidates in Step 4, beyond the default
@@ -176,6 +177,7 @@ Risk register: on              <!-- optional, see risk-register.md -->
 |---|---|
 | 0 (setup.md) | Interrogate the proposed categories/tiers with the user before writing the initial tracker |
 | 0 (session-start.md) | If the tracker exists but is malformed, ask the user rather than silently rewriting or refusing |
+| 0 (risk-register.md) | If `RISK_REGISTER.md` exists but is malformed, ask the user rather than silently rewriting or refusing |
 | 0.5 (session-start.md) | Confirm goal changes with the user before updating Goals / bumping `Last reviewed:` |
 | 2 | Show proposed new ideas, or a category retirement/merge/narrow, and wait for confirmation before writing anything |
 | 2/4.5/6 (risk-register.md) | Show a proposed risk-area creation or update (any trigger), and an archival/reactivation, and wait for confirmation before writing to `RISK_REGISTER.md` |

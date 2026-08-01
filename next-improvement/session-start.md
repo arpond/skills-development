@@ -97,6 +97,12 @@ tracked field; if they don't, move on — don't block the rest of the run on it.
 (remove `reassess: pending` from that entry) once it's been surfaced once, same "answered items
 drop out" spirit as `feedback.md`'s eligible pool, so it doesn't repeat forever.
 
+**Fold with Step 0.5 if both are due the same run** — same "one check-in, not two" reasoning Step
+0.5 already applies when folding in `feedback.md`'s check-in: if Goals are also due a check-in this
+run, ask both in one message rather than stacking two separate prompts back-to-back, e.g. "Goals
+were last confirmed on <date>... still the right order? Also, '<origin idea>' needed a follow-up
+fix — worth a look at how it was scoped?" If only one is due, ask just that one.
+
 ## Step 0.7: Surface due `revisit-after:` entries from Rejected
 
 Same once-per-session throttle as every other check-in here. Scan Rejected for any
@@ -110,9 +116,3 @@ existing id — see `SKILL.md`'s tracker-format id note). If still not the right
 and Step 0.6's own fold notes: if Goals, a reassess flag, and a due revisit are all due the same
 run, ask all of them in one message rather than three stacked prompts. If only this one is due, ask
 just this one.
-
-**Fold with Step 0.5 if both are due the same run** — same "one check-in, not two" reasoning Step
-0.5 already applies when folding in `feedback.md`'s check-in: if Goals are also due a check-in this
-run, ask both in one message rather than stacking two separate prompts back-to-back, e.g. "Goals
-were last confirmed on <date>... still the right order? Also, '<origin idea>' needed a follow-up
-fix — worth a look at how it was scoped?" If only one is due, ask just that one.

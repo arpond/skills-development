@@ -155,8 +155,13 @@ without a formal `mitigated-by:` entry, though it doesn't trigger archival by it
 **New evidence against an archived entry** (a `fixes:`/`reworked:` link or `missed`/`mixed`/
 `reverted` outcome lands in that category again) is a **reactivation** proposal, not a silent flip — same
 confirm gate: "R2 (<theme>) was archived on <date> — <new evidence> suggests it's back, reopen it?"
-On confirmation, flip `status: archived → active`, move it back to `## Active`, and continue from
-there as an ordinary active entry.
+On confirmation, flip `status: archived → active`, move it back to `## Active`, and — **re-populate
+`at-risk:` immediately**, not just going forward: scan the category's currently outstanding ideas
+for a match, same check `SKILL.md` Step 2 runs for a newly-proposed idea, and add every match now.
+Archival cleared the list, but ideas that were already sitting outstanding in that category the
+whole time never went through Step 2's cross-reference (that only fires for *new* proposals), so
+without this they'd stay silently untagged until each one happened to get re-touched. Then continue
+from there as an ordinary active entry.
 
 ## Using active entries (from `SKILL.md` Step 3/4)
 

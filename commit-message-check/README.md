@@ -23,9 +23,10 @@ tools or MCP calls.
 
 ## Requires
 
-- **`C:\Users\apond\.claude\commit-message-conventions.md`** — hard dependency, read fresh every
-  invocation rather than paraphrased from memory. If it's missing, the skill stops and asks rather
-  than improvising conventions from general commit-message knowledge.
+- **The user's global `CLAUDE.md`** (its "Commit message conventions" section, typically at
+  `~/.claude/CLAUDE.md`) — hard dependency, read fresh every invocation rather than paraphrased
+  from memory. If it's missing, the skill stops and asks rather than improvising conventions from
+  general commit-message knowledge.
 
 ## When it triggers
 

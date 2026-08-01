@@ -15,11 +15,12 @@ steps below, in order, every time.
 
 ## Step 0 — Read the source of truth fresh
 
-Read `C:\Users\apond\.claude\commit-message-conventions.md` now, in full, even if you've read it
-before this session. Don't work from a paraphrased memory of it — the rules and the incident log
-inside it get updated, and a stale mental copy is exactly what let this recur previously. If that
-file doesn't exist at that path, stop and ask the user rather than improvising conventions from
-general commit-message knowledge.
+Read the user's global `CLAUDE.md` (the "Commit message conventions" section — typically at
+`~/.claude/CLAUDE.md`, i.e. the user's home directory on whichever machine this is running on,
+never a hardcoded path from a different machine/account) now, in full, even if you've read it
+before this session. Don't work from a paraphrased memory of it — the rules get updated, and a
+stale mental copy is exactly what let this recur previously. If that section doesn't exist, stop
+and ask the user rather than improvising conventions from general commit-message knowledge.
 
 ## Step 1 — Repo type and ticket-key prefix
 

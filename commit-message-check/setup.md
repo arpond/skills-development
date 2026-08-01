@@ -1,9 +1,9 @@
-# Bootstrap setup (one-time per user)
+# Bootstrap setup (one-time per user, or per repo for a shared file)
 
-Read this file only when `SKILL.md`'s Step 0 finds no `~/.claude/commit-message-conventions.md`
-yet. This is a one-time interrogation — once the file exists, later runs never need this file
-again (the user can always ask for it to be edited directly, which doesn't require re-running
-this bootstrap).
+Read this file only when `SKILL.md`'s Step 0 finds neither a repo-level nor a personal
+conventions file. This is a one-time interrogation for whichever file is missing — once it
+exists, later runs never need this file again (the user can always ask for it to be edited
+directly, which doesn't require re-running this bootstrap).
 
 **Create it before checking any commit message** — this is part of the skill, not a separate
 setup step the user has to remember to do first.
@@ -17,7 +17,7 @@ visible way to change it stops being a choice at all. Don't summarize this as "j
 defaults?" and move on; actually list each default's concrete effect so the user is agreeing to
 something specific, not a vague gesture at "standard practice."
 
-1. **Check for an existing seed first.** Two possible sources, either or both:
+1. **Check for an existing seed first.** Three possible sources, any combination:
    - **Written conventions.** Some users already have commit conventions written down somewhere
      general-purpose — a "Commit message conventions" section in their global `CLAUDE.md`, or
      similar. If found, offer to use it as the starting point: show what was found, ask if it
@@ -31,6 +31,8 @@ something specific, not a vague gesture at "standard practice."
      want?" rather than silently picking one. This is inference from observed behavior, not a
      stated preference — treat it as a hypothesis to confirm, not a fact to adopt, same discipline
      as any input that's a claim rather than ground truth.
+   - **A README, CONTRIBUTING doc, or similar in the current repo** that already states commit
+     conventions in prose, even if never formalized into this skill's format.
 
    Either way, don't silently assume a seed is still accurate just because it's written down or
    observed — confirm before writing it as the file's contents. Whatever is seeded still gets
@@ -38,7 +40,17 @@ something specific, not a vague gesture at "standard practice."
    skill's part-based structure won't already be organized that way, and won't already cover parts
    (like Footer) it never had reason to mention.
 
-2. **Show the full set of parts in one message, defaults included, then ask.** Per this project's
+2. **Ask where this should live.** Personal (`~/.claude/commit-message-conventions.md` —
+   applies for this user across every repo) or repo-level (`.claude/commit-message-conventions.md`
+   at the current repo's root — a team's shared, committed convention, applying to anyone who
+   works in this repo, not just this user). If the repo is clearly shared with a team, or the
+   conventions being set look like a team standard rather than personal taste, say so and suggest
+   repo-level rather than defaulting to personal without asking. Either file can exist alongside
+   the other — Step 0 in `SKILL.md` merges them per heading — so this is "which file gets this
+   content," not an exclusive choice for the whole setup. If a repo-level file is chosen, mention
+   it needs to actually be committed for the "shared" part to mean anything.
+
+3. **Show the full set of parts in one message, defaults included, then ask.** Per this project's
    "one check-in, not two" — one combined message covering all of the below, not a volley of
    separate questions:
 
@@ -82,7 +94,7 @@ something specific, not a vague gesture at "standard practice."
      a mandatory checklist item — but whatever does go here still gets checked every run (see
      `SKILL.md` Step 6), it is not a lower-priority bucket.
 
-3. **Write the file** at `~/.claude/commit-message-conventions.md` under the six headings, with
+4. **Write the file** at whichever path Step 2 settled on, under the six headings, with
    the confirmed value for *every* part above — including the ones where the answer was "yes,
    keep the default." Write out what the default concretely does, don't just write "(default)" as
    a placeholder that points back at `SKILL.md` — that file may change later, and the conventions
@@ -113,6 +125,6 @@ something specific, not a vague gesture at "standard practice."
    <anything else volunteered, or omit the heading entirely if nothing was volunteered>
    ```
 
-4. Confirm the written file with the user before moving on to actually checking a commit message
+5. Confirm the written file with the user before moving on to actually checking a commit message
    — this is a stored preference file the skill will keep trusting on every future run, so it's
    worth getting right the first time rather than silently guessing and correcting later.

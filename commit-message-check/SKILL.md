@@ -40,19 +40,30 @@ One companion file:
 
 ## Step 0 — Find or bootstrap the conventions file
 
-Look for a conventions file at `~/.claude/commit-message-conventions.md` (the user's home
-directory on whichever machine this is running on — never a path copied from a different
-machine or account).
+Two possible locations, checked in this order:
 
-- **Exists** → read it fresh, in full, every run. Don't work from a paraphrased memory of it —
-  the user can edit it any time, and a stale mental copy defeats the point of keeping it external.
-- **Doesn't exist** → read `setup.md` and run the bootstrap interrogation before continuing.
-  Don't improvise conventions from general commit-message knowledge or from this skill's own
-  worked examples — those illustrate the mechanism, they aren't a default ruleset. `setup.md`
-  covers why every built-in default below gets shown and confirmed there rather than assumed.
+1. **Repo-level**: `.claude/commit-message-conventions.md` at the current repo's root. This is a
+   team's shared, committed convention — if it exists, it's not one person's file to silently
+   defer to or override.
+2. **Personal**: `~/.claude/commit-message-conventions.md` (the user's home directory on whichever
+   machine this is running on — never a path copied from a different machine or account).
 
-Any of the six headings can be empty or absent (e.g. most users have no `## Prefix` rules) — that
-means the matching step has nothing to check, not that the step gets skipped without looking.
+Read whichever exist, in full, fresh every run — don't work from a paraphrased memory of either,
+they can be edited any time and a stale mental copy defeats the point of keeping them external.
+**Precedence is per heading, not whole-file**: for each of the six headings, use the repo-level
+file's version if it defines that heading; otherwise fall back to the personal file's version;
+otherwise fall back to the built-in default (Steps 2 and 5 below). Neither file needs to repeat
+what the other already covers.
+
+If neither file exists, read `setup.md` and run the bootstrap interrogation before continuing.
+Don't improvise conventions from general commit-message knowledge or from this skill's own worked
+examples — those illustrate the mechanism, they aren't a default ruleset. `setup.md` covers why
+every built-in default below gets shown and confirmed there rather than assumed, and where the
+bootstrapped file ends up (repo-level or personal).
+
+Any of the six headings can be empty or absent in either file — that means the matching step falls
+through to the next source in the precedence order, not that the step gets skipped without
+looking.
 
 ## Step 1 — Prefix
 

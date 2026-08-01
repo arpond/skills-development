@@ -12,14 +12,21 @@ written down: a commit message gets drafted from whatever vocabulary is fresh in
 mechanism just implemented), and gets shown to the user without the check ever actually running.
 Turning "remember to check" into an explicit, ordered procedure is the fix.
 
-The conventions themselves are **not part of this skill** — they're the user's own preferences,
-kept in a standalone conventions file this skill reads fresh every run and bootstraps (via a short
-interrogation) the first time it doesn't find one. That's what makes the skill itself portable
-across users rather than tied to one person's ruleset. The conventions file is organized under six
-headings — `Prefix`, `Subject`, `Body`, `Footer`, `Whole-message`, `Miscellaneous` — matching the
-structural parts of a commit message, so a new rule (a required footer link, a spelling
-convention, anything) always has an obvious home and always gets checked, rather than landing in
-an unstructured pile that only sometimes gets read.
+The conventions themselves are **not part of this skill** — they're kept in a standalone
+conventions file this skill reads fresh every run and bootstraps (via a short interrogation) the
+first time it doesn't find one. That's what makes the skill itself portable across users rather
+than tied to one person's ruleset. The conventions file is organized under six headings —
+`Prefix`, `Subject`, `Body`, `Footer`, `Whole-message`, `Miscellaneous` — matching the structural
+parts of a commit message, so a new rule (a required footer link, a spelling convention, anything)
+always has an obvious home and always gets checked, rather than landing in an unstructured pile
+that only sometimes gets read.
+
+There are two possible locations, and both can exist at once: **personal**
+(`~/.claude/commit-message-conventions.md`, this user's own preferences, applying across every
+repo) and **repo-level** (`.claude/commit-message-conventions.md` at a repo's root, a team's
+shared, committed convention). Where both define the same heading, repo-level wins — it's the
+explicit shared standard, not one person's default. Where only one defines a heading, that one
+applies; where neither does, the skill's built-in default applies.
 
 Files:
 - `SKILL.md` — the whole flow: find/bootstrap the conventions file, then one step per structural
@@ -38,9 +45,10 @@ tools or MCP calls. Setup (first run only) is a short back-and-forth with the us
 
 ## Requires
 
-- **A conventions file at `~/.claude/commit-message-conventions.md`** — hard dependency, read
-  fresh every invocation rather than paraphrased from memory. If it's missing, the skill runs
-  `setup.md`'s bootstrap interrogation to create it rather than improvising conventions from
+- **A conventions file, personal (`~/.claude/commit-message-conventions.md`) and/or repo-level
+  (`.claude/commit-message-conventions.md`)** — hard dependency on at least one existing, read
+  fresh every invocation rather than paraphrased from memory. If neither exists, the skill runs
+  `setup.md`'s bootstrap interrogation to create one rather than improvising conventions from
   general commit-message knowledge.
 
 ## When it triggers
@@ -141,12 +149,12 @@ Claude: [invokes commit-message-check]
         Want me to commit this?
 ```
 
-On a brand new machine/user with no conventions file yet, the first invocation instead runs the
-`setup.md` bootstrap — offering to seed from an existing `CLAUDE.md` conventions section or from
-example commits/repo history if available (proposed as a hypothesis to confirm, not adopted
-silently — real history is often inconsistent), then asking through all six parts for whatever's
-still uncovered, defaults shown explicitly rather than silently assumed — before checking any
-commit message.
+With neither file present yet, the first invocation instead runs the `setup.md` bootstrap —
+offering to seed from an existing `CLAUDE.md` conventions section, example commits/repo history,
+or a repo's own README/CONTRIBUTING doc if available (proposed as a hypothesis to confirm, not
+adopted silently — real history is often inconsistent), asking whether the result should be
+personal or repo-level, then asking through all six parts for whatever's still uncovered, defaults
+shown explicitly rather than silently assumed — before checking any commit message.
 
 **Conflicting rules.** If two rules genuinely conflict — within one heading, across headings, or
 against a built-in default — the skill stops and asks rather than silently picking one; see

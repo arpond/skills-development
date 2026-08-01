@@ -17,15 +17,26 @@ visible way to change it stops being a choice at all. Don't summarize this as "j
 defaults?" and move on; actually list each default's concrete effect so the user is agreeing to
 something specific, not a vague gesture at "standard practice."
 
-1. **Check for an existing seed first.** Some users already have commit conventions written down
-   somewhere general-purpose — a "Commit message conventions" section in their global `CLAUDE.md`,
-   or similar. If one exists, offer to use it as the starting point rather than interrogating from
-   scratch: show what was found, ask if it should be copied in as-is, edited, or ignored in favor
-   of a fresh interrogation. Don't silently assume it's still accurate just because it's written
-   down — confirm before writing it as the file's contents. Whatever is seeded still gets sorted
-   into the six headings and checked against the full list below — a seed predating this skill's
-   part-based structure won't already be organized that way, and won't already cover parts (like
-   Footer) it never had reason to mention.
+1. **Check for an existing seed first.** Two possible sources, either or both:
+   - **Written conventions.** Some users already have commit conventions written down somewhere
+     general-purpose — a "Commit message conventions" section in their global `CLAUDE.md`, or
+     similar. If found, offer to use it as the starting point: show what was found, ask if it
+     should be copied in as-is, edited, or ignored in favor of a fresh interrogation.
+   - **Example commits or repo history.** If the user offers example commits, or points at a
+     repo's `git log`, look for *consistent* patterns — imperative mood already in use, a ticket
+     prefix format, whether bodies are typically present and how they're formatted, a spelling
+     variant — and propose them as a starting ruleset. Real history is messy: don't manufacture a
+     rule from one or two commits, and don't paper over genuine inconsistency by picking whichever
+     style happens to be more common — surface it as "commits go both ways on X, which do you
+     want?" rather than silently picking one. This is inference from observed behavior, not a
+     stated preference — treat it as a hypothesis to confirm, not a fact to adopt, same discipline
+     as any input that's a claim rather than ground truth.
+
+   Either way, don't silently assume a seed is still accurate just because it's written down or
+   observed — confirm before writing it as the file's contents. Whatever is seeded still gets
+   sorted into the six headings and checked against the full list below — a seed predating this
+   skill's part-based structure won't already be organized that way, and won't already cover parts
+   (like Footer) it never had reason to mention.
 
 2. **Show the full set of parts in one message, defaults included, then ask.** Per this project's
    "one check-in, not two" — one combined message covering all of the below, not a volley of

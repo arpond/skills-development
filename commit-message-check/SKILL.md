@@ -25,6 +25,14 @@ individually.* Same mechanism, six times, not six bespoke ones — so a brand ne
 home and always gets checked, without SKILL.md needing to change to accommodate it. This is stated
 once, here; the steps below don't repeat it.
 
+**If two rules genuinely conflict** — two rules under one heading, rules across two headings, or
+a rule against a built-in default — that's the same third state Step 1 already handles for an
+unclear prefix: not a coin flip. Don't silently pick whichever rule is more specific, more recent,
+or easier to satisfy. Stop, show the user the specific conflict (both rules, quoted), and ask.
+Whatever they say resolves it going forward is a conventions-file edit, confirmed the same way as
+any other (see Step 7) — not a one-off judgment call repeated silently on every future commit that
+hits the same conflict.
+
 One companion file:
 
 - `setup.md` — the one-time bootstrap interrogation. Read it when Step 0 finds no conventions

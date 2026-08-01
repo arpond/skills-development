@@ -28,7 +28,8 @@ Files:
   every commit message, nothing here is one-time or opt-in.
 - `setup.md` — the one-time bootstrap interrogation, read only when no conventions file exists
   yet. Offers to seed from an existing "Commit message conventions" section in the user's
-  `CLAUDE.md` if one's already there, otherwise asks through all six parts from scratch.
+  `CLAUDE.md`, or from consistent patterns in example commits / repo history if offered, then
+  asks through all six parts for anything not already covered.
 
 ## Cost
 
@@ -141,7 +142,13 @@ Claude: [invokes commit-message-check]
 ```
 
 On a brand new machine/user with no conventions file yet, the first invocation instead runs the
-`setup.md` bootstrap — offering to seed from an existing `CLAUDE.md` conventions section if found,
-otherwise asking through all six parts (prefix, subject, body, footer, whole-message,
-miscellaneous), defaults shown explicitly rather than silently assumed — before checking any
+`setup.md` bootstrap — offering to seed from an existing `CLAUDE.md` conventions section or from
+example commits/repo history if available (proposed as a hypothesis to confirm, not adopted
+silently — real history is often inconsistent), then asking through all six parts for whatever's
+still uncovered, defaults shown explicitly rather than silently assumed — before checking any
 commit message.
+
+**Conflicting rules.** If two rules genuinely conflict — within one heading, across headings, or
+against a built-in default — the skill stops and asks rather than silently picking one; see
+`SKILL.md`'s intro. The resolution gets written back into the conventions file so the same
+conflict doesn't need re-litigating on the next commit.

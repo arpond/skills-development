@@ -61,6 +61,12 @@ examples — those illustrate the mechanism, they aren't a default ruleset. `set
 every built-in default below gets shown and confirmed there rather than assumed, and where the
 bootstrapped file ends up (repo-level or personal).
 
+**If a file exists but doesn't parse** — none of the six headings present, or content that doesn't
+resemble this structure at all — don't silently reinterpret it, discard it, or fall back to
+bootstrapping over it. Show the user what was found and ask whether it should be fixed up into the
+expected format, replaced via `setup.md`, or left as-is with a one-off manual read for this commit
+only.
+
 ## Step 1 — Prefix
 
 Not every user or repo uses a ticket-key or other prefix — this step is conditional on whether
@@ -144,6 +150,8 @@ The message may only be shown to the user or passed to `git commit` once Steps 1
 walked through for *this* draft — not carried over from an earlier draft in the same conversation.
 If the user pushes back on something you show them, that means the checklist was skipped or
 rushed: go back to Step 1 on the corrected version rather than only patching the specific
-complaint they happened to notice. If the pushback reveals the conventions file itself is wrong
-or out of date, that's a separate, explicit edit to the conventions file — confirm the change with
-the user before writing it, same as any other update to their stored preferences.
+complaint they happened to notice. If the pushback reveals a conventions file rule itself is wrong
+or out of date, that's a separate, explicit edit — confirm the change with the user before writing
+it, same as any other update to their stored preferences. With two possible files, also confirm
+*which one*: a wrong team standard belongs in the repo-level file, a wrong personal preference in
+the personal one — don't assume based on which file happened to already define that heading.

@@ -127,3 +127,9 @@ something specific, not a vague gesture at "standard practice."
 4. Confirm the written file with the user before moving on to actually checking a commit message
    — this is a stored preference file the skill will keep trusting on every future run, so it's
    worth getting right the first time rather than silently guessing and correcting later.
+
+5. **If a repo-level file was just written, check it's actually tracked** (`git status` on that
+   path) — a one-time check here, not something Step 0 repeats on every future commit. If it's
+   untracked or gitignored, say so and suggest committing it now; otherwise "shared" is only true
+   in theory. This isn't a hard requirement to enforce, just a nudge — don't block on it if the
+   user wants to commit it separately later.

@@ -51,19 +51,15 @@ Two possible locations, checked in this order:
 Read whichever exist, in full, fresh every run — don't work from a paraphrased memory of either,
 they can be edited any time and a stale mental copy defeats the point of keeping them external.
 **Precedence is per heading, not whole-file**: for each of the six headings, use the repo-level
-file's version if it defines that heading; otherwise fall back to the personal file's version;
-otherwise fall back to the built-in default (Steps 2 and 5 below). Neither file needs to repeat
-what the other already covers.
+file's version if it defines that heading, otherwise the personal file's version, otherwise the
+built-in default (Steps 2 and 5 below). An empty or absent heading in either file just falls
+through to the next source — it doesn't mean the matching step gets skipped without looking.
 
 If neither file exists, read `setup.md` and run the bootstrap interrogation before continuing.
 Don't improvise conventions from general commit-message knowledge or from this skill's own worked
 examples — those illustrate the mechanism, they aren't a default ruleset. `setup.md` covers why
 every built-in default below gets shown and confirmed there rather than assumed, and where the
 bootstrapped file ends up (repo-level or personal).
-
-Any of the six headings can be empty or absent in either file — that means the matching step falls
-through to the next source in the precedence order, not that the step gets skipped without
-looking.
 
 ## Step 1 — Prefix
 

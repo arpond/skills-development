@@ -40,10 +40,8 @@ something specific, not a vague gesture at "standard practice."
    skill's part-based structure won't already be organized that way, and won't already cover parts
    (like Footer) it never had reason to mention.
 
-2. **Show the full set of parts in one message, defaults included, then ask** — including where
-   the file should live. Per this project's "one check-in, not two": one combined message, not a
-   volley of separate questions, and that includes the location question below, not just the six
-   parts:
+2. **Show the full set of parts in one message, defaults included, then ask** — location included,
+   per this project's "one check-in, not two":
 
    - **Location.** Present as two numbered options: 1) personal
      (`~/.claude/commit-message-conventions.md` — applies for this user across every repo), 2)
@@ -95,8 +93,8 @@ something specific, not a vague gesture at "standard practice."
      a mandatory checklist item — but whatever does go here still gets checked every run (see
      `SKILL.md` Step 6), it is not a lower-priority bucket.
 
-3. **Write the file** at whichever path the location question settled on, under the six headings, with
-   the confirmed value for *every* part above — including the ones where the answer was "yes,
+3. **Write the file** at whichever path the location question settled on, under the six headings,
+   with the confirmed value for *every* part above — including the ones where the answer was "yes,
    keep the default." Write out what the default concretely does, don't just write "(default)" as
    a placeholder that points back at `SKILL.md` — that file may change later, and the conventions
    file needs to stay a complete, accurate record of what this user actually agreed to at the

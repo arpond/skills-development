@@ -1,7 +1,7 @@
 # Session start: find/bootstrap the tracker, check staleness
 
-Read this file every time the skill triggers, right after `SKILL.md`'s intro — this is Steps 0,
-0.5, and 0.6 of the loop. Unlike the other companion files (`setup.md`, `strategies.md`,
+Read this file every time the skill triggers, right after `SKILL.md`'s intro — this is Steps 0
+through 0.7 of the loop. Unlike the other companion files (`setup.md`, `strategies.md`,
 `feedback.md`, `risk-register.md`), this one isn't optional or one-time: every run starts here,
 since every run needs
 a tracker to read and needs to know whether its Goals are still trustworthy before ranking
@@ -57,7 +57,7 @@ to.
 If `Feedback:` is also due a check-in this same run (see `feedback.md`), fold both into a single
 message rather than asking twice in a row — e.g. "Goals were last confirmed on <date> and N items
 have shipped since, still the right order? Also, last shipped '<idea>' (<date>) — deliver as
-expected, mixed, or miss?" Two unrelated confirmations stacked back-to-back at the start of a run
+expected, mixed, miss, or reverted?" Two unrelated confirmations stacked back-to-back at the start of a run
 is exactly what "one check-in, not two" exists to avoid, even though they're about different
 things (goals vs. outcomes) — the point is the user reads one message, not that the topics match.
 If only one of the two is due, ask just that one; don't manufacture a second question to fill out
@@ -96,6 +96,20 @@ look at how it was scoped or actioned?" If the user engages, that's a normal con
 tracked field; if they don't, move on — don't block the rest of the run on it. Clear the flag
 (remove `reassess: pending` from that entry) once it's been surfaced once, same "answered items
 drop out" spirit as `feedback.md`'s eligible pool, so it doesn't repeat forever.
+
+## Step 0.7: Surface due `revisit-after:` entries from Rejected
+
+Same once-per-session throttle as every other check-in here. Scan Rejected for any
+`revisit-after:` date that's today or earlier. If any exist, surface the oldest due one: "'<idea>'
+was declined on <date> for '<reason>', revisit was due <date> — still not the right time, or
+reconsider it?" If reconsidered, hand it to `SKILL.md` Step 2 (confirm before appending, reuse its
+existing id — see `SKILL.md`'s tracker-format id note). If still not the right time, ask for a new
+`revisit-after:` date or drop the field so it stops resurfacing. If none are due, say nothing.
+
+**Fold with whatever else is due this run** — same "one check-in, not two" reasoning as Step 0.5's
+and Step 0.6's own fold notes: if Goals, a reassess flag, and a due revisit are all due the same
+run, ask all of them in one message rather than three stacked prompts. If only this one is due, ask
+just this one.
 
 **Fold with Step 0.5 if both are due the same run** — same "one check-in, not two" reasoning Step
 0.5 already applies when folding in `feedback.md`'s check-in: if Goals are also due a check-in this

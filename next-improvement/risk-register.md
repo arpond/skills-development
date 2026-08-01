@@ -93,9 +93,11 @@ doesn't care which trigger noticed it first:
    category (or the same specific earlier idea), propose creating a new entry (first pattern) or
    extending an existing one (add the new fix's evidence isn't stored, but do re-open `status:
    archived → active` if the matching entry was archived — see Reactivation).
-2. **`feedback.md`, a `missed`/`mixed` outcome is recorded.** Same category showing repeat bad
-   outcomes, even with no explicit fix link yet, is earlier/softer evidence of the same shape —
-   propose the same way.
+2. **`feedback.md`, a `missed`/`mixed`/`reverted` outcome is recorded.** For `missed`/`mixed`: same
+   category showing a *repeat* of bad outcomes, even with no explicit fix link yet, is earlier/
+   softer evidence of the same shape — propose the same way as trigger 1. For `reverted`: propose
+   on the **first** occurrence, no repeat needed — an idea getting actively undone is strong enough
+   evidence on its own, unlike a merely-disappointing outcome.
 3. **`SKILL.md` Step 2's fragile-scan** turns up a *structural* pattern (not one isolated rough
    spot) while brainstorming — propose directly, don't wait for it to actually break first.
 4. **`SKILL.md` Step 4.5**, planning a confirmed pick exposes a risk that wasn't visible before
@@ -139,7 +141,7 @@ disclosure rather than a silently-dead feature.
 
 **Propose archiving** (confirm gate, same as creation) when a `mitigated-by:` entry is assessed
 `effective` **and** no new evidence has landed against that category since (no new `fixes:`/
-`reworked:` link, no new `missed`/`mixed` outcome, checked live per the "no stored cause list"
+`reworked:` link, no new `missed`/`mixed`/`reverted` outcome, checked live per the "no stored cause list"
 note above). On confirmation: flip `status: active → archived`, move the entry from `## Active` to
 `## Archived`, clear its `at-risk:` list (outstanding ideas stop being flagged against a resolved
 risk), and note the archival date and reason inline.
@@ -150,8 +152,8 @@ one data point against the risk being live — worth factoring into the next arc
 without a formal `mitigated-by:` entry, though it doesn't trigger archival by itself the way an
 `effective` mitigation does.
 
-**New evidence against an archived entry** (a `fixes:`/`reworked:` link or `missed`/`mixed`
-outcome lands in that category again) is a **reactivation** proposal, not a silent flip — same
+**New evidence against an archived entry** (a `fixes:`/`reworked:` link or `missed`/`mixed`/
+`reverted` outcome lands in that category again) is a **reactivation** proposal, not a silent flip — same
 confirm gate: "R2 (<theme>) was archived on <date> — <new evidence> suggests it's back, reopen it?"
 On confirmation, flip `status: archived → active`, move it back to `## Active`, and continue from
 there as an ordinary active entry.

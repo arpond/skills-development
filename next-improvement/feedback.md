@@ -41,7 +41,10 @@ an `outcome:` value:
 - **Idea name** (Category, id: I7, shipped YYYY-MM-DD, outcome: pending) — one-line note...
 ```
 
-`outcome:` is one of `pending`, `delivered`, `mixed`, `missed`, or `skipped`.
+`outcome:` is one of `pending`, `delivered`, `mixed`, `missed`, `reverted`, or `skipped`.
+`reverted` is distinct from `missed`: `missed` means it shipped but didn't deliver the intended
+value; `reverted` means it was actually undone — a stronger, costlier signal worth its own tag
+rather than folding into `missed`.
 
 ## Setup (from `setup.md`)
 
@@ -92,11 +95,11 @@ archive" note.
   mode below. Wording is distinct from a routine ask, and depends on what the origin's outcome
   already was: if it's still `pending` (never answered), fold the fix/rework into the normal
   outcome question as one clause instead of asking twice — "Last shipped '<idea>' (<date>) —
-  deliver as expected, mixed, or miss? (Note: this was later fixed by '<fixing idea>'.)" If the
-  origin already had a real answer (`delivered`/`mixed`/`missed`), reopen it explicitly: "'<idea>'
-  was marked <old outcome>, but was later fixed by '<fixing idea>' — still <old outcome>, or
-  downgrade to mixed/missed?" Clear `reassess: pending` the moment it's answered, same as any other
-  eligible item — see "Answered items" below.
+  deliver as expected, mixed, miss, or was it reverted? (Note: this was later fixed by '<fixing
+  idea>'.)" If the origin already had a real answer (`delivered`/`mixed`/`missed`/`reverted`),
+  reopen it explicitly: "'<idea>' was marked <old outcome>, but was later fixed by '<fixing idea>'
+  — still <old outcome>, or downgrade to mixed/missed/reverted?" Clear `reassess: pending` the
+  moment it's answered, same as any other eligible item — see "Answered items" below.
 - **Always surface the count** when it's nonzero, even if nothing else here triggers — e.g. a
   trailing "(3 ships pending feedback, 1 needs reassessment)" note, calling out the reassess subset
   separately since it's a different kind of pending. This is what stops the backlog from silently
@@ -149,9 +152,13 @@ archive" note.
 Use recorded outcomes qualitatively in `SKILL.md` Step 2 (top-up) and Step 3 (ranking), the same
 way existing signals like "what's fragile/rough-edged" are used — e.g. a category with a couple
 of `missed` outcomes is worth naming as a reason for caution when a similar-shaped candidate
-comes up, not a hidden scoring penalty.
+comes up, not a hidden scoring penalty. A `reverted` outcome carries more weight than a `missed` or
+`mixed` one when judging this — it's not "didn't land great," it's "actively undone," so it's
+worth naming even on its own, not just as part of a pattern.
 
 If `Risk register: on`, a `missed` or `mixed` outcome is also one of `risk-register.md`'s
 creation/update triggers — even without an explicit `fixes:`/`reworked:` link, a plain bad outcome
 in a category is earlier, softer evidence of the same kind of pattern. See `risk-register.md`'s
-triggers list.
+triggers list. A single `reverted` outcome is strong enough evidence to trigger a risk-area
+proposal by itself, unlike `missed`/`mixed`, which need a repeat pattern first — see
+`risk-register.md`'s trigger 2.

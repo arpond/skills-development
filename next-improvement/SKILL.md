@@ -83,6 +83,8 @@ Risk register: on              <!-- optional, see risk-register.md -->
 
 ## Rejected
 - **Idea name** (Category, YYYY-MM-DD) — one-line reason it was declined.
+- **Idea name** (Category, YYYY-MM-DD, revisit-after: YYYY-MM-DD) — a timing/priority reason
+  carries an optional revisit date instead of relying on a coincidental re-proposal to catch it.
 ```
 
 - **Goals** is an ordered list, highest priority first, with a `Last reviewed:` date. Earlier
@@ -164,6 +166,9 @@ Risk register: on              <!-- optional, see risk-register.md -->
 - **Rejected** is append-only, same as Done — an idea proposed in Step 2 and declined by the
   user goes here with the reason, not just dropped. See Step 2 for how this gets checked before
   re-proposing something similar; the reason is what matters, not the mere fact of rejection.
+- **`revisit-after:` is optional, only for timing/priority reasons** ("not now, focused on X") —
+  not for substance reasons ("doesn't fit," "already tried"), which don't go stale the same way and
+  don't need a date. See Step 2 for when it's set and Step 1 for how it gets surfaced once due.
 
 **Hard rules by step, so a review can check none have gone missing:**
 
@@ -181,17 +186,22 @@ Risk register: on              <!-- optional, see risk-register.md -->
 mirror of the steps, not independent prose, so it's the one place to check rather than three
 scattered cross-references.
 
-## Step 0, Step 0.5, and Step 0.6: Find/bootstrap the tracker, check staleness, surface reassess flags
+## Step 0 through Step 0.7: Find/bootstrap the tracker, check staleness, surface reassess flags and due revisits
 
 Read `session-start.md` and follow it before continuing — it covers finding or bootstrapping the
-tracker (including the malformed-tracker case), checking whether Goals are stale, and (Step 0.6,
-`Feedback: off` only) surfacing standalone reassess flags. This is the
+tracker (including the malformed-tracker case), checking whether Goals are stale, (Step 0.6,
+`Feedback: off` only) surfacing standalone reassess flags, and (Step 0.7) surfacing any Rejected
+entries whose `revisit-after:` date has passed. This is the
 one companion file that's read every run, not gated behind a trigger condition; see the intro
 above for why it's split out. Once it says to, continue to Step 1 below.
 
 ## Step 1: Count what's outstanding
 
 Count remaining (not-in-Done) items in each idea category.
+
+**If `session-start.md`'s Step 0.7 flagged any due `revisit-after:` entries and the user chose to
+reconsider one**, it goes back through Step 2 like any other candidate — confirm before appending,
+reuse its existing id per the id-scheme note above.
 
 ## Step 2: Top up any category running low
 
@@ -253,8 +263,12 @@ decision — the user may accept all of it, drop some, tweak wording, or say non
 keeping. Don't write to
 the tracker until they've had a chance to react. Whatever gets declined, add it to **Rejected**
 with the reason given (or your best summary of it if the user was terse) — don't just drop it
-silently, that's what lets the check above work next time. Match that file's existing format and
-voice for whatever does get appended. Don't pad a thin category with filler just to hit a count:
+silently, that's what lets the check above work next time. **If the reason is timing/priority-based
+rather than substance**, ask for (or suggest) a rough `revisit-after:` date — "worth checking again
+in a month or two, or should I just re-check whenever it comes up again?" — and store it if they
+give one; a substance-based decline gets no such field, per the Rejected-format note above. Match
+that file's existing format and voice for whatever does get appended. Don't pad a thin category
+with filler just to hit a count:
 if there are only one or two solid ideas, say so and move on rather than inventing weak ones. If
 `Selection strategy:` includes `wildcard(tagged)`, see `strategies.md` for the idea-tagging
 convention that mode depends on.

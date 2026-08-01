@@ -142,3 +142,29 @@ Principles applied consistently across the skills in this repo:
   drafting a new one. A second, slightly-different test for what is structurally the same judgment
   call is harder to keep consistent than one test applied twice, and the two versions will
   eventually drift from each other as one gets refined and the other doesn't.
+- **Structure around the domain's natural shape, not around whatever named rules got thought of
+  first.** A checklist keyed to a fixed list of named items (rule A, rule B, rule C) always has a
+  gap for whatever wasn't named yet — a new rule either doesn't fit any of them or gets stuffed
+  into one that's a poor match. Structure the check around the domain's actual shape instead (the
+  parts a thing is made of, the stages a process goes through), with one genuinely-enforced
+  miscellaneous bucket for whatever still doesn't fit — so coverage comes from the structure
+  itself, not from how thorough the original enumeration happened to be. A miscellaneous bucket
+  only satisfies this if it gets the same enforced check as every other part; otherwise it's just
+  where rules go to be silently skipped.
+- **A default the user never saw isn't a default, it's undisclosed forced behavior.** Any skill
+  with a built-in fallback (a threshold, a selection strategy, a term list) must surface that
+  fallback's concrete effect during setup/bootstrap and get it confirmed, not just ask "want the
+  defaults?" and move on. A user who never saw what a default actually does can't meaningfully be
+  said to have agreed to it.
+- **Mechanism and personal preference belong in different files.** A skill's own logic (the
+  checklist, the loop, the ranking method) should be portable across users; whatever encodes one
+  person's actual rules, priorities, or ruleset belongs in a separate file the skill reads, not
+  hardcoded into the skill itself. This is the same split `IMPROVEMENT_TRACKER.md` already makes
+  per-project — apply it per-user too whenever a skill's judgment calls are really one person's
+  preferences rather than something universal.
+- **No machine-specific paths in a tracked skill file.** An absolute path to a specific user
+  account or machine (`C:\Users\someone\...`) breaks the moment the skill is installed anywhere
+  else, and often fails silently — the skill just can't find its dependency and either stalls or
+  improvises. Any path a skill depends on should be expressed relative to a portable anchor (the
+  current user's home directory, a location the skill bootstraps itself) rather than copied from
+  wherever it was first written.

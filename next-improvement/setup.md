@@ -49,17 +49,18 @@ the user has to remember to do first:
    (e.g. "if these two ever conflict on a specific candidate, which should win by default, or
    would you rather I ask you each time?"), and write both goals at the same tier number with
    that rule inline (see `SKILL.md`'s tracker format).
-4. Ask two more questions — see `strategies.md` and `feedback.md` for their exact wording —
-   covering presentation strategy and outcome feedback. Both have a safe, zero-effort default
-   (`top-tier` / `Feedback: on`) if the user doesn't care, and neither should turn into a
-   back-and-forth interrogation like Step 3's tier ranking does. But "don't over-interrogate" is
-   about not volleying follow-up questions — it does not mean skipping or compressing the actual
-   menu of options. For presentation strategy specifically, `strategies.md`'s own Setup section
-   requires showing the full option set (both base modes, all additive modifiers, one sentence
-   each) plus a worked combination example, in that one message, before asking what they want —
-   a bare "want a selection strategy, or keep the default?" does not satisfy this, since the user
-   can't choose from options they were never shown. Feedback's question stays a single short
-   yes/no, no menu needed.
-5. Write the file with the confirmed tiers, `Selection strategy:`, `Feedback:` setting, and
-   today's date as `Last reviewed:`, then proceed to Step 1 in `SKILL.md` (it will find the
-   categories empty, which is an expected and normal case of "running low," not an error).
+4. Ask three more questions — see `strategies.md`, `feedback.md`, and `risk-register.md` for their
+   exact wording — covering presentation strategy, outcome feedback, and the risk register. All
+   three have a safe, zero-effort default (`top-tier` / `Feedback: on` / `Risk register: off`) if
+   the user doesn't care, and none should turn into a back-and-forth interrogation like Step 3's
+   tier ranking does. But "don't over-interrogate" is about not volleying follow-up questions — it
+   does not mean skipping or compressing the actual menu of options. For presentation strategy
+   specifically, `strategies.md`'s own Setup section requires showing the full option set (both
+   base modes, all additive modifiers, one sentence each) plus a worked combination example, in
+   that one message, before asking what they want — a bare "want a selection strategy, or keep the
+   default?" does not satisfy this, since the user can't choose from options they were never shown.
+   Feedback's and the risk register's questions each stay a single short yes/no, no menu needed.
+5. Write the file with the confirmed tiers, `Selection strategy:`, `Feedback:`, `Risk register:`
+   setting, and today's date as `Last reviewed:`, then proceed to Step 1 in `SKILL.md` (it will
+   find the categories empty, which is an expected and normal case of "running low," not an
+   error).

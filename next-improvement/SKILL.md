@@ -26,14 +26,21 @@ alongside it:
   or when setting/changing it.
 - `feedback.md` — an optional loop that asks how past ships actually landed and feeds that back
   into future judgement. Read it when `Feedback: on`, or when setting/changing it.
+- `risk-register.md` — an optional loop that traces which shipped ideas needed follow-up fixes or
+  rework, persists that as a named risk area, and factors active risks into future proposals. Read
+  it when `Risk register: on`, or when setting/changing it.
 
-Of these, only `session-start.md` is unconditional — the other three are read only when their
+Of these, only `session-start.md` is unconditional — the other four are read only when their
 trigger condition says to, to keep the common-case read lean.
 
 A project's tracker may also grow a sibling `IMPROVEMENT_TRACKER_DONE.md` — the overflow of old
 **Done** history moved out of the live tracker (see Step 6). It's not a companion file of this
 skill (no fixed content to read every run) and stays untouched unless something specifically
 needs older shipped history.
+
+A project with `Risk register: on` also has a sibling `RISK_REGISTER.md` — its own file, own id
+space, own lifecycle, read/written per `risk-register.md`'s rules rather than this file's Step 0-6
+loop.
 
 ## The tracker file
 
@@ -51,8 +58,10 @@ Format:
 
 ## Goals (priority order, highest first)
 Last reviewed: <YYYY-MM-DD>
+Next id: I<N>                  <!-- next unassigned idea id -->
 Selection strategy: top-tier   <!-- optional, see strategies.md -->
 Feedback: on                   <!-- optional, see feedback.md -->
+Risk register: on              <!-- optional, see risk-register.md -->
 1. <highest-priority tier>
 2. <tier A> / <tier B> — tied; if a candidate must pick one, prefer: <tie-break rule>
 3. <next tier>
@@ -60,15 +69,17 @@ Feedback: on                   <!-- optional, see feedback.md -->
 
 ## <Idea category A>
 (dry runs: <N> — last: <YYYY-MM-DD>)  <!-- optional, only present after a dry top-up -->
-- **Idea name** — short rationale, referencing specific files/functions where useful.
+- **Idea name** (id: I7) — short rationale, referencing specific files/functions where useful.
 
 ## <Idea category B>
 - ...
 
 ## Done
 (archived before <YYYY-MM-DD>: see IMPROVEMENT_TRACKER_DONE.md)  <!-- optional, only present once an archive exists -->
-- **Idea name** (Category) — one-line note on what actually shipped (may differ from the
+- **Idea name** (Category, id: I7) — one-line note on what actually shipped (may differ from the
   original idea's exact wording if the implementation took a different shape).
+- **Idea name** (Category, id: I12, fixes: I7, reassess: pending) — a later ship that fixes or
+  reworks an earlier one carries the origin's id and flags the origin for reassessment.
 
 ## Rejected
 - **Idea name** (Category, YYYY-MM-DD) — one-line reason it was declined.
@@ -86,9 +97,31 @@ Feedback: on                   <!-- optional, see feedback.md -->
   it happens" — but prefer capturing their actual reasoning if they have one. Keep tie groups
   small (2, rarely 3); a tier that keeps growing tied entries is a smell that ranking has stopped
   meaning anything, and is worth flagging (see Step 0.5).
-- `Selection strategy:` and `Feedback:` are optional lines, absent by default. Their full format
-  and behaviour live in `strategies.md` and `feedback.md` respectively — don't inline their
-  details here, and don't read those files unless one of them is actually present/being set up.
+- `Selection strategy:`, `Feedback:`, and `Risk register:` are optional lines, absent by default.
+  Their full format and behaviour live in `strategies.md`, `feedback.md`, and `risk-register.md`
+  respectively — don't inline their details here, and don't read those files unless one of them
+  is actually present/being set up.
+- **Every idea gets an `id:`** (`I<N>`) the moment it's added to a category (Step 2) — one counter
+  for the whole tracker, tracked as `Next id:` under Goals, never reused. The id carries forward
+  unchanged through Done and Rejected; it's what lets a later ship reference an earlier one
+  reliably even after the earlier one's name gets reworded. **Migrating an older tracker that
+  predates this field is lazy, not a bulk pass**: if `Next id:` is missing, initialize it (from 1,
+  or from the highest existing id + 1 if some entries already have one) the first time anything
+  actually needs it — same non-judgement mechanical bookkeeping as Step 6's Done-trimming, no
+  confirmation needed. **This same rule covers any id-less entry, not just ones from before this
+  feature existed** — including one someone added or edited by hand without following the format.
+  Such entries stay id-less until something specifically needs to reference them (a `fixes:` link,
+  an `at-risk:` list, a reassess flag) — at that point mint the next counter value for that one
+  entry in place, same precedent as Done's legacy-tag handling below; don't rewrite every existing
+  entry just because the field now exists, and don't treat a missing id as a malformed-tracker case
+  either (contrast `session-start.md`'s Step 0 malformed-tracker handling) — it's the expected
+  steady state for anything that hasn't needed a reference yet, not an error to flag.
+- **A ship that fixes or reworks an earlier Done item** tags itself with `fixes: I<N>` (bug fix) or
+  `reworked: I<N>` (broader rework), referencing the origin's id — see Step 6. This also sets
+  `reassess: pending` on the *origin* entry, standalone of whether `Feedback:` is on (see
+  `feedback.md`'s and `session-start.md`'s handling of that flag). If `Risk register: on`, a
+  `fixes:`/`reworked:` link is also one of the signals that can trigger a risk-area proposal — see
+  `risk-register.md`.
 - Idea category headers and names are entirely up to the project — there might be two, or
   five, and they might be called "Features"/"Refactors" or something far more specific to that
   project's domain. Discover them by reading the file; don't assume fixed category names.
@@ -129,6 +162,7 @@ Feedback: on                   <!-- optional, see feedback.md -->
 | 0 (session-start.md) | If the tracker exists but is malformed, ask the user rather than silently rewriting or refusing |
 | 0.5 (session-start.md) | Confirm goal changes with the user before updating Goals / bumping `Last reviewed:` |
 | 2 | Show proposed new ideas, or a category retirement/merge/narrow, and wait for confirmation before writing anything |
+| 2/4.5/6 (risk-register.md) | Show a proposed risk-area creation or update (any trigger), and an archival/reactivation, and wait for confirmation before writing to `RISK_REGISTER.md` |
 | 4 | Do not start planning or implementing until the user confirms which one (if any) to build |
 | 4.5 | Get the plan approved before writing any code |
 
@@ -136,10 +170,11 @@ Feedback: on                   <!-- optional, see feedback.md -->
 mirror of the steps, not independent prose, so it's the one place to check rather than three
 scattered cross-references.
 
-## Step 0 and Step 0.5: Find/bootstrap the tracker, check staleness
+## Step 0, Step 0.5, and Step 0.6: Find/bootstrap the tracker, check staleness, surface reassess flags
 
 Read `session-start.md` and follow it before continuing — it covers finding or bootstrapping the
-tracker (including the malformed-tracker case) and checking whether Goals are stale. This is the
+tracker (including the malformed-tracker case), checking whether Goals are stale, and (Step 0.6,
+`Feedback: off` only) surfacing standalone reassess flags. This is the
 one companion file that's read every run, not gated behind a trigger condition; see the intro
 above for why it's split out. Once it says to, continue to Step 1 below.
 
@@ -168,6 +203,20 @@ rather than inventing from nowhere:
 - What's the natural next step after whatever just shipped?
 - What did the user mention in passing that sounded like a want but wasn't captured yet?
 - If `Feedback:` is on, factor recorded outcomes in too — see `feedback.md`.
+- If `Risk register: on`, a rough edge that's actually a repeat/structural pattern (not just one
+  isolated spot) is also a candidate risk-area proposal, not only a candidate idea — see
+  `risk-register.md`'s Step 2 trigger.
+
+**Assign an id when a proposed idea is actually appended.** Not at brainstorm time — only once the
+user has confirmed it's going in (see the confirmation rule below), take the current `Next id:`
+value, write it onto the new entry, and bump the counter. Declined ideas that go to Rejected don't
+consume an id.
+
+**If `Risk register: on`, cross-reference each candidate against active risk areas** before
+presenting it — read `RISK_REGISTER.md`'s active entries and check whether the candidate's
+category/theme matches one. If it does, say so when presenting it (see `risk-register.md`) rather
+than leaving the match implicit, and if the user accepts the idea, add its id to that risk area's
+`at-risk:` list in the same write.
 
 **Check Rejected before proposing.** If a candidate closely resembles something already in
 Rejected, don't just skip it or blindly re-propose it — read the recorded reason and judge
@@ -234,6 +283,14 @@ nothing else here does by default), saying it implies it mattered when it didn't
 factor if it's tier fit, a genuine synergy (below), or an active strategy signal that actually
 swung the pick.
 
+**If `Risk register: on`, a candidate that mitigates an active risk is a distinct signal from
+synergy** — it's not "these two ideas help each other," it's "this specific candidate is what an
+already-persisted risk area names as its mitigation." Treat it the same weight class as synergy for
+tie-breaking (see `risk-register.md`), but keep the reasoning text distinct: "mitigates R3" is a
+different claim than "also lays groundwork for Y," and a candidate that's merely `at-risk:`-tagged
+(exposed to a risk, not building against it) is a caution flag, not a tie-break in its favour —
+don't conflate the three in Step 4's presentation.
+
 **Synergies are a soft signal, judged fresh each run, not tracked data.** While ranking, notice if
 a candidate is a genuine stepping stone toward another outstanding candidate, would make one
 noticeably easier, or shares real implementation with it — but only when it's concrete (name the
@@ -281,6 +338,13 @@ tier-3 maintenance work but nothing above it is ready to build, since Y." The cl
 is configurable (`max-options(N)`) — see `strategies.md`. If Step 3 noticed a genuine, concrete
 synergy with another outstanding candidate, mention it here too ("this also lays the groundwork
 for Y") — it's part of the reasoning, not a separate line item.
+
+**Flag risk-register signals explicitly, and don't conflate them.** If `Risk register: on` and the
+pick mitigates an active risk area, say so plainly ("this also mitigates R3 — <theme>"). If instead
+it's merely `at-risk:`-tagged (touches a category with an active risk but isn't building against
+it), flag that too but as a caution, not a point in its favour ("this touches R3's risk area —
+worth extra care on <what the risk actually is>"). These are two different claims; use the wording
+that matches which one actually applies — see `risk-register.md`.
 
 If `Selection strategy:` is set to anything else, read `strategies.md` and build the
 presentation as it describes instead.
@@ -332,6 +396,11 @@ declined doesn't retroactively unpick or reject the idea itself, which is still 
 just not being built right now. Leave it as-is in its category; it goes back through Step 3's
 ranking next time like anything else outstanding.
 
+**If planning surfaces a risk that wasn't already known** (e.g. scoping the work exposes fragile
+coupling, an untested assumption, a structural weak point), and `Risk register: on`, propose a
+risk-area entry right here rather than waiting for a future fix to retroactively prove the pattern
+— same confirm gate as any other risk-register write, see `risk-register.md`.
+
 **Always plan fresh; don't reuse an old plan for an idea that gets picked again later.** If a
 candidate was proposed, planned, and then declined or shelved in an earlier session, and the same
 idea comes up again now, write a new plan grounded in the project's current state rather than
@@ -355,6 +424,30 @@ note on what was actually built. If `Feedback: on`, see `feedback.md` for the ex
 add at this step. Leave everything else in the file untouched. If the work surfaced new
 follow-on ideas that weren't there before, add them to the relevant category now rather than
 losing them — that's the loop closing, not scope creep.
+
+**Ask whether this ship fixes or reworks an earlier one.** Every recording, ask directly — with an
+auto-detect suggestion, not a blind open question: scan recent Done entries (and the branch/commit
+context, if this session touched a specific bug or reopened specific files) for a plausible origin,
+propose it, and let the user confirm, correct, or say no. If confirmed:
+- Tag the new entry `fixes: I<N>` (bug fix) or `reworked: I<N>` (broader rework), referencing the
+  origin's id (mint one for the origin now if it predates the id field — see the tracker-format
+  section above).
+- Set `reassess: pending` on the **origin** entry. This is standalone of `Feedback:` — it applies
+  whether or not the feedback subsystem is on. See `feedback.md` (Feedback on: folded into its
+  check-in, prioritised over routine outcome asks) and `session-start.md` (Feedback off: a
+  lightweight one-off surfacing, no persistent answer required).
+- If `Risk register: on`, this link is also one of `risk-register.md`'s creation/update triggers —
+  follow it there (propose creating or extending a risk area, confirm before writing).
+
+If the user says this ship is *not* a fix/rework of anything, or the auto-detect had nothing
+plausible, record the ship normally with no `fixes:`/`reworked:` tag — don't force a link that
+doesn't exist.
+
+**A clean ship of a previously `at-risk:`-tagged idea is itself a signal.** If `Risk register: on`
+and the idea being recorded was on an active risk area's `at-risk:` list, and this ship needs no
+`fixes:`/`reworked:` tag of its own, that's counter-evidence against the risk (see
+`risk-register.md`'s archival trigger) — note it there, don't just drop the idea off the list
+silently.
 
 **After appending, check whether Done needs trimming.** If the live tracker's Done section now
 holds more than ~20 entries, archive the oldest down to a working set of ~15 (a target, same

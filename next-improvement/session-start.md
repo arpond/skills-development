@@ -1,8 +1,9 @@
 # Session start: find/bootstrap the tracker, check staleness
 
-Read this file every time the skill triggers, right after `SKILL.md`'s intro — this is Steps 0
-and 0.5 of the loop. Unlike the other companion files (`setup.md`, `strategies.md`,
-`feedback.md`), this one isn't optional or one-time: every run starts here, since every run needs
+Read this file every time the skill triggers, right after `SKILL.md`'s intro — this is Steps 0,
+0.5, and 0.6 of the loop. Unlike the other companion files (`setup.md`, `strategies.md`,
+`feedback.md`, `risk-register.md`), this one isn't optional or one-time: every run starts here,
+since every run needs
 a tracker to read and needs to know whether its Goals are still trustworthy before ranking
 anything against them. It lives in its own file purely to keep `SKILL.md` focused on the
 steady-state propose/build/record loop — the split is about what's loaded into the common-case
@@ -72,4 +73,25 @@ previously-distinct tiers — same edit-and-bump mechanism as any other repriori
 If `Selection strategy:` is present (or the user wants to add/change it), see `strategies.md` —
 it's not fixed at setup either and is edited the same lightweight way. If `Feedback:` is present
 (or the user wants to add/change it), see `feedback.md`, which also runs its own short check-in
-from this step when relevant.
+from this step when relevant. If `Risk register:` is present (or the user wants to add/change it),
+see `risk-register.md`.
+
+## Step 0.6: Surface standalone reassess flags (`Feedback: off` only)
+
+A `reassess: pending` flag (set by `SKILL.md` Step 6 when a later ship fixes/reworks an earlier
+one) is standalone of `Feedback:` — it exists regardless of whether that subsystem is on. When
+`Feedback: on`, it's folded into `feedback.md`'s own check-in instead (see that file) and this step
+does nothing. **This step only fires when `Feedback:` is off or absent** — otherwise the flag would
+surface twice.
+
+Same once-per-session throttle as Step 0.5/`feedback.md`'s check-in (track in conversation context
+only, never written to the tracker). If it's already surfaced once this session, skip this step
+entirely on later rounds.
+
+Scan the live tracker's Done section for `reassess: pending` entries. If any exist, surface the
+oldest one as a single lightweight line — no persistent answer required, no wait/bulk timing, just
+visibility: "'<origin idea>' needed a follow-up fix/rework (<the fixing idea's name>) — worth a
+look at how it was scoped or actioned?" If the user engages, that's a normal conversation, not a
+tracked field; if they don't, move on — don't block the rest of the run on it. Clear the flag
+(remove `reassess: pending` from that entry) once it's been surfaced once, same "answered items
+drop out" spirit as `feedback.md`'s eligible pool, so it doesn't repeat forever.

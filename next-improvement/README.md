@@ -23,6 +23,10 @@ Files:
 - `feedback.md` — an optional loop that asks how past ships actually landed
   (delivered / mixed / missed) and feeds that back into future judgement, capped so it never
   turns into a nagging backlog. Only read when a project has `Feedback: on`.
+- `risk-register.md` — an optional loop that traces which shipped ideas needed follow-up fixes,
+  reworks, or bad outcomes, persists that as a named risk area in a sibling `RISK_REGISTER.md`,
+  and cross-references future proposals against it. Only read when a project has
+  `Risk register: on`.
 
 A project's tracker may also grow a sibling `IMPROVEMENT_TRACKER_DONE.md` once its Done history
 gets long — older shipped entries move there automatically (Step 6) so the live tracker stays a

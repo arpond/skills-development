@@ -93,18 +93,24 @@ First: does this commit even need a body? Check `## Body` for a stated policy; t
 default is *no, unless the why genuinely isn't recoverable from the subject alone*.
 
 If a body is written, check it against every rule listed under `## Body`, individually. Built-in
-defaults (apply to whatever isn't overridden):
+default (light, deliberately — applies only to whatever isn't overridden):
 
 - Format is `-`-bulleted, never a prose paragraph.
-- Each bullet passes the strip-test:
-  1. List every proper noun, class name, function name, library name, header name, or config key
-     that appears in it.
-  2. Delete them from the sentence.
-  3. Read what's left — does it still stand alone as a complete rationale?
-  4. If yes, keep it. If no, it was describing the mechanism rather than the intent — rewrite it
-     as pure "why," then run the test again on the new version.
-- The diff already shows the mechanism; the message's only job is the part the diff can't show —
-  why the change happened. See `README.md` for a worked example of the strip-test in practice.
+- Each bullet explains *why* the change happened, not what changed or how — the diff already shows
+  the mechanism, so a bullet that just narrates the diff in prose isn't adding anything.
+
+**Strip-test** — an optional, more rigorous technique for checking a bullet actually holds to the
+above, available if `## Body` opts into it (setup.md offers this explicitly; it's not applied
+unless requested, since it's a specific stylistic discipline rather than a universal default):
+
+1. List every proper noun, class name, function name, library name, header name, or config key
+   that appears in the bullet.
+2. Delete them from the sentence.
+3. Read what's left — does it still stand alone as a complete rationale?
+4. If yes, keep it. If no, it was describing the mechanism rather than the intent — rewrite it as
+   pure "why," then run the test again on the new version.
+
+See `README.md` for a worked example of the strip-test in practice.
 
 ## Step 4 — Footer
 

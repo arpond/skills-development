@@ -107,7 +107,8 @@ Claude: [invokes commit-message-check — conventions file defines a Prefix rule
 
 **A messier draft, showing the checklist actually catching things** (not just passing a clean
 draft through) — conventions file here has a `Footer` rule requiring a link back to the PR/ticket,
-and a `Whole-message` rule for British spelling:
+a `Whole-message` rule for British spelling, and opts into the strip-test (an optional, stricter
+body technique — not the default; see `SKILL.md` Step 3):
 
 ```
 You: Write the commit for this.

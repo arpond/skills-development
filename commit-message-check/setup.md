@@ -41,12 +41,17 @@ something specific, not a vague gesture at "standard practice."
      always names the object of the verb (`Fix broken retry loop`, not bare `Fix`). Show this
      concretely, ask if it fits or if anything should change or be added (e.g. a language/spelling
      convention belongs under Whole-message instead, not here — see below).
-   - **Body.** Built-in default: no body unless the subject genuinely can't carry the why; when
-     present, always `-`-bulleted and each bullet passes the strip-test (delete every proper
-     noun/function/class/library name from it, check what's left still reads as a complete
-     rationale on its own, rewrite if not). Show this concretely (a one-line example is enough),
-     ask if it fits or if this user wants something else — always a body, never a body, a specific
-     template, a different body format entirely.
+   - **Body.** Built-in default (kept deliberately light, to avoid biasing the user toward one
+     specific style): no body unless the subject genuinely can't carry the why; when present,
+     always `-`-bulleted, each bullet stating why rather than what/how. Show this concretely, ask
+     if it fits or if this user wants something else — always a body, never a body, a specific
+     template, a different body format entirely. Separately, offer the **strip-test** as an
+     opt-in, more rigorous technique (not the default): delete every proper noun/function/class/
+     library name from a bullet, check what's left still reads as a complete rationale on its own,
+     rewrite if not. Show a one-line example, ask if they want this applied on top of the light
+     default or skip it — don't bundle it into the default silently just because it's a good
+     technique; it's a specific stylistic discipline one person happened to like, not something
+     every user would necessarily want imposed on their own judgment.
    - **Footer.** No built-in default. Does this user want anything appended after the body —
      a required link (ticket, PR, doc), a co-author trailer policy, anything else that goes at the
      end? If no: record that explicitly rather than leaving it blank and ambiguous.

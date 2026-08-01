@@ -150,13 +150,17 @@ Count remaining (not-in-Done) items in each idea category.
 ## Step 2: Top up any category running low
 
 If a category has fewer than ~3 items, or is empty, it needs fresh ideas before ranking makes
-sense — there's nothing meaningful to weigh against the goals otherwise. When topping up, aim for
-a bigger buffer than the trigger — target ~6-8 outstanding items in the category, not just enough
-to clear the ~3 floor — so picking one or two off the top doesn't immediately drop it back into
-top-up territory next run. This is a target, not a quota: it raises how much ground to search
-before stopping, it never lowers the bar on any individual idea (see "exhausted is a valid
-outcome" below) — a category that only has 4 solid ideas stays at 4. Ground new ideas in the
-project's actual current state rather than inventing from nowhere:
+sense — there's nothing meaningful to weigh against the goals otherwise. The ~3 floor is only the
+*trigger* for starting a top-up, not the stopping point — don't stop searching once the count
+clears 3. Keep searching until the category reaches **~6-8 outstanding items**, and don't stop
+short of that range without a concrete reason. If you stop before reaching 6-8, say explicitly
+why (e.g. "checked recent commits, rough edges, and natural next-steps — only 4 solid candidates
+exist, the rest would be filler") — a silent stop at 3-4 is exactly the undershoot this rule
+exists to prevent. This is a target, not a quota: it raises how much ground to search before
+stopping, it never lowers the bar on any individual idea (see "exhausted is a valid outcome"
+below) — a category that only has 4 solid ideas stays at 4, but that must be a stated, evidenced
+conclusion, not a default stopping point. Ground new ideas in the project's actual current state
+rather than inventing from nowhere:
 
 - What's been built or changed recently (recent commits, new modules, new files)?
 - What's untested, fragile, or has a noted rough edge (TODO-style comments, test coverage gaps,

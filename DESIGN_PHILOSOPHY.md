@@ -251,3 +251,9 @@ around on its own (per
 [Unreachable isn't resolved](#unreachable-isnt-resolved-in-either-direction)) don't need the same
 billing; conflating the two either buries a real blocker behind a wall of caveats or overstates
 how fragile the skill actually is.
+
+Applies between a skill's own optional subsystems too, not just external tools — if optional
+feature B reuses optional feature A's periodic mechanism (a check-in loop, a scheduled surfacing),
+turning B on without A doesn't just degrade gracefully, it can leave B permanently inert with no
+visible sign. State that dependency explicitly and surface it at the point B would first activate,
+the same as an external dependency would be stated up front.

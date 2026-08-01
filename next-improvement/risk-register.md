@@ -56,6 +56,15 @@ Next id: R<N>
   entry (Step 2/3/4, or deciding whether to archive), pull that evidence live rather than trusting
   a stored snapshot.
 
+## Malformed file
+
+`RISK_REGISTER.md` can exist but not parse (a missing `Next id:`, an entry outside `## Active`/
+`## Archived`, an unrecognised `status:` value) — same "unreachable isn't resolved" treatment as
+`IMPROVEMENT_TRACKER.md`'s own malformed-tracker case (`session-start.md` Step 0): don't silently
+reinterpret or rewrite it, and don't refuse to proceed either. Name the specific thing that doesn't
+parse and ask directly, same as the tracker's own handling. `Next id:` missing specifically isn't
+this case — see `SKILL.md`'s lazy-initialization rule, which applies here too.
+
 ## Setup (from `setup.md`)
 
 Ask one short yes/no alongside the `Selection strategy:`/`Feedback:` questions: want the skill to
@@ -110,6 +119,15 @@ quiet since this shipped, or has it recurred?") and write the answer as that ris
 `mitigated-by: I23 (outcome: <answer>)`, not as the idea's own `outcome:` field (the idea already
 has its own routine outcome from the ordinary feedback loop, if `Feedback:` is also on — the two
 are separate judgements about the same ship: did it deliver, and did it actually fix the risk).
+
+**This is a hard dependency on `Feedback: on`.** `feedback.md`'s check-in only runs from
+`session-start.md` Step 0.5 when `Feedback:` is on — if `Risk register: on` and `Feedback: off`,
+there is no periodic mechanism to ever ask about a `mitigated-by:` outcome, and it would sit at
+`pending` indefinitely with nothing surfacing that fact. Don't silently let this happen: if a
+project has `Risk register: on` while `Feedback:` is off, say so the first time a `mitigated-by:`
+tag would be added ("mitigation outcomes need `Feedback: on` to ever get checked — turn it on too,
+or this one will just stay `pending`?") and let the user decide, same as any other setup-time
+disclosure rather than a silently-dead feature.
 
 ## Archival and reactivation
 

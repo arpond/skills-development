@@ -60,7 +60,13 @@ the user has to remember to do first:
    that one message, before asking what they want — a bare "want a selection strategy, or keep the
    default?" does not satisfy this, since the user can't choose from options they were never shown.
    Feedback's and the risk register's questions each stay a single short yes/no, no menu needed.
-5. Write the file with the confirmed tiers, `Selection strategy:`, `Feedback:`, `Risk register:`
+5. **Disclose the one behavior that isn't opt-in.** Regardless of what they choose above, mention
+   once: every ship gets asked whether it fixes or reworks an earlier one (`SKILL.md` Step 6) —
+   this flags the origin item for a second look (`reassess:`, surfaced via `session-start.md` Step
+   0.6 even with both `Feedback:` and `Risk register:` off) and feeds `fixes:`/`reworked:` ids used
+   by whichever subsystems are on. It's core-loop, not a toggle — say so plainly rather than
+   letting it show up unannounced the first time a ship gets recorded.
+6. Write the file with the confirmed tiers, `Selection strategy:`, `Feedback:`, `Risk register:`
    setting, and today's date as `Last reviewed:`, then proceed to Step 1 in `SKILL.md` (it will
    find the categories empty, which is an expected and normal case of "running low," not an
    error).

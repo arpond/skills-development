@@ -141,7 +141,11 @@ Risk register: on              <!-- optional, see risk-register.md -->
   like any other Step 2 judgement call (re-propose to a different category, or drop with a
   Rejected note) rather than silently discarding them. All three (retire, merge, narrow) are still
   a write to the tracker and need confirmation first, same as any other Step 2 change (see the
-  hard-rules table).
+  hard-rules table). **Preserve the id on a dropped item's Rejected note** (`(Category, YYYY-MM-DD,
+  id: I<N>)`) if it already had one — an outstanding idea can be referenced from elsewhere (a risk
+  entry's `at-risk:` list) purely by id, and dropping it to Rejected doesn't retract that reference;
+  if `Risk register: on`, also remove the id from any `at-risk:` list it appears on, same as any
+  other idea leaving the outstanding pool (see Step 6's clean-ship handling for the parallel case).
 - **Done** is append-only history, never deleted from. Prefix each entry with its origin
   category in parens — useful bookkeeping regardless of any optional subsystem; legacy entries
   without a tag just aren't counted by anything that relies on it, no migration needed.
@@ -432,9 +436,13 @@ propose it, and let the user confirm, correct, or say no. If confirmed:
 - Tag the new entry `fixes: I<N>` (bug fix) or `reworked: I<N>` (broader rework), referencing the
   origin's id (mint one for the origin now if it predates the id field — see the tracker-format
   section above).
-- Set `reassess: pending` on the **origin** entry. This is standalone of `Feedback:` — it applies
-  whether or not the feedback subsystem is on. See `feedback.md` (Feedback on: folded into its
-  check-in, prioritised over routine outcome asks) and `session-start.md` (Feedback off: a
+- Set `reassess: pending` on the **origin** entry — **in whichever file it actually lives in.** The
+  origin may already have been archived to `IMPROVEMENT_TRACKER_DONE.md` by the time a fix ships
+  (Step 6's own Done-trimming can move it there long before anyone fixes it); check there if it's
+  not still in the live tracker's Done section, same "one combined pool, not just the live file"
+  treatment `feedback.md`'s outcome-writes already use. This is standalone of `Feedback:` — it
+  applies whether or not the feedback subsystem is on. See `feedback.md` (Feedback on: folded into
+  its check-in, prioritised over routine outcome asks) and `session-start.md` (Feedback off: a
   lightweight one-off surfacing, no persistent answer required).
 - If `Risk register: on`, this link is also one of `risk-register.md`'s creation/update triggers —
   follow it there (propose creating or extending a risk area, confirm before writing).
@@ -443,11 +451,12 @@ If the user says this ship is *not* a fix/rework of anything, or the auto-detect
 plausible, record the ship normally with no `fixes:`/`reworked:` tag — don't force a link that
 doesn't exist.
 
-**A clean ship of a previously `at-risk:`-tagged idea is itself a signal.** If `Risk register: on`
-and the idea being recorded was on an active risk area's `at-risk:` list, and this ship needs no
-`fixes:`/`reworked:` tag of its own, that's counter-evidence against the risk (see
-`risk-register.md`'s archival trigger) — note it there, don't just drop the idea off the list
-silently.
+**Recording any ship, first drop its id from every active risk entry's `at-risk:` list** — that
+field is specifically *outstanding* ideas (see `risk-register.md`), and this one just stopped being
+outstanding regardless of how it shipped. Then, separately: if this ship needed no `fixes:`/
+`reworked:` tag of its own, that clean ship is itself counter-evidence against the risk (see
+`risk-register.md`'s archival trigger) — note it there rather than just silently removing the id
+and moving on.
 
 **After appending, check whether Done needs trimming.** If the live tracker's Done section now
 holds more than ~20 entries, archive the oldest down to a working set of ~15 (a target, same

@@ -88,10 +88,17 @@ Same once-per-session throttle as Step 0.5/`feedback.md`'s check-in (track in co
 only, never written to the tracker). If it's already surfaced once this session, skip this step
 entirely on later rounds.
 
-Scan the live tracker's Done section for `reassess: pending` entries. If any exist, surface the
+Scan the live tracker's Done section (and `IMPROVEMENT_TRACKER_DONE.md` if it exists, same
+combined-pool treatment as `feedback.md`) for `reassess: pending` entries. If any exist, surface the
 oldest one as a single lightweight line — no persistent answer required, no wait/bulk timing, just
 visibility: "'<origin idea>' needed a follow-up fix/rework (<the fixing idea's name>) — worth a
 look at how it was scoped or actioned?" If the user engages, that's a normal conversation, not a
 tracked field; if they don't, move on — don't block the rest of the run on it. Clear the flag
 (remove `reassess: pending` from that entry) once it's been surfaced once, same "answered items
 drop out" spirit as `feedback.md`'s eligible pool, so it doesn't repeat forever.
+
+**Fold with Step 0.5 if both are due the same run** — same "one check-in, not two" reasoning Step
+0.5 already applies when folding in `feedback.md`'s check-in: if Goals are also due a check-in this
+run, ask both in one message rather than stacking two separate prompts back-to-back, e.g. "Goals
+were last confirmed on <date>... still the right order? Also, '<origin idea>' needed a follow-up
+fix — worth a look at how it was scoped?" If only one is due, ask just that one.

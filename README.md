@@ -168,3 +168,16 @@ Principles applied consistently across the skills in this repo:
   improvises. Any path a skill depends on should be expressed relative to a portable anchor (the
   current user's home directory, a location the skill bootstraps itself) rather than copied from
   wherever it was first written.
+- **Malformed stored state gets its own check, distinct from "can't reach it."**
+  "Unreachable isn't resolved" covers a check that can't run at all — no access, no result. A
+  stored file that *can* be read but doesn't parse into the shape a skill expects is a different
+  failure mode: don't silently reinterpret it, discard it, or bootstrap over it. Stop and ask.
+- **Every write path needs an explicit target, not just every read path a precedence order.**
+  Layered config (project-level over personal over built-in default) is easy to get right on the
+  read side and easy to forget on the write side: when a correction needs writing back, which
+  layer does it belong to? Solve both directions, not just the one that's exercised on every run.
+- **A claimed property that isn't self-verifying deserves a one-time check at the point it's
+  created.** "This should be committed for sharing to actually work" is a sentence, not a
+  guarantee. Where a skill's behavior depends on an external fact holding (a file actually
+  tracked, a dependency actually installed), check it once at the moment that matters most —
+  creation — rather than asserting it in prose and trusting it got acted on.

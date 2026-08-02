@@ -32,10 +32,26 @@ Files:
 - `changelog.md` — what each skill version added, plus the versioning policy. Only read when an
   existing tracker turns out to be behind the installed skill version.
 
-A project's tracker may also grow a sibling `IMPROVEMENT_TRACKER_DONE.md` once its Done history
-gets long — older shipped entries move there automatically (Step 6) so the live tracker stays a
-manageable read; it's only opened when older history is actually needed, never as part of the
-normal loop.
+## What it writes
+
+All inside the project you're working in — nothing elsewhere on your machine, nothing off it.
+
+- **`IMPROVEMENT_TRACKER.md`** — the tracker itself, created on first use after a setup
+  conversation. One per project (the directory with its own README/package manifest, not
+  necessarily the repo root).
+- **`IMPROVEMENT_TRACKER_DONE.md`** — appears once Done history gets long; older shipped entries
+  move here automatically so the live tracker stays a manageable read. Only opened when older
+  history is actually needed.
+- **`RISK_REGISTER.md`** — only if you turn `Risk register: on`, which is off by default.
+
+**Where it looks:** the project root first, then the project's own docs directory (`docs/`,
+`doc/`, `documentation/`) if it has one, then `.claude/`. It uses an existing tracker wherever it
+finds one and never moves it. Creating a new one goes into the docs directory if the project
+already has one, otherwise the project root — it won't create a docs directory to hold it. The
+other two files always sit beside the tracker, wherever that turned out to be.
+
+Every write is shown and confirmed first, apart from mechanical bookkeeping (moving a shipped item
+to Done, aging entries into the archive).
 
 ## Requires
 

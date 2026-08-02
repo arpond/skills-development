@@ -43,6 +43,22 @@ Files:
 Cheap — one file read (the conventions file) plus reasoning against a checklist. No external
 tools or MCP calls. Setup (first run only) is a short back-and-forth with the user.
 
+## What it writes
+
+- **`.claude/commit-message-conventions.md`** — your conventions, written once at first use after
+  an interrogation about how you actually like commit messages written. Two possible homes: at the
+  **repo root** as a committed team standard, or at `~/.claude/` as a personal one that follows you
+  across every repo. It asks which at bootstrap, reads both when both exist (repo wins per
+  heading), and updates one only when you've said a rule in it is wrong.
+
+**Where it looks:** repo root `.claude/` first, then `~/.claude/`. Deliberately not the repo root
+itself or a docs folder — this is config you rarely open, not documentation. It's per-repo rather
+than per-project because a repo with several projects still has one commit history.
+
+Beyond that it writes nothing into your project. It does, of course, affect your actual commits —
+that's the job — but it never runs `git commit` on its own; it gates a message you were already
+about to make.
+
 ## Requires
 
 - **A conventions file, personal (`~/.claude/commit-message-conventions.md`) and/or repo-level

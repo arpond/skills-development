@@ -24,6 +24,21 @@ confirmed in scope (Step 5). Expect noticeably more tool calls and tokens than a
 question, in exchange for a plan actually grounded in the current codebase rather than a restated
 ticket. The skill itself flags this to the user before Step 1 starts.
 
+## What it writes
+
+**No files in your project.** The plan lives in the conversation (or in Claude Code's plan file,
+which the harness manages, not this skill).
+
+- **A comment on the Jira ticket**, offered once the plan is approved — this leaves your machine
+  and is visible to anyone with access to the ticket. It's the preferred next step rather than a
+  mandatory one: a plan that only exists in the conversation is gone when the session ends, while
+  one on the ticket survives for whoever picks it up. The content is confirmed with you before
+  posting, never posted automatically just because a plan now exists.
+
+If you'd rather go straight to implementing, that's fine and the comment is skipped. Code the plan
+produces is ordinary work in your repo — this skill stops at an approved plan and doesn't change
+how code gets written after that.
+
 ## Requires
 
 - **A Jira MCP server, configured and authenticated** — this is a hard dependency. Every step

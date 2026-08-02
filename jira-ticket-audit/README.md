@@ -26,6 +26,24 @@ Lighter than `plan-technical-jira-ticket`: no codebase exploration, no checkout-
 Still fetches the ticket plus its comments, linked issues, parent epic, and epic siblings (via a
 JQL query), so expect a handful of Jira MCP calls per audit rather than a single lookup.
 
+## What it writes
+
+**By default, nothing.** A single-ticket audit is answered in the conversation. Both outputs below
+happen only if you ask, or if you're auditing several tickets at once — and each is shown in full
+and confirmed before anything is written.
+
+- **`TICKET-AUDIT-<KEY>.md`** — a report file, in whatever directory the skill was run from.
+- **A comment on the Jira ticket itself** — this one leaves your machine and is visible to anyone
+  with access to the ticket. It asks which you want (file, comment, or both) rather than assuming.
+
+It reads a lot more than it writes: the ticket, its comments, linked issues, the parent epic and
+its siblings. On a later audit of the same ticket it looks for a prior report in *both* places
+above, since finding only one would mean re-deriving findings that were already reached.
+
+The skill also carries `references/stage-expectations.md` inside its own folder, which it may
+update with per-project workflow conventions it learns — that's inside the installed skill, not
+your project.
+
 ## Requires
 
 - **A Jira MCP server, configured and authenticated** — hard dependency. Every step relies on

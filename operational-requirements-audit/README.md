@@ -21,6 +21,19 @@ Files:
   are discussion, not part of the requirement, and are intentionally excluded) into the bundled
   reference file.
 
+## What it writes
+
+- **`OPERATIONAL_REQUIREMENTS_AUDIT.md`** — the report, at the root of whatever was audited: the
+  repo root, or a service subdirectory if the repo holds several independently-deployed services
+  and you scoped the audit to one.
+
+**Only for a full or explicitly multi-OR audit, or if you ask.** A narrow "does this service meet
+the backups OR?" is answered in the conversation and writes nothing. The summary table is shown and
+confirmed before the file is written, and if a report of the same name already exists you're told
+so in that same message rather than finding out afterwards.
+
+Nothing else is written — no changes to the audited code, and nothing outside the repo.
+
 ## Requires
 
 Nothing beyond local file read/search (Read/Grep/Glob) to investigate the target repo. Refreshing

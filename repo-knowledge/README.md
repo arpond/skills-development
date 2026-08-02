@@ -27,6 +27,26 @@ Files:
   inline in `SKILL.md`; this is the human-judgment pass on top of it). Read when a review is due,
   or on explicit request.
 
+## What it writes
+
+All inside the project you're working in — nothing elsewhere on your machine, nothing off it.
+
+- **`KNOWLEDGE.md`** — the knowledge file itself, created on first use after a short setup
+  conversation. One per project (the directory with its own README/package manifest, not
+  necessarily the repo root). Meant to be committed; the whole point is that the next person hits
+  the gotcha and finds it already written down.
+- **One line added to an existing `CLAUDE.md`**, if the project has one — a pointer so the file
+  gets found, not a copy of its contents. Proposed and confirmed like anything else, and skipped
+  entirely if there's no `CLAUDE.md` to point from. This is the only file the skill touches that
+  it doesn't own.
+
+**Where it looks:** the project root first, then the project's own docs directory (`docs/`,
+`doc/`, `documentation/`) if it has one, then `.claude/`. It uses an existing file wherever it
+finds one and never moves it. Creating a new one goes into the docs directory if the project
+already has one, otherwise the project root — it won't create a docs directory to hold it.
+
+Every write is shown and confirmed first, including the first one that creates the file.
+
 ## Requires
 
 Nothing beyond local file read/write — no MCP server, no external service.

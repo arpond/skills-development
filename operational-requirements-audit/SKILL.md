@@ -12,17 +12,18 @@ topics; this skill carries a point-in-time export of them in `references/operati
 so an audit doesn't depend on live access to Discourse or on your own memory of what an OR says
 (wording matters — always read the bundled text, don't paraphrase from recollection).
 
-**Hard rules by step, so a review can check none have gone missing.** Scope: rules that hold
-however narrow the audit is — mostly obligations on the verdicts themselves (every verdict cites
-evidence, the repo's own docs are claims rather than proof, no secret value ever gets quoted), plus
-the three points that wait on the user. Reading the bundled OR text rather than working from memory
-isn't listed because it's the premise of the whole skill, not a rule inside it. Absence from this
-table doesn't mean optional.
+**Hard rules by step, so a review can check none have gone missing.** Scope: rules that fail
+*silently* if skipped — where the report would look entirely normal with the rule broken. Crediting
+a verdict to the repo's own README instead of verifying it, or quoting a secret value into a
+citation, both produce a report that reads fine. Three rows are wait-for-the-user gates. Rules that
+fail visibly are deliberately absent — "every verdict cites at least one evidence path" (Step 3)
+isn't here, since breaking it yields obviously unsupported verdicts. Reading the bundled OR text
+rather than working from memory isn't listed either: it's the premise of the skill, not a rule
+inside it. Absence from this table doesn't mean optional.
 
 | Step | Hard rule |
 |---|---|
 | 1 | If the repo holds more than one independently-deployed service, ask which service(s) are in scope rather than auditing the whole repo as one undifferentiated thing |
-| 3 | Every Met/Partial/Not Met verdict needs at least one cited evidence path; N/A and Unverifiable need a one-line reason instead |
 | 3 | Treat the repo's own README/TSG/docs as claims, not proof — verify against actual config/code before crediting a verdict to them |
 | 3 | Never quote a secret/credential value into an evidence citation — cite the file/line/key instead |
 | 4 | For a narrow, single-OR question, answer conversationally by default; only write the report file for a full (or explicitly multi-OR) audit, or if asked |

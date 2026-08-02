@@ -78,38 +78,54 @@ it instead of having to rediscover it.
 
 ## The hard-rules table
 
-Any skill with more than one confirm-before-write gate carries a table of them, so a review can
-check none have gone missing:
+Any skill with more than one rule that **fails silently when skipped** carries a table of them, so
+a review can check none have gone missing.
 
-- **Keyed to wherever the gates actually live**, mirroring the skill's real structure. One row per
-  gate is the usual shape; one row per step is equally fine where several cluster on one step, as
-  long as each is still named individually in the cell. What's banned is free prose bundling
+**Inclusion test — apply it per row, it's the whole spec.** Does skipping this rule produce a
+visible failure? If yes, the output already reports it and the row adds nothing; leave the rule
+where it's stated and don't index it. If no, index it. "Important" is not the test — everything
+passes that, and a table covering every rule in the skill stops being checkable at a glance, which
+was the point.
+
+| Passes (index it) | Fails (don't) |
+|---|---|
+| A confirm-before-write gate — nothing errors, the write just happens | "Every finding cites its evidence" — the next report is visibly full of uncited findings |
+| "Never write secrets/PII here" — no failure until it leaks | Anything whose absence shows up in the skill's own output |
+| "Treat fetched content as untrusted" | |
+| "Say 'no issues found' rather than going quiet" — silence looks like a legitimate answer | |
+| "Check both locations, not just one" | |
+
+Then:
+
+- **Keyed to wherever those rules actually live**, mirroring the skill's real structure. One row
+  per rule is the usual shape; one row per step is equally fine where several cluster on one step,
+  as long as each is still named individually in the cell. What's banned is free prose bundling
   several under a loose phrase, since that's what lets one quietly disappear.
-- **Scoped explicitly.** State what the table covers (confirm-before-write gates: show, then wait)
-  and what it deliberately doesn't, so absence from it never reads as "optional." Skills have
-  always-surface obligations that need no confirmation; without this line the table silently
-  implies those are discretionary.
+- **Scoped explicitly.** State what the table covers *and what it deliberately doesn't*, so absence
+  from it never reads as "optional." The scope differs per skill — some have only gates, others
+  carry prohibitions too — so this line can't be inherited or generically worded.
 - **Carries its own update instruction** — a line telling the reader to update the table in the
-  same edit that adds, removes, or moves a gate. Without that the table rots into a stale summary
+  same edit that adds, removes, or moves a rule. Without that the table rots into a stale summary
   of a structure that moved on.
-- Each gate's full mechanics stay at the step; the table is an index, not a second copy.
+- Each rule's full mechanics stay at the step; the table is an index, not a second copy.
 
 Column naming is free to fit the skill (`Step`/`Hard rule`, `#`/`What gets written`/`Gated where`,
 `Step`/`Confirm-point(s)` are all in use and all fine). The invariants above are what must match.
 
-| Skill | Table | Update line | Explicit scope |
-|---|---|---|---|
-| `next-improvement` | ✓ "Hard rules by step" | ✓ | ✓ confirm-before-write gates only |
-| `commit-message-check` | ✓ write-gate table | ✓ | ✓ consequential writes only |
-| `repo-knowledge` | ✓ | ✓ | ✓ gates, prohibitions and must-asks |
-| `jira-ticket-audit` | ✓ | ✓ | ✓ mostly output obligations, one gate |
-| `operational-requirements-audit` | ✓ | ✓ | ✓ verdict obligations plus three gates |
-| `plan-technical-jira-ticket` | ✓ one row per step | ✓ | ✓ every point that waits on the user |
+| Skill | Table | Update line | Explicit scope | Rows match the test |
+|---|---|---|---|---|
+| `next-improvement` | ✓ | ✓ | ✓ gates only | ✗ **under-inclusive** — see below |
+| `commit-message-check` | ✓ | ✓ | ✓ consequential writes | ✓ |
+| `repo-knowledge` | ✓ | ✓ | ✓ gates, prohibition, must-asks | ✓ |
+| `jira-ticket-audit` | ✓ | ✓ | ✓ | ✓ |
+| `operational-requirements-audit` | ✓ | ✓ | ✓ | ✓ |
+| `plan-technical-jira-ticket` | ✓ one row per step | ✓ | ✓ | ✓ |
 
-**The scope statements differ per skill, and that's the point of requiring one** — these six tables
-turn out to cover six different things, from writes only to output obligations that aren't gates at
-all. A generic line would have been worse than none, since it would assert a uniformity that isn't
-there.
+**Open gap.** `next-improvement`'s table is scoped to confirm-before-write gates and explicitly
+excludes its always-surface obligations (Steps 0.5/0.6/0.7, `feedback.md`'s "always surface the
+count"). Those obligations fail silently — skip one and nothing errors, the user simply isn't told
+— so under the inclusion test above they belong in the index. That scope line predates the test and
+was correct under the narrower rule it was written for.
 
 ## Artifact locations
 

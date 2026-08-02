@@ -79,12 +79,13 @@ Last reviewed: <YYYY-MM-DD>
   remove that old `Declined` line — it stays as-is, same as `next-improvement`'s `Rejected` (see
   Step 2). Whatever gets written here is still subject to the same secrets/PII rule as entries.
 
-**Hard rules by step, so a review can check none have gone missing.** Scope: rules that can't be
-skipped whatever the situation looks like — confirm-before-write gates, the secrets/PII
-prohibition, and must-ask obligations alike, since all three fail the same way if quietly dropped.
-It deliberately doesn't list the every-run behaviour that needs no gate (referencing an entry when
-work touches its area, running an entry's mechanical check before relying on it). Absence from this
-table doesn't mean optional.
+**Hard rules by step, so a review can check none have gone missing.** Scope: rules that fail
+*silently* if skipped — confirm-before-write gates, the secrets/PII prohibition, and must-ask
+obligations alike, since all three break without anything visibly going wrong (a leaked credential
+surfaces long after the fact; an unasked question just never gets asked). It deliberately doesn't
+list every-run behaviour whose omission shows up on its own — referencing an entry when work
+touches its area, running an entry's mechanical check before relying on it. Absence from this table
+doesn't mean optional.
 
 | Step | Hard rule |
 |---|---|

@@ -20,6 +20,7 @@ address rather than a flat unstructured list.
   - [Don't persist a signal just because it's useful once](#dont-persist-a-signal-just-because-its-useful-once)
 - [Principles vs. specs](#principles-vs-specs)
 - [Structure & reuse](#structure--reuse)
+  - [Index what fails silently](#index-what-fails-silently)
   - [Reuse a judgment test, don't invent a parallel one](#reuse-a-judgment-test-dont-invent-a-parallel-one)
   - [A computed join needs its matching test written down once](#a-computed-join-needs-its-matching-test-written-down-once)
   - [Self-correcting knobs share one shape — reuse it](#self-correcting-knobs-share-one-shape--reuse-it)
@@ -48,10 +49,10 @@ these bullets cover when/how that gate fires.
 
 Every consequential write — a new idea added to a tracker, a choice of what to build, an
 implementation plan — gets shown to the user and confirmed before it happens. A recommendation is
-not a decision. Where a skill has more than one such gate, they get indexed in one place rather
-than left implicit, so drift is easy to catch on review: a gate that quietly stopped being enforced
-is invisible otherwise, since nothing fails — the write just happens. The index's shape is a spec,
-not a judgement call — see `CONVENTIONS.md`, "The hard-rules table."
+not a decision. A gate that quietly stopped being enforced is invisible — nothing fails, the write
+just happens — so where a skill has more than one, they get indexed rather than left implicit. Gates
+are the clearest member of a wider class that needs indexing for that same reason; see
+[Index what fails silently](#index-what-fails-silently) for the class and the test.
 
 ### A default the user never saw isn't a default
 
@@ -158,6 +159,26 @@ second skill needs it, which is the point to move it rather than copy it.
 
 How a skill's checks and prompts get built — coverage should come from the shape of the problem
 and from reusing what already exists, not from listing cases as they're remembered.
+
+### Index what fails silently
+
+A skill accumulates rules that must never be skipped, and a review can only check the ones it can
+find. So collect them in one index — but the inclusion test is not "is this important," which
+everything passes. **It's whether skipping the rule produces a visible failure.** If it does, the
+output already reports it and an index adds nothing. If it doesn't, nothing anywhere will ever say
+so, and the index is the only thing standing between a quietly-dropped rule and never finding out.
+
+The clearest case is a confirm-before-write gate ([Propose, don't just do](#propose-dont-just-do)):
+skip it and nothing errors, the write just happens. But that's the clearest case, not the only one
+— a "never write secrets into this file" prohibition fails the same way and more expensively, and
+so does anything that makes an absence look like a legitimate answer ("a dimension with nothing
+wrong says so explicitly, rather than going quiet"). Conversely a rule like "every finding cites
+its evidence" is *out*: drop it and the very next report is visibly full of uncited findings.
+
+Keeping the test sharp is what keeps the index useful. An index that grows to cover every rule in
+the skill is no longer checkable at a glance, which was the entire point — so a rule that doesn't
+pass the test stays where it's stated and simply isn't indexed. The index's exact shape is a spec —
+see `CONVENTIONS.md`, "The hard-rules table."
 
 ### Reuse a judgment test, don't invent a parallel one
 

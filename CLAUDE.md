@@ -78,9 +78,6 @@ stacked as a second ask right after some other confirmation (see "one check-in, 
 declined, don't re-offer for that same change; the user can ask for any individual pass (or the
 whole loop) at any time without waiting for the offer.
 
-This loop isn't exclusive to `commit-message-check` — apply it to whichever skill (or
-`DESIGN_PHILOSOPHY.md`) just changed.
-
 ## Deploying a skill locally
 
 After editing a skill's files in this repo, redeploy to make the change live for this session's

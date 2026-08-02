@@ -47,11 +47,10 @@ these bullets cover when/how that gate fires.
 
 Every consequential write — a new idea added to a tracker, a choice of what to build, an
 implementation plan — gets shown to the user and confirmed before it happens. A recommendation is
-not a decision. Where a skill has more than one such gate, they should be explicitly
-numbered/cross-referenced so drift is easy to catch on review, not left implicit — and that
-cross-reference needs to mirror the skill's actual structure (one entry per step/section, e.g. a
-table keyed to step number) rather than free prose that bundles items under a loose phrase, and
-should carry an explicit note to update it in the same edit that changes what it's summarizing.
+not a decision. Where a skill has more than one such gate, they get indexed in one place rather
+than left implicit, so drift is easy to catch on review: a gate that quietly stopped being enforced
+is invisible otherwise, since nothing fails — the write just happens. The index's shape is a spec,
+not a judgement call — see `CONVENTIONS.md`, "The hard-rules table."
 
 ### A default the user never saw isn't a default
 
@@ -70,10 +69,9 @@ reinforces it.
 
 ### Numbered choices, not just labels
 
-When presenting two or more options for the user to pick from, number them `1.`, `2.`, `3.`... in
-a single sequential list, regardless of what other labels each option carries (a tier name,
-"wildcard", a category). A descriptive label explains an option; it isn't a substitute for a
-number the user can just say back ("go with 2") to confirm unambiguously.
+A user confirming a choice should be able to say the shortest possible thing back ("go with 2")
+without re-typing a name or guessing which label you meant. Descriptive labels explain options;
+they don't identify them. The exact format is a spec — see `CONVENTIONS.md`, "Numbered choices."
 
 ## Trust & staleness
 
@@ -177,12 +175,9 @@ bespoke streak/counter per knob — that's the same "second, slightly-different 
 [above](#reuse-a-judgment-test-dont-invent-a-parallel-one), applied to a mechanism instead of a
 judgment call, and just as prone to drifting: each bespoke copy tends to answer small design
 questions ("does surfacing it reset the counter, or only a genuine correction?") slightly
-differently, with no single place that's actually right. The shape: increment on the
-miscalibration signal, reset to 0 on the corrected signal, and — once a threshold's reached and
-the finding is actually surfaced to the user — force a reset regardless of what they decide, so a
-declined suggestion doesn't re-nag every subsequent occurrence without new evidence. State this
-shape once; each instance then only needs to declare its own trigger, its own corrected signal,
-and its own threshold.
+differently, with no single place that's actually right. State the shape once; each instance then
+declares only its own trigger, corrected signal, and threshold. That shape is a spec — see
+`CONVENTIONS.md`, "Self-correcting counters."
 
 ### Structure around the domain's natural shape
 

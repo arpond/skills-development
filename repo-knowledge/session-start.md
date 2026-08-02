@@ -10,14 +10,31 @@ Once this file's step is done, continue to Step 1 in `SKILL.md`.
 
 ## Step 0: Find `KNOWLEDGE.md`, or bootstrap it
 
-Look for `KNOWLEDGE.md` at the root of whichever project the user is currently working in (use
-judgement on project boundary: the nearest enclosing directory with its own README, package
-manifest, or similar — not necessarily the git repo root, since one repo can contain several
-projects with different concerns).
+First establish the project: the nearest enclosing directory with its own README, package manifest,
+or similar — not necessarily the git repo root, since one repo can contain several projects with
+different concerns.
 
-**If it doesn't exist yet**, read `setup.md` and follow it before doing anything else — that's a
-one-time-per-project bootstrap, kept out of this file since every run after the first doesn't need
-it.
+**Then resolve `KNOWLEDGE.md` over these locations, in order, first hit wins:**
+
+1. `<project>/KNOWLEDGE.md`
+2. `<project>/<docs-dir>/KNOWLEDGE.md` — where `<docs-dir>` is `docs/`, `doc/`, or
+   `documentation/`, whichever the project already has
+3. `<project>/.claude/KNOWLEDGE.md`
+
+Don't assume location 1 and stop. A knowledge file that exists somewhere else would be invisible,
+and the next step would bootstrap a second one on top of real entries — silently.
+
+**Found in more than one location**: don't take the first and don't merge them. Say which files
+were found where and ask which is authoritative; "first hit wins" orders the *lookup*, it isn't
+permission to strand a second copy.
+
+**Found nowhere**: read `setup.md` and follow it before doing anything else — a one-time-per-project
+bootstrap, kept out of this file since every run after the first doesn't need it. It creates the
+file in `<docs-dir>/` if the project already has one, otherwise at `<project>/`. **Never create a
+docs directory to hold it** — that imposes a layout the project didn't choose.
+
+**Found somewhere other than location 1**: normal, not something to fix. Use it where it is;
+existing files never get moved as a side effect of a run.
 
 **If it exists, read it as-is and continue** — don't re-run setup. Judgment-drift review timing is
 handled separately below, not here.

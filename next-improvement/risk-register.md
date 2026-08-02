@@ -34,8 +34,9 @@ this loop.** Size alone isn't the signal.
 
 ## File format
 
-`RISK_REGISTER.md`, same directory as `IMPROVEMENT_TRACKER.md`, created the first time it's
-actually needed (setup, or the first trigger below if the project turns this on mid-stream):
+`RISK_REGISTER.md`, in whatever directory `IMPROVEMENT_TRACKER.md` was resolved to — it follows
+the tracker rather than being looked up on its own — created the first time it's actually needed
+(setup, or the first trigger below if the project turns this on mid-stream):
 
 ```markdown
 # <Project> — Risk Register

@@ -58,12 +58,17 @@ loop.
 
 ## The tracker file
 
-Each project that uses this skill has its own `IMPROVEMENT_TRACKER.md` at that project's root
-(i.e. the directory containing its own code, not necessarily the overall repo root — if you're
-working in `some-repo/some-project/`, the tracker lives at `some-repo/some-project/IMPROVEMENT_TRACKER.md`,
-not at the top of the whole repo, since a repo can hold several independent projects each with
-their own priorities). This is the single source of truth: don't keep a separate mental list of
-ideas or priorities, and don't split this across multiple files — one tracker per project.
+Each project that uses this skill has its own `IMPROVEMENT_TRACKER.md`, one per project — where
+"project" means the directory containing its own code, not necessarily the overall repo root, since
+a repo can hold several independent projects each with their own priorities. **`session-start.md`
+Step 0 resolves where that file actually lives** (project root, the project's own docs directory,
+or `.claude/`); don't assume a path here. This is the single source of truth: don't keep a separate
+mental list of ideas or priorities, and don't split it across multiple files.
+
+**This skill's other two files sit in whatever directory the tracker was found in** —
+`IMPROVEMENT_TRACKER_DONE.md` (Step 6) and, with `Risk register: on`, `RISK_REGISTER.md`. They're
+never resolved independently: they follow the tracker. One found somewhere else is worth surfacing
+rather than quietly working around.
 
 Format:
 

@@ -31,7 +31,9 @@ docs, contributing guides):
 
 Fold all of the following into a single message rather than asking in stages — this is one of the
 skill's hard rules (see the table in `SKILL.md`):
-- Propose creating `KNOWLEDGE.md`, with a one-line explanation of what it's for (a place for repo
+- Propose creating `KNOWLEDGE.md` — in `<docs-dir>/` if the project already has one (`docs/`,
+  `doc/`, `documentation/`), otherwise at the project root, and never creating a docs directory
+  just to hold it — with a one-line explanation of what it's for (a place for repo
   gotchas/quirks/root-causes that cost real time to discover and aren't recorded anywhere else),
   and mention that it'll periodically prompt a "judgment-drift review" on its own — roughly every
   60-90 days, or sooner if entries have piled up — to prune stale entries (see

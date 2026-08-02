@@ -35,6 +35,7 @@ address rather than a flat unstructured list.
   - [Mechanism and personal preference belong in different files](#mechanism-and-personal-preference-belong-in-different-files)
   - [Independent knobs, not piggybacked defaults](#independent-knobs-not-piggybacked-defaults)
   - [Every write path needs an explicit target](#every-write-path-needs-an-explicit-target)
+  - [An artifact's location is resolved, not assumed](#an-artifacts-location-is-resolved-not-assumed)
   - [State hard dependencies explicitly](#state-hard-dependencies-explicitly)
 
 ## Write gates & confirmation
@@ -293,6 +294,30 @@ Not just every read path a precedence order. Layered config (project-level over 
 built-in default) is easy to get right on the read side and easy to forget on the write side: when
 a correction needs writing back, which layer does it belong to? Solve both directions, not just
 the one that's exercised on every run.
+
+### An artifact's location is resolved, not assumed
+
+A skill that maintains a file inside the user's project shouldn't hardcode one path for it. A file
+sitting somewhere else is then invisible, and the skill bootstraps a second copy on top of work
+that already existed — the worst outcome available, and a silent one. Resolve over a short ordered
+list of candidate locations instead, and treat the two awkward results as first-class: finding it
+in *two* places is ambiguity to surface, not a race the first hit wins
+([Ask when genuinely ambiguous](#ask-when-genuinely-ambiguous-dont-silently-resolve)), and finding
+it nowhere means bootstrapping — which should follow the layout the project already has rather than
+imposing one. Creating a directory structure to hold your own artifact is a layout decision that
+isn't yours to make.
+
+Related but distinct from [Every write path needs an explicit target](#every-write-path-needs-an-explicit-target):
+that one is about *which layer* a write belongs to once you know the file; this is about finding
+the file at all. Both fail the same way — quietly, on the write side, long after the read side
+looked fine.
+
+Where more than one skill writes into the same project, the resolution order has to be identical
+across them, or the same project ends up with artifacts scattered by whichever skill created each
+one. That shared order is a **concrete spec, not a principle** — it belongs in this repo's
+`CONVENTIONS.md`, with each skill restating it inline, since
+[a skill can't cite a repo-root file](#a-skills-own-instructions-cant-depend-on-the-dev-repo-around-it)
+and only its own folder travels.
 
 ### State hard dependencies explicitly
 

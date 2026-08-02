@@ -58,6 +58,11 @@ Two possible locations, checked in this order:
 2. **Personal**: `~/.claude/commit-message-conventions.md` (the user's home directory on whichever
    machine this is running on — never a path copied from a different machine or account).
 
+`.claude/` is deliberate and is also where a new one gets created: this is **config** — a file the
+skill reads on every run and a human opens rarely — as distinct from working state or documentation
+a user reads and hand-edits, which belongs somewhere visible. Don't look for it at the repo root or
+in a docs folder, and don't create it there.
+
 Read whichever exist, in full, fresh every run — don't work from a paraphrased memory of either,
 they can be edited any time and a stale mental copy defeats the point of keeping them external.
 **Precedence is per heading, not whole-file**: for each of the six headings, use the repo-level

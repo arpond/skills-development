@@ -47,4 +47,8 @@ stay available even once it's installed elsewhere.
 ## Design philosophy
 
 See [DESIGN_PHILOSOPHY.md](DESIGN_PHILOSOPHY.md) for the principles applied consistently across
-the skills in this repo.
+the skills in this repo, and [CONVENTIONS.md](CONVENTIONS.md) for the concrete cross-skill specs
+they all implement identically — currently where each skill writes the files it maintains inside
+a user's project. Both are authoring references: since installing a skill copies only its own
+folder, neither file travels with it, so every spec is also restated inside each skill that
+implements it.

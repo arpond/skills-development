@@ -27,10 +27,12 @@ live alongside it:
 
 ## The knowledge file
 
-Each project that uses this skill has its own `KNOWLEDGE.md` at that project's root (i.e. the
-directory containing its own code, not necessarily the overall repo root — a repo can hold several
-independent projects, each with their own knowledge). This is the single source of truth for this
-kind of fact — don't keep it split across multiple files or duplicated into `CLAUDE.md`.
+Each project that uses this skill has its own `KNOWLEDGE.md`, one per project — where "project"
+means the directory containing its own code, not necessarily the overall repo root, since a repo
+can hold several independent projects each with their own knowledge. **`session-start.md` Step 0
+resolves where that file actually lives** (project root, the project's own docs directory, or
+`.claude/`); don't assume a path here. This is the single source of truth for this kind of fact —
+don't keep it split across multiple files or duplicated into `CLAUDE.md`.
 
 Format:
 

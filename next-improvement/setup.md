@@ -5,10 +5,10 @@ current project. This is a one-time-per-project interrogation — once the file 
 never need this file again (see `session-start.md`'s Step 0.5 for ongoing staleness checks
 instead).
 
-Look for `IMPROVEMENT_TRACKER.md` at the root of whichever project the user is currently working
-in (use judgement on project boundary: the nearest enclosing directory with its own README,
-package manifest, or similar — not necessarily the git repo root, since one repo can contain
-several projects with different concerns).
+`session-start.md` Step 0 has already resolved that no tracker exists anywhere — don't re-look.
+**Create it in `<docs-dir>/` if the project already has one** (`docs/`, `doc/`, or
+`documentation/`), otherwise at the project root, and never create a docs directory just to hold
+it. Whichever it lands in is where this skill's other files go too.
 
 **Create it before doing anything else** — this is part of the skill, not a separate setup step
 the user has to remember to do first:

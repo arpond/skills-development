@@ -27,6 +27,14 @@ anything to opt into**:
   since leaving old and new spellings mixed indefinitely is exactly the drift this kind of change
   exists to close.
 
+- **2.1.0** — *automatic, all projects, nothing to opt into.* Done's archive sweep (age vs.
+  `floor`/`backstop`) now also runs at every session start (`session-start.md` Step 0.5), not only
+  as a side effect of Step 6 recording a fresh ship. The append-triggered sweep could go
+  uncompleted for reasons nothing else ever re-checked (a hand-edited tracker, a session ending
+  before that check ran, an older tracker predating `Done archive:`), so Done could grow well past
+  `age`/`floor`/`backstop` with nothing left to trigger a catch-up. If eligible entries are found,
+  archiving now happens automatically on session start too, same no-confirmation bookkeeping as
+  Step 6's own sweep — mentioned in a clause if it moves anything, silent otherwise.
 - **2.0.0** — *breaking, `Feedback:` outcome values only, migrated automatically.* Outcome
   vocabulary renamed for clarity and to match `risk-register.md`'s own `mitigated-by:` vocabulary
   instead of duplicating it under different words: `delivered → effective`, `mixed → partial`,

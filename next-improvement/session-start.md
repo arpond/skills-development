@@ -113,6 +113,20 @@ read-gate note): its default is `on`, so run `feedback.md`'s check-in unless the
 says `off`. That check-in contributes its own line to this run's combined message — including a
 "backlog not shrinking" flag when its `growth-streak` hits 2.
 
+**Also re-run Done's own archive sweep here, not only after Step 6 records a fresh ship.** The
+sweep described in `SKILL.md` Step 6 ("After appending, check whether Done needs trimming") only
+fires as a side effect of that one event — a tracker that predates the `Done archive:` field, was
+hand-edited, or had a session end before that check completed can carry a Done section that's
+overdue for archiving with nothing left to trigger it. Re-derive eligibility the same way Step 6
+does (age vs. `floor`/`backstop`) every session start, and run the sweep if anything qualifies —
+this is the same mechanical, no-confirmation bookkeeping as Step 6's own sweep, not a new
+judgement call, so it doesn't wait for the combined check-in gate above. Update the same
+`(last sweep: ..., streak: N)` counter Step 6 uses regardless of which step actually performed the
+sweep — the counter tracks whether `age` is catching sweeps at all, not which step happened to run
+one. Mention it in one clause if it actually moved anything ("archived 12 entries older than 60
+days into `IMPROVEMENT_TRACKER_DONE.md`") — silent otherwise, same as any other automatic action
+that didn't change what's visible this run.
+
 **If `SKILL.md` Step 6's Done-archive `streak` has hit 3** (three backstop-triggered sweeps in a
 row, `age` never once catching anything first), that's also due this step — fold it into the same
 combined message per the rule above: `age` is calibrated for a slower project than this one, so

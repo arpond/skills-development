@@ -5,7 +5,7 @@ description: Runs a "what should we work on next" process for whatever project t
 
 # Next improvement
 
-**Skill version: 2.0.0.** `session-start.md`'s version check compares a tracker's `Feature check:`
+**Skill version: 2.1.0.** `session-start.md`'s version check compares a tracker's `Feature check:`
 stamp against this number. `changelog.md` holds both what shipped at each version and the
 versioning policy itself — read it only when that check actually finds a gap, not on every run.
 
@@ -225,6 +225,8 @@ visibly weak ideas the user can see for themselves. Absence from this table does
 | 4 | gate | Do not start planning or implementing until the user confirms which one (if any) to build |
 | 4 | surface | Flag a feature-type pick as such, and flag every candidate's risk-register signals (mitigates vs. merely exposed) |
 | 4.5 | gate | Get the plan approved before writing any code |
+| 6 | surface | Sweep Done into the archive whenever age/floor/backstop makes an entry eligible, not only when someone happens to notice |
+| 0.5 (session-start.md) | surface | Re-run that same Done sweep independently of Step 6, so a missed append-time sweep gets caught at the next session start |
 | Checking in (feedback.md) | surface | Always surface the pending-outcome count when it's nonzero, calling out the reassess subset separately |
 | Checking on mitigations (risk-register.md) | surface | Say so the first time a `mitigated-by:` tag would be added while `Feedback:` is off, since nothing would ever ask about it |
 
@@ -558,7 +560,11 @@ doesn't exist.
 against that risk** — nothing to record for it, since exposure was never stored; it's read out of
 Done whenever archival is next considered. See `risk-register.md`'s archival trigger.
 
-**After appending, check whether Done needs trimming.** Primary trigger is age, not count — how
+**After appending, check whether Done needs trimming.** This isn't the only place this sweep runs —
+`session-start.md` Step 0.5 re-derives the same eligibility independently at the start of every
+session, so a sweep this step fails to complete (a session ending early, a hand-edited tracker, an
+older tracker predating `Done archive:`) still gets caught rather than leaving Done to grow
+unbounded with nothing left to trigger it. Primary trigger is age, not count — how
 long ago something shipped is what determines whether it's still useful working context, not how
 many entries happen to sit next to it (a project shipping in bursts can produce 20 genuinely-recent
 entries in two weeks that are all still relevant; a slow project can carry 10 stale ones for a

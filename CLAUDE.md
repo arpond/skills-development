@@ -14,7 +14,15 @@ If the user says yes, run these four checks in order, on whatever was just chang
 1. **Design philosophy.** Check the changed files against every bullet in `DESIGN_PHILOSOPHY.md`.
    Report violations found; fix what's confirmed. **N/A when the change is to
    `DESIGN_PHILOSOPHY.md` itself** — checking a file against itself is circular, not a real check;
-   skip straight to pass 2.
+   skip straight to pass 2. **Also check size, not just the diff**: if the skill's always-loaded
+   core file (the one read on every invocation, not gated behind a trigger condition) is at or
+   above ~500 lines, do a quick whole-file skim — not just the changed lines — specifically for
+   Progressive disclosure violations: content that only matters rarely/once but lives in the core
+   read anyway. A diff-scoped pass can't catch drift sitting in untouched sections, which is exactly
+   how this kind of bloat accumulates unnoticed across many small, individually-reasonable changes;
+   size crossing the threshold is the trigger to zoom out. Skip this check when the file's under the
+   threshold — most reviews stay diff-scoped and cheap, this is only for the file that's grown
+   enough to warrant a fresh look.
 2. **Repetition, complexity, verbosity.** Reread the changed files fresh — same statement made
    more than once across files or sections, mechanisms that could reuse an existing pattern
    instead of inventing a parallel one, prose that's denser or longer than the content requires.

@@ -3,6 +3,25 @@
 Principles applied consistently across the skills in this repo, grouped by the concern they
 address rather than a flat unstructured list.
 
+**These govern this file and `CONVENTIONS.md` too, not only the skills.** The bullets read as
+advice about skills because that's what they were written from, but nothing in them is
+skill-specific: both shared files are text that gets read and acted on, so they're subject to the
+same rules. The failure is asymmetric and worth naming, because it has happened repeatedly — the
+principles get applied to a skill reflexively and to these two files hardly at all, since a
+document about rules doesn't feel like a thing the rules apply to. Worked instances, all real:
+
+- `CONVENTIONS.md` grew per-skill conformance tables — a stored verdict recomputable by a grep, and
+  one that misleads the moment it goes stale. Both
+  [Don't persist a signal just because it's useful once](#dont-persist-a-signal-just-because-its-useful-once)
+  and [Re-ground, don't cache](#re-ground-dont-cache) already forbade it.
+- `CLAUDE.md`'s review loop carried a trailing line restating its own opening, which promptly went
+  stale when the opening changed — the repetition it warns about, in the file doing the warning.
+- A spec here was once widened to match what its implementations happened to do, rather than the
+  implementations being brought up to it.
+
+When editing either shared file, run the same passes over it that a skill change would get. A
+principle that only ever gets applied outward isn't being applied.
+
 ## Contents
 
 - [Write gates & confirmation](#write-gates--confirmation)

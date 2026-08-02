@@ -11,8 +11,10 @@ review pass rather than running it unasked or waiting to be asked every time. On
 
 If the user says yes, run these four checks in order, on whatever was just changed:
 
-1. **Design philosophy.** Check the changed files against every bullet in `DESIGN_PHILOSOPHY.md`.
-   Report violations found; fix what's confirmed. **Also check `CONVENTIONS.md`** — if the change
+1. **Design philosophy.** Check the changed files against every bullet in `DESIGN_PHILOSOPHY.md` —
+   **including when the changed file is `CONVENTIONS.md` or `CLAUDE.md` itself**, which are text
+   that gets read and acted on like any skill and are subject to the same bullets (see that file's
+   opening note). Report violations found; fix what's confirmed. **Also check `CONVENTIONS.md`** — if the change
    touched anything a spec covers, verify the skill's inline copy still matches it, since the
    copies are what actually run (a skill can't cite a repo-root file) and drift between them stays
    invisible until two skills disagree inside the same project. **For a brand-new skill, check it

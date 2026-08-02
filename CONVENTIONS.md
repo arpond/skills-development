@@ -7,15 +7,22 @@ where the only thing that matters is that all the skills agree.
 **This file is an authoring reference, not something a skill reads.** A skill's own instructions
 can't cite a repo-root file (see `DESIGN_PHILOSOPHY.md`, "A skill's own instructions can't depend
 on the dev repo around it") — only its own folder gets copied when it's installed. So every spec
-below is *restated inside each skill that implements it*, and this file exists to check those
-copies haven't drifted apart.
+below is *restated inside each skill that implements it*. Each spec ends by naming where those
+copies live, so that changing one is a matter of following a list rather than remembering which
+skills were involved.
 
-**Changing a spec and recording a gap are different acts.** *Changing* one means updating every
-skill listed under it in the same edit — a spec that's ahead of its implementations by accident is
-the drift this file exists to prevent. *Recording* a gap is the opposite: a requirement some skills
-knowingly don't meet yet, written into its own implemented-by table as an explicit `✗`, because a
-known gap that's visible is worth more than a spec quietly weakened to whatever everything already
-does. Every spec below therefore states the requirement, not the current lowest common denominator.
+**That list is a pointer index, not a compliance record.** It says where to look, never whether
+what's there currently passes — conformance is cheap to recompute (a grep, a read) and the review
+loop checks it on every change anyway, so storing a verdict would mean maintaining a second copy
+that rots. A stale ✓ is worse than no record at all: it becomes a reason to skip the check it was
+supposed to prompt.
+
+**Changing a spec and recording a known gap are different acts.** *Changing* one means updating
+every skill listed under it in the same edit — a spec accidentally ahead of its implementations is
+the drift this file exists to prevent. *Recording a gap* is deliberate and rare: a requirement some
+skill knowingly doesn't meet yet, written as a short **Open gap** note under that spec and removed
+when it's closed. That's a decision worth persisting, unlike a measurement. Every spec below states
+the requirement, never the current lowest common denominator.
 
 **Adding a new skill to this repo means reading this file first**, not discovering it at review
 time. Nothing here is optional for a skill that has the thing a spec covers, and a new skill has no
@@ -46,13 +53,9 @@ threshold  -> surface to the user, then force-reset to 0 regardless of their ans
   never-state as its own sentinel (`never`), not as `0`, or every first measurement scores as a
   change from a zero that never meant zero.
 
-| Instance | States the shape | Trigger / reset / threshold |
-|---|---|---|
-| `next-improvement` — `SKILL.md` Step 2, dry-run tracking | ✓ canonical | ✓ |
-| `next-improvement` — `SKILL.md` Step 6, archive-sweep streak | refers to Step 2 | ✓ |
-| `next-improvement` — `feedback.md`, "Backlog not shrinking" | refers to Step 2 | ✓ |
-
-No other skill in this repo currently has a self-correcting counter.
+Stated in: `next-improvement` — `SKILL.md` Step 2 (dry-run tracking) holds the canonical wording;
+`SKILL.md` Step 6 (archive-sweep streak) and `feedback.md` ("Backlog not shrinking") declare their
+own three values and refer back to it. No other skill currently has one.
 
 ## Numbered choices
 
@@ -67,14 +70,9 @@ covering everything Claude says, skills or not — broader scope, and it applies
 only. Each skill also states it inline, because an installed skill runs for people who have neither
 of the other two.
 
-| Skill | Where it's stated | States the rule |
-|---|---|---|
-| `next-improvement` | `SKILL.md` Step 4 | ✓ covering every presentation mode |
-| `repo-knowledge` | `SKILL.md`, above Step 0 | ✓ covering every site, present and future |
-| `commit-message-check` | `SKILL.md`, above Step 0 | ✓ covering every site, present and future |
-
-Each states the rule once and names its own option-presenting sites, so a site added later inherits
-it instead of having to rediscover it.
+Stated in: `next-improvement` — `SKILL.md` Step 4; `repo-knowledge` and `commit-message-check` —
+`SKILL.md`, just above Step 0. Each states it once and names its own option-presenting sites, so a
+site added later inherits the rule instead of having to rediscover it.
 
 ## The hard-rules table
 
@@ -112,14 +110,9 @@ Then:
 Column naming is free to fit the skill (`Step`/`Hard rule`, `#`/`What gets written`/`Gated where`,
 `Step`/`Confirm-point(s)` are all in use and all fine). The invariants above are what must match.
 
-| Skill | Table | Update line | Explicit scope | Rows match the test |
-|---|---|---|---|---|
-| `next-improvement` | ✓ | ✓ | ✓ gates and surfacings, marked | ✓ |
-| `commit-message-check` | ✓ | ✓ | ✓ consequential writes | ✓ |
-| `repo-knowledge` | ✓ | ✓ | ✓ gates, prohibition, must-asks | ✓ |
-| `jira-ticket-audit` | ✓ | ✓ | ✓ | ✓ |
-| `operational-requirements-audit` | ✓ | ✓ | ✓ | ✓ |
-| `plan-technical-jira-ticket` | ✓ one row per step | ✓ | ✓ | ✓ |
+Stated in: all six skills, each in its own `SKILL.md`. Their scopes genuinely differ — only
+`next-improvement`'s is confined to confirm-before-write gates; the rest carry prohibitions and
+output obligations too. The narrow reading came first only because that skill was written first.
 
 **A table mixing gates with unprompted surfacings should mark which is which** — `next-improvement`
 uses a `Kind` column (`gate` / `surface`). Both fail silently and both belong in the index, but
@@ -189,17 +182,16 @@ skill defines one; that's the skill's own business, not this spec's.
 
 ### Implemented by
 
-| Skill | Where it's stated | Resolve order | Ambiguity case | Siblings |
-|---|---|---|---|---|
-| `next-improvement` | `session-start.md` Step 0, `SKILL.md` "The tracker file" | ✓ | ✓ | ✓ |
-| `repo-knowledge` | `session-start.md` Step 0 | ✓ | ✓ | n/a — single file |
-| `commit-message-check` | `SKILL.md` Step 0 | ✓ config rule | n/a — fixed location | n/a |
+| Skill | Where it's stated |
+|---|---|
+| `next-improvement` | `session-start.md` Step 0 (resolve/bootstrap), `SKILL.md` "The tracker file" (siblings), `README.md` |
+| `repo-knowledge` | `session-start.md` Step 0, `README.md` |
+| `commit-message-check` | `SKILL.md` Step 0 (config rule), `README.md` |
 
-**Each of these is also restated a third time, in the skill's `README.md`** (see "Skill README
-contents" below, which requires it) — for the human deciding whether to install, rather than for
-Claude at runtime. That copy is the one most likely to drift unnoticed, because nothing at runtime
-reads it and a wrong path there sends someone looking in the wrong place before they ever run the
-skill. Change a resolve order and it's three edits per skill, not two.
+**The `README.md` copy is for the human deciding whether to install**, not for Claude at runtime —
+which makes it the one most likely to drift unnoticed, since nothing at runtime reads it and a
+wrong path there misdirects someone before they ever invoke the skill. Changing a resolve order is
+three edits per skill, not two.
 
 ## Skill README contents
 
@@ -231,11 +223,5 @@ is exactly the sort of thing a person wants to know in advance rather than disco
 Where a skill writes nothing by default, say that outright; it's a materially different install
 decision from one that always writes.
 
-| Skill | Opening | `Files:` | What it writes | Requires | When it triggers | Example | Cost |
-|---|---|---|---|---|---|---|---|
-| `next-improvement` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | n/a — local only |
-| `repo-knowledge` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | n/a — local only |
-| `commit-message-check` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| `jira-ticket-audit` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| `plan-technical-jira-ticket` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| `operational-requirements-audit` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+Applies to every skill in this repo. `next-improvement` and `repo-knowledge` omit `## Cost`, both
+being local-file-only; the other four carry one.

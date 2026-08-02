@@ -193,26 +193,36 @@ Done archive: age=60, floor=5, backstop=40   <!-- optional, default shown, see S
   silently fine either — see `session-start.md` Step 0's malformed-tracker handling, extended to
   this case.
 
-**Hard rules by step, so a review can check none have gone missing.** Scope: this table tracks
-only confirm-before-write gates (show, then wait for user's go-ahead). Separate always-surface
-obligations exist elsewhere and don't need confirmation — Step 0.5/0.6/0.7 (session-start.md) and
-feedback.md's "Checking in" ("Always surface the count..."). Absence from this table doesn't mean
-optional.
+**Hard rules by step, so a review can check none have gone missing.** Scope: rules that fail
+*silently* if skipped — where nothing errors and no output looks wrong, so only this table would
+ever reveal the omission. Two kinds qualify, marked in the **Kind** column: **gate** (show, then
+wait for a go-ahead — skip it and the write just happens) and **surface** (tell the user something
+unprompted — skip it and they simply never hear it). Rules that fail *visibly* are deliberately
+absent: Step 2's "don't pad a thin category with filler" isn't here, because breaking it produces
+visibly weak ideas the user can see for themselves. Absence from this table doesn't mean optional.
 
-| Step | Hard rule |
-|---|---|
-| 0 (setup.md) | Interrogate the proposed categories/tiers with the user before writing the initial tracker |
-| 0 (session-start.md) | If the tracker exists but is malformed, ask the user rather than silently rewriting or refusing |
-| 0 (risk-register.md) | If `RISK_REGISTER.md` exists but is malformed, ask the user rather than silently rewriting or refusing |
-| 0.5 (session-start.md) | Confirm goal changes with the user before updating Goals / bumping `Last reviewed:` |
-| 0.5 (session-start.md) | Confirm before adjusting `Done archive:` knobs or `Feedback:`'s cadence knobs off the back of a detected drift signal |
-| 2 | Show proposed new ideas, or a category retirement/merge/narrow, and wait for confirmation before writing anything |
-| 2/4.5/6 (risk-register.md) | Show a proposed risk-area creation or update (any trigger), and an archival/reactivation, and wait for confirmation before writing to `RISK_REGISTER.md` |
-| 4 | Do not start planning or implementing until the user confirms which one (if any) to build |
-| 4.5 | Get the plan approved before writing any code |
+| Step | Kind | Hard rule |
+|---|---|---|
+| 0 (setup.md) | gate | Interrogate the proposed categories/tiers with the user before writing the initial tracker |
+| 0 (setup.md) | surface | Disclose the behaviours that aren't opt-in (the fixes/reworks question, Done archiving) rather than letting them appear unannounced |
+| 0 (session-start.md) | gate | If the tracker exists but is malformed, ask the user rather than silently rewriting or refusing |
+| 0 (risk-register.md) | gate | If `RISK_REGISTER.md` exists but is malformed, ask the user rather than silently rewriting or refusing |
+| 0.5 (session-start.md) | gate | Confirm goal changes with the user before updating Goals / bumping `Last reviewed:` |
+| 0.5 (session-start.md) | gate | Confirm before adjusting `Done archive:` knobs or `Feedback:`'s cadence knobs off the back of a detected drift signal |
+| 0.5 (session-start.md) | surface | Raise a stale-Goals check-in when due, and a `Feature check:` version gap (or an unexpectedly-ahead stamp) |
+| 0.6 (session-start.md) | surface | Surface standalone `reassess: pending` flags when `Feedback:` is explicitly `off` |
+| 0.7 (session-start.md) | surface | Surface Rejected entries whose `revisit-after:` date has passed |
+| 2 | gate | Show proposed new ideas, or a category retirement/merge/narrow, and wait for confirmation before writing anything |
+| 2 | surface | Raise a category sitting at `dry runs: 2+` rather than silently polling it again |
+| 2/4.5/6 (risk-register.md) | gate | Show a proposed risk-area creation or update (any trigger), and an archival/reactivation, and wait for confirmation before writing to `RISK_REGISTER.md` |
+| 4 | gate | Do not start planning or implementing until the user confirms which one (if any) to build |
+| 4 | surface | Flag a feature-type pick as such, and flag every candidate's risk-register signals (mitigates vs. merely exposed) |
+| 4.5 | gate | Get the plan approved before writing any code |
+| Checking in (feedback.md) | surface | Always surface the pending-outcome count when it's nonzero, calling out the reassess subset separately |
+| Checking on mitigations (risk-register.md) | surface | Say so the first time a `mitigated-by:` tag would be added while `Feedback:` is off, since nothing would ever ask about it |
 
 *Update this table in the same edit whenever a hard rule is added, removed, or moved* — it's a
-mirror of the steps, not independent prose, so it's the one place to check rather than three
+mirror of the steps, not independent prose, so it's the one place to check rather than several
 scattered cross-references.
 
 ## Step 0 through Step 0.7: Find/bootstrap the tracker, check staleness, surface reassess flags and due revisits

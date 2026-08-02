@@ -114,18 +114,18 @@ Column naming is free to fit the skill (`Step`/`Hard rule`, `#`/`What gets writt
 
 | Skill | Table | Update line | Explicit scope | Rows match the test |
 |---|---|---|---|---|
-| `next-improvement` | ✓ | ✓ | ✓ gates only | ✗ **under-inclusive** — see below |
+| `next-improvement` | ✓ | ✓ | ✓ gates and surfacings, marked | ✓ |
 | `commit-message-check` | ✓ | ✓ | ✓ consequential writes | ✓ |
 | `repo-knowledge` | ✓ | ✓ | ✓ gates, prohibition, must-asks | ✓ |
 | `jira-ticket-audit` | ✓ | ✓ | ✓ | ✓ |
 | `operational-requirements-audit` | ✓ | ✓ | ✓ | ✓ |
 | `plan-technical-jira-ticket` | ✓ one row per step | ✓ | ✓ | ✓ |
 
-**Open gap.** `next-improvement`'s table is scoped to confirm-before-write gates and explicitly
-excludes its always-surface obligations (Steps 0.5/0.6/0.7, `feedback.md`'s "always surface the
-count"). Those obligations fail silently — skip one and nothing errors, the user simply isn't told
-— so under the inclusion test above they belong in the index. That scope line predates the test and
-was correct under the narrower rule it was written for.
+**A table mixing gates with unprompted surfacings should mark which is which** — `next-improvement`
+uses a `Kind` column (`gate` / `surface`). Both fail silently and both belong in the index, but
+they're different obligations: one waits for an answer, the other only has to be said. Without the
+column a reader has to infer which from the wording of each row, and the distinction is exactly
+what the older gates-only scoping existed to protect.
 
 ## Artifact locations
 

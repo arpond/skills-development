@@ -20,6 +20,7 @@ address rather than a flat unstructured list.
   - [Don't persist a signal just because it's useful once](#dont-persist-a-signal-just-because-its-useful-once)
 - [Structure & reuse](#structure--reuse)
   - [Reuse a judgment test, don't invent a parallel one](#reuse-a-judgment-test-dont-invent-a-parallel-one)
+  - [Self-correcting knobs share one shape — reuse it](#self-correcting-knobs-share-one-shape--reuse-it)
   - [Structure around the domain's natural shape](#structure-around-the-domains-natural-shape)
   - [Split along orthogonal triggers, not around size](#split-along-orthogonal-triggers-not-around-size)
   - [Concrete over vague](#concrete-over-vague)
@@ -28,6 +29,7 @@ address rather than a flat unstructured list.
   - [Progressive disclosure](#progressive-disclosure)
   - [Moving content means re-pointing every reference to it](#moving-content-means-re-pointing-every-reference-to-it)
   - [Documentation travels with the skill](#documentation-travels-with-the-skill)
+  - [A skill's own instructions can't depend on the dev repo around it](#a-skills-own-instructions-cant-depend-on-the-dev-repo-around-it)
   - [No machine-specific paths in a tracked skill file](#no-machine-specific-paths-in-a-tracked-skill-file)
   - [Mechanism and personal preference belong in different files](#mechanism-and-personal-preference-belong-in-different-files)
   - [Independent knobs, not piggybacked defaults](#independent-knobs-not-piggybacked-defaults)
@@ -143,6 +145,21 @@ is structurally the same judgment call is harder to keep consistent than one tes
 and the two versions will eventually drift from each other as one gets refined and the other
 doesn't.
 
+### Self-correcting knobs share one shape — reuse it
+
+When a skill stores a numeric default and can also detect that the default is miscalibrated (a
+counter that keeps hitting the same fallback path instead of the intended one), don't write a
+bespoke streak/counter per knob — that's the same "second, slightly-different test" mistake
+[above](#reuse-a-judgment-test-dont-invent-a-parallel-one), applied to a mechanism instead of a
+judgment call, and just as prone to drifting: each bespoke copy tends to answer small design
+questions ("does surfacing it reset the counter, or only a genuine correction?") slightly
+differently, with no single place that's actually right. The shape: increment on the
+miscalibration signal, reset to 0 on the corrected signal, and — once a threshold's reached and
+the finding is actually surfaced to the user — force a reset regardless of what they decide, so a
+declined suggestion doesn't re-nag every subsequent occurrence without new evidence. State this
+shape once; each instance then only needs to declare its own trigger, its own corrected signal,
+and its own threshold.
+
 ### Structure around the domain's natural shape
 
 Not around whatever named rules got thought of first. A checklist keyed to a fixed list of named
@@ -211,6 +228,18 @@ own `README.md`, not in a repo-level file that doesn't get copied along. Differe
 [Progressive disclosure](#progressive-disclosure) (which is about what Claude loads into context)
 — this is about what a human still has once the skill is installed elsewhere. The top-level README
 stays a thin index pointing into each skill's own docs, rather than duplicating them.
+
+### A skill's own instructions can't depend on the dev repo around it
+
+A third case, distinct from both neighbours here: not what a human needs
+([Documentation travels with the skill](#documentation-travels-with-the-skill)) and not what Claude
+loads into context ([Progressive disclosure](#progressive-disclosure)) — this is about a skill's
+own *operative* content (text Claude actually reads and acts on) citing something that only
+happens to exist in this dev repo. Pointing `SKILL.md` or a companion file at this
+`DESIGN_PHILOSOPHY.md`, or any other repo-root file, for justification reads fine here, where the
+file sits alongside the skill, but breaks the moment the skill deploys standalone, since only its
+own folder gets copied. State the underlying reasoning inline instead of citing shared context
+that may not travel with it.
 
 ### No machine-specific paths in a tracked skill file
 

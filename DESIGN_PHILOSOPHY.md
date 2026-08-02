@@ -20,6 +20,7 @@ address rather than a flat unstructured list.
   - [Don't persist a signal just because it's useful once](#dont-persist-a-signal-just-because-its-useful-once)
 - [Structure & reuse](#structure--reuse)
   - [Reuse a judgment test, don't invent a parallel one](#reuse-a-judgment-test-dont-invent-a-parallel-one)
+  - [A computed join needs its matching test written down once](#a-computed-join-needs-its-matching-test-written-down-once)
   - [Self-correcting knobs share one shape — reuse it](#self-correcting-knobs-share-one-shape--reuse-it)
   - [Structure around the domain's natural shape](#structure-around-the-domains-natural-shape)
   - [Split along orthogonal triggers, not around size](#split-along-orthogonal-triggers-not-around-size)
@@ -144,6 +145,28 @@ pointed at different input, before drafting a new one. A second, slightly-differ
 is structurally the same judgment call is harder to keep consistent than one test applied twice,
 and the two versions will eventually drift from each other as one gets refined and the other
 doesn't.
+
+### A computed join needs its matching test written down once
+
+Replacing a stored link (an id on a list) with a computed match ("does this candidate touch this
+risk's areas?") is usually the right trade — it deletes the add/remove/repopulate paths and with
+them every way the list could go stale, per
+[Don't persist a signal just because it's useful once](#dont-persist-a-signal-just-because-its-useful-once).
+But it doesn't delete the work, it relocates it into a judgement that now runs at every call site.
+State that judgement once, name it, and have each site refer to it — otherwise the design has
+swapped a visible failure (one stale list) for an invisible one (nine sites quietly disagreeing
+about what "touches" means), which is
+[reuse a judgment test](#reuse-a-judgment-test-dont-invent-a-parallel-one) failing in a new guise.
+The test has to say what gets compared when the two sides aren't alike — an idea that hasn't been
+built has no files yet, so it matches on what its rationale names, not on a diff.
+
+Two non-answers belong in the test, not rounded away: *too vague to place*, and *the key no longer
+resolves*. That second one is the sharp edge — when a join key names something external (a path, a
+module, a ticket), it needs the same treatment any other external claim gets under
+[A claimed property that isn't self-verifying](#a-claimed-property-that-isnt-self-verifying), and
+for a worse reason than usual: a stored id that dangles breaks loudly, while a stored path that
+stopped existing just silently matches nothing forever, leaving the entry looking healthy while it
+protects nothing. Check it resolves at the point the entry is already in hand — not as a sweep.
 
 ### Self-correcting knobs share one shape — reuse it
 

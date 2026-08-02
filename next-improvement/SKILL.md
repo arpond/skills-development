@@ -263,7 +263,9 @@ resolves correctly. Only mint fresh for an idea that's never been appended befor
 
 **If `Risk register: on`, cross-reference each candidate against active risk areas** before
 presenting it — read `RISK_REGISTER.md`'s active entries and check whether the candidate touches
-the `areas:` of one **or more** (check all active entries, not just until the first hit). If any
+the `areas:` of one **or more**, using `risk-register.md`'s "The area match" test (that's the one
+definition of touching; don't improvise a second) and checking all active entries rather than
+stopping at the first hit. If any
 match, say so when presenting it (see `risk-register.md`) rather than leaving the match implicit,
 and ask whether the candidate is merely exposed to the risk or specifically meant to fix it. Only
 the "meant to fix it" answer writes anything — a `mitigated-by: ... (outcome: planned)` tag, made
@@ -417,10 +419,11 @@ for Y") — it's part of the reasoning, not a separate line item.
 **Flag risk-register signals explicitly, and don't conflate them.** If `Risk register: on`, check
 **every candidate being presented this round** — not just the top pick, every numbered option in a
 multi-option list (close contenders, `spread(N)` tier picks, wildcard, quick-win alike) — against
-active risk areas. One that mitigates an active risk gets flagged plainly ("this also mitigates
-R3 — <theme>"). One that merely touches an active entry's areas without building against them gets
-flagged too, but as a caution, not a point in its favour ("this touches R3's risk area — worth
-extra care on <what the risk actually is>"). Use the wording that
+active risk areas (same area match as Step 2). One that mitigates an active risk gets flagged
+plainly ("this also mitigates R3 — <theme>"). One that merely touches an active entry's areas
+without building against them gets flagged too, but as a caution, not a point in its favour ("this
+touches R3's risk area — worth extra care on <what the risk actually is>"). A match that came out
+borderline, or an area that no longer resolves, gets said as such rather than rounded to yes or no. Use the wording that
 matches which one actually applies for each candidate, per Step 3's distinction.
 
 If `Selection strategy:` is set to anything else, read `strategies.md` and build the

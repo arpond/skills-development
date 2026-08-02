@@ -44,19 +44,23 @@ an `outcome:` value:
 ```
 
 `outcome:` is one of `pending`, `delivered`, `mixed`, `missed`, `reverted`, or `skipped`.
-`reverted` is distinct from `missed`: `missed` means it shipped but didn't deliver the intended
-value; `reverted` means it was actually undone — a stronger, costlier signal worth its own tag
-rather than folding into `missed`.
+`delivered` = worked as intended; `mixed` = landed but with real rough edges or partial value;
+`missed` = shipped but didn't deliver the intended value at all; `reverted` = actually undone, a
+stronger, costlier signal than `missed` worth its own tag rather than folding in; `skipped` = user
+declined to judge this one. **These definitions are for me, not something the user is assumed to
+already know** — see "Checking in" below for where they actually get told this, not just the
+Setup question.
 
 ## Setup (from `setup.md`)
 
-Ask one short yes/no: want the skill to check back on how shipped work actually landed (delivered
-/ mixed / missed) — at most once per session, starting 7 days after an item ships, and offered
-(once 5 are eligible at once) as a choice of all-at-once, in smaller batches, continuously one at a
-time, or the default single question, rather than always asked one at a time? Default
-`Feedback: on(wait=7, bulk=5, batch=5)` if they don't care — all three numbers are changeable later
-without re-running setup, and it's capped and skippable per the mechanics below, so opting in is
-low-risk.
+Ask one short yes/no: want the skill to check back on how shipped work actually landed — delivered
+(worked as intended), mixed (landed but with real rough edges), missed (didn't deliver the intended
+value), or reverted (actually undone) — at most once per session, starting 7 days after an item
+ships, and offered (once 5 are eligible at once) as a choice of all-at-once, in smaller batches,
+continuously one at a time, or the default single question, rather than always asked one at a time?
+Default `Feedback: on(wait=7, bulk=5, batch=5)` if they don't care — all three numbers are
+changeable later without re-running setup, and it's capped and skippable per the mechanics below,
+so opting in is low-risk.
 
 ## Recording a ship (from `SKILL.md` Step 6)
 
@@ -124,6 +128,15 @@ archive" note.
   growing unnoticed; a visible number is enough on its own even between prompts. This still only
   fires once per session, per the throttle above — it's about not going silent forever across
   separate sessions, not about repeating every round within one.
+- **The first outcome question ever asked for a project includes the tag definitions; later ones
+  don't repeat them.** Setup's yes/no already stated them once, but that can be weeks before the
+  first Done entry actually becomes eligible — long enough to forget. Detect "first ever" cheaply,
+  without a new stored field (see `DESIGN_PHILOSOPHY.md`'s "Don't persist a signal just because
+  it's useful once"): if no Done entry anywhere (live tracker or the archive) yet carries a non-`pending`
+  outcome, this is the first real question, so append the gloss inline — "(delivered = worked as
+  intended, mixed = landed with real rough edges, missed = didn't deliver the value, reverted =
+  actually undone)" — to whatever wording the mode below would otherwise use. Every later question,
+  in any mode, drops it; the tags are self-evident once they've been used once.
 - **Every item shown in any mode below gets a why-and-what line, not just name + date** — the
   longer it's been, the harder those two things are to tell apart from memory. Pull both from text
   already stored, nothing new to record: the idea's original one-line rationale (from when it was

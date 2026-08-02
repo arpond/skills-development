@@ -80,16 +80,16 @@ Done archive: age=60, floor=5, backstop=40   <!-- optional, default shown, see S
 
 ## <Idea category A>
 (dry runs: <N> — last: <YYYY-MM-DD>)  <!-- optional, only present after a dry top-up -->
-- **Idea name** (id: I7) — short rationale, referencing specific files/functions where useful.
+- I7: **Idea name** — short rationale, referencing specific files/functions where useful.
 
 ## <Idea category B>
 - ...
 
 ## Done
 (archived before <YYYY-MM-DD>: see IMPROVEMENT_TRACKER_DONE.md)  <!-- optional, only present once an archive exists -->
-- **Idea name** (Category, id: I7) — one-line note on what actually shipped (may differ from the
+- I7: **Idea name** (Category) — one-line note on what actually shipped (may differ from the
   original idea's exact wording if the implementation took a different shape).
-- **Idea name** (Category, id: I12, fixes: I7, reassess: pending) — a later ship that fixes or
+- I12: **Idea name** (Category, fixes: I7, reassess: pending) — a later ship that fixes or
   reworks an earlier one carries the origin's id and flags the origin for reassessment.
 
 ## Rejected
@@ -124,10 +124,15 @@ Done archive: age=60, floor=5, backstop=40   <!-- optional, default shown, see S
   `risk-register.md`, and Step 6 below respectively — don't inline their details here, and don't
   read `strategies.md`/`feedback.md`/`risk-register.md` unless the one it covers is actually
   present/being set up.
-- **Every idea gets an `id:`** (`I<N>`) the moment it's added to a category (Step 2) — one counter
-  for the whole tracker, tracked as `Next id:` under Goals, never reused. The id carries forward
-  unchanged through Done and Rejected; it's what lets a later ship reference an earlier one
-  reliably even after the earlier one's name gets reworded. **Migrating an older tracker that
+- **Every idea gets an id** (`I<N>`) the moment it's added to a category (Step 2) — one counter
+  for the whole tracker, tracked as `Next id:` under Goals, never reused. **Written as a leading
+  `I<N>:` prefix on the line, not a trailing `(id: I<N>)`** — scanning a long category or Done list
+  for a specific id is the common case, and a prefix reads left-to-right without having to parse
+  into the parenthetical first. Rejected entries are the one exception: most have no id at all
+  (see below), so a leading `I<N>:` would misleadingly suggest every Rejected line has one — keep
+  `id: I<N>` inside the parenthetical there, only when actually present. The id carries forward
+  unchanged through Done (and into Rejected when it has one); it's what lets a later ship reference
+  an earlier one reliably even after the earlier one's name gets reworded. **Migrating an older tracker that
   predates this field is lazy, not a bulk pass**: if `Next id:` is missing, initialize it (from 1,
   or from the highest existing id + 1 if some entries already have one) the first time anything
   actually needs it — same non-judgement mechanical bookkeeping as Step 6's Done-trimming, no

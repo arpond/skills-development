@@ -40,7 +40,7 @@ Done entries extend the base format (see `SKILL.md`, which also covers the `id:`
 an `outcome:` value:
 
 ```markdown
-- **Idea name** (Category, id: I7, shipped YYYY-MM-DD, outcome: pending) — one-line note...
+- I7: **Idea name** (Category, shipped YYYY-MM-DD, outcome: pending) — one-line note...
 ```
 
 `outcome:` is one of `pending`, `delivered`, `mixed`, `missed`, `reverted`, or `skipped`.
@@ -60,11 +60,11 @@ low-risk.
 
 ## Recording a ship (from `SKILL.md` Step 6)
 
-When moving an item to Done, extend the base `(Category, id: I<N>)` parenthetical (see `SKILL.md`
+When moving an item to Done, extend the base `I<N>: **Idea name** (Category)` line (see `SKILL.md`
 for the id itself, which applies regardless of `Feedback:`) with a ship date and `outcome:
-pending`, e.g. `(Category, id: I7, shipped YYYY-MM-DD, outcome: pending)`. The date and the
-outcome tag are specific to `Feedback: on` — if it's off, use the plain base format with just the
-category and id.
+pending` inside the parenthetical, e.g. `I7: **Idea name** (Category, shipped YYYY-MM-DD,
+outcome: pending)`. The date and the outcome tag are specific to `Feedback: on` — if it's off, use
+the plain base format with just the category.
 
 ## Checking in (from `session-start.md` Step 0.5)
 

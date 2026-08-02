@@ -63,6 +63,7 @@ Next id: I<N>                  <!-- next unassigned idea id -->
 Selection strategy: top-tier   <!-- optional, see strategies.md -->
 Feedback: on                   <!-- optional, see feedback.md -->
 Risk register: on              <!-- optional, see risk-register.md -->
+Done archive: age=60, floor=5, backstop=40   <!-- optional, default shown, see Step 6 -->
 1. <highest-priority tier>
 2. <tier A> / <tier B> — tied; if a candidate must pick one, prefer: <tie-break rule>
 3. <next tier>
@@ -100,10 +101,11 @@ Risk register: on              <!-- optional, see risk-register.md -->
   it happens" — but prefer capturing their actual reasoning if they have one. Keep tie groups
   small (2, rarely 3); a tier that keeps growing tied entries is a smell that ranking has stopped
   meaning anything, and is worth flagging (see Step 0.5).
-- `Selection strategy:`, `Feedback:`, and `Risk register:` are optional lines, absent by default.
-  Their full format and behaviour live in `strategies.md`, `feedback.md`, and `risk-register.md`
-  respectively — don't inline their details here, and don't read those files unless one of them
-  is actually present/being set up.
+- `Selection strategy:`, `Feedback:`, `Risk register:`, and `Done archive:` are optional lines,
+  absent by default. Their full format and behaviour live in `strategies.md`, `feedback.md`,
+  `risk-register.md`, and Step 6 below respectively — don't inline their details here, and don't
+  read `strategies.md`/`feedback.md`/`risk-register.md` unless the one it covers is actually
+  present/being set up.
 - **Every idea gets an `id:`** (`I<N>`) the moment it's added to a category (Step 2) — one counter
   for the whole tracker, tracked as `Next id:` under Goals, never reused. The id carries forward
   unchanged through Done and Rejected; it's what lets a later ship reference an earlier one
@@ -174,6 +176,20 @@ Risk register: on              <!-- optional, see risk-register.md -->
 - **`revisit-after:` is optional, only for timing/priority reasons** ("not now, focused on X") —
   not for substance reasons ("doesn't fit," "already tried"), which don't go stale the same way and
   don't need a date. See Step 2 for when it's set and Step 1 for how it gets surfaced once due.
+- **The file's top-level sections are closed: Goals, one `##` per idea category, Done, Rejected —
+  nothing else.** Don't add a new `##` section for content that doesn't fit that shape (a
+  design-discussion doc, a decision log, meeting notes, a roadmap), even when this file is already
+  open and being edited and adding a section feels like the path of least resistance — that
+  proximity is exactly why it happens and exactly why it's worth a hard no. Content like that
+  dilutes the one thing this file is for and makes every future read slower (Step 2's history-check
+  and every check-in scan the live sections). Point it at wherever the project already keeps that
+  kind of content instead — `DEVELOPMENT.md`, a dedicated design doc, project docs — and only add a
+  category if what's being recorded is genuinely idea-category shaped (a list of discrete,
+  proposable, shippable ideas). Same "different write target" judgement `DESIGN_PHILOSOPHY.md`'s
+  "Split along orthogonal triggers" applies to skills, applied here to this one file's structure.
+  If a project's tracker already has a foreign section from before this rule existed, that's not
+  silently fine either — see `session-start.md` Step 0's malformed-tracker handling, extended to
+  this case.
 
 **Hard rules by step, so a review can check none have gone missing.** Scope: this table tracks
 only confirm-before-write gates (show, then wait for user's go-ahead). Separate always-surface
@@ -187,6 +203,7 @@ optional.
 | 0 (session-start.md) | If the tracker exists but is malformed, ask the user rather than silently rewriting or refusing |
 | 0 (risk-register.md) | If `RISK_REGISTER.md` exists but is malformed, ask the user rather than silently rewriting or refusing |
 | 0.5 (session-start.md) | Confirm goal changes with the user before updating Goals / bumping `Last reviewed:` |
+| 0.5 (session-start.md) | Confirm before adjusting `Done archive:` knobs or `Feedback:`'s cadence knobs off the back of a detected drift signal |
 | 2 | Show proposed new ideas, or a category retirement/merge/narrow, and wait for confirmation before writing anything |
 | 2/4.5/6 (risk-register.md) | Show a proposed risk-area creation or update (any trigger), and an archival/reactivation, and wait for confirmation before writing to `RISK_REGISTER.md` |
 | 4 | Do not start planning or implementing until the user confirms which one (if any) to build |
@@ -529,29 +546,45 @@ risk entry** — a candidate proposed at Step 2 specifically as a risk's planned
 starts the real outcome-check timing, distinct from the routine `fixes:`/`reworked:` handling above,
 which is about *unplanned* fixes discovered after the fact.
 
-**After appending, check whether Done needs trimming.** If the live tracker's Done section now
-holds more than ~20 entries, archive the oldest down to a working set of ~15 (a target, same
-spirit as Step 2's buffer — trim generously so this doesn't refire every single run): move them,
-unedited and in their existing order, to the end of `IMPROVEMENT_TRACKER_DONE.md` (create it,
-same directory as `IMPROVEMENT_TRACKER.md`, with a one-line `# <Project> — archived Done history`
-header if it doesn't exist yet). Update the archive-pointer note under the live `## Done` header
-to the cutoff date of the oldest entry now remaining live. This is mechanical bookkeeping, not a
-judgement call about ideas or priorities, so it doesn't need user confirmation the way Steps 2/4/
-4.5 do.
+**After appending, check whether Done needs trimming.** Primary trigger is age, not count — how
+long ago something shipped is what determines whether it's still useful working context, not how
+many entries happen to sit next to it (a project shipping in bursts can produce 20 genuinely-recent
+entries in two weeks that are all still relevant; a slow project can carry 10 stale ones for a
+year). Archive any Done entry whose `shipped` date is older than `Done archive:`'s `age` (default
+60 days). **Always keep the most recent `floor` entries live regardless of age** (default 5), so a
+dormant project that just resumed doesn't get its Done section swept to empty. **Count stays as a
+backstop only**: if the live section still exceeds `backstop` entries (default 40) after the age
+sweep — a burst of very recent ships — archive the oldest down to `floor` by age regardless, so one
+hyperactive stretch can't leave the file unbounded between age-sweeps. Move archived entries,
+unedited and in their existing order, to the end of `IMPROVEMENT_TRACKER_DONE.md` (create it, same
+directory as `IMPROVEMENT_TRACKER.md`, with a one-line `# <Project> — archived Done history` header
+if it doesn't exist yet). Update the archive-pointer note under the live `## Done` header to the
+cutoff date of the oldest entry now remaining live. This is mechanical bookkeeping, not a judgement
+call about ideas or priorities, so it doesn't need user confirmation the way Steps 2/4/4.5 do —
+only the knob *adjustment* below is confirm-gated, not the routine sweep itself.
 
-**Trimming doesn't wait on `outcome`** (`Feedback: on` — see `feedback.md`). Archive the oldest
-entries on the normal ~20→~15 schedule regardless of whether their outcome is still `pending` —
-otherwise a feedback loop that can't keep pace with shipping would let the live Done section grow
-without bound. `feedback.md`'s eligible-count and drip/bulk logic treat the live tracker and
-`IMPROVEMENT_TRACKER_DONE.md` as one combined pool of pending entries, oldest-first, so an entry
-crossing into the archive while still `pending` doesn't drop it from consideration — it's still
-askable, just from the other file.
+**Track which trigger actually fired, to catch a miscalibrated `age`.** Note inline on the
+`Done archive:` line which kind of sweep just ran: `(last sweep: backstop, streak: N)` or
+`(last sweep: age, streak: 0)` — increment `streak` on a `backstop` sweep, reset to 0 on an `age`
+sweep, same shape as Step 2's dry-run counter. **At `streak: 3`** (three backstop-triggered sweeps
+in a row with `age` never once catching anything first), surface it at the next `session-start.md`
+Step 0.5 check-in: `age` is calibrated for a slower project than this one is actually shipping at —
+propose halving it (or raising `backstop`) with a concrete number, wait for confirmation before
+writing (this is a hard rule — see the table above), then reset the streak. Same spirit as Step
+0.5's Goals staleness check: a number can go stale just like a priority order can.
+
+**Trimming doesn't wait on `outcome`** (`Feedback: on` — see `feedback.md`). Archive eligible-by-age
+entries regardless of whether their outcome is still `pending` — otherwise a feedback loop that
+can't keep pace with shipping would let the live Done section grow without bound. `feedback.md`'s
+eligible-count and drip/bulk logic treat the live tracker and `IMPROVEMENT_TRACKER_DONE.md` as one
+combined pool of pending entries, oldest-first, so an entry crossing into the archive while still
+`pending` doesn't drop it from consideration — it's still askable, just from the other file.
 
 `category-rotation` (`strategies.md`) counts only the live tracker's Done entries, never the
-archive — its default window (5) is well inside the ~15-20 kept live, so this practically never
-runs short, but if a project sets a much larger window than the live Done section holds, treat it
-the same as "fewer than N total" (insufficient history, skip the bias) rather than reading the
-archive file to fill the count.
+archive — its default window (5) is well inside the default `floor`-`backstop` range kept live, so
+this practically never runs short, but if a project sets a much larger window than the live Done
+section holds, treat it the same as "fewer than N total" (insufficient history, skip the bias)
+rather than reading the archive file to fill the count.
 
 **Reading the archive.** Only open `IMPROVEMENT_TRACKER_DONE.md` when something actually needs
 older history — Step 2's Rejected-style history check extended to "has something like this

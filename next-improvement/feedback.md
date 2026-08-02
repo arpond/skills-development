@@ -13,25 +13,27 @@ judgement — without turning into a nagging, ever-growing chore.
 In the Goals block:
 
 ```markdown
-Feedback: on(wait=7, bulk=5, batch=5) (bulk-offer last: <N>)
+Feedback: on(wait=7, bulk=5, batch=5, reoffer=30) (bulk-offer last: <N>, <YYYY-MM-DD>, growth-streak: <N>)
 ```
 
 `on`/`off`, default `on`. `off` disables the whole feedback check in `session-start.md`'s Step 0.5
 — no prompts, no pending count shown (but see `session-start.md`'s Step 0.6, which still surfaces
 standalone `reassess:` flags even with `Feedback: off`, since those aren't part of this
-subsystem). `wait`, `bulk`, and `batch` are optional and independently settable (unset means the
-defaults shown — 7, 5, and 5 respectively) — plain `Feedback: on` with no parens is equivalent to
-`Feedback: on(wait=7, bulk=5, batch=5)` and is the normal way to write it when none need changing;
-only spell out the parens when overriding one. `wait` is the eligibility window in days (see
-Checking in), `bulk` is the bulk-offer threshold, `batch` is the chunk size for the batched-offer
-mode (same section) — three unrelated numbers, set independently (`batch` defaults to whatever
-`bulk` is set to, but doesn't silently ride on it — set it separately if the two should differ,
-e.g. offering in chunks smaller than the threshold that triggers the offer), same independent-knob
-treatment as the `Selection strategy:` counts. The `(bulk-offer last: N)` note records the
-eligible-count at which the most recent bulk-style offer (all-at-once or batched) was made or
-declined (0 if never) — this is what lets Step 0.5 know not to re-offer until the count has grown a
-full `bulk`-step past that point (see below); it's a real stored field, not something inferred from
-the eligible count alone, since that count fluctuates as items get answered or new ones ship.
+subsystem). `wait`, `bulk`, `batch`, and `reoffer` are optional and independently settable (unset
+means the defaults shown — 7, 5, 5, and 30 respectively) — plain `Feedback: on` with no parens is
+equivalent to `Feedback: on(wait=7, bulk=5, batch=5, reoffer=30)` and is the normal way to write it
+when none need changing; only spell out the parens when overriding one. `wait` is the eligibility
+window in days (see Checking in), `bulk` is the bulk-offer threshold, `batch` is the chunk size for
+the batched-offer mode (same section), `reoffer` is the days-based re-offer trigger (see below) —
+four unrelated numbers, set independently (`batch` defaults to whatever `bulk` is set to, but
+doesn't silently ride on it — set it separately if the two should differ, e.g. offering in chunks
+smaller than the threshold that triggers the offer), same independent-knob treatment as the
+`Selection strategy:` counts. The `(bulk-offer last: N, <date>, growth-streak: <N>)` note records
+the eligible-count and date at which the most recent bulk-style offer (all-at-once or batched) was
+made or declined (0/no-date/0 if never) — this is what lets Step 0.5 know when to re-offer (see
+below); it's a real stored field, not something inferred from the eligible count alone, since that
+count fluctuates as items get answered or new ones ship. `growth-streak` counts consecutive offers
+where the eligible count was higher than at the previous offer — see "Backlog not shrinking" below.
 
 Done entries extend the base format (see `SKILL.md`, which also covers the `id:`, `fixes:`,
 `reworked:`, and `reassess:` fields — those aren't specific to this subsystem) with a ship date and
@@ -134,12 +136,24 @@ archive" note.
   immediately (skip -> `outcome: skipped`) in whichever file the item actually lives in (live
   tracker or `IMPROVEMENT_TRACKER_DONE.md`), so that item is never asked about again. At most one
   such question per session, per the throttle above.
-- **At or above `bulk`, and the eligible count exceeds `bulk-offer last:` by at least `bulk`**:
-  offer a choice instead of the single drip question — "N ships pending feedback (M need
-  reassessment) — clear them all now, N at a time, one-by-one until you say stop, or just the
-  oldest for now?" Whichever is chosen (or declined outright), update `bulk-offer last:` to the
-  current eligible count immediately — the offer itself only needs re-triggering once the pool
-  grows another full `bulk`-step, regardless of which mode was picked last time.
+- **At or above `bulk`, and *either* the eligible count exceeds `bulk-offer last:`'s stored count by
+  at least `bulk`, *or* it's been ≥`reoffer` days since `bulk-offer last:`'s stored date**: offer a
+  choice instead of the single drip question — "N ships pending feedback (M need reassessment) —
+  clear them all now, N at a time, one-by-one until you say stop, or just the oldest for now?"
+  Whichever is chosen (or declined outright), update `bulk-offer last:`'s count and date to the
+  current eligible count and today, immediately. The count-based trigger exists so a fast-growing
+  backlog doesn't wait a full month to be re-offered; the date-based trigger exists so a stalled
+  backlog that isn't growing (declined once, then just sits there) still gets re-surfaced instead of
+  silently waiting for growth that may never come.
+  - **Backlog not shrinking.** Before updating the stored count, compare it against the current
+    eligible count: if this offer's count is higher than the *previous* offer's, increment
+    `growth-streak`; otherwise reset it to 0. **At `growth-streak: 2`** (two consecutive offers where
+    the backlog grew instead of shrinking), say so plainly as part of the offer — "this backlog's
+    grown across the last two check-ins instead of shrinking; want to shorten `reoffer`, shrink
+    `bulk` so it asks more often in smaller pieces, or leave it as-is?" — surface the pattern and ask
+    rather than picking a fix, since whether the right cause is cadence, batch size, or the user
+    just not being engaged isn't something to guess at. Reset `growth-streak` to 0 once surfaced,
+    same "answered/surfaced once, don't repeat" precedent as a `reassess:` flag.
   - **All at once** — list every eligible item as a numbered list (oldest first across both files,
     reassess-flagged first within that, no cap — see `SKILL.md` Step 4's numbering rule, which
     applies to this list too), each with its why-and-what line, and let the user answer all of them

@@ -60,13 +60,23 @@ the user has to remember to do first:
    that one message, before asking what they want — a bare "want a selection strategy, or keep the
    default?" does not satisfy this, since the user can't choose from options they were never shown.
    Feedback's and the risk register's questions each stay a single short yes/no, no menu needed.
-5. **Disclose the one behavior that isn't opt-in.** Regardless of what they choose above, mention
-   once: every ship gets asked whether it fixes or reworks an earlier one (`SKILL.md` Step 6) —
-   this flags the origin item for a second look (`reassess:`, surfaced via `session-start.md` Step
-   0.6 even with both `Feedback:` and `Risk register:` off) and feeds `fixes:`/`reworked:` ids used
-   by whichever subsystems are on. It's core-loop, not a toggle — say so plainly rather than
-   letting it show up unannounced the first time a ship gets recorded.
-6. Write the file with the confirmed tiers, `Selection strategy:`, `Feedback:`, `Risk register:`
-   setting, and today's date as `Last reviewed:`, then proceed to Step 1 in `SKILL.md` (it will
-   find the categories empty, which is an expected and normal case of "running low," not an
-   error).
+5. **Disclose the behaviors that aren't opt-in.** Regardless of what they choose above, mention
+   once:
+   - Every ship gets asked whether it fixes or reworks an earlier one (`SKILL.md` Step 6) — this
+     flags the origin item for a second look (`reassess:`, surfaced via `session-start.md` Step
+     0.6 even with both `Feedback:` and `Risk register:` off) and feeds `fixes:`/`reworked:` ids
+     used by whichever subsystems are on.
+   - Done entries older than 60 days get moved out to a sibling `IMPROVEMENT_TRACKER_DONE.md` to
+     keep the live file lean (`SKILL.md` Step 6, `Done archive:` — mention the default `age`/
+     `floor`/`backstop` numbers and that they're changeable, same one-sentence treatment
+     `strategies.md`'s Setup gives its own knobs); archived entries stay just as readable/askable,
+     nothing is deleted. If it's clear from the categories/goals just discussed that this project
+     ships in unusually large or frequent bursts (or, at the other extreme, very rarely), mention
+     that the skill will flag it and propose a number adjustment if the default turns out to be
+     miscalibrated, rather than requiring the user to notice and ask.
+   Both are core-loop, not toggles — say so plainly rather than letting either show up unannounced
+   the first time it fires.
+6. Write the file with the confirmed tiers, `Selection strategy:`, `Feedback:`, `Risk register:`,
+   and (only if changed from the default) `Done archive:` setting, and today's date as
+   `Last reviewed:`, then proceed to Step 1 in `SKILL.md` (it will find the categories empty, which
+   is an expected and normal case of "running low," not an error).

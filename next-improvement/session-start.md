@@ -35,6 +35,15 @@ list to paper over a missing one — a wrong guess here silently misranks every 
 long as the tracker lives, the exact failure mode Step 0.5 already exists to prevent for staleness.
 This is one of the skill's hard rules (see the table in `SKILL.md`).
 
+**A `##` section that isn't Goals, a category, Done, or Rejected is a content-placement problem,
+not a parsing problem** (see `SKILL.md`'s "closed sections" rule) — lighter-weight than the
+malformed cases above, so it doesn't block the run. Flag it once per project (track in conversation
+context whether it's already been raised this session, same throttle as the check-ins below —
+don't re-raise every run once declined): name what's actually in the section and suggest where it
+looks like it should live instead (`DEVELOPMENT.md`, a design doc, project docs). If the user wants
+it moved, do that as its own small edit; if they want it left as a deliberate exception, don't
+re-ask on future runs — note that call was made and move on.
+
 ## Step 0.5: Check whether goals are stale
 
 Goals can drift as the project evolves, even without a formal re-setup. Check the `Last
@@ -73,8 +82,15 @@ previously-distinct tiers — same edit-and-bump mechanism as any other repriori
 If `Selection strategy:` is present (or the user wants to add/change it), see `strategies.md` —
 it's not fixed at setup either and is edited the same lightweight way. If `Feedback:` is present
 (or the user wants to add/change it), see `feedback.md`, which also runs its own short check-in
-from this step when relevant. If `Risk register:` is present (or the user wants to add/change it),
-see `risk-register.md`.
+from this step when relevant — including a "backlog not shrinking" flag when its `growth-streak`
+hits 2 (see `feedback.md`'s "Backlog not shrinking"). If `Risk register:` is present (or the user
+wants to add/change it), see `risk-register.md`.
+
+**If `SKILL.md` Step 6's Done-archive `streak` has hit 3** (three backstop-triggered sweeps in a
+row, `age` never once catching anything first), that's also due this step — fold it into the same
+combined message per the rule above: `age` is calibrated for a slower project than this one, so
+propose a concrete new number (e.g. halve it) or a higher `backstop`, wait for confirmation (hard
+rule, see the table in `SKILL.md`), then reset the streak either way once asked.
 
 ## Step 0.6: Surface standalone reassess flags (`Feedback: off` only)
 

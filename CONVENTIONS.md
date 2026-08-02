@@ -215,9 +215,11 @@ evaluate and use it with. These sections are required, in this order:
 | `## When it triggers` | The phrasings and situations that reach for it |
 | `## Example` (one or more) | At least one worked run, verbatim enough to show the actual shape |
 
-`## Cost` is required only where the skill does more than local file read/write — MCP calls, broad
-repo exploration — so someone can tell before invoking whether this is cheap. A skill whose
-`## Requires` already says "nothing beyond local file read/write" has answered it.
+`## Cost` sits immediately after the `Files:` list and is required only where the skill does more
+than local file read/write — MCP calls, broad repo exploration — so someone can tell before
+invoking whether this is cheap. A skill whose `## Requires` already says "nothing beyond local file
+read/write" has answered it. Where a skill has both an expensive and a cheap path, say so: the
+whole point is letting someone pick the cheap one deliberately.
 
 Skill-specific sections beyond these are fine and don't need justifying.
 
@@ -236,8 +238,4 @@ decision from one that always writes.
 | `commit-message-check` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | `jira-ticket-audit` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | `plan-technical-jira-ticket` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| `operational-requirements-audit` | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ |
-
-**Open gap.** `operational-requirements-audit` has no worked example and no `## Cost`, despite
-auditing a whole repo against ~10 requirement sets — the most expensive skill here and the one
-whose cost is least obvious from its description.
+| `operational-requirements-audit` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |

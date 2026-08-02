@@ -245,17 +245,14 @@ reuse its existing id per the id-scheme note above.
 ## Step 2: Top up any category running low
 
 If a category has fewer than ~3 items, or is empty, it needs fresh ideas before ranking makes
-sense — there's nothing meaningful to weigh against the goals otherwise. The ~3 floor is only the
-*trigger* for starting a top-up, not the stopping point — don't stop searching once the count
-clears 3. Keep searching until the category reaches **~6-8 outstanding items**, and don't stop
-short of that range without a concrete reason. If you stop before reaching 6-8, say explicitly
-why (e.g. "checked recent commits, rough edges, and natural next-steps — only 4 solid candidates
-exist, the rest would be filler") — a silent stop at 3-4 is exactly the undershoot this rule
-exists to prevent. This is a target, not a quota: it raises how much ground to search before
-stopping, it never lowers the bar on any individual idea (see "exhausted is a valid outcome"
-below) — a category that only has 4 solid ideas stays at 4, but that must be a stated, evidenced
-conclusion, not a default stopping point. Ground new ideas in the project's actual current state
-rather than inventing from nowhere:
+sense — there's nothing meaningful to weigh against the goals otherwise. The ~3 floor only
+triggers a top-up; keep searching until the category reaches **~6-8 outstanding items**. This is a
+target, not a quota — it raises how much ground to search, it never lowers the bar on any
+individual idea (see "exhausted is a valid outcome" below), so a category with only 4 solid ideas
+stays at 4. But stopping short of 6-8 needs a stated, concrete reason (e.g. "checked recent
+commits, rough edges, and natural next-steps — only 4 solid candidates exist, the rest would be
+filler") — a silent stop at 3-4 is exactly the undershoot this rule exists to prevent. Ground new
+ideas in the project's actual current state rather than inventing from nowhere:
 
 - What's been built or changed recently (recent commits, new modules, new files)?
 - What's untested, fragile, or has a noted rough edge (TODO-style comments, test coverage gaps,
@@ -378,10 +375,11 @@ actual shared file/module/step), never a vague "these feel related." A tier-3 id
 set up a tier-1 idea is still tier-3 for ranking purposes; the synergy is worth mentioning in Step
 4, not worth re-tiering it over. Nothing here gets written to the tracker — it's noticed and
 reasoned about at ranking time from whatever's actually outstanding, so there's no annotation to
-keep in sync as ideas get reworded, merged, or shipped. Scoped the same way `category-rotation` is:
-it breaks the base pick's own close
-call, not a tie within one of `spread(N)`'s individual per-tier picks — a tie that narrow is left
-as-is rather than resolved by either signal.
+keep in sync as ideas get reworded, merged, or shipped.
+
+It's scoped as narrowly as `category-rotation` (see `strategies.md`): it only breaks the base
+pick's own close call, never a tie within one of `spread(N)`'s individual per-tier picks — a tie
+that narrow is left as-is rather than resolved by either signal.
 
 **Precedence when several of these signals bear on the same within-tier close call.** This is the
 canonical ordering — everywhere else that mentions one of these defers here rather than restating

@@ -20,7 +20,7 @@ the priority tiers are, what's already been decided) lives in a file inside the 
 not in this skill. That file is what makes this skill reusable across every project rather than
 rewritten per repo.
 
-This file covers Steps 1-6, the steady-state propose/build/record loop. Five companion files live
+This file covers Steps 1-6, the steady-state propose/build/record loop. Six companion files live
 alongside it:
 
 - `session-start.md` — Steps 0 through 0.7 (find/bootstrap the tracker, check whether Goals need a
@@ -40,8 +40,11 @@ alongside it:
 - `changelog.md` — what each skill version added, for telling an existing tracker what it's
   missing. Read it only when `session-start.md`'s version check finds a tracker's `Feature check:`
   behind the current skill version.
+- `tracker-maintenance.md` — rare per-project edge cases (an id collision when minting, retiring/
+  merging/narrowing a category). Read it only when that specific trigger actually fires — see its
+  own header for exactly which.
 
-Of these, only `session-start.md` is unconditional — the other five are read only when their
+Of these, only `session-start.md` is unconditional — the other six are read only when their
 trigger condition says to, to keep the common-case read lean.
 
 A project's tracker may also grow a sibling `IMPROVEMENT_TRACKER_DONE.md` — the overflow of old
@@ -150,14 +153,9 @@ Done archive: age=60, floor=5, backstop=40   <!-- optional, default shown, see S
   entry in place, same precedent as Done's legacy-tag handling below; don't rewrite every existing
   entry just because the field now exists, and don't treat a missing id as a malformed-tracker case
   either (contrast `session-start.md`'s Step 0 malformed-tracker handling) — it's the expected
-  steady state for anything that hasn't needed a reference yet, not an error to flag.
-  **Before minting any id** (lazy-backfill or a fresh Step 2 append), check it isn't already in use
-  anywhere in the tracker — a hand-typed `id: I5` can exist on some entry while `Next id:` is still
-  sitting at `I5` or lower, e.g. from manual editing. If the value about to be minted collides,
-  skip forward past every id already in use (checking the live tracker, and
-  `IMPROVEMENT_TRACKER_DONE.md`/`RISK_REGISTER.md` if either exists) and mint the first free one
-  instead, then set `Next id:` to one past whatever got minted — this is the same mechanical,
-  no-confirmation bookkeeping as the rest of id assignment, not a new judgement call.
+  steady state for anything that hasn't needed a reference yet, not an error to flag. **Before
+  minting any id, check it isn't already in use** — see `tracker-maintenance.md`'s "Id collision
+  when minting" for the rare case this actually matters (a hand-typed id colliding with `Next id:`).
 - **A ship that fixes or reworks an earlier Done item** tags itself with `fixes: I<N>` (bug fix) or
   `reworked: I<N>` (broader rework), referencing the origin's id — see Step 6. This also sets
   `reassess: pending` on the *origin* entry, standalone of whether `Feedback:` is on (see
@@ -169,29 +167,9 @@ Done archive: age=60, floor=5, backstop=40   <!-- optional, default shown, see S
   project's domain. Discover them by reading the file; don't assume fixed category names.
 - A category may carry an optional `(dry runs: N — last: DATE)` note right under its header —
   see Step 2 for when it's added, incremented, cleared, and surfaced to the user.
-- **Retiring or merging a category** (offered at `dry runs: 2+`, see Step 2): if the user
-  confirms retirement, delete that category's `##` header and its (by then empty, or otherwise
-  moved) item list from the active section — but never touch **Done**/**Rejected** entries
-  already tagged with that category name; they're history, not live state, and stay exactly as
-  written. If the user confirms a merge into an existing category instead, move any remaining
-  outstanding items under the surviving category's header (dropping the retired one), and don't
-  rewrite old Done/Rejected tags to the new name — a mismatched historical tag is expected and
-  fine, not a bug to fix. **Narrowing scope instead** means renaming the category's `##` header to
-  a more specific name (the tracker format has no separate scope/description field — the name
-  *is* the scope) and treating that narrower name as the brief for future brainstorming in Step 2;
-  existing outstanding items stay under it unless they no longer fit, in which case handle them
-  like any other Step 2 judgement call (re-propose to a different category, or drop with a
-  Rejected note) rather than silently discarding them. All three (retire, merge, narrow) are still
-  a write to the tracker and need confirmation first, same as any other Step 2 change (see the
-  hard-rules table). **Preserve the id on a dropped item's Rejected note** (`(Category, YYYY-MM-DD,
-  id: I<N>)`) if it already had one — an outstanding idea can be referenced from elsewhere (a risk
-  entry's `at-risk:` list) purely by id, and dropping it to Rejected doesn't retract that reference;
-  if `Risk register: on`, also remove the id from any `at-risk:` list it appears on, same as any
-  other idea leaving the outstanding pool (see Step 6's clean-ship handling for the parallel case).
-  **This applies to any outstanding idea dropped to Rejected, not just a category-retirement drop**
-  — including one tagged `mitigated-by: ... (outcome: planned)` on a risk entry (`risk-register.md`):
-  if the idea it names is dropped instead of shipped, remove that `mitigated-by:` tag too rather
-  than leaving a dangling reference to a fix that will never ship.
+- **Retiring, merging, or narrowing a category** (offered at `dry runs: 2+`, see Step 2) and the
+  Rejected-drop id-preservation rule that goes with it — rare per-project events, see
+  `tracker-maintenance.md`.
 - **Done** is append-only history, never deleted from. Prefix each entry with its origin
   category in parens — useful bookkeeping regardless of any optional subsystem; legacy entries
   without a tag just aren't counted by anything that relies on it, no migration needed.
@@ -349,7 +327,8 @@ or the user declined what was proposed. Corrected signal/reset: the next time a 
 gets added, remove the line entirely. Threshold: at `dry runs: 2+`, surface this to the user up
 front the next time this category comes up — e.g. "Features has been topped up 2 times with
 nothing solid since <date> — possible this category is genuinely done; want to retire/merge it,
-narrow its scope, or keep polling?" — and force-reset by removing the line once surfaced,
+narrow its scope, or keep polling?" (see `tracker-maintenance.md` for the mechanics of whichever
+they pick) — and force-reset by removing the line once surfaced,
 regardless of which answer they give, so "keep polling" doesn't re-nag on the very next dry
 attempt; it takes two fresh dry runs to surface again.
 

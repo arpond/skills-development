@@ -79,7 +79,12 @@ Last reviewed: <YYYY-MM-DD>
   remove that old `Declined` line — it stays as-is, same as `next-improvement`'s `Rejected` (see
   Step 2). Whatever gets written here is still subject to the same secrets/PII rule as entries.
 
-**Hard rules by step, so a review can check none have gone missing:**
+**Hard rules by step, so a review can check none have gone missing.** Scope: rules that can't be
+skipped whatever the situation looks like — confirm-before-write gates, the secrets/PII
+prohibition, and must-ask obligations alike, since all three fail the same way if quietly dropped.
+It deliberately doesn't list the every-run behaviour that needs no gate (referencing an entry when
+work touches its area, running an entry's mechanical check before relying on it). Absence from this
+table doesn't mean optional.
 
 | Step | Hard rule |
 |---|---|
@@ -94,6 +99,13 @@ Last reviewed: <YYYY-MM-DD>
 *Update this table in the same edit whenever a hard rule is added, removed, or moved* — it's a
 mirror of the steps, not independent prose, so it's the one place to check rather than several
 scattered cross-references.
+
+**Whenever two or more options are presented for the user to pick from — migration candidates at
+Step 0, prune/needs-review candidates in `review.md`, several entries flagged at once — number them
+`1.`, `2.`, `3.`… in a single sequential list**, whatever label each carries. A label explains an
+option; a number is what the user can say back ("go with 2") to pick one unambiguously. A single
+unambiguous recommendation with nothing else to choose between doesn't need one. This applies at
+every such point in this skill, including any added later.
 
 ## Step 0: Find/bootstrap the knowledge file
 

@@ -12,7 +12,12 @@ someone starts implementing it rather than partway through. This is a review of 
 against real code (that's `plan-technical-jira-ticket`'s job, once a ticket has passed this audit
 and is judged worth planning).
 
-**Hard rules by step, so a review can check none have gone missing:**
+**Hard rules by step, so a review can check none have gone missing.** Scope: rules that hold no
+matter how simple a ticket looks — most of them aren't confirm gates at all but obligations on the
+audit's own output (every finding cites evidence, an unreachable input is its own state, a clean
+dimension says so out loud). Only the last row is a wait-for-the-user gate. The per-dimension
+analysis itself isn't listed, because it's the work rather than a rule about it. Absence from this
+table doesn't mean optional.
 
 | Step | Hard rule |
 |---|---|

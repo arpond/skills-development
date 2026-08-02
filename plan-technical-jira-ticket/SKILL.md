@@ -32,7 +32,13 @@ below for those), just a heads-up so the cost isn't a surprise: every step from 
 linked issues, remote docs, and a parent epic, and Step 5 explores and verifies claims against real
 code per repo in scope — real investigation, not a single-shot lookup.
 
-**Confirm-points by step, so a review can check none have gone missing:**
+**Confirm-points by step, so a review can check none have gone missing.** Scope: every point where
+this skill stops and waits for the user. Most are *conditional* — they fire only if that situation
+actually arises (no inaccessible link, nothing to raise at Step 2) — with Step 4's recap and Step
+6's plan approval the two that always fire. One row per step rather than per point, since several
+steps carry a handful; each is still named individually, never bundled under a loose phrase. The
+cost heads-up above isn't here because it's a notice, not something to wait on. Absence from this
+table doesn't mean optional.
 
 | Step | Confirm-point(s) |
 |---|---|

@@ -35,6 +35,10 @@ a one-off judgment call repeated silently on every future commit that hits the s
 This skill has more than one point where it writes something consequential; per this repo's
 "propose, don't just do," each is gated on user confirmation and none skips it:
 
+Scope: this table tracks **consequential writes** — anything that ends up in a file or in git
+history — and nothing else. Steps 1-6's checks aren't in it because they aren't writes and aren't
+gated: they run on every draft, unconditionally. Absence from this table never means optional.
+
 | # | What gets written | Gated where |
 |---|---|---|
 | 1 | The conventions file itself, at bootstrap | `setup.md` steps 2-4 |
@@ -42,6 +46,12 @@ This skill has more than one point where it writes something consequential; per 
 | 3 | The commit message itself (shown or passed to `git commit`) | Step 7 |
 
 Update this table in the same edit that adds or moves a write gate.
+
+**Whenever two or more options are presented for the user to pick from** — the malformed-file
+choice in Step 0, a conflict between two rules in Step 7, anything added later — **number them
+`1.`, `2.`, `3.`… in a single sequential list**, whatever label each carries. A label explains an
+option; a number is what the user can say back ("go with 2") to pick one unambiguously. A single
+unambiguous recommendation with nothing else to choose between doesn't need one.
 
 One companion file:
 

@@ -12,7 +12,12 @@ topics; this skill carries a point-in-time export of them in `references/operati
 so an audit doesn't depend on live access to Discourse or on your own memory of what an OR says
 (wording matters — always read the bundled text, don't paraphrase from recollection).
 
-**Hard rules by step, so a review can check none have gone missing:**
+**Hard rules by step, so a review can check none have gone missing.** Scope: rules that hold
+however narrow the audit is — mostly obligations on the verdicts themselves (every verdict cites
+evidence, the repo's own docs are claims rather than proof, no secret value ever gets quoted), plus
+the three points that wait on the user. Reading the bundled OR text rather than working from memory
+isn't listed because it's the premise of the whole skill, not a rule inside it. Absence from this
+table doesn't mean optional.
 
 | Step | Hard rule |
 |---|---|

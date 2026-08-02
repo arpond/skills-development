@@ -69,20 +69,22 @@ of the other two.
 
 | Skill | Where it's stated | States the rule |
 |---|---|---|
-| `next-improvement` | `SKILL.md` Step 4 | ✓ outright, covering every presentation mode |
-| `repo-knowledge` | `SKILL.md`, `setup.md`, `review.md` | ✗ applied at each site, never stated once |
-| `commit-message-check` | `SKILL.md` Step 0 | ✗ applied at the one site that needs it |
+| `next-improvement` | `SKILL.md` Step 4 | ✓ covering every presentation mode |
+| `repo-knowledge` | `SKILL.md`, above Step 0 | ✓ covering every site, present and future |
+| `commit-message-check` | `SKILL.md`, above Step 0 | ✓ covering every site, present and future |
 
-Applying it without stating it is enough while a skill offers options in one or two places; it
-stops being enough once a third appears with nothing for it to follow.
+Each states the rule once and names its own option-presenting sites, so a site added later inherits
+it instead of having to rediscover it.
 
 ## The hard-rules table
 
 Any skill with more than one confirm-before-write gate carries a table of them, so a review can
 check none have gone missing:
 
-- **One row per gate, keyed to wherever that gate actually lives** — mirroring the skill's real
-  structure, not free prose bundling several under a loose phrase.
+- **Keyed to wherever the gates actually live**, mirroring the skill's real structure. One row per
+  gate is the usual shape; one row per step is equally fine where several cluster on one step, as
+  long as each is still named individually in the cell. What's banned is free prose bundling
+  several under a loose phrase, since that's what lets one quietly disappear.
 - **Scoped explicitly.** State what the table covers (confirm-before-write gates: show, then wait)
   and what it deliberately doesn't, so absence from it never reads as "optional." Skills have
   always-surface obligations that need no confirmation; without this line the table silently
@@ -97,16 +99,17 @@ Column naming is free to fit the skill (`Step`/`Hard rule`, `#`/`What gets writt
 
 | Skill | Table | Update line | Explicit scope |
 |---|---|---|---|
-| `next-improvement` | ✓ "Hard rules by step" | ✓ | ✓ |
-| `commit-message-check` | ✓ write-gate table | ✓ | ✗ |
-| `repo-knowledge` | ✓ | ✓ | ✗ |
-| `jira-ticket-audit` | ✓ | ✓ | ✗ |
-| `operational-requirements-audit` | ✓ | ✓ | ✗ |
-| `plan-technical-jira-ticket` | ✓ | ✓ | ✗ |
+| `next-improvement` | ✓ "Hard rules by step" | ✓ | ✓ confirm-before-write gates only |
+| `commit-message-check` | ✓ write-gate table | ✓ | ✓ consequential writes only |
+| `repo-knowledge` | ✓ | ✓ | ✓ gates, prohibitions and must-asks |
+| `jira-ticket-audit` | ✓ | ✓ | ✓ mostly output obligations, one gate |
+| `operational-requirements-audit` | ✓ | ✓ | ✓ verdict obligations plus three gates |
+| `plan-technical-jira-ticket` | ✓ one row per step | ✓ | ✓ every point that waits on the user |
 
-The scope column is a known, open gap — five skills carry a table with no statement of what it
-does and doesn't cover. Recorded here rather than silently backfilled, since that's five skills'
-worth of edits beyond what this change set was for.
+**The scope statements differ per skill, and that's the point of requiring one** — these six tables
+turn out to cover six different things, from writes only to output obligations that aren't gates at
+all. A generic line would have been worse than none, since it would assert a uniformity that isn't
+there.
 
 ## Artifact locations
 

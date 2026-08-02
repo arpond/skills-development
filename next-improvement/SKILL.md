@@ -8,9 +8,9 @@ description: Runs a "what should we work on next" process for whatever project t
 **Skill version: 1.0.0.** Semver, bumped only for changes that matter to an existing tracker:
 MINOR for a new optional feature/behavior a pre-existing tracker might want to opt into, MAJOR for
 a breaking tracker-format change that needs migration. Ordinary wording/bug fixes don't bump it —
-patch stays `0`, unused. See "Changelog" near the end of this file for what shipped at each MINOR+
-version; that list is also what `session-start.md`'s version check reads from to tell an existing
-tracker what it's missing.
+patch stays `0`, unused. See `changelog.md` for what shipped at each MINOR+ version — that list is
+also what `session-start.md`'s version check reads from to tell an existing tracker what it's
+missing; read it only when that check finds a gap (see below), not on every run.
 
 A repeatable "what next" loop: keep a running list of ideas per project, top the list up when
 it runs thin, pick the next thing to build by weighing it against that project's own standing
@@ -20,7 +20,7 @@ the priority tiers are, what's already been decided) lives in a file inside the 
 not in this skill. That file is what makes this skill reusable across every project rather than
 rewritten per repo.
 
-This file covers Steps 1-6, the steady-state propose/build/record loop. Four companion files live
+This file covers Steps 1-6, the steady-state propose/build/record loop. Five companion files live
 alongside it:
 
 - `session-start.md` — Steps 0 through 0.7 (find/bootstrap the tracker, check whether Goals need a
@@ -37,8 +37,11 @@ alongside it:
 - `risk-register.md` — an optional loop that traces which shipped ideas needed follow-up fixes or
   rework, persists that as a named risk area, and factors active risks into future proposals. Read
   it when `Risk register: on`, or when setting/changing it.
+- `changelog.md` — what each skill version added, for telling an existing tracker what it's
+  missing. Read it only when `session-start.md`'s version check finds a tracker's `Feature check:`
+  behind the current skill version.
 
-Of these, only `session-start.md` is unconditional — the other four are read only when their
+Of these, only `session-start.md` is unconditional — the other five are read only when their
 trigger condition says to, to keep the common-case read lean.
 
 A project's tracker may also grow a sibling `IMPROVEMENT_TRACKER_DONE.md` — the overflow of old
@@ -132,7 +135,11 @@ Done archive: age=60, floor=5, backstop=40   <!-- optional, default shown, see S
   (see below), so a leading `I<N>:` would misleadingly suggest every Rejected line has one — keep
   `id: I<N>` inside the parenthetical there, only when actually present. The id carries forward
   unchanged through Done (and into Rejected when it has one); it's what lets a later ship reference
-  an earlier one reliably even after the earlier one's name gets reworded. **Migrating an older tracker that
+  an earlier one reliably even after the earlier one's name gets reworded. **This is a styling
+  change, not a breaking one — read both, write the new style.** A tracker written before the
+  leading-prefix convention has every id in the older trailing `(id: I<N>)` style; those entries
+  stay exactly as they are, don't get bulk-rewritten, and remain perfectly valid to read/reference.
+  Only entries newly minted from here on use the leading prefix. **Migrating an older tracker that
   predates this field is lazy, not a bulk pass**: if `Next id:` is missing, initialize it (from 1,
   or from the highest existing id + 1 if some entries already have one) the first time anything
   actually needs it — same non-judgement mechanical bookkeeping as Step 6's Done-trimming, no
@@ -208,9 +215,9 @@ Done archive: age=60, floor=5, backstop=40   <!-- optional, default shown, see S
   and every check-in scan the live sections). Point it at wherever the project already keeps that
   kind of content instead — `DEVELOPMENT.md`, a dedicated design doc, project docs — and only add a
   category if what's being recorded is genuinely idea-category shaped (a list of discrete,
-  proposable, shippable ideas). Same "different write target" judgement `DESIGN_PHILOSOPHY.md`'s
-  "Split along orthogonal triggers" applies to skills, applied here to this one file's structure.
-  If a project's tracker already has a foreign section from before this rule existed, that's not
+  proposable, shippable ideas) — content that needs a different write target belongs in a
+  different file, not squeezed into this one because it's already open. If a project's tracker
+  already has a foreign section from before this rule existed, that's not
   silently fine either — see `session-start.md` Step 0's malformed-tracker handling, extended to
   this case.
 
@@ -615,14 +622,3 @@ already shipped," the user explicitly asking about past work, or (`Feedback: on`
 Step 0.5 check-in scanning for `pending` entries that got archived before being answered. Otherwise
 don't read it as part of the normal Step 0-6 loop; that's most of the point of moving entries out
 of the live tracker.
-
-## Changelog
-
-What a tracker's `Feature check:` version-gap actually names, read by `session-start.md`'s version
-check. Each entry: what's new, and which existing setup flow to hand off to for opting in (never a
-new confirm-gate of its own — reuse the feature's own setup ask, don't invent a parallel one).
-
-- **1.0.0** — baseline. Everything in this skill as of the version field's introduction: idea
-  ids, `Selection strategy:`, `Feedback:`, `Risk register:`, `Done archive:`, closed tracker
-  sections. No disclosure owed for reaching baseline itself — a tracker backfilled to `1.0.0` (see
-  `session-start.md` Step 0) isn't behind anything, it's caught up.

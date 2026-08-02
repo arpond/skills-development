@@ -25,7 +25,8 @@ If it does exist, read it as-is and continue — don't re-ask full setup questio
 Goals aren't fixed forever though: see Step 0.5 below.
 
 **If it exists but is malformed** (no `## Goals` section, a tier line that doesn't parse as
-priority order, an unrecognised `Selection strategy:`/`Feedback:` value) — this is a case of
+priority order, an unrecognised `Selection strategy:`/`Feedback:`/`Done archive:` value, or a
+`Created:`/`Feature check:` that isn't a valid `X.Y.Z` version) — this is a case of
 "unreachable isn't resolved," not a normal empty/stale tracker: don't silently rewrite it back
 into shape (that guesses at intent the user never confirmed) and don't refuse to proceed either.
 Name the specific thing that doesn't parse and ask directly: fix it by hand, or walk through
@@ -102,18 +103,26 @@ combined message per the rule above: `age` is calibrated for a slower project th
 propose a concrete new number (e.g. halve it) or a higher `backstop`, wait for confirmation (hard
 rule, see the table in `SKILL.md`), then reset the streak either way once asked.
 
-**Check the tracker's `Feature check:` version against `SKILL.md`'s current skill version.** If
-behind, walk `SKILL.md`'s "Changelog" section for every entry newer than the stored version and
-fold them into the same combined check-in: "This tracker's on v1.0.0; v1.1.0 added <one-line
-description> — want to turn it on, or leave as-is?" For each one the user wants, hand off to that
-feature's *own* setup ask (`feedback.md`/`strategies.md`/`risk-register.md`'s Setup sections, or the
-relevant inline instructions for a non-file feature) rather than writing the tracker line directly
-here — reuse the existing confirm-gated flow per feature, don't invent a second one. Whatever the
-user decides for each item, bump `Feature check:` to the skill's current version once this has been
-asked — same "surfaced once, advance the marker" shape as `bulk-offer last:`/dry-run counters, so a
-declined feature doesn't get re-offered every session. If only this check is due this run (Goals
-and Done-archive both fine), it still gets its own short message — it doesn't need another trigger
-to piggyback on, just doesn't stack as a *second* message if others are already due.
+**Check the tracker's `Feature check:` version against `SKILL.md`'s current skill version.** Compare
+as standard semver — major first, then minor, then patch, numerically (`1.10.0` is newer than
+`1.9.0`, not older) — never as plain string/lexicographic comparison. **Behind**: open `changelog.md`
+(only now — this is exactly its trigger condition, see its own header) and walk every entry newer
+than the stored version, folding them into the same combined check-in: "This tracker's on v1.0.0;
+v1.1.0 added <one-line description> — want to turn it on, or leave as-is?" For each one the user
+wants, hand off to that feature's *own* setup ask (`feedback.md`/`strategies.md`/`risk-register.md`'s
+Setup sections, or the relevant inline instructions for a non-file feature) rather than writing the
+tracker line directly here — reuse the existing confirm-gated flow per feature, don't invent a
+second one. Whatever the user decides for each item, bump `Feature check:` to the skill's current
+version once this has been asked — same "surfaced once, advance the marker" shape as `bulk-offer
+last:`/dry-run counters, so a declined feature doesn't get re-offered every session. **Ahead** (the
+tracker's `Feature check:` is newer than this skill install's current version — a downgraded skill
+install, or a tracker copied over from a machine running a newer version) is a genuinely surprising
+input, not a normal case to silently resolve either direction: say so once ("this tracker's stamped
+v1.2.0 but this skill install is on v1.1.0 — that's unexpected, is the skill install stale?") and
+don't attempt any disclosure walk, since nothing in this install's `changelog.md` is actually newer.
+If only this check is due this run (Goals and Done-archive both fine), it still gets its own short
+message — it doesn't need another trigger to piggyback on, just doesn't stack as a *second* message
+if others are already due.
 
 ## Step 0.6: Surface standalone reassess flags (`Feedback: off` only)
 

@@ -58,9 +58,9 @@ Ask one short yes/no: want the skill to check back on how shipped work actually 
 value), or reverted (actually undone) — at most once per session, starting 7 days after an item
 ships, and offered (once 5 are eligible at once) as a choice of all-at-once, in smaller batches,
 continuously one at a time, or the default single question, rather than always asked one at a time?
-Default `Feedback: on(wait=7, bulk=5, batch=5)` if they don't care — all three numbers are
-changeable later without re-running setup, and it's capped and skippable per the mechanics below,
-so opting in is low-risk.
+Default `Feedback: on(wait=7, bulk=5, batch=5, reoffer=30)` if they don't care — all four numbers
+are changeable later without re-running setup, and it's capped and skippable per the mechanics
+below, so opting in is low-risk.
 
 ## Recording a ship (from `SKILL.md` Step 6)
 
@@ -131,8 +131,8 @@ archive" note.
 - **The first outcome question ever asked for a project includes the tag definitions; later ones
   don't repeat them.** Setup's yes/no already stated them once, but that can be weeks before the
   first Done entry actually becomes eligible — long enough to forget. Detect "first ever" cheaply,
-  without a new stored field (see `DESIGN_PHILOSOPHY.md`'s "Don't persist a signal just because
-  it's useful once"): if no Done entry anywhere (live tracker or the archive) yet carries a non-`pending`
+  without a new stored field — it can be computed fresh at no real cost, so don't write it down
+  just because it'd be convenient to have: if no Done entry anywhere (live tracker or the archive) yet carries a non-`pending`
   outcome, this is the first real question, so append the gloss inline — "(delivered = worked as
   intended, mixed = landed with real rough edges, missed = didn't deliver the value, reverted =
   actually undone)" — to whatever wording the mode below would otherwise use. Every later question,

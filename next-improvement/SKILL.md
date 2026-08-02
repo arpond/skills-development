@@ -5,6 +5,13 @@ description: Runs a "what should we work on next" process for whatever project t
 
 # Next improvement
 
+**Skill version: 1.0.0.** Semver, bumped only for changes that matter to an existing tracker:
+MINOR for a new optional feature/behavior a pre-existing tracker might want to opt into, MAJOR for
+a breaking tracker-format change that needs migration. Ordinary wording/bug fixes don't bump it —
+patch stays `0`, unused. See "Changelog" near the end of this file for what shipped at each MINOR+
+version; that list is also what `session-start.md`'s version check reads from to tell an existing
+tracker what it's missing.
+
 A repeatable "what next" loop: keep a running list of ideas per project, top the list up when
 it runs thin, pick the next thing to build by weighing it against that project's own standing
 priorities, confirm with the user, plan it in detail, build it, then record what shipped. This
@@ -59,6 +66,8 @@ Format:
 
 ## Goals (priority order, highest first)
 Last reviewed: <YYYY-MM-DD>
+Created: v<X.Y.Z>               <!-- skill version at setup time, stamped once, never changes -->
+Feature check: v<X.Y.Z>         <!-- skill version last checked for new-feature disclosure -->
 Next id: I<N>                  <!-- next unassigned idea id -->
 Selection strategy: top-tier   <!-- optional, see strategies.md -->
 Feedback: on                   <!-- optional, see feedback.md -->
@@ -94,6 +103,15 @@ Done archive: age=60, floor=5, backstop=40   <!-- optional, default shown, see S
   ties among roughly-equal candidates. Edit this section directly to reprioritise, and bump
   `Last reviewed:` when you do — nothing else in this process needs to change when priorities
   shift. See Step 0.5 for how staleness gets surfaced automatically.
+- **`Created:` and `Feature check:` are both skill-version stamps, distinct purposes.** `Created:`
+  is set once at setup and never changes — a permanent, human-readable record of what this tracker
+  started life knowing about (this repo's own `next-improvement` tracker, if it had one, would read
+  `Created: v1.0.0`, same as any tracker bootstrapped before a later version ships). `Feature
+  check:` moves forward — see `session-start.md`'s version check for when and how, and this file's
+  "Changelog" section for what each version actually added. Both are lazy-backfilled to the current
+  skill version the first time a tracker predating this field is touched (same non-judgement
+  mechanical bookkeeping as `Next id:`'s lazy-init above) — a backfilled tracker starts caught up,
+  not behind.
 - Two or more goals may share the same tier number when they're genuinely equal priority right
   now. A tied group must carry a short tie-break note on the same line: what to do when a real
   candidate serves one tied goal but not its sibling. If the user has no strong opinion, fall
@@ -592,3 +610,14 @@ already shipped," the user explicitly asking about past work, or (`Feedback: on`
 Step 0.5 check-in scanning for `pending` entries that got archived before being answered. Otherwise
 don't read it as part of the normal Step 0-6 loop; that's most of the point of moving entries out
 of the live tracker.
+
+## Changelog
+
+What a tracker's `Feature check:` version-gap actually names, read by `session-start.md`'s version
+check. Each entry: what's new, and which existing setup flow to hand off to for opting in (never a
+new confirm-gate of its own — reuse the feature's own setup ask, don't invent a parallel one).
+
+- **1.0.0** — baseline. Everything in this skill as of the version field's introduction: idea
+  ids, `Selection strategy:`, `Feedback:`, `Risk register:`, `Done archive:`, closed tracker
+  sections. No disclosure owed for reaching baseline itself — a tracker backfilled to `1.0.0` (see
+  `session-start.md` Step 0) isn't behind anything, it's caught up.

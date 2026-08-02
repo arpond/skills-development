@@ -77,6 +77,8 @@ the user has to remember to do first:
    Both are core-loop, not toggles — say so plainly rather than letting either show up unannounced
    the first time it fires.
 6. Write the file with the confirmed tiers, `Selection strategy:`, `Feedback:`, `Risk register:`,
-   and (only if changed from the default) `Done archive:` setting, and today's date as
-   `Last reviewed:`, then proceed to Step 1 in `SKILL.md` (it will find the categories empty, which
-   is an expected and normal case of "running low," not an error).
+   and (only if changed from the default) `Done archive:` setting, today's date as
+   `Last reviewed:`, and `SKILL.md`'s current version as both `Created:` and `Feature check:`
+   (identical at setup time — they only diverge once a later skill version ships something new),
+   then proceed to Step 1 in `SKILL.md` (it will find the categories empty, which is an expected
+   and normal case of "running low," not an error).

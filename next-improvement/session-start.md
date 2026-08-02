@@ -44,6 +44,12 @@ looks like it should live instead (`DEVELOPMENT.md`, a design doc, project docs)
 it moved, do that as its own small edit; if they want it left as a deliberate exception, don't
 re-ask on future runs — note that call was made and move on.
 
+**If `Created:` or `Feature check:` is missing** (tracker predates the version-stamp fields), lazy-
+backfill both to `SKILL.md`'s current skill version, same mechanical no-confirmation bookkeeping as
+`Next id:`'s lazy-init (see `SKILL.md`'s tracker-format section). A tracker backfilled this way
+starts caught up, not behind — it isn't owed a disclosure for versions that shipped before it was
+even reading them, only for whatever ships from here forward (see Step 0.5's version check).
+
 ## Step 0.5: Check whether goals are stale
 
 Goals can drift as the project evolves, even without a formal re-setup. Check the `Last
@@ -80,17 +86,34 @@ This is also where an existing tie can be broken into a strict order, or a new t
 previously-distinct tiers — same edit-and-bump mechanism as any other reprioritisation.
 
 If `Selection strategy:` is present (or the user wants to add/change it), see `strategies.md` —
-it's not fixed at setup either and is edited the same lightweight way. If `Feedback:` is present
-(or the user wants to add/change it), see `feedback.md`, which also runs its own short check-in
-from this step when relevant — including a "backlog not shrinking" flag when its `growth-streak`
-hits 2 (see `feedback.md`'s "Backlog not shrinking"). If `Risk register:` is present (or the user
-wants to add/change it), see `risk-register.md`.
+it's not fixed at setup either and is edited the same lightweight way. **Read `feedback.md`'s
+check-in whenever `Feedback:` is not explicitly `off`** — its documented default is `on`
+(`feedback.md`'s Tracker format section), so a tracker with the line entirely absent still gets the
+check-in, not just one with the line spelled out; gating this on the line's *presence* instead of
+its *value* would silently strand any tracker that never had reason to write the line, which
+defeats the point of having a default at all. Runs its own short check-in from this step when
+relevant — including a "backlog not shrinking" flag when its `growth-streak` hits 2 (see
+`feedback.md`'s "Backlog not shrinking"). If `Risk register:` is present (or the user wants to
+add/change it), see `risk-register.md`.
 
 **If `SKILL.md` Step 6's Done-archive `streak` has hit 3** (three backstop-triggered sweeps in a
 row, `age` never once catching anything first), that's also due this step — fold it into the same
 combined message per the rule above: `age` is calibrated for a slower project than this one, so
 propose a concrete new number (e.g. halve it) or a higher `backstop`, wait for confirmation (hard
 rule, see the table in `SKILL.md`), then reset the streak either way once asked.
+
+**Check the tracker's `Feature check:` version against `SKILL.md`'s current skill version.** If
+behind, walk `SKILL.md`'s "Changelog" section for every entry newer than the stored version and
+fold them into the same combined check-in: "This tracker's on v1.0.0; v1.1.0 added <one-line
+description> — want to turn it on, or leave as-is?" For each one the user wants, hand off to that
+feature's *own* setup ask (`feedback.md`/`strategies.md`/`risk-register.md`'s Setup sections, or the
+relevant inline instructions for a non-file feature) rather than writing the tracker line directly
+here — reuse the existing confirm-gated flow per feature, don't invent a second one. Whatever the
+user decides for each item, bump `Feature check:` to the skill's current version once this has been
+asked — same "surfaced once, advance the marker" shape as `bulk-offer last:`/dry-run counters, so a
+declined feature doesn't get re-offered every session. If only this check is due this run (Goals
+and Done-archive both fine), it still gets its own short message — it doesn't need another trigger
+to piggyback on, just doesn't stack as a *second* message if others are already due.
 
 ## Step 0.6: Surface standalone reassess flags (`Feedback: off` only)
 

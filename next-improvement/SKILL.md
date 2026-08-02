@@ -5,7 +5,7 @@ description: Runs a "what should we work on next" process for whatever project t
 
 # Next improvement
 
-**Skill version: 1.0.0.** `session-start.md`'s version check compares a tracker's `Feature check:`
+**Skill version: 1.1.0.** `session-start.md`'s version check compares a tracker's `Feature check:`
 stamp against this number. `changelog.md` holds both what shipped at each version and the
 versioning policy itself — read it only when that check actually finds a gap, not on every run.
 
@@ -258,17 +258,17 @@ value, write it onto the new entry, and bump the counter. Declined ideas that go
 consume an id — **unless the idea already has one**, e.g. it was outstanding, dropped to Rejected
 (a category retirement, or a plain decline of something already appended), and is now being
 proposed again: reuse its existing id rather than minting a new one for what's the same idea
-reappearing, so anything that referenced it by id (an `at-risk:` list, a `fixes:` link) still
+reappearing, so anything that referenced it by id (a `mitigated-by:` tag, a `fixes:` link) still
 resolves correctly. Only mint fresh for an idea that's never been appended before.
 
 **If `Risk register: on`, cross-reference each candidate against active risk areas** before
-presenting it — read `RISK_REGISTER.md`'s active entries and check whether the candidate's
-category/theme matches one **or more** (check all active entries, not just until the first hit).
-If any match, say so when presenting it (see `risk-register.md`) rather than leaving the match
-implicit, and ask whether the candidate is merely exposed to the risk or specifically meant to fix
-it — the answer decides whether it lands on that risk area's `at-risk:` list or its `mitigated-by:`
-list as a `planned` mitigation, not both (see `risk-register.md`'s Cross-referencing new ideas
-section). Either way, the write happens in the same write as appending the idea itself.
+presenting it — read `RISK_REGISTER.md`'s active entries and check whether the candidate touches
+the `areas:` of one **or more** (check all active entries, not just until the first hit). If any
+match, say so when presenting it (see `risk-register.md`) rather than leaving the match implicit,
+and ask whether the candidate is merely exposed to the risk or specifically meant to fix it. Only
+the "meant to fix it" answer writes anything — a `mitigated-by: ... (outcome: planned)` tag, made
+in the same write as appending the idea itself. Mere exposure is recomputed from the areas every
+time and is never recorded (see `risk-register.md`'s Cross-referencing new ideas section).
 
 **Check Rejected before proposing.** If a candidate closely resembles something already in
 Rejected, don't just skip it or blindly re-propose it — read the recorded reason and judge
@@ -351,8 +351,8 @@ already shipped and proven `effective` — both are "this candidate is the named
 different lifecycle stages; word the reasoning accordingly ("this is the planned fix for R3" vs.
 "this already proved effective against R3" if it's a repeat build). Keep the reasoning text
 distinct: "mitigates R3" is a different claim than "also lays groundwork for Y," and a candidate
-that's merely `at-risk:`-tagged (exposed to a risk, not building against it) is a caution flag, not
-a tie-break in its favour — don't conflate the three in Step 4's presentation.
+that merely touches an active risk's areas (exposed to it, not building against it) is a caution
+flag, not a tie-break in its favour — don't conflate the three in Step 4's presentation.
 
 **Synergies are a soft signal, judged fresh each run, not tracked data.** While ranking, notice if
 a candidate is a genuine stepping stone toward another outstanding candidate, would make one
@@ -418,9 +418,9 @@ for Y") — it's part of the reasoning, not a separate line item.
 **every candidate being presented this round** — not just the top pick, every numbered option in a
 multi-option list (close contenders, `spread(N)` tier picks, wildcard, quick-win alike) — against
 active risk areas. One that mitigates an active risk gets flagged plainly ("this also mitigates
-R3 — <theme>"). One that's merely `at-risk:`-tagged (touches a category with an active risk but
-isn't building against it) gets flagged too, but as a caution, not a point in its favour ("this
-touches R3's risk area — worth extra care on <what the risk actually is>"). Use the wording that
+R3 — <theme>"). One that merely touches an active entry's areas without building against them gets
+flagged too, but as a caution, not a point in its favour ("this touches R3's risk area — worth
+extra care on <what the risk actually is>"). Use the wording that
 matches which one actually applies for each candidate, per Step 3's distinction.
 
 If `Selection strategy:` is set to anything else, read `strategies.md` and build the
@@ -530,10 +530,9 @@ If the user says this ship is *not* a fix/rework of anything, or the auto-detect
 plausible, record the ship normally with no `fixes:`/`reworked:` tag — don't force a link that
 doesn't exist.
 
-**Recording any ship, first drop its id from every active risk entry's `at-risk:` list** — that
-field is specifically *outstanding* ideas (see `risk-register.md`), and this one just stopped being
-outstanding regardless of how it shipped. A clean ship (no `fixes:`/`reworked:` tag) is itself
-counter-evidence against the risk — see `risk-register.md`'s archival trigger for what that does.
+**A clean ship (no `fixes:`/`reworked:` tag) in an active risk entry's areas is counter-evidence
+against that risk** — nothing to record for it, since exposure was never stored; it's read out of
+Done whenever archival is next considered. See `risk-register.md`'s archival trigger.
 
 **After appending, check whether Done needs trimming.** Primary trigger is age, not count — how
 long ago something shipped is what determines whether it's still useful working context, not how

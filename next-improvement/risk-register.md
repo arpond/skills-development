@@ -5,16 +5,26 @@ it up or asking to change it. If a project has `Risk register: off` (or the line
 absent), none of this applies and you never need to read it.
 
 The idea: some ideas ship clean, some come back — a bug fix, a rework, a repeat `missed`/`mixed`
-outcome in the same category. That recurrence is a signal about *where this project needs more
-rigor*, not just a fact about one idea. This loop names that pattern once, persists it, and feeds
-it back into future proposals so the same kind of risk gets flagged before it repeats a third time,
-not just noticed after the fact.
+outcome in the same part of the project. That recurrence is a signal about *where this project
+needs more rigor*, not just a fact about one idea. This loop names that pattern once, persists it,
+and feeds it back into future proposals so the same kind of risk gets flagged before it repeats a
+third time, not just noticed after the fact.
 
 This is a genuinely separate concern from the rest of the skill's steady-state loop — different
 question ("where's the risk" vs. "what's next"), different write target, multiple independent
 entry points — so it lives in its own sibling file, `RISK_REGISTER.md`, rather than growing
-`IMPROVEMENT_TRACKER.md`'s own sections. It still only exists to serve next-improvement's Step 2-4
-proposals, so it stays a companion file of this skill rather than a separate skill.
+`IMPROVEMENT_TRACKER.md`'s own sections.
+
+**It stays a companion file of this skill, but is deliberately built not to depend on being one.**
+A risk area is a property of the project, not of anyone's backlog, and shipped ideas are only one
+of the things that could evidence one — a debugging session, a review, a flaky test would all do.
+So entries key on `areas:` (see below) rather than on idea ids, hold nothing that requires a
+tracker to interpret, and degrade to a still-useful standalone list if one isn't there. What keeps
+it here for now is that every trigger below is still a next-improvement event, and mitigation
+outcomes ride on `feedback.md`'s check-in machinery rather than any of their own. **The tripwire
+for splitting it out into its own skill: a reason to run that doesn't start with "what should we
+build next" — auditing risk areas directly, or evidence arriving from outside this loop.** Size
+alone isn't the signal.
 
 ## File format
 
@@ -26,14 +36,15 @@ actually needed (setup, or the first trigger below if the project turns this on 
 Next id: R<N>
 
 ## Active
-- **Theme** (Category, id: R1, status: active) — at-risk: I7, I12; mitigated-by: I23 (outcome:
-  pending) — one-line note on the pattern and what it actually is.
-- **Theme B** (Category, id: R3, status: active) — at-risk: (none); mitigated-by: I31 (outcome:
-  planned) — a fix is already proposed (I31) but not yet built.
+- **Theme** (id: R1, status: active) — areas: src/sync/, retry logic anywhere —
+  mitigated-by: I23 (outcome: pending) — one-line note on the pattern and what it actually is.
+- **Theme B** (id: R3, status: active) — areas: the CSV export path —
+  mitigated-by: I31 (outcome: planned) — a fix is already proposed but not yet built.
 
 ## Archived
-- **Theme** (Category, id: R2, status: archived) — at-risk: (none); mitigated-by: I19 (outcome:
-  effective) — archived <YYYY-MM-DD>: mitigation held, no new evidence since.
+- **Theme** (id: R2, status: archived) — areas: db/migrations/ —
+  mitigated-by: I19 (outcome: effective) — archived <YYYY-MM-DD>: mitigation held, no new
+  evidence since.
 ```
 
 - **Own id space (`R<N>`)**, own counter (`Next id:` at the top of this file), never reused —
@@ -42,20 +53,35 @@ Next id: R<N>
   the same concept.
 - **`status: active` | `archived`** — archived entries are preserved, not deleted, and excluded
   from the routine cross-reference checks below; see Archival.
-- **`at-risk:`** — ids of currently *outstanding* ideas judged to share this risk (same
-  category/theme/cause). References ideas by id, not name, for the same reason `fixes:`/
-  `reworked:` do (`SKILL.md`) — a name can get reworded, an id can't drift.
+- **`areas:`** — **the join key: what part of the project this risk is actually about**, named
+  concretely enough to match against — file paths, directories, a module, or a named subsystem
+  where no path fits ("the CSV export path", "anything touching retry logic"). Everything that
+  consumes this file matches on areas, so a vague area ("the codebase", "quality") makes the entry
+  unusable; push for something a candidate can be checked against.
+  - **Deliberately not idea ids.** An area is a durable property of the project; an idea id is a
+    row in one particular tracker. Keying on areas means an entry stays meaningful when the idea
+    that evidenced it is reworded, archived, or dropped, when the tracker is hand-edited, and when
+    there's no `IMPROVEMENT_TRACKER.md` at all — evidence can come from a debugging session or a
+    review just as legitimately as from a shipped idea.
+  - **Which idea ids are currently exposed is computed, never stored.** A candidate is exposed if
+    it touches one of the areas — judged fresh at Step 2/3/4 from what's actually outstanding, the
+    same way the evidence scan below is recomputed rather than persisted. There's no `at-risk:`
+    list to add to, drop from, or repopulate, and so no way for one to go stale. A register written
+    before this change may still carry an `at-risk:` field — ignore it on read, drop it the next
+    time that entry is rewritten for another reason; don't do a bulk pass.
 - **`mitigated-by:`** — id(s) of idea(s) built, or *intended*, *specifically to address* this
   risk, each with its own `outcome:` value: `planned`/`pending`/`effective`/`partial`/
   `ineffective`. `planned` is this field's own first state, for an idea that's still outstanding —
   proposed at Step 2 specifically as the fix for this risk, not yet built. The remaining four reuse
   `feedback.md`'s exact ship-outcome vocabulary and check-in mechanics once it ships — see Recording
-  a planned mitigation and Checking on mitigations below. Distinct meaning from `at-risk:`: `at-risk`
-  is "exposed to this," `mitigated-by` is "meant to fix this, whether or not it's shipped yet" —
-  don't conflate the two in reasoning text (`SKILL.md` Step 3/4 already calls this out).
+  a planned mitigation and Checking on mitigations below. **This one *is* stored, unlike exposure**
+  — "meant to fix this" is a judgement someone made, not something recomputable from what a
+  candidate touches, and it's the only field carrying an idea id. Keep the distinction sharp in
+  reasoning text: merely touching an area is "exposed to this," a `mitigated-by:` tag is "meant to
+  fix this, whether or not it's shipped yet" (`SKILL.md` Step 3/4 already calls this out).
 - **No `cause:`/`fixes:` list is stored on the entry.** Which specific `fixes:`/`reworked:` links
   originally evidenced the pattern is cheap to recompute on demand — scan Done for links whose
-  origin's category matches this entry's category — so it isn't persisted here; storing it would
+  origin touches this entry's areas — so it isn't persisted here; storing it would
   just be a second copy to keep in sync every time a new link lands. Scan Done per the combined-pool
   rule (`SKILL.md` Step 6's "Reading the archive") — evidence for an old, slow-moving risk pattern
   is exactly the kind of thing likely to have aged into the archive by the time it matters, and
@@ -66,7 +92,8 @@ Next id: R<N>
 ## Malformed file
 
 `RISK_REGISTER.md` can exist but not parse (a missing `Next id:`, an entry outside `## Active`/
-`## Archived`, an unrecognised `status:` value) — same "unreachable isn't resolved" treatment as
+`## Archived`, an unrecognised `status:` value, an active entry with no `areas:` at all — nothing
+can be matched against it) — same "unreachable isn't resolved" treatment as
 `IMPROVEMENT_TRACKER.md`'s own malformed-tracker case (`session-start.md` Step 0): don't silently
 reinterpret or rewrite it, and don't refuse to proceed either. Name the specific thing that doesn't
 parse and ask directly, same as the tracker's own handling. `Next id:` missing specifically isn't
@@ -85,19 +112,26 @@ turn it on any time later once that's no longer true, same lightweight edit-in-p
 ## Creating or updating an entry
 
 **Always a proposal, never a silent write** — this is one of the skill's hard rules (see the table
-in `SKILL.md`): show the proposed theme, category, and evidence, and wait for confirmation before
-writing to `RISK_REGISTER.md`, same gate as Step 2's new-idea proposals. Five independent triggers
-can start this, all funneling through the same proposal format and the same gate — a repeat pattern
-doesn't care which trigger noticed it first:
+in `SKILL.md`): show the proposed theme, **the concrete areas it covers** (an idea category is no
+longer part of an entry — a risk is scoped by where it lives, not by which backlog heading
+happened to surface it), and the evidence, then
+wait for confirmation before writing to `RISK_REGISTER.md`, same gate as Step 2's new-idea
+proposals. The areas are the part worth actually negotiating rather than assuming — they're what
+every later check matches against, so "which files/modules is this really about?" is the question
+to ask if the evidence doesn't already make it obvious. Five independent triggers can start this,
+all funneling through the same proposal format and the same gate — a repeat pattern doesn't care
+which trigger noticed it first:
 
-1. **`SKILL.md` Step 6, a `fixes:`/`reworked:` link lands.** If this is the 2nd+ link into the same
-   category (or the same specific earlier idea), propose creating a new entry if no entry covers
+1. **`SKILL.md` Step 6, a `fixes:`/`reworked:` link lands.** If this is the 2nd+ link touching the
+   same area (or the same specific earlier idea), propose creating a new entry if no entry covers
    that pattern yet. If one already does, there's usually nothing to write — the new link is
    evidence, and evidence isn't stored on the entry (see the no-`cause:`-list note above), so it
-   gets recomputed on demand rather than appended. The exception: if the matching entry was
-   archived, this is a reactivation proposal (see Archival and reactivation).
-2. **`feedback.md`, a `missed`/`mixed`/`reverted` outcome is recorded.** For `missed`/`mixed`: same
-   category showing a *repeat* of bad outcomes, even with no explicit fix link yet, is earlier/
+   gets recomputed on demand rather than appended. Two exceptions: if the matching entry was
+   archived, this is a reactivation proposal (see Archival and reactivation); and if the new
+   evidence sits just outside the entry's stated areas, propose widening `areas:` rather than
+   silently counting it or opening a near-duplicate entry.
+2. **`feedback.md`, a `missed`/`mixed`/`reverted` outcome is recorded.** For `missed`/`mixed`: the
+   same areas showing a *repeat* of bad outcomes, even with no explicit fix link yet, is earlier/
    softer evidence of the same shape — propose the same way as trigger 1. For `reverted`: propose
    on the **first** occurrence, no repeat needed — an idea getting actively undone is strong enough
    evidence on its own, unlike a merely-disappointing outcome.
@@ -111,7 +145,7 @@ doesn't care which trigger noticed it first:
 
 ### A mitigation needing its own fix
 
-Distinct from trigger 1's ordinary same-category evidence: if the id getting a `fixes:`/
+Distinct from trigger 1's ordinary same-area evidence: if the id getting a `fixes:`/
 `reworked:` link (`SKILL.md` Step 6) is itself tagged `mitigated-by:` on some risk entry — the
 thing that was supposed to fix that risk just needed fixing itself — that's not just another data
 point toward a *new* pattern, it's direct evidence the *existing* mitigation didn't hold. Handle it
@@ -129,24 +163,24 @@ as its own case, not folded into trigger 1's generic "2nd+ link" counting:
 
 ## Cross-referencing new ideas (from `SKILL.md` Step 2)
 
-Before presenting a newly-proposed idea, check it against every **active** entry's category/theme.
+Before presenting a newly-proposed idea, check whether it touches any **active** entry's `areas:`.
 On a match, say so as part of presenting the idea (not a separate confirmation step) — e.g. "this
 also touches R1 — <theme> — past ships here needed 2 follow-up fixes, worth extra care on scope/
 tests upfront." Then, **for each matching entry separately** (a candidate can match more than one —
 it may be the intended fix for one and merely exposed to another; don't ask one global question
 covering all matches at once), ask the exposed-vs-fix follow-up: is this candidate merely *exposed*
-to that risk, or *meant to fix it*? The answer decides which field it goes in, per entry:
+to that risk, or *meant to fix it*?
 
-- **Exposed, not a fix** (the normal case): if the user accepts the idea, add its id to that
-  entry's `at-risk:` list in the same write as appending the idea itself.
+- **Exposed, not a fix** (the normal case): **nothing gets written.** The match was computed from
+  the entry's areas and will be recomputed the same way every time this candidate is presented, so
+  there's nothing to record. The flag itself is the whole output.
 - **Meant to fix it**: if the user accepts the idea, tag it `mitigated-by: I<N> (outcome: planned)`
-  on that entry instead — this is the idea's status *before* it's built, distinct from the
-  `pending` it gets once shipped (see Recording a planned mitigation below). Don't also add it to
-  the same entry's `at-risk:` — for *that entry* it's either the fix or exposed, not both (it can
-  still be `at-risk:` on a *different* matching entry).
+  on that entry — this is the idea's status *before* it's built, distinct from the `pending` it
+  gets once shipped (see Recording a planned mitigation below). This is a real write, so it goes
+  through the confirm gate along with appending the idea itself.
 
 Archived entries are skipped for this check — that's the point of archiving; a new match against an
-archived theme is instead a **reactivation** trigger (see below), not a routine at-risk tag or a new
+archived theme is instead a **reactivation** trigger (see below), not a routine caution or a new
 planned mitigation.
 
 ## Recording a planned mitigation (from `SKILL.md` Step 6)
@@ -188,11 +222,12 @@ disclosure rather than a silently-dead feature.
 ## Archival and reactivation
 
 **Propose archiving** (confirm gate, same as creation) when a `mitigated-by:` entry is assessed
-`effective` **and** no new evidence has landed against that category since (no new `fixes:`/
-`reworked:` link, no new `missed`/`mixed`/`reverted` outcome, checked live per the "no stored cause list"
-note above). On confirmation: flip `status: active → archived`, move the entry from `## Active` to
-`## Archived`, clear its `at-risk:` list (outstanding ideas stop being flagged against a resolved
-risk), and note the archival date and reason inline.
+`effective` **and** no new evidence has landed in that entry's areas since (no new `fixes:`/
+`reworked:` link, no new `missed`/`mixed`/`reverted` outcome, checked live per the "no stored cause
+list" note above). On confirmation: flip `status: active → archived`, move the entry from
+`## Active` to `## Archived`, and note the archival date and reason inline. Outstanding ideas stop
+being flagged against it automatically, since the check only looks at active entries and nothing
+was stored per-idea in the first place.
 
 **Don't archive while any `mitigated-by:` on that entry is still `outcome: planned`.** A fix is
 already in flight — archiving now would mean Step 6's flip-check (which only scans **active**
@@ -201,26 +236,25 @@ permanently stuck. Wait for it to ship and reach a real outcome (or get dropped,
 before considering archival, even if a separate, earlier `mitigated-by:` on the same entry already
 came back `effective`.
 
-**A clean ship of an `at-risk:`-tagged idea is counter-evidence too** (`SKILL.md` Step 6): if an
-idea on an active entry's `at-risk:` list ships with no `fixes:`/`reworked:` tag of its own, that's
-one data point against the risk being live — worth factoring into the next archival judgement even
-without a formal `mitigated-by:` entry, though it doesn't trigger archival by itself the way an
-`effective` mitigation does.
+**A clean ship in an entry's areas is counter-evidence too** (`SKILL.md` Step 6): if an idea
+touching an active entry's areas ships with no `fixes:`/`reworked:` tag of its own, that's one data
+point against the risk being live — worth factoring into the next archival judgement even without a
+formal `mitigated-by:` entry, though it doesn't trigger archival by itself the way an `effective`
+mitigation does. Nothing needs recording for this either; it's read out of Done at archival time.
 
 **New evidence against an archived entry** (a `fixes:`/`reworked:` link or `missed`/`mixed`/
-`reverted` outcome lands in that category again) is a **reactivation** proposal, not a silent flip — same
-confirm gate: "R2 (<theme>) was archived on <date> — <new evidence> suggests it's back, reopen it?"
-On confirmation, flip `status: archived → active`, move it back to `## Active`, and — **re-populate
-`at-risk:` immediately**, not just going forward: scan the category's currently outstanding ideas
-for a match, same check `SKILL.md` Step 2 runs for a newly-proposed idea, and add every match now.
-Archival cleared the list, but ideas that were already sitting outstanding in that category the
-whole time never went through Step 2's cross-reference (that only fires for *new* proposals), so
-without this they'd stay silently untagged until each one happened to get re-touched. Then continue
-from there as an ordinary active entry.
+`reverted` outcome lands in its areas again) is a **reactivation** proposal, not a silent flip —
+same confirm gate: "R2 (<theme>) was archived on <date> — <new evidence> suggests it's back, reopen
+it?" On confirmation, flip `status: archived → active` and move it back to `## Active`; it's an
+ordinary active entry from there. Nothing needs re-populating: every already-outstanding idea in
+those areas starts matching again the moment the entry is active, because the match is computed
+rather than stored. (This is the case that used to need a special catch-up pass — ideas sitting
+outstanding the whole time had never been through the cross-reference, since that only fires for
+*new* proposals.)
 
 ## Using active entries (from `SKILL.md` Step 3/4)
 
 A candidate that's tagged `mitigated-by:` an active entry gets that named as a positive reason in
-Step 3/4's reasoning ("mitigates R1"); one that's merely `at-risk:`-tagged gets named as a caution,
-not a point in its favour. For how either weighs against the other tie-break signals, see
-`SKILL.md` Step 3's precedence ladder — that's the canonical ordering, not restated here.
+Step 3/4's reasoning ("mitigates R1"); one that merely touches an active entry's areas gets named
+as a caution, not a point in its favour. For how either weighs against the other tie-break signals,
+see `SKILL.md` Step 3's precedence ladder — that's the canonical ordering, not restated here.

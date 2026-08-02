@@ -207,7 +207,8 @@ worth naming even on its own, not just as part of a pattern.
 
 If `Risk register: on`, a `missed` or `mixed` outcome is also one of `risk-register.md`'s
 creation/update triggers — even without an explicit `fixes:`/`reworked:` link, a plain bad outcome
-in a category is earlier, softer evidence of the same kind of pattern. See `risk-register.md`'s
+in the same part of the project is earlier, softer evidence of the same pattern. See
+`risk-register.md`'s
 triggers list. A single `reverted` outcome is strong enough evidence to trigger a risk-area
 proposal by itself, unlike `missed`/`mixed`, which need a repeat pattern first — see
 `risk-register.md`'s trigger 2.

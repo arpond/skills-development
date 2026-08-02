@@ -11,10 +11,27 @@ patch stays `0`, unused. The current version lives at the top of `SKILL.md`; onl
 get an entry below, since those are the only ones a tracker could be behind on in a way it'd want
 told about.
 
-What a tracker's version-gap actually names. Each entry: what's new, and which existing setup flow
-to hand off to for opting in (never a new confirm-gate of its own — reuse the feature's own setup
-ask, don't invent a parallel one).
+What a tracker's version-gap actually names. Each entry says what's new and **whether there's
+anything to opt into**:
 
+- **Opt-in entries** hand off to that feature's own setup ask (`feedback.md`/`strategies.md`/
+  `risk-register.md`'s Setup sections, or the relevant inline instructions) — never a new
+  confirm-gate of its own; reuse the feature's own flow, don't invent a parallel one.
+- **Automatic entries** change how something already turned on behaves. There's nothing to accept
+  or decline, so don't pose one as a question — mention it in a clause if it changes what the user
+  will see, or skip it silently if it doesn't, and bump `Feature check:` either way.
+
+- **1.1.0** — *automatic, `Risk register: on` only, nothing to opt into.* Risk entries now key on
+  `areas:` (the files/modules/subsystem a risk is actually about) instead of on a stored `at-risk:`
+  list of idea ids. Which outstanding ideas are exposed is computed fresh from those areas at
+  Steps 2/3/4 rather than recorded, so the list can't go stale, doesn't need clearing on archival
+  or re-populating on reactivation, and survives a hand-edited or absent tracker. `mitigated-by:`
+  is unchanged and still carries an idea id — it's a stored judgement, not a computable match. An
+  existing `RISK_REGISTER.md` keeps working: an `at-risk:` field is ignored on read and dropped
+  whenever that entry is next rewritten, no bulk migration. The per-entry idea `Category` is gone
+  for the same reason — areas scope a risk more precisely, and two join keys can drift apart.
+  Entries do need `areas:` to match against anything, so the first time an older entry comes up,
+  propose areas for it as part of whatever write is already happening.
 - **1.0.0** — baseline. Everything in this skill as of the version field's introduction: idea ids
   (leading `I<N>:` prefix on new entries; existing entries in the older trailing `(id: I<N>)` style
   stay valid and don't need rewriting — both are readable, only new writes use the prefix),

@@ -24,9 +24,9 @@ Files:
   (delivered / mixed / missed) and feeds that back into future judgement, capped so it never
   turns into a nagging backlog. On by default; only skipped when a project sets `Feedback: off`.
 - `risk-register.md` — an optional loop that traces which shipped ideas needed follow-up fixes,
-  reworks, or bad outcomes, persists that as a named risk area in a sibling `RISK_REGISTER.md`,
-  and cross-references future proposals against it. Off by default; only read when a project has
-  `Risk register: on`.
+  reworks, or bad outcomes, persists that as a named risk area (keyed to the files/modules it's
+  actually about) in a sibling `RISK_REGISTER.md`, and cross-references future proposals against
+  it. Off by default; only read when a project has `Risk register: on`.
 - `tracker-maintenance.md` — rare per-project edge cases: minting/migrating idea ids, and
   retiring, merging, or narrowing an idea category. Only read when one of those actually comes up.
 - `changelog.md` — what each skill version added, plus the versioning policy. Only read when an

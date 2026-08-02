@@ -7,7 +7,8 @@ section below names its own trigger. This exists to keep this rare, occasional-e
 ## Minting and migrating ids
 
 **Trigger: an id is actually needed** — a fresh Step 2 append, or an existing id-less entry that
-something now wants to reference (a `fixes:` link, an `at-risk:` list, a reassess flag).
+something now wants to reference (a `fixes:` link, a risk entry's `mitigated-by:` tag, a reassess
+flag).
 
 All of it is mechanical, no-confirmation bookkeeping, same as Step 6's Done-trimming — never a
 judgement call, and never a reason to stop and ask.
@@ -61,11 +62,12 @@ All three are still a write to the tracker and need confirmation first, same as 
 change (see `SKILL.md`'s hard-rules table).
 
 **Preserve the id on a dropped item's Rejected note** (`(Category, YYYY-MM-DD, id: I<N>)`) if it
-already had one — an outstanding idea can be referenced from elsewhere (a risk entry's `at-risk:`
-list) purely by id, and dropping it to Rejected doesn't retract that reference; if
-`Risk register: on`, also remove the id from any `at-risk:` list it appears on, same as any other
-idea leaving the outstanding pool (see `SKILL.md` Step 6's clean-ship handling for the parallel
-case). This applies to any outstanding idea dropped to Rejected, not just a category-retirement
-drop — including one tagged `mitigated-by: ... (outcome: planned)` on a risk entry
-(`risk-register.md`): if the idea it names is dropped instead of shipped, remove that
-`mitigated-by:` tag too rather than leaving a dangling reference to a fix that will never ship.
+already had one — an outstanding idea can still be referenced by id from elsewhere, and dropping it
+to Rejected doesn't retract that reference. This applies to any outstanding idea dropped to
+Rejected, not just a category-retirement drop.
+
+**If `Risk register: on`, check for a `mitigated-by:` tag naming it** (`risk-register.md`). That's
+the only place a risk entry references an idea by id, and it's a promise that a fix is coming: if
+the idea is dropped instead of shipped, remove the tag rather than leaving a risk entry pointing at
+a fix that will never arrive. Nothing else needs cleaning up — exposure to a risk area is computed
+from the entry's `areas:`, never stored against an idea, so a dropped idea simply stops matching.

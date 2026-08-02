@@ -532,13 +532,12 @@ If confirmed:
   applies whether or not the feedback subsystem is on. See `feedback.md` (Feedback on: folded into
   its check-in, prioritised over routine outcome asks) and `session-start.md` (Feedback off: a
   lightweight one-off surfacing, no persistent answer required).
-- If `Risk register: on`, this link is also one of `risk-register.md`'s creation/update triggers —
-  follow it there (propose creating or extending a risk area, confirm before writing).
-- **If `Risk register: on`, also check whether the origin's id is itself a `mitigated-by:` entry
-  on any risk area** — i.e., the thing that was supposed to *fix* a risk just needed fixing itself.
-  This is stronger, more specific evidence than an ordinary same-category `fixes:` link (trigger 1)
-  — see `risk-register.md`'s "A mitigation needing its own fix" note for how it's surfaced and
-  what it does to that mitigation's `outcome:`.
+- If `Risk register: on`, this link also feeds three of `risk-register.md`'s own Step-6-triggered
+  checks, each with its full mechanics already documented there rather than repeated here: a
+  creation/update trigger (its "Creating or updating an entry," trigger 1), whether the origin's id
+  is itself a `mitigated-by:` entry (its "A mitigation needing its own fix"), and whether this
+  ship's own id is a `mitigated-by: ... (outcome: planned)` entry on some risk (its "Recording a
+  planned mitigation").
 
 If the user says this ship is *not* a fix/rework of anything, or the auto-detect had nothing
 plausible, record the ship normally with no `fixes:`/`reworked:` tag — don't force a link that
@@ -546,16 +545,8 @@ doesn't exist.
 
 **Recording any ship, first drop its id from every active risk entry's `at-risk:` list** — that
 field is specifically *outstanding* ideas (see `risk-register.md`), and this one just stopped being
-outstanding regardless of how it shipped. Then, separately: if this ship needed no `fixes:`/
-`reworked:` tag of its own, that clean ship is itself counter-evidence against the risk (see
-`risk-register.md`'s archival trigger) — note it there rather than just silently removing the id
-and moving on.
-
-**Also check whether this ship's id is tagged `mitigated-by: ... (outcome: planned)` on any active
-risk entry** — a candidate proposed at Step 2 specifically as a risk's planned fix. If so, flip
-`planned → pending` there (see `risk-register.md`'s Recording a planned mitigation) — this is what
-starts the real outcome-check timing, distinct from the routine `fixes:`/`reworked:` handling above,
-which is about *unplanned* fixes discovered after the fact.
+outstanding regardless of how it shipped. A clean ship (no `fixes:`/`reworked:` tag) is itself
+counter-evidence against the risk — see `risk-register.md`'s archival trigger for what that does.
 
 **After appending, check whether Done needs trimming.** Primary trigger is age, not count — how
 long ago something shipped is what determines whether it's still useful working context, not how

@@ -5,9 +5,9 @@ Instructions for working in this specific repo, on top of global preferences.
 ## Review loop
 
 After a non-trivial change to a skill in this repo (a new feature, a fix, a rework — not a single
-typo fix), **or to `DESIGN_PHILOSOPHY.md` itself**, offer a review pass rather than running it
-unasked or waiting to be asked every time. One short offer, e.g. "Want a review pass?" — not four
-separate offers for the four checks below.
+typo fix), **or to either shared file — `DESIGN_PHILOSOPHY.md` or `CONVENTIONS.md`** — offer a
+review pass rather than running it unasked or waiting to be asked every time. One short offer, e.g.
+"Want a review pass?" — not four separate offers for the four checks below.
 
 If the user says yes, run these four checks in order, on whatever was just changed:
 
@@ -33,7 +33,9 @@ If the user says yes, run these four checks in order, on whatever was just chang
    more than once across files or sections, mechanisms that could reuse an existing pattern
    instead of inventing a parallel one, prose that's denser or longer than the content requires.
    On `DESIGN_PHILOSOPHY.md` this means checking bullets against each other, not just against a
-   skill.
+   skill; on `CONVENTIONS.md`, checking specs against each other, and each spec against its own
+   inline copies — a spec restated in three skills is three chances for the same sentence to say
+   three slightly different things.
 3. **Gaps.** Functional/logical holes, not wording — contradictory inputs, malformed stored state,
    ambiguous write targets when more than one file/location can hold state, claims about external
    facts (committed, installed, reachable) that are asserted but never checked, third states
@@ -42,13 +44,34 @@ If the user says yes, run these four checks in order, on whatever was just chang
    split (see `DESIGN_PHILOSOPHY.md`'s "Split along orthogonal triggers, not around size"). Distinct
    from pass 1: philosophy violations are "breaks a stated rule," gaps are "no rule covers this
    yet." On `DESIGN_PHILOSOPHY.md` itself, a gap looks like a principle with no worked example, an
-   ambiguous cross-reference, or two bullets that quietly contradict each other.
-4. **Philosophy additions.** Given what passes 1-3 turned up, is there a new pattern here that
-   would generalize to other skills in this repo, not just this one? If yes, propose it as a new
-   `DESIGN_PHILOSOPHY.md` bullet before writing it — same "propose, don't just do" gate as any
-   other change to a shared file. When the change under review *is* `DESIGN_PHILOSOPHY.md`, this
-   pass instead asks whether passes 2-3 surfaced a wording/structure fix worth applying now, same
-   propose-first gate.
+   ambiguous cross-reference, or two bullets that quietly contradict each other. On
+   `CONVENTIONS.md`, it looks like a spec with no implemented-by table, a table asserting something
+   that isn't actually true of the skill named, a spec stating a rule with no test for applying it,
+   or a requirement no skill has ever met — which is a spec nobody wrote from, not a standard.
+4. **Shared-file additions.** Given what passes 1-3 turned up, is there a new pattern here that
+   would generalize to other skills in this repo, not just this one? If yes, **decide which shared
+   file it belongs in before drafting it**, using the test in `DESIGN_PHILOSOPHY.md`'s "Principles
+   vs. specs": ask what failure the rule prevents. *Two implementations doing it differently*, where
+   each looks fine alone and only the disagreement is wrong → a `CONVENTIONS.md` spec, which also
+   needs its implemented-by table and an inline copy in each skill that implements it, since a skill
+   can't cite a repo-root file. *One judgement made badly*, no second implementation involved → a
+   `DESIGN_PHILOSOPHY.md` bullet. A rule can be both, and the embedded spec is usually the half
+   that got written first because it's easier to state — split it rather than filing the whole
+   thing under one, with the principle keeping the why and pointing at the spec.
+
+   Either way, propose before writing — same "propose, don't just do" gate as any other change to a
+   shared file. Two things that look like specs and aren't: a prohibition has no shared
+   implementation to drift from, and a rule with only one implementation isn't a spec yet.
+
+   **A pattern found here is not licence to restate an existing rule.** If a spec already covers it
+   and some skills don't match, that's a conformance finding for pass 1, not an addition — and the
+   fix is bringing the skills up to the spec or recording an explicit `✗`, never widening the spec
+   to describe what the implementations happen to do. Widening is sometimes right, but it's a
+   deliberate change to the rule with its own proposal, not a by-product of noticing drift.
+
+   When the change under review *is* `DESIGN_PHILOSOPHY.md` or `CONVENTIONS.md`, this pass instead
+   asks whether passes 2-3 surfaced a wording/structure fix worth applying now, same propose-first
+   gate.
 
 Timing: offer once, after the change is otherwise done and deployed — not mid-edit, and not
 stacked as a second ask right after some other confirmation (see "one check-in, not two"). If

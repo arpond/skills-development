@@ -78,20 +78,17 @@ it instead of having to rediscover it.
 
 ## The hard-rules table
 
-Any skill with more than one rule that must never be skipped carries a table of them, so a review
-can check none have gone missing. What counts as such a rule varies by skill — a confirm-before-
-write gate, a prohibition, an obligation on the skill's own output — and each table decides its own
-answer rather than inheriting one:
+Any skill with more than one confirm-before-write gate carries a table of them, so a review can
+check none have gone missing:
 
-- **Keyed to wherever those rules actually live**, mirroring the skill's real structure. One row
-  per rule is the usual shape; one row per step is equally fine where several cluster on one step,
-  as long as each is still named individually in the cell. What's banned is free prose bundling
+- **Keyed to wherever the gates actually live**, mirroring the skill's real structure. One row per
+  gate is the usual shape; one row per step is equally fine where several cluster on one step, as
+  long as each is still named individually in the cell. What's banned is free prose bundling
   several under a loose phrase, since that's what lets one quietly disappear.
-- **Scoped explicitly.** State what the table covers *and what it deliberately doesn't*, so absence
-  from it never reads as "optional." This line does real work precisely because the answer isn't
-  uniform: the six tables in this repo range from writes only, to output obligations that gate
-  nothing at all. A skill inheriting a generic scope sentence would be asserting a consistency that
-  doesn't exist.
+- **Scoped explicitly.** State what the table covers (confirm-before-write gates: show, then wait)
+  and what it deliberately doesn't, so absence from it never reads as "optional." Skills have
+  always-surface obligations that need no confirmation; without this line the table silently
+  implies those are discretionary.
 - **Carries its own update instruction** — a line telling the reader to update the table in the
   same edit that adds, removes, or moves a gate. Without that the table rots into a stale summary
   of a structure that moved on.
@@ -109,9 +106,10 @@ Column naming is free to fit the skill (`Step`/`Hard rule`, `#`/`What gets writt
 | `operational-requirements-audit` | ✓ | ✓ | ✓ verdict obligations plus three gates |
 | `plan-technical-jira-ticket` | ✓ one row per step | ✓ | ✓ every point that waits on the user |
 
-Only `next-improvement`'s table is confined to confirm-before-write gates; the rest carry
-prohibitions and output obligations too. The narrow reading came first only because that skill was
-written first.
+**The scope statements differ per skill, and that's the point of requiring one** — these six tables
+turn out to cover six different things, from writes only to output obligations that aren't gates at
+all. A generic line would have been worse than none, since it would assert a uniformity that isn't
+there.
 
 ## Artifact locations
 

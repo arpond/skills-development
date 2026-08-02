@@ -175,7 +175,11 @@ Risk register: on              <!-- optional, see risk-register.md -->
   not for substance reasons ("doesn't fit," "already tried"), which don't go stale the same way and
   don't need a date. See Step 2 for when it's set and Step 1 for how it gets surfaced once due.
 
-**Hard rules by step, so a review can check none have gone missing:**
+**Hard rules by step, so a review can check none have gone missing.** Scope: this table tracks
+only confirm-before-write gates (show, then wait for user's go-ahead). Separate always-surface
+obligations exist elsewhere and don't need confirmation — Step 0.5/0.6/0.7 (session-start.md) and
+feedback.md's "Checking in" ("Always surface the count..."). Absence from this table doesn't mean
+optional.
 
 | Step | Hard rule |
 |---|---|

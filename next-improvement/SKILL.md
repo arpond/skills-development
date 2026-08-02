@@ -5,12 +5,9 @@ description: Runs a "what should we work on next" process for whatever project t
 
 # Next improvement
 
-**Skill version: 1.0.0.** Semver, bumped only for changes that matter to an existing tracker:
-MINOR for a new optional feature/behavior a pre-existing tracker might want to opt into, MAJOR for
-a breaking tracker-format change that needs migration. Ordinary wording/bug fixes don't bump it —
-patch stays `0`, unused. See `changelog.md` for what shipped at each MINOR+ version — that list is
-also what `session-start.md`'s version check reads from to tell an existing tracker what it's
-missing; read it only when that check finds a gap (see below), not on every run.
+**Skill version: 1.0.0.** `session-start.md`'s version check compares a tracker's `Feature check:`
+stamp against this number. `changelog.md` holds both what shipped at each version and the
+versioning policy itself — read it only when that check actually finds a gap, not on every run.
 
 A repeatable "what next" loop: keep a running list of ideas per project, top the list up when
 it runs thin, pick the next thing to build by weighing it against that project's own standing
@@ -20,7 +17,7 @@ the priority tiers are, what's already been decided) lives in a file inside the 
 not in this skill. That file is what makes this skill reusable across every project rather than
 rewritten per repo.
 
-This file covers Steps 1-6, the steady-state propose/build/record loop. Six companion files live
+This file covers Steps 1-6, the steady-state propose/build/record loop. Seven companion files live
 alongside it:
 
 - `session-start.md` — Steps 0 through 0.7 (find/bootstrap the tracker, check whether Goals need a
@@ -33,19 +30,22 @@ alongside it:
   single top pick. Read it when `Selection strategy:` is set to anything other than `top-tier`,
   or when setting/changing it.
 - `feedback.md` — an optional loop that asks how past ships actually landed and feeds that back
-  into future judgement. Read it when `Feedback: on`, or when setting/changing it.
+  into future judgement. Read it whenever `Feedback:` isn't spelled out as `off`, or when
+  setting/changing it. **This one defaults to `on`, so an absent line means read it** — see the
+  read-gate note under the tracker format below.
 - `risk-register.md` — an optional loop that traces which shipped ideas needed follow-up fixes or
   rework, persists that as a named risk area, and factors active risks into future proposals. Read
   it when `Risk register: on`, or when setting/changing it.
 - `changelog.md` — what each skill version added, for telling an existing tracker what it's
   missing. Read it only when `session-start.md`'s version check finds a tracker's `Feature check:`
   behind the current skill version.
-- `tracker-maintenance.md` — rare per-project edge cases (an id collision when minting, retiring/
-  merging/narrowing a category). Read it only when that specific trigger actually fires — see its
-  own header for exactly which.
+- `tracker-maintenance.md` — rare per-project edge cases (minting/migrating ids, retiring/merging/
+  narrowing a category, one-time disclosures to an older tracker). Read it only when that specific
+  trigger actually fires — each section names its own.
 
-Of these, only `session-start.md` is unconditional — the other six are read only when their
-trigger condition says to, to keep the common-case read lean.
+Of these, only `session-start.md` is unconditional. The other six are gated on their own trigger
+condition, to keep the common-case read lean — note that `feedback.md`'s gate is satisfied by
+default, so it's read on most runs too.
 
 A project's tracker may also grow a sibling `IMPROVEMENT_TRACKER_DONE.md` — the overflow of old
 **Done** history moved out of the live tracker (see Step 6). It's not a companion file of this
@@ -110,14 +110,10 @@ Done archive: age=60, floor=5, backstop=40   <!-- optional, default shown, see S
   `Last reviewed:` when you do — nothing else in this process needs to change when priorities
   shift. See Step 0.5 for how staleness gets surfaced automatically.
 - **`Created:` and `Feature check:` are both skill-version stamps, distinct purposes.** `Created:`
-  is set once at setup and never changes — a permanent, human-readable record of what this tracker
-  started life knowing about (this repo's own `next-improvement` tracker, if it had one, would read
-  `Created: v1.0.0`, same as any tracker bootstrapped before a later version ships). `Feature
-  check:` moves forward — see `session-start.md`'s version check for when and how, and this file's
-  "Changelog" section for what each version actually added. Both are lazy-backfilled to the current
-  skill version the first time a tracker predating this field is touched (same non-judgement
-  mechanical bookkeeping as `Next id:`'s lazy-init above) — a backfilled tracker starts caught up,
-  not behind.
+  is set once at setup and never changes — a permanent record of what this tracker started life
+  knowing about. `Feature check:` moves forward as new features get disclosed. Both are handled
+  entirely by `session-start.md`'s Step 0/0.5 (including lazy-backfill of a tracker that predates
+  them); nothing in Steps 1-6 reads or writes either.
 - Two or more goals may share the same tier number when they're genuinely equal priority right
   now. A tied group must carry a short tie-break note on the same line: what to do when a real
   candidate serves one tied goal but not its sibling. If the user has no strong opinion, fall
@@ -125,37 +121,30 @@ Done archive: age=60, floor=5, backstop=40   <!-- optional, default shown, see S
   it happens" — but prefer capturing their actual reasoning if they have one. Keep tie groups
   small (2, rarely 3); a tier that keeps growing tied entries is a smell that ranking has stopped
   meaning anything, and is worth flagging (see Step 0.5).
-- `Selection strategy:`, `Feedback:`, `Risk register:`, and `Done archive:` are optional lines,
-  absent by default. Their full format and behaviour live in `strategies.md`, `feedback.md`,
-  `risk-register.md`, and Step 6 below respectively — don't inline their details here, and don't
-  read `strategies.md`/`feedback.md`/`risk-register.md` unless the one it covers is actually
-  present/being set up.
+- `Selection strategy:`, `Feedback:`, `Risk register:`, and `Done archive:` are optional lines that
+  may be absent. Their full format and behaviour live in `strategies.md`, `feedback.md`,
+  `risk-register.md`, and Step 6 below respectively — don't inline their details here.
+  **Gate reading each companion file on the setting's *value*, not on whether the line is
+  present** — an absent line means that setting's documented default, and the defaults differ:
+  `Selection strategy:` and `Risk register:` default to off (`top-tier` / `off`), so an absent line
+  means don't read `strategies.md`/`risk-register.md`; `Feedback:` defaults to **on**, so an absent
+  line means `feedback.md` *does* get read. Keying off presence instead would silently strand every
+  tracker that simply never had reason to write the line, which defeats having a default at all.
 - **Every idea gets an id** (`I<N>`) the moment it's added to a category (Step 2) — one counter
   for the whole tracker, tracked as `Next id:` under Goals, never reused. **Written as a leading
   `I<N>:` prefix on the line, not a trailing `(id: I<N>)`** — scanning a long category or Done list
   for a specific id is the common case, and a prefix reads left-to-right without having to parse
-  into the parenthetical first. Rejected entries are the one exception: most have no id at all
-  (see below), so a leading `I<N>:` would misleadingly suggest every Rejected line has one — keep
+  into the parenthetical first. Rejected entries are the one exception: most have no id at all,
+  so a leading `I<N>:` would misleadingly suggest every Rejected line has one — keep
   `id: I<N>` inside the parenthetical there, only when actually present. The id carries forward
   unchanged through Done (and into Rejected when it has one); it's what lets a later ship reference
-  an earlier one reliably even after the earlier one's name gets reworded. **This is a styling
-  change, not a breaking one — read both, write the new style.** A tracker written before the
-  leading-prefix convention has every id in the older trailing `(id: I<N>)` style; those entries
-  stay exactly as they are, don't get bulk-rewritten, and remain perfectly valid to read/reference.
-  Only entries newly minted from here on use the leading prefix. **Migrating an older tracker that
-  predates this field is lazy, not a bulk pass**: if `Next id:` is missing, initialize it (from 1,
-  or from the highest existing id + 1 if some entries already have one) the first time anything
-  actually needs it — same non-judgement mechanical bookkeeping as Step 6's Done-trimming, no
-  confirmation needed. **This same rule covers any id-less entry, not just ones from before this
-  feature existed** — including one someone added or edited by hand without following the format.
-  Such entries stay id-less until something specifically needs to reference them (a `fixes:` link,
-  an `at-risk:` list, a reassess flag) — at that point mint the next counter value for that one
-  entry in place, same precedent as Done's legacy-tag handling below; don't rewrite every existing
-  entry just because the field now exists, and don't treat a missing id as a malformed-tracker case
-  either (contrast `session-start.md`'s Step 0 malformed-tracker handling) — it's the expected
-  steady state for anything that hasn't needed a reference yet, not an error to flag. **Before
-  minting any id, check it isn't already in use** — see `tracker-maintenance.md`'s "Id collision
-  when minting" for the rare case this actually matters (a hand-typed id colliding with `Next id:`).
+  an earlier one reliably even after the earlier one's name gets reworded. An entry carrying no id
+  at all is an expected steady state, not an error to flag — nothing mints one until something
+  actually needs to reference it. **Minting and migration are all mechanical, and none of it is
+  needed to run the normal loop** — an id-less entry that now needs referencing, a missing
+  `Next id:`, an older tracker's trailing `(id: I<N>)` style, or a collision with a hand-typed id:
+  see `tracker-maintenance.md`'s "Minting and migrating ids" at the point one of those actually
+  comes up.
 - **A ship that fixes or reworks an earlier Done item** tags itself with `fixes: I<N>` (bug fix) or
   `reworked: I<N>` (broader rework), referencing the origin's id — see Step 6. This also sets
   `reassess: pending` on the *origin* entry, standalone of whether `Feedback:` is on (see
@@ -319,9 +308,9 @@ marginal/duplicate/out of scope." A vague "nothing comes to mind" isn't enough; 
 what lets the user judge whether the category's actually done or the search just wasn't broad
 enough.
 
-**Track dry top-ups so they don't repeat silently** — a self-correcting knob, same canonical shape
-as `DESIGN_PHILOSOPHY.md`'s "Self-correcting knobs share one shape": note it inline under that
-category's header, `(dry runs: N — last: YYYY-MM-DD)`. Trigger/increment: a top-up attempt ends up
+**Track dry top-ups so they don't repeat silently** — a self-correcting counter (increment on the
+miscalibration signal, reset on the corrected one, force-reset once surfaced): note it inline under
+that category's header, `(dry runs: N — last: YYYY-MM-DD)`. Trigger/increment: a top-up attempt ends up
 adding nothing — brainstorming found nothing genuinely new, everything proposed was flagged weak,
 or the user declined what was proposed. Corrected signal/reset: the next time a solid idea actually
 gets added, remove the line entirely. Threshold: at `dry runs: 2+`, surface this to the user up
@@ -360,31 +349,38 @@ its own gate when the risk entry was created. This covers a candidate tagged `mi
 ... (outcome: planned)` (proposed at Step 2 specifically as the fix, not yet built) the same as one
 already shipped and proven `effective` — both are "this candidate is the named fix," just at
 different lifecycle stages; word the reasoning accordingly ("this is the planned fix for R3" vs.
-"this already proved effective against R3" if it's a repeat build). It still only breaks ties within
-a tier, never
-promotes across tiers, same as synergy — but when a risk-mitigation signal and a synergy signal
-disagree on the same close call, risk-mitigation wins (see `strategies.md`'s `category-rotation`
-precedence note, which covers all of tie-break rule / synergy / risk-mitigation / category-rotation
-together). Keep the reasoning text distinct regardless: "mitigates R3" is a different claim than
-"also lays groundwork for Y," and a candidate that's merely `at-risk:`-tagged (exposed to a risk,
-not building against it) is a caution flag, not a tie-break in its favour — don't conflate the
-three in Step 4's presentation.
+"this already proved effective against R3" if it's a repeat build). Keep the reasoning text
+distinct: "mitigates R3" is a different claim than "also lays groundwork for Y," and a candidate
+that's merely `at-risk:`-tagged (exposed to a risk, not building against it) is a caution flag, not
+a tie-break in its favour — don't conflate the three in Step 4's presentation.
 
 **Synergies are a soft signal, judged fresh each run, not tracked data.** While ranking, notice if
 a candidate is a genuine stepping stone toward another outstanding candidate, would make one
 noticeably easier, or shares real implementation with it — but only when it's concrete (name the
-actual shared file/module/step), never a vague "these feel related." Where it's genuinely true,
-use it the same way a tied-goal's tie-break rule is used: to break a tie between candidates that
-are already close within a tier, never to promote a candidate across tiers — a tier-3 idea that
-happens to set up a tier-1 idea is still tier-3 for ranking purposes; the synergy is worth
-mentioning in Step 4, not worth re-tiering it over. Nothing here gets written to the tracker —
-it's noticed and reasoned about at ranking time from whatever's actually outstanding, so there's
-no annotation to keep in sync as ideas get reworded, merged, or shipped. If `category-rotation` is
-also active and points at a different candidate for the same close call, see its precedence rule
-in `strategies.md` — a stored tie-break rule beats both, and synergy beats category-rotation when
-the two disagree. Scoped the same way `category-rotation` is: it breaks the base pick's own close
+actual shared file/module/step), never a vague "these feel related." A tier-3 idea that happens to
+set up a tier-1 idea is still tier-3 for ranking purposes; the synergy is worth mentioning in Step
+4, not worth re-tiering it over. Nothing here gets written to the tracker — it's noticed and
+reasoned about at ranking time from whatever's actually outstanding, so there's no annotation to
+keep in sync as ideas get reworded, merged, or shipped. Scoped the same way `category-rotation` is:
+it breaks the base pick's own close
 call, not a tie within one of `spread(N)`'s individual per-tier picks — a tie that narrow is left
 as-is rather than resolved by either signal.
+
+**Precedence when several of these signals bear on the same within-tier close call.** This is the
+canonical ordering — everywhere else that mentions one of these defers here rather than restating
+it:
+
+1. **A tied tier's stored tie-break rule** always wins when it applies — it's the user's explicit,
+   deliberate call, and everything below is a fallback that only kicks in when no such rule is in
+   play.
+2. **Risk-mitigation** beats the rest: it's a previously-confirmed judgement that this specific
+   problem needs addressing, not a generic heuristic.
+3. **Synergy** next — grounded in something concrete about the actual candidates (a named shared
+   file/module/step).
+4. **`category-rotation`**, if active (`strategies.md`) — last, since it's a content-blind
+   diversity heuristic, and concrete beats generic.
+
+None of these ever promotes a candidate across tiers; they only break ties *within* one.
 
 **Tied tiers**: evaluate candidates against every goal in the tied group, not just one.
 - If a candidate serves all goals in the tie equally (or none of them), there's no conflict —
@@ -424,9 +420,8 @@ multi-option list (close contenders, `spread(N)` tier picks, wildcard, quick-win
 active risk areas. One that mitigates an active risk gets flagged plainly ("this also mitigates
 R3 — <theme>"). One that's merely `at-risk:`-tagged (touches a category with an active risk but
 isn't building against it) gets flagged too, but as a caution, not a point in its favour ("this
-touches R3's risk area — worth extra care on <what the risk actually is>"). These are two
-different claims; use the wording that matches which one actually applies for each candidate — see
-`risk-register.md`.
+touches R3's risk area — worth extra care on <what the risk actually is>"). Use the wording that
+matches which one actually applies for each candidate, per Step 3's distinction.
 
 If `Selection strategy:` is set to anything else, read `strategies.md` and build the
 presentation as it describes instead.
@@ -512,23 +507,15 @@ auto-detect suggestion, not a blind open question: scan recent Done entries (and
 context, if this session touched a specific bug or reopened specific files) for a plausible origin,
 propose it, and let the user confirm, correct, or say no.
 
-**One-time heads-up on a tracker that predates this feature.** If `Next id:` was missing before
-this recording (the lazy-init case, tracker-format section above) — meaning this is the first time
-this project has ever seen this question — say so in one clause before asking it, e.g. "(this
-tracker's picking up a new feature: every ship now gets asked if it fixes/reworks an earlier one,
-used to flag the origin for a second look)" — same disclosure `setup.md` gives a brand-new
-tracker at bootstrap, given once here since an existing tracker never goes through `setup.md`
-again. Don't repeat it on later ships once `Next id:` exists.
+If `Next id:` was missing before this recording, this is the first time this project has ever been
+asked — give the one-time heads-up in `tracker-maintenance.md` before asking.
 
 If confirmed:
 - Tag the new entry `fixes: I<N>` (bug fix) or `reworked: I<N>` (broader rework), referencing the
-  origin's id (mint one for the origin now if it predates the id field — see the tracker-format
-  section above).
-- Set `reassess: pending` on the **origin** entry — **in whichever file it actually lives in.** The
-  origin may already have been archived to `IMPROVEMENT_TRACKER_DONE.md` by the time a fix ships
-  (Step 6's own Done-trimming can move it there long before anyone fixes it); check there if it's
-  not still in the live tracker's Done section, same "one combined pool, not just the live file"
-  treatment `feedback.md`'s outcome-writes already use. This is standalone of `Feedback:` — it
+  origin's id (if the origin has no id, mint one for it now — see `tracker-maintenance.md`).
+- Set `reassess: pending` on the **origin** entry — **in whichever file it actually lives in**, per
+  the combined-pool rule below; Done-trimming can move an origin to the archive long before anyone
+  fixes it. This is standalone of `Feedback:` — it
   applies whether or not the feedback subsystem is on. See `feedback.md` (Feedback on: folded into
   its check-in, prioritised over routine outcome asks) and `session-start.md` (Feedback off: a
   lightweight one-off surfacing, no persistent answer required).
@@ -565,10 +552,12 @@ cutoff date of the oldest entry now remaining live. This is mechanical bookkeepi
 call about ideas or priorities, so it doesn't need user confirmation the way Steps 2/4/4.5 do —
 only the knob *adjustment* below is confirm-gated, not the routine sweep itself.
 
-**Track which trigger actually fired, to catch a miscalibrated `age`** — same canonical shape as
-`DESIGN_PHILOSOPHY.md`'s "Self-correcting knobs share one shape": note inline on the
-`Done archive:` line which kind of sweep just ran, `(last sweep: backstop, streak: N)` or
-`(last sweep: age, streak: 0)`. Trigger/increment: a `backstop` sweep. Corrected signal/reset: an
+**Track which trigger actually fired, to catch a miscalibrated `age`** — a self-correcting counter,
+same shape as Step 2's dry-run tracking: note inline on the `Done archive:` line which kind of
+sweep just ran, `(last sweep: backstop, streak: N)` or `(last sweep: age, streak: 0)`. **If the
+`Done archive:` line isn't present** (the normal case — it's absent whenever the defaults haven't
+been changed), write it out with its default values first and annotate that, rather than dropping
+the note somewhere else or silently skipping the tracking; there's no other line it belongs on. Trigger/increment: a `backstop` sweep. Corrected signal/reset: an
 `age` sweep, back to 0. Threshold: at `streak: 3` (three backstop-triggered sweeps in a row with
 `age` never once catching anything first), surface it at the next `session-start.md` Step 0.5
 check-in — `age` is calibrated for a slower project than this one is actually shipping at, propose
@@ -578,10 +567,9 @@ of the answer, same as Step 2's dry-run counter.
 
 **Trimming doesn't wait on `outcome`** (`Feedback: on` — see `feedback.md`). Archive eligible-by-age
 entries regardless of whether their outcome is still `pending` — otherwise a feedback loop that
-can't keep pace with shipping would let the live Done section grow without bound. `feedback.md`'s
-eligible-count and drip/bulk logic treat the live tracker and `IMPROVEMENT_TRACKER_DONE.md` as one
-combined pool of pending entries, oldest-first, so an entry crossing into the archive while still
-`pending` doesn't drop it from consideration — it's still askable, just from the other file.
+can't keep pace with shipping would let the live Done section grow without bound. An entry crossing
+into the archive while still `pending` doesn't drop out of consideration, per the combined-pool
+rule below — it's still askable, just from the other file.
 
 `category-rotation` (`strategies.md`) counts only the live tracker's Done entries, never the
 archive — its default window (5) is well inside the default `floor`-`backstop` range kept live, so
@@ -590,8 +578,13 @@ section holds, treat it the same as "fewer than N total" (insufficient history, 
 rather than reading the archive file to fill the count.
 
 **Reading the archive.** Only open `IMPROVEMENT_TRACKER_DONE.md` when something actually needs
-older history — Step 2's Rejected-style history check extended to "has something like this
-already shipped," the user explicitly asking about past work, or (`Feedback: on`) `feedback.md`'s
-Step 0.5 check-in scanning for `pending` entries that got archived before being answered. Otherwise
-don't read it as part of the normal Step 0-6 loop; that's most of the point of moving entries out
-of the live tracker.
+older history; otherwise don't read it as part of the normal Step 0-6 loop, since that's most of
+the point of moving entries out of the live tracker. **When something does need it, the rule is
+always the same one — treat the live tracker's Done section and the archive as one combined pool**,
+never just the live file: the count is the sum, "oldest" is the oldest across both, and a write
+lands in whichever of the two the entry actually sits in. Everywhere else that scans Done history
+means this rule, and defers here rather than restating it — Step 2's "has something like this
+already shipped" check, Step 6's `reassess:` write to an origin entry, the user asking about past
+work, `feedback.md`'s eligible-entry scan, and `risk-register.md`'s evidence scan. Archiving is
+purely about what gets loaded on a routine run; it never narrows what a deliberate history lookup
+is allowed to see.

@@ -22,11 +22,15 @@ Files:
   option reference (syntax, defaults, and how modes combine).
 - `feedback.md` — an optional loop that asks how past ships actually landed
   (delivered / mixed / missed) and feeds that back into future judgement, capped so it never
-  turns into a nagging backlog. Only read when a project has `Feedback: on`.
+  turns into a nagging backlog. On by default; only skipped when a project sets `Feedback: off`.
 - `risk-register.md` — an optional loop that traces which shipped ideas needed follow-up fixes,
   reworks, or bad outcomes, persists that as a named risk area in a sibling `RISK_REGISTER.md`,
-  and cross-references future proposals against it. Only read when a project has
+  and cross-references future proposals against it. Off by default; only read when a project has
   `Risk register: on`.
+- `tracker-maintenance.md` — rare per-project edge cases: minting/migrating idea ids, and
+  retiring, merging, or narrowing an idea category. Only read when one of those actually comes up.
+- `changelog.md` — what each skill version added, plus the versioning policy. Only read when an
+  existing tracker turns out to be behind the installed skill version.
 
 A project's tracker may also grow a sibling `IMPROVEMENT_TRACKER_DONE.md` once its Done history
 gets long — older shipped entries move there automatically (Step 6) so the live tracker stays a

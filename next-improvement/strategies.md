@@ -75,7 +75,7 @@ Each entry below covers what the mode means *and* what Step 4 does with it — o
   - `low-tier` — the candidate from the single lowest tier that still has an outstanding item;
     if more than one, apply the cheapest-first judgement described under `quick-win` below.
   - `tagged` — only pulls ideas the user explicitly marked `(wildcard)` when adding them, e.g.
-    `- **Idea name** (wildcard) — rationale...`. None tagged -> no wildcard to offer this run.
+    `- I7: **Idea name** (wildcard) — rationale...`. None tagged -> no wildcard to offer this run.
 
   Gate: only add a wildcard if there's a candidate left over that isn't already one of the base
   picks. If the pool's too small for a distinct pick, skip the wildcard silently rather than
@@ -97,24 +97,15 @@ Each entry below covers what the mode means *and* what Step 4 does with it — o
 - **`category-rotation`** or **`category-rotation(window=N)`** (default N=5) — when the base
   pick's ranking has a genuine close call, Step 4 prefers whichever candidate's category hasn't
   appeared in the last N Done entries (across all categories combined, oldest-first count, live
-  tracker only — never `IMPROVEMENT_TRACKER_DONE.md`, see `SKILL.md` Step 6; fewer than N total
-  Done entries -> insufficient history, skip the bias), and says so ("Y also serves
+  tracker only — the one deliberate exception to the combined-pool rule, since this is a "what
+  shipped lately" window rather than a history lookup; fewer than N total live Done entries ->
+  insufficient history, skip the bias), and says so ("Y also serves
   tier 1 equally well and its category hasn't shipped recently"). Only affects the base
   `top-tier`/`spread(N)` pick's own close-call, not each `spread(N)` tier independently; never
-  overrides a clear tier-1-vs-lower-tier win, only breaks ties. **Precedence**: four things can
-  all bear on the same within-tier close call — a tied-tier's stored tie-break rule (`SKILL.md`
-  Step 3), Step 3's synergy signal, Step 3's risk-mitigation signal (`Risk register: on` — see
-  `risk-register.md`), and this mode — and they don't all carry equal weight. A stored tie-break
-  rule always wins when it applies: it's the user's explicit, deliberate call, and the other three
-  are fallbacks that only kick in when no such rule is in play. Next, a candidate that mitigates an
-  active risk beats both synergy and category-rotation: it's not just "these two ideas relate" or
-  "this category hasn't shipped lately," it's a previously-confirmed judgement (the risk entry
-  itself was proposed and accepted through its own confirm gate) that this specific problem needs
-  addressing — a stronger claim than either generic fallback. Between synergy and category-rotation,
-  synergy wins when both apply to the same close call and disagree: it's grounded in something
-  concrete about the actual candidates (a named shared file/module/step), where category-rotation
-  is a content-blind diversity heuristic — concrete beats generic, the same reasoning "concrete over
-  vague" applies everywhere else in this skill.
+  overrides a clear tier-1-vs-lower-tier win, only breaks ties. **This mode sits last of the four
+  signals that can bear on the same close call** — see `SKILL.md` Step 3's precedence ladder for
+  the full ordering; it loses to a stored tie-break rule, to risk-mitigation, and to synergy, since
+  it's a content-blind diversity heuristic and those are all grounded in something specific.
 
 ## Setup (from `setup.md`)
 

@@ -1,21 +1,43 @@
 # Tracker maintenance (rare edge cases)
 
 Read this file only when one of its specific triggers actually fires — not on a normal run. Each
-section below names its own trigger. This exists to keep this rare, occasional-event content out
-of `SKILL.md`'s always-loaded core read (see `DESIGN_PHILOSOPHY.md`'s "Progressive disclosure") —
-none of it is needed to run the normal Step 0-6 loop.
+section below names its own trigger. This exists to keep this rare, occasional-event content out of
+`SKILL.md`'s always-loaded core read — none of it is needed to run the normal Step 0-6 loop.
 
-## Id collision when minting
+## Minting and migrating ids
 
-**Trigger: about to mint a new id** (lazy-backfill or a fresh Step 2 append).
+**Trigger: an id is actually needed** — a fresh Step 2 append, or an existing id-less entry that
+something now wants to reference (a `fixes:` link, an `at-risk:` list, a reassess flag).
 
-Check it isn't already in use anywhere in the tracker first — a hand-typed `id: I5` can exist on
-some entry while `Next id:` is still sitting at `I5` or lower, e.g. from manual editing. If the
-value about to be minted collides, skip forward past every id already in use (checking the live
-tracker, and `IMPROVEMENT_TRACKER_DONE.md`/`RISK_REGISTER.md` if either exists) and mint the first
-free one instead, then set `Next id:` to one past whatever got minted — this is the same
-mechanical, no-confirmation bookkeeping as the rest of id assignment (`SKILL.md`'s tracker-format
-section), not a new judgement call.
+All of it is mechanical, no-confirmation bookkeeping, same as Step 6's Done-trimming — never a
+judgement call, and never a reason to stop and ask.
+
+- **A missing `Next id:`** (a tracker predating the field): initialize it the first time something
+  actually needs it — from 1, or from the highest existing id + 1 if some entries already have one.
+- **An id-less entry that now needs referencing**: mint the next counter value for *that one entry*
+  in place. Don't rewrite every other id-less entry while you're there — being id-less is the
+  expected steady state for anything that hasn't needed a reference yet, not an error, and not a
+  malformed-tracker case either (contrast `session-start.md` Step 0's malformed handling).
+- **Older entries in the trailing `(id: I<N>)` style**, from before the leading-`I<N>:`-prefix
+  convention: a styling change, not a breaking one — read both, write the new style. Those entries
+  stay exactly as they are, don't get bulk-rewritten, and remain valid to read and reference. Only
+  newly-minted entries use the leading prefix.
+- **A collision with a hand-typed id**: before minting, check the value isn't already in use — a
+  hand-typed `id: I5` can exist on some entry while `Next id:` still sits at `I5` or lower. If it
+  collides, skip forward past every id already in use (checking the live tracker, and
+  `IMPROVEMENT_TRACKER_DONE.md`/`RISK_REGISTER.md` if either exists), mint the first free one, then
+  set `Next id:` to one past whatever got minted.
+
+## One-time heads-up on a tracker that predates the fixes/reworks question
+
+**Trigger: `SKILL.md` Step 6 is about to ask whether this ship fixes or reworks an earlier one, and
+`Next id:` was missing before this recording** — meaning this project has never seen that question.
+
+Say so in one clause before asking it, e.g. "(this tracker's picking up a new feature: every ship
+now gets asked if it fixes/reworks an earlier one, used to flag the origin for a second look)" —
+the same disclosure `setup.md` gives a brand-new tracker at bootstrap, given once here since an
+existing tracker never goes through `setup.md` again. Don't repeat it on later ships once
+`Next id:` exists.
 
 ## Retiring, merging, or narrowing a category
 

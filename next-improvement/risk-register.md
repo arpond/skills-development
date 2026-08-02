@@ -56,15 +56,12 @@ Next id: R<N>
 - **No `cause:`/`fixes:` list is stored on the entry.** Which specific `fixes:`/`reworked:` links
   originally evidenced the pattern is cheap to recompute on demand — scan Done for links whose
   origin's category matches this entry's category — so it isn't persisted here; storing it would
-  just be a second copy to keep in sync every time a new link lands. **Scan both the live
-  tracker's Done section and `IMPROVEMENT_TRACKER_DONE.md` if it exists** — same combined-pool
-  treatment `feedback.md` already applies to its own outcome checks (`SKILL.md`'s "Reading the
-  archive" note): evidence for an old, slow-moving risk pattern is exactly the kind of thing that's
-  likely to have aged into the archive by the time it matters, and missing it there would silently
-  undercount evidence or, worse, wrongly clear an active entry for archival on a false "nothing new"
-  read. When reasoning about an entry (Step 2/3/4, or deciding whether to archive), pull that
-  evidence live from both files rather than trusting a stored snapshot or only checking the live
-  one.
+  just be a second copy to keep in sync every time a new link lands. Scan Done per the combined-pool
+  rule (`SKILL.md` Step 6's "Reading the archive") — evidence for an old, slow-moving risk pattern
+  is exactly the kind of thing likely to have aged into the archive by the time it matters, and
+  missing it there would undercount evidence or, worse, wrongly clear an active entry for archival
+  on a false "nothing new" read. When reasoning about an entry (Step 2/3/4, or deciding whether to
+  archive), pull that evidence live rather than trusting a stored snapshot.
 
 ## Malformed file
 
@@ -73,7 +70,7 @@ Next id: R<N>
 `IMPROVEMENT_TRACKER.md`'s own malformed-tracker case (`session-start.md` Step 0): don't silently
 reinterpret or rewrite it, and don't refuse to proceed either. Name the specific thing that doesn't
 parse and ask directly, same as the tracker's own handling. `Next id:` missing specifically isn't
-this case — see `SKILL.md`'s lazy-initialization rule, which applies here too.
+this case — see `tracker-maintenance.md`'s "Minting and migrating ids", which applies here too.
 
 ## Setup (from `setup.md`)
 
@@ -94,9 +91,11 @@ can start this, all funneling through the same proposal format and the same gate
 doesn't care which trigger noticed it first:
 
 1. **`SKILL.md` Step 6, a `fixes:`/`reworked:` link lands.** If this is the 2nd+ link into the same
-   category (or the same specific earlier idea), propose creating a new entry (first pattern) or
-   extending an existing one (add the new fix's evidence isn't stored, but do re-open `status:
-   archived → active` if the matching entry was archived — see Reactivation).
+   category (or the same specific earlier idea), propose creating a new entry if no entry covers
+   that pattern yet. If one already does, there's usually nothing to write — the new link is
+   evidence, and evidence isn't stored on the entry (see the no-`cause:`-list note above), so it
+   gets recomputed on demand rather than appended. The exception: if the matching entry was
+   archived, this is a reactivation proposal (see Archival and reactivation).
 2. **`feedback.md`, a `missed`/`mixed`/`reverted` outcome is recorded.** For `missed`/`mixed`: same
    category showing a *repeat* of bad outcomes, even with no explicit fix link yet, is earlier/
    softer evidence of the same shape — propose the same way as trigger 1. For `reverted`: propose
@@ -222,7 +221,6 @@ from there as an ordinary active entry.
 ## Using active entries (from `SKILL.md` Step 3/4)
 
 A candidate that's tagged `mitigated-by:` an active entry gets that named as a positive reason in
-Step 3/4's reasoning, same weight class as a synergy signal but a distinct claim ("mitigates R1").
-A candidate that's merely `at-risk:`-tagged gets named as a caution, not a point in its favour.
-Neither promotes a candidate across Goals tiers — same rule as synergy (`SKILL.md` Step 3): it
-breaks close calls within a tier, it doesn't re-tier anything.
+Step 3/4's reasoning ("mitigates R1"); one that's merely `at-risk:`-tagged gets named as a caution,
+not a point in its favour. For how either weighs against the other tie-break signals, see
+`SKILL.md` Step 3's precedence ladder — that's the canonical ordering, not restated here.

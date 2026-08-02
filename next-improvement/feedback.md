@@ -1,8 +1,9 @@
 # Outcome feedback (optional)
 
-Read this file only when the tracker's `Feedback:` line is `on`, or when the user is setting it
-up or asking to change it. If a project has `Feedback: off` (or the line is simply absent),
-none of this applies and you never need to read it.
+Read this file unless the tracker's `Feedback:` line explicitly says `off`, or whenever the user is
+setting it up or asking to change it. **This setting's default is `on`, so an absent line means
+read this file** — unlike `Selection strategy:` and `Risk register:`, whose defaults are off (see
+`SKILL.md`'s read-gate note). Only an explicit `Feedback: off` means none of this applies.
 
 The idea: shipped work can look great as a plan and still not deliver. This loop asks, lazily
 and cheaply, how past ships actually landed, and feeds that back into future ranking/top-up
@@ -16,10 +17,10 @@ In the Goals block:
 Feedback: on(wait=7, bulk=5, batch=5, reoffer=30) (bulk-offer last: <N>, <YYYY-MM-DD>, growth-streak: <N>)
 ```
 
-`on`/`off`, default `on`. `off` disables the whole feedback check in `session-start.md`'s Step 0.5
-— no prompts, no pending count shown (but see `session-start.md`'s Step 0.6, which still surfaces
-standalone `reassess:` flags even with `Feedback: off`, since those aren't part of this
-subsystem). `wait`, `bulk`, `batch`, and `reoffer` are optional and independently settable (unset
+`on`/`off`, default `on` — an absent line means `on`, and only a spelled-out `off` disables this.
+`off` disables the whole feedback check in `session-start.md`'s Step 0.5 — no prompts, no pending
+count shown (but see `session-start.md`'s Step 0.6, which still surfaces standalone `reassess:`
+flags in that case, since those aren't part of this subsystem). `wait`, `bulk`, `batch`, and `reoffer` are optional and independently settable (unset
 means the defaults shown — 7, 5, 5, and 30 respectively) — plain `Feedback: on` with no parens is
 equivalent to `Feedback: on(wait=7, bulk=5, batch=5, reoffer=30)` and is the normal way to write it
 when none need changing; only spell out the parens when overriding one. `wait` is the eligibility
@@ -30,9 +31,12 @@ doesn't silently ride on it — set it separately if the two should differ, e.g.
 smaller than the threshold that triggers the offer), same independent-knob treatment as the
 `Selection strategy:` counts. The `(bulk-offer last: N, <date>, growth-streak: <N>)` note records
 the eligible-count and date at which the most recent bulk-style offer (all-at-once or batched) was
-made or declined (0/no-date/0 if never) — this is what lets Step 0.5 know when to re-offer (see
+made or declined — this is what lets Step 0.5 know when to re-offer (see
 below); it's a real stored field, not something inferred from the eligible count alone, since that
-count fluctuates as items get answered or new ones ship. `growth-streak` counts consecutive offers
+count fluctuates as items get answered or new ones ship. **"Never offered" is its own state, not a
+count of zero** — write it as `(bulk-offer last: never, growth-streak: 0)`. A first-ever offer has
+no previous offer to have grown from, so it's neither growth nor a reset; treating the sentinel as
+a real prior measurement of 0 would score every first offer as growth. `growth-streak` counts consecutive offers
 where the eligible count was higher than at the previous offer — see "Backlog not shrinking" below.
 
 Done entries extend the base format (see `SKILL.md`, which also covers the `id:`, `fixes:`,
@@ -84,15 +88,11 @@ eligible" note either. Silence by default beats a repeat announcement of the sam
 normally the next time the skill starts a new session.
 
 A Done entry is **eligible** once it's shipped ≥`wait` days ago (default 7) and still has
-`outcome: pending` — enough time has passed to actually judge it. Count eligible entries from the
-live tracker's Done section for free, since Step 0.5 already reads it. Then also check whether
-`IMPROVEMENT_TRACKER_DONE.md` exists (`SKILL.md` Step 6 archives entries regardless of `outcome`,
-so a `pending` entry can end up there if the feedback loop hasn't caught up to it yet) — if it
-exists, open it and fold any `pending` entries in as eligible too. Treat the two files as one
-combined pool: eligible count is the sum, and "oldest eligible" (drip mode, below) is the oldest
-across both, not just whichever file it happens to live in. This is the one place in the normal
-Step 0-6 loop that reads the archive, and only when `Feedback: on` — see `SKILL.md`'s "Reading the
-archive" note.
+`outcome: pending` — enough time has passed to actually judge it. Count them across both Done
+files, per the combined-pool rule (`SKILL.md` Step 6's "Reading the archive"): Step 6 archives
+entries regardless of `outcome`, so a `pending` entry can be sitting in
+`IMPROVEMENT_TRACKER_DONE.md` if this loop hasn't caught up to it yet, and missing it would let the
+backlog quietly shrink on paper without anyone answering anything.
 
 - **`reassess: pending` entries take priority over routine eligible items.** A `reassess` flag
   (`SKILL.md` Step 6: a later ship fixed or reworked this one) means the item's original outcome
@@ -150,7 +150,9 @@ archive" note.
   tracker or `IMPROVEMENT_TRACKER_DONE.md`), so that item is never asked about again. At most one
   such question per session, per the throttle above.
 - **At or above `bulk`, and *either* the eligible count exceeds `bulk-offer last:`'s stored count by
-  at least `bulk`, *or* it's been ≥`reoffer` days since `bulk-offer last:`'s stored date**: offer a
+  at least `bulk`, *or* it's been ≥`reoffer` days since `bulk-offer last:`'s stored date** (a
+  `never` sentinel satisfies this outright — reaching `bulk` for the first time is itself the
+  trigger): offer a
   choice instead of the single drip question — "N ships pending feedback (M need reassessment) —
   clear them all now, N at a time, one-by-one until you say stop, or just the oldest for now?"
   Whichever is chosen (or declined outright), update `bulk-offer last:`'s count and date to the
@@ -158,10 +160,12 @@ archive" note.
   backlog doesn't wait a full month to be re-offered; the date-based trigger exists so a stalled
   backlog that isn't growing (declined once, then just sits there) still gets re-surfaced instead of
   silently waiting for growth that may never come.
-  - **Backlog not shrinking** — same canonical shape as `DESIGN_PHILOSOPHY.md`'s "Self-correcting
-    knobs share one shape." Trigger/increment: before updating the stored count, compare it against
+  - **Backlog not shrinking** — a self-correcting counter, same shape as `SKILL.md` Step 2's
+    dry-run tracking. Trigger/increment: before updating the stored count, compare it against
     the current eligible count — if this offer's count is higher than the *previous* offer's,
-    increment `growth-streak`. Corrected signal/reset: otherwise, back to 0. Threshold: at
+    increment `growth-streak`. Corrected signal/reset: otherwise, back to 0. **If `bulk-offer last:`
+    is `never`, do neither** — leave the streak at 0 and just record this offer, since there's no
+    previous count to compare against. Threshold: at
     `growth-streak: 2` (two consecutive offers where the backlog grew instead of shrinking), say so
     plainly as part of the offer — "this backlog's grown across the last two check-ins instead of
     shrinking; want to shorten `reoffer`, shrink `bulk` so it asks more often in smaller pieces, or

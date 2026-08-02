@@ -150,6 +150,13 @@ Done archive: age=60, floor=5, backstop=40   <!-- optional, default shown, see S
   `Next id:`, an older tracker's trailing `(id: I<N>)` style, or a collision with a hand-typed id:
   see `tracker-maintenance.md`'s "Minting and migrating ids" at the point one of those actually
   comes up.
+- **An id is for cross-referencing inside the files, never a substitute for the name in
+  conversation.** Whenever an id gets said to the user — proposing a `fixes:`/`reworked:` origin,
+  a reassess flag, a risk match or mitigation — say the idea's name or the risk's theme alongside
+  it (`R3 — <theme>`, not bare `R3`); the id is what gets written into the tag, not what gets
+  spoken. `session-start.md`'s reassess/revisit surfacing and `risk-register.md`'s
+  cross-referencing wording already do this — the rule is to extend it everywhere else an id would
+  otherwise stand alone, including this file's own Step 3 risk-mitigation wording below.
 - **A ship that fixes or reworks an earlier Done item** tags itself with `fixes: I<N>` (bug fix) or
   `reworked: I<N>` (broader rework), referencing the origin's id — see Step 6. This also sets
   `reassess: pending` on the *origin* entry, standalone of whether `Feedback:` is on (see
@@ -362,9 +369,10 @@ an already-persisted risk area names as its mitigation," which was itself alread
 its own gate when the risk entry was created. This covers a candidate tagged `mitigated-by:
 ... (outcome: planned)` (proposed at Step 2 specifically as the fix, not yet built) the same as one
 already shipped and proven `effective` — both are "this candidate is the named fix," just at
-different lifecycle stages; word the reasoning accordingly ("this is the planned fix for R3" vs.
-"this already proved effective against R3" if it's a repeat build). Keep the reasoning text
-distinct: "mitigates R3" is a different claim than "also lays groundwork for Y," and a candidate
+different lifecycle stages; word the reasoning accordingly ("this is the planned fix for
+R3 — <theme>" vs. "this already proved effective against R3 — <theme>" if it's a repeat build).
+Keep the reasoning text distinct: "mitigates R3 — <theme>" is a different claim than "also lays
+groundwork for Y," and a candidate
 that merely touches an active risk's areas (exposed to it, not building against it) is a caution
 flag, not a tie-break in its favour — don't conflate the three in Step 4's presentation.
 

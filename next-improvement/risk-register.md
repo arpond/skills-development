@@ -223,7 +223,9 @@ it may be the intended fix for one and merely exposed to another; don't ask one 
 covering all matches at once), ask the exposed-vs-fix follow-up: is this candidate merely *exposed*
 to that risk, or *meant to fix it*?
 
-- **Exposed, not a fix** (the normal case): the flag is the whole output.
+- **Exposed, not a fix** (the normal case): the flag is the whole output — whether spoken or kept
+  as a short note in the idea's own rationale once appended, it names the theme alongside the id
+  (`Touches R2 — settings-panel density`), never the bare id on its own.
 - **Meant to fix it**: if the user accepts the idea, tag it `mitigated-by: I<N> (outcome: planned)`
   on that entry — this is the idea's status *before* it's built, distinct from the `pending` it
   gets once shipped (see Recording a planned mitigation below). This is a real write, so it goes
@@ -301,6 +303,8 @@ again immediately.
 ## Using active entries (from `SKILL.md` Step 3/4)
 
 A candidate that's tagged `mitigated-by:` an active entry gets that named as a positive reason in
-Step 3/4's reasoning ("mitigates R1"); one that merely touches an active entry's areas gets named
-as a caution, not a point in its favour. For how either weighs against the other tie-break signals,
-see `SKILL.md` Step 3's precedence ladder — that's the canonical ordering, not restated here.
+Step 3/4's reasoning ("mitigates R1 — <theme>"); one that merely touches an active entry's areas
+gets named as a caution the same way ("touches R1 — <theme>"), not a point in its favour. Always
+name the theme alongside the id, never the bare id — see the id-labeling rule in `SKILL.md`'s
+tracker-format notes. For how either weighs against the other tie-break signals, see `SKILL.md`
+Step 3's precedence ladder — that's the canonical ordering, not restated here.

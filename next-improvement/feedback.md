@@ -47,19 +47,20 @@ an `outcome:` value:
 - I7: **Idea name** (Category, shipped YYYY-MM-DD, outcome: pending) — one-line note...
 ```
 
-`outcome:` is one of `pending`, `delivered`, `mixed`, `missed`, `reverted`, or `skipped`.
-`delivered` = worked as intended; `mixed` = landed but with real rough edges or partial value;
-`missed` = shipped but didn't deliver the intended value at all; `reverted` = actually undone, a
-stronger, costlier signal than `missed` worth its own tag rather than folding in; `skipped` = user
-declined to judge this one. **These definitions are for me, not something the user is assumed to
-already know** — see "Checking in" below for where they actually get told this, not just the
-Setup question.
+`outcome:` is one of `pending`, `effective`, `partial`, `ineffective`, `reverted`, or `skipped` —
+these match `risk-register.md`'s own `mitigated-by:` vocabulary rather than duplicating it under
+different words. `effective` = worked as intended; `partial` = landed but with real rough edges or
+partial value; `ineffective` = shipped but didn't deliver the intended value at all; `reverted` =
+actually undone, a stronger, costlier signal than `ineffective` worth its own tag rather than
+folding in; `skipped` = user declined to judge this one. **These definitions are for me, not
+something the user is assumed to already know** — see "Checking in" below for where they actually
+get told this, not just the Setup question.
 
 ## Setup (from `setup.md`)
 
-Ask one short yes/no: want the skill to check back on how shipped work actually landed — delivered
-(worked as intended), mixed (landed but with real rough edges), missed (didn't deliver the intended
-value), or reverted (actually undone) — at most once per session, starting 7 days after an item
+Ask one short yes/no: want the skill to check back on how shipped work actually landed — effective
+(worked as intended), partial (landed but with real rough edges), ineffective (didn't deliver the
+intended value), or reverted (actually undone) — at most once per session, starting 7 days after an item
 ships, and offered (once 5 are eligible at once) as a choice of all-at-once, in smaller batches,
 continuously one at a time, or the default single question, rather than always asked one at a time?
 Default `Feedback: on(wait=7, bulk=5, batch=5, reoffer=30)` if they don't care — all four numbers
@@ -101,25 +102,25 @@ backlog quietly shrink on paper without anyone answering anything.
   mode below. Wording is distinct from a routine ask, and depends on what the origin's outcome
   already was: if it's still `pending` (never answered), fold the fix/rework into the normal
   outcome question as one clause instead of asking twice — "Last shipped '<idea>' (<date>) —
-  deliver as expected, mixed, miss, or was it reverted? (Note: this was later fixed by '<fixing
-  idea>'.)" If the origin already had a real answer (`delivered`/`mixed`/`missed`/`reverted`),
-  reopen it explicitly, allowing either direction: "'<idea>' was marked <old outcome>, but was
-  later fixed by '<fixing idea>' — still <old outcome>, upgrade to delivered, or adjust to
-  mixed/missed/reverted?" Clear `reassess: pending` the
+  worked as intended, partial, ineffective, or was it reverted? (Note: this was later fixed by
+  '<fixing idea>'.)" If the origin already had a real answer (`effective`/`partial`/`ineffective`/
+  `reverted`), reopen it explicitly, allowing either direction: "'<idea>' was marked <old outcome>,
+  but was later fixed by '<fixing idea>' — still <old outcome>, upgrade to effective, or adjust to
+  partial/ineffective/reverted?" Clear `reassess: pending` the
   moment it's answered, same as any other eligible item — see "Answered items" below.
   - **What the tag measures.** `outcome:` answers one question only: given everything known now,
     did this idea deliver its intended value? It is not a defect record — whether a bug was found
     and fixed later is already preserved permanently and independently via the `fixes:`/`reworked:`
     link on the fixing entry (`SKILL.md` Step 6), regardless of what outcome gets chosen here.
     Don't fold "there was a bug" into the outcome value itself; that fact isn't lost by leaving
-    outcome at `delivered`, and doesn't need re-litigating by downgrading on principle.
+    outcome at `effective`, and doesn't need re-litigating by downgrading on principle.
   - **What reassessment is actually for, then.** Not scoring the bug — the fix is evidence the
     *original judgement* might have been made on incomplete information, and reassessment exists to
     check that, not to penalize the idea for having needed a fix. For a `pending` origin, this means
     giving the first-time judgement full context (e.g. did the bug mean the feature genuinely didn't
     deliver value for users during the gap before it was fixed?). For an already-answered origin, it
     means asking whether the original call was actually correct now that more is known (e.g. marked
-    `delivered`, but did the bug mean it wasn't, even at the time?) — not whether the fix itself
+    `effective`, but did the bug mean it wasn't, even at the time?) — not whether the fix itself
     should move the tag. A same-day, narrow patch (tightening a regex, a one-line guard) rarely
     implies the original judgement was wrong and is rarely reason to move the tag at all.
 - **Always surface the count** when it's nonzero, even if nothing else here triggers — e.g. a
@@ -133,9 +134,9 @@ backlog quietly shrink on paper without anyone answering anything.
   first Done entry actually becomes eligible — long enough to forget. Detect "first ever" cheaply,
   without a new stored field — it can be computed fresh at no real cost, so don't write it down
   just because it'd be convenient to have: if no Done entry anywhere (live tracker or the archive) yet carries a non-`pending`
-  outcome, this is the first real question, so append the gloss inline — "(delivered = worked as
-  intended, mixed = landed with real rough edges, missed = didn't deliver the value, reverted =
-  actually undone)" — to whatever wording the mode below would otherwise use. Every later question,
+  outcome, this is the first real question, so append the gloss inline — "(effective = worked as
+  intended, partial = landed with real rough edges, ineffective = didn't deliver the value,
+  reverted = actually undone)" — to whatever wording the mode below would otherwise use. Every later question,
   in any mode, drops it; the tags are self-evident once they've been used once.
 - **Every item shown in any mode below gets a why-and-what line, not just name + date** — the
   longer it's been, the harder those two things are to tell apart from memory. Pull both from text
@@ -200,15 +201,15 @@ backlog quietly shrink on paper without anyone answering anything.
 
 Use recorded outcomes qualitatively in `SKILL.md` Step 2 (top-up) and Step 3 (ranking), the same
 way existing signals like "what's fragile/rough-edged" are used — e.g. a category with a couple
-of `missed` outcomes is worth naming as a reason for caution when a similar-shaped candidate
-comes up, not a hidden scoring penalty. A `reverted` outcome carries more weight than a `missed` or
-`mixed` one when judging this — it's not "didn't land great," it's "actively undone," so it's
-worth naming even on its own, not just as part of a pattern.
+of `ineffective` outcomes is worth naming as a reason for caution when a similar-shaped candidate
+comes up, not a hidden scoring penalty. A `reverted` outcome carries more weight than an
+`ineffective` or `partial` one when judging this — it's not "didn't land great," it's "actively
+undone," so it's worth naming even on its own, not just as part of a pattern.
 
-If `Risk register: on`, a `missed` or `mixed` outcome is also one of `risk-register.md`'s
+If `Risk register: on`, an `ineffective` or `partial` outcome is also one of `risk-register.md`'s
 creation/update triggers — even without an explicit `fixes:`/`reworked:` link, a plain bad outcome
 in the same part of the project is earlier, softer evidence of the same pattern. See
 `risk-register.md`'s
 triggers list. A single `reverted` outcome is strong enough evidence to trigger a risk-area
-proposal by itself, unlike `missed`/`mixed`, which need a repeat pattern first — see
+proposal by itself, unlike `ineffective`/`partial`, which need a repeat pattern first — see
 `risk-register.md`'s trigger 2.

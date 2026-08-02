@@ -5,7 +5,7 @@ description: Runs a "what should we work on next" process for whatever project t
 
 # Next improvement
 
-**Skill version: 1.1.0.** `session-start.md`'s version check compares a tracker's `Feature check:`
+**Skill version: 2.0.0.** `session-start.md`'s version check compares a tracker's `Feature check:`
 stamp against this number. `changelog.md` holds both what shipped at each version and the
 versioning policy itself — read it only when that check actually finds a gap, not on every run.
 

@@ -4,8 +4,8 @@ Read this file only when the tracker's `Risk register:` line is `on`, or when th
 it up or asking to change it. If a project has `Risk register: off` (or the line is simply
 absent), none of this applies and you never need to read it.
 
-The idea: some ideas ship clean, some come back — a bug fix, a rework, a repeat `missed`/`mixed`
-outcome in the same part of the project. That recurrence is a signal about *where this project
+The idea: some ideas ship clean, some come back — a bug fix, a rework, a repeat
+`ineffective`/`partial` outcome in the same part of the project. That recurrence is a signal about *where this project
 needs more rigor*, not just a fact about one idea. This loop names that pattern once, persists it,
 and feeds it back into future proposals so the same kind of risk gets flagged before it repeats a
 third time, not just noticed after the fact.
@@ -80,9 +80,10 @@ Next id: R<N>
 - **`mitigated-by:`** — id(s) of idea(s) built, or *intended*, *specifically to address* this
   risk, each with its own `outcome:` value: `planned`/`pending`/`effective`/`partial`/
   `ineffective`. `planned` is this field's own first state, for an idea that's still outstanding —
-  proposed at Step 2 specifically as the fix for this risk, not yet built. The remaining four reuse
-  `feedback.md`'s exact ship-outcome vocabulary and check-in mechanics once it ships — see Recording
-  a planned mitigation and Checking on mitigations below. **This one *is* stored, unlike exposure**
+  proposed at Step 2 specifically as the fix for this risk, not yet built. The remaining three
+  (`effective`/`partial`/`ineffective`) share `feedback.md`'s ship-outcome wording and reuse its
+  check-in mechanics once it ships — see Recording a planned mitigation and Checking on mitigations
+  below. **This one *is* stored, unlike exposure**
   — "meant to fix this" is a judgement someone made, not something recomputable from what a
   candidate touches, and it's the only field carrying an idea id. Keep the distinction sharp in
   reasoning text: merely touching an area is "exposed to this," a `mitigated-by:` tag is "meant to
@@ -182,9 +183,10 @@ which trigger noticed it first:
    fragility reaching one module further is a widening; a different failure that happens to live
    next door is its own entry, and merging them produces a theme too broad to act on. Say which
    reading you're proposing and why, so the user can correct it.
-2. **`feedback.md`, a `missed`/`mixed`/`reverted` outcome is recorded.** For `missed`/`mixed`: the
-   same areas showing a *repeat* of bad outcomes, even with no explicit fix link yet, is earlier/
-   softer evidence of the same shape — propose the same way as trigger 1. For `reverted`: propose
+2. **`feedback.md`, an `ineffective`/`partial`/`reverted` outcome is recorded.** For
+   `ineffective`/`partial`: the same areas showing a *repeat* of bad outcomes, even with no
+   explicit fix link yet, is earlier/softer evidence of the same shape — propose the same way as
+   trigger 1. For `reverted`: propose
    on the **first** occurrence, no repeat needed — an idea getting actively undone is strong enough
    evidence on its own, unlike a merely-disappointing outcome.
 3. **`SKILL.md` Step 2's fragile-scan** turns up a *structural* pattern (not one isolated rough
@@ -275,7 +277,7 @@ disclosure rather than a silently-dead feature.
 
 **Propose archiving** (confirm gate, same as creation) when a `mitigated-by:` entry is assessed
 `effective` **and** no new evidence has landed in that entry's areas since (no new `fixes:`/
-`reworked:` link, no new `missed`/`mixed`/`reverted` outcome, checked live per the "no stored cause
+`reworked:` link, no new `ineffective`/`partial`/`reverted` outcome, checked live per the "no stored cause
 list" note above). On confirmation: flip `status: active → archived`, move the entry from
 `## Active` to `## Archived`, and note the archival date and reason inline. Outstanding ideas stop
 being flagged against it automatically, since the cross-reference only looks at active entries.
@@ -293,7 +295,7 @@ point against the risk being live — worth factoring into the next archival jud
 formal `mitigated-by:` entry, though it doesn't trigger archival by itself the way an `effective`
 mitigation does. It's read out of Done at archival time, per the area match.
 
-**New evidence against an archived entry** (a `fixes:`/`reworked:` link or `missed`/`mixed`/
+**New evidence against an archived entry** (a `fixes:`/`reworked:` link or `ineffective`/`partial`/
 `reverted` outcome lands in its areas again) is a **reactivation** proposal, not a silent flip —
 same confirm gate: "R2 (<theme>) was archived on <date> — <new evidence> suggests it's back, reopen
 it?" On confirmation, flip `status: archived → active` and move it back to `## Active`; it's an

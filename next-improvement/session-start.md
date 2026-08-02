@@ -98,7 +98,7 @@ to.
 
 This step's contribution to the combined message is the goals question itself — e.g. "Goals were
 last confirmed on <date> and N items have shipped since, still the right order? Also, last shipped
-'<idea>' (<date>) — deliver as expected, mixed, miss, or reverted?" if `Feedback:` has something
+'<idea>' (<date>) — worked as intended, partial, ineffective, or reverted?" if `Feedback:` has something
 due the same run. The topics don't need to match; the point is that the user reads one message.
 
 The user can also trigger this at any time outside of a normal run — e.g. "reprioritise" or

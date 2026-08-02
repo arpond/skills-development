@@ -21,7 +21,7 @@ Files:
   actually configures a `Selection strategy:` beyond the default. See that file for the full
   option reference (syntax, defaults, and how modes combine).
 - `feedback.md` — an optional loop that asks how past ships actually landed
-  (delivered / mixed / missed) and feeds that back into future judgement, capped so it never
+  (effective / partial / ineffective) and feeds that back into future judgement, capped so it never
   turns into a nagging backlog. On by default; only skipped when a project sets `Feedback: off`.
 - `risk-register.md` — an optional loop that traces which shipped ideas needed follow-up fixes,
   reworks, or bad outcomes, persists that as a named risk area (keyed to the files/modules it's
@@ -132,9 +132,9 @@ Claude: [sets Selection strategy: spread(3) + wildcard(rotate) and Feedback: on
 
 ...next run...
 
-Claude: Last shipped "Add retry logic" (3 weeks ago) — deliver as expected, mixed, or miss?
+Claude: Last shipped "Add retry logic" (3 weeks ago) — worked as intended, partial, or ineffective?
 
-You: Delivered as expected.
+You: Worked as intended.
 
 Claude: 1. Tier 1 pick: "Fix pagination bug" — because X.
         2. Tier 2 pick: "Add dark mode" — because Y.

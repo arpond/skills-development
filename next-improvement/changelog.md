@@ -20,7 +20,21 @@ anything to opt into**:
 - **Automatic entries** change how something already turned on behaves. There's nothing to accept
   or decline, so don't pose one as a question — mention it in a clause if it changes what the user
   will see, or skip it silently if it doesn't, and bump `Feature check:` either way.
+- **A pure rename of existing values is automatic too** — no confirm gate, since a rewrite that
+  preserves meaning exactly has no judgement in it (same category as the id-restyling mechanics in
+  `tracker-maintenance.md`). Say it happened in the same disclosure clause, then sweep every
+  occurrence across the live tracker and its archive in that one edit — not lazily on next touch,
+  since leaving old and new spellings mixed indefinitely is exactly the drift this kind of change
+  exists to close.
 
+- **2.0.0** — *breaking, `Feedback:` outcome values only, migrated automatically.* Outcome
+  vocabulary renamed for clarity and to match `risk-register.md`'s own `mitigated-by:` vocabulary
+  instead of duplicating it under different words: `delivered → effective`, `mixed → partial`,
+  `missed → ineffective` (`pending`, `reverted`, `skipped` unchanged) — `delivered` read too much
+  like a synonym for the ship date's own `shipped`, not for whether the ship actually worked.
+  Disclosure sweeps every `outcome:` value across the live tracker and
+  `IMPROVEMENT_TRACKER_DONE.md` (if it exists), rewriting old spellings to new in that same edit —
+  a pure rename, so nothing to confirm beyond the ordinary version-gap disclosure.
 - **1.1.0** — *automatic, `Risk register: on` only, nothing to opt into.* Risk entries now key on
   `areas:` (the files/modules/subsystem a risk is actually about) instead of on a stored `at-risk:`
   list of idea ids. Which outstanding ideas are exposed is computed fresh from those areas at

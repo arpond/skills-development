@@ -194,3 +194,50 @@ skill defines one; that's the skill's own business, not this spec's.
 | `next-improvement` | `session-start.md` Step 0, `SKILL.md` "The tracker file" | ✓ | ✓ | ✓ |
 | `repo-knowledge` | `session-start.md` Step 0 | ✓ | ✓ | n/a — single file |
 | `commit-message-check` | `SKILL.md` Step 0 | ✓ config rule | n/a — fixed location | n/a |
+
+**Each of these is also restated a third time, in the skill's `README.md`** (see "Skill README
+contents" below, which requires it) — for the human deciding whether to install, rather than for
+Claude at runtime. That copy is the one most likely to drift unnoticed, because nothing at runtime
+reads it and a wrong path there sends someone looking in the wrong place before they ever run the
+skill. Change a resolve order and it's three edits per skill, not two.
+
+## Skill README contents
+
+Installing a skill copies only its own folder, so its `README.md` is everything a human has to
+evaluate and use it with. These sections are required, in this order:
+
+| Section | Answers |
+|---|---|
+| Opening prose (before any `##`) | What it does, and why it exists at all |
+| `Files:` list | What's in the folder, and when each file is read |
+| `## What it writes` | Artifacts created, where it looks for them, what's confirmed first |
+| `## Requires` | Hard dependencies, separated from what degrades gracefully |
+| `## When it triggers` | The phrasings and situations that reach for it |
+| `## Example` (one or more) | At least one worked run, verbatim enough to show the actual shape |
+
+`## Cost` is required only where the skill does more than local file read/write — MCP calls, broad
+repo exploration — so someone can tell before invoking whether this is cheap. A skill whose
+`## Requires` already says "nothing beyond local file read/write" has answered it.
+
+Skill-specific sections beyond these are fine and don't need justifying.
+
+**`## What it writes` is the one people most often skip**, and the one that matters most before
+installing: it names every artifact, says where the skill looks for an existing one, flags anything
+that leaves the machine (a ticket comment is visible to everyone with access, unlike a local file),
+and names any file the skill edits without owning — a pointer line added to someone's `CLAUDE.md`
+is exactly the sort of thing a person wants to know in advance rather than discover afterwards.
+Where a skill writes nothing by default, say that outright; it's a materially different install
+decision from one that always writes.
+
+| Skill | Opening | `Files:` | What it writes | Requires | When it triggers | Example | Cost |
+|---|---|---|---|---|---|---|---|
+| `next-improvement` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | n/a — local only |
+| `repo-knowledge` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | n/a — local only |
+| `commit-message-check` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `jira-ticket-audit` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `plan-technical-jira-ticket` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `operational-requirements-audit` | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ |
+
+**Open gap.** `operational-requirements-audit` has no worked example and no `## Cost`, despite
+auditing a whole repo against ~10 requirement sets — the most expensive skill here and the one
+whose cost is least obvious from its description.

@@ -286,12 +286,18 @@ cross-reference repo-wide points at the new home.
 
 ### Documentation travels with the skill
 
-Installing a skill means copying its folder, so anything a person needs to evaluate or use it —
-what it does, when it triggers, example runs, prerequisites — belongs inside that folder as its
-own `README.md`, not in a repo-level file that doesn't get copied along. Different concern from
-[Progressive disclosure](#progressive-disclosure) (which is about what Claude loads into context)
-— this is about what a human still has once the skill is installed elsewhere. The top-level README
-stays a thin index pointing into each skill's own docs, rather than duplicating them.
+Installing a skill means copying its folder, so anything a person needs to evaluate or use it
+belongs inside that folder as its own `README.md`, not in a repo-level file that doesn't get copied
+along. Different concern from [Progressive disclosure](#progressive-disclosure) (which is about
+what Claude loads into context) — this is about what a human still has once the skill is installed
+elsewhere. The top-level README stays a thin index pointing into each skill's own docs, rather than
+duplicating them.
+
+The bar is a person deciding whether to install this, who can't see the code and won't read
+`SKILL.md`. That includes the question skills most often leave unanswered: **what will this write
+into my project, and where?** Someone is entitled to know that before a skill edits their repo,
+not after. Which sections a README must carry to clear that bar is a spec — see `CONVENTIONS.md`,
+"Skill README contents."
 
 ### A skill's own instructions can't depend on the dev repo around it
 

@@ -8,8 +8,18 @@ where the only thing that matters is that all the skills agree.
 can't cite a repo-root file (see `DESIGN_PHILOSOPHY.md`, "A skill's own instructions can't depend
 on the dev repo around it") — only its own folder gets copied when it's installed. So every spec
 below is *restated inside each skill that implements it*, and this file exists to check those
-copies haven't drifted apart. Changing a spec here means changing it in every skill listed under
-it, in the same edit.
+copies haven't drifted apart.
+
+**Changing a spec and recording a gap are different acts.** *Changing* one means updating every
+skill listed under it in the same edit — a spec that's ahead of its implementations by accident is
+the drift this file exists to prevent. *Recording* a gap is the opposite: a requirement some skills
+knowingly don't meet yet, written into its own implemented-by table as an explicit `✗`, because a
+known gap that's visible is worth more than a spec quietly weakened to whatever everything already
+does. Every spec below therefore states the requirement, not the current lowest common denominator.
+
+**Adding a new skill to this repo means reading this file first**, not discovering it at review
+time. Nothing here is optional for a skill that has the thing a spec covers, and a new skill has no
+prior implementation for a drift check to catch.
 
 ## Self-correcting counters
 
@@ -30,10 +40,19 @@ threshold  -> surface to the user, then force-reset to 0 regardless of their ans
 - **Where the line it annotates may not exist**, the instance must say what to do — writing the
   line out with its defaults first is the usual answer. A counter with nowhere to live silently
   stops counting.
+- **"Never yet measured" is a third state, not a stored 0.** Where the increment compares against a
+  previous measurement, the first one has nothing to compare to: it is neither growth nor a
+  correction, so it neither increments nor resets — it just records the baseline. Write the
+  never-state as its own sentinel (`never`), not as `0`, or every first measurement scores as a
+  change from a zero that never meant zero.
 
-Implemented by: `next-improvement` — `SKILL.md` Step 2 states the shape canonically (dry-run
-tracking); `SKILL.md` Step 6 (archive-sweep streak) and `feedback.md` ("Backlog not shrinking")
-declare their own three values and refer to it.
+| Instance | States the shape | Trigger / reset / threshold |
+|---|---|---|
+| `next-improvement` — `SKILL.md` Step 2, dry-run tracking | ✓ canonical | ✓ |
+| `next-improvement` — `SKILL.md` Step 6, archive-sweep streak | refers to Step 2 | ✓ |
+| `next-improvement` — `feedback.md`, "Backlog not shrinking" | refers to Step 2 | ✓ |
+
+No other skill in this repo currently has a self-correcting counter.
 
 ## Numbered choices
 
@@ -48,9 +67,14 @@ covering everything Claude says, skills or not — broader scope, and it applies
 only. Each skill also states it inline, because an installed skill runs for people who have neither
 of the other two.
 
-Implemented by: `next-improvement` — `SKILL.md` Step 4 states the rule outright and covers every
-presentation mode; `repo-knowledge` — `SKILL.md` and `setup.md`/`review.md` apply it at each point
-options are offered; `commit-message-check` — `SKILL.md` Step 0.
+| Skill | Where it's stated | States the rule |
+|---|---|---|
+| `next-improvement` | `SKILL.md` Step 4 | ✓ outright, covering every presentation mode |
+| `repo-knowledge` | `SKILL.md`, `setup.md`, `review.md` | ✗ applied at each site, never stated once |
+| `commit-message-check` | `SKILL.md` Step 0 | ✗ applied at the one site that needs it |
+
+Applying it without stating it is enough while a skill offers options in one or two places; it
+stops being enough once a third appears with nothing for it to follow.
 
 ## The hard-rules table
 
@@ -108,18 +132,27 @@ bootstrap (nothing found):
 `commit-message-conventions.md` (`commit-message-check`).
 
 ```
-resolve and bootstrap: <project>/.claude/<FILE>
+resolve and bootstrap: <repo-root>/.claude/<FILE>
 ```
 
-Config additionally supports a personal fallback outside the project
-(`~/.claude/<FILE>`) where the skill defines one; that's the skill's own business, not this spec's.
+**Repo root, not project root — the one place these two rules deliberately differ.** Human-facing
+artifacts are per-project because priorities and gotchas are per-project. Config is per-repo when
+what it configures is per-repo: a repo holding several projects still has one commit history, so
+splitting its commit conventions per project would fragment a rule that isn't per-project. A skill
+whose config genuinely *is* per-project uses `<project>/.claude/` instead — decide from what the
+setting governs, and say which you chose and why in the skill's own text.
+
+Config additionally supports a personal fallback outside any repo (`~/.claude/<FILE>`) where the
+skill defines one; that's the skill's own business, not this spec's.
 
 ### Rules that go with it
 
 - **`<docs-dir>` means one the project already has** — `docs/`, `doc/`, or `documentation/`,
   whichever exists. **Never create one.** A project without a docs directory gets its artifacts at
   the project root; inventing a docs tree to hold one file imposes a layout the project didn't
-  choose.
+  choose. **If more than one exists**, resolution checks them all (a hit in two is the ambiguity
+  case below), but bootstrap doesn't guess: ask which, since a project carrying both usually means
+  they hold different things and picking wrong buries the file where nobody looks.
 - **`<project>` is the project root, not necessarily the repo root** — the nearest enclosing
   directory with its own README, package manifest, or similar, since one repo can hold several
   projects with different concerns.
@@ -137,10 +170,8 @@ Config additionally supports a personal fallback outside the project
 
 ### Implemented by
 
-Each of these restates the above in its own text; keep them in sync.
-
-| Skill | Where it's stated |
-|---|---|
-| `next-improvement` | `session-start.md` Step 0 (resolve/bootstrap), `SKILL.md` "The tracker file" (siblings) |
-| `repo-knowledge` | `session-start.md` Step 0 |
-| `commit-message-check` | `SKILL.md` Step 0 (config rule) |
+| Skill | Where it's stated | Resolve order | Ambiguity case | Siblings |
+|---|---|---|---|---|
+| `next-improvement` | `session-start.md` Step 0, `SKILL.md` "The tracker file" | ✓ | ✓ | ✓ |
+| `repo-knowledge` | `session-start.md` Step 0 | ✓ | ✓ | n/a — single file |
+| `commit-message-check` | `SKILL.md` Step 0 | ✓ config rule | n/a — fixed location | n/a |

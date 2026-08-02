@@ -58,10 +58,16 @@ Two possible locations, checked in this order:
 2. **Personal**: `~/.claude/commit-message-conventions.md` (the user's home directory on whichever
    machine this is running on — never a path copied from a different machine or account).
 
-`.claude/` is deliberate and is also where a new one gets created: this is **config** — a file the
-skill reads on every run and a human opens rarely — as distinct from working state or documentation
-a user reads and hand-edits, which belongs somewhere visible. Don't look for it at the repo root or
-in a docs folder, and don't create it there.
+**Both paths are `.claude/`, deliberately, and that's also where a new one gets created.** This is
+**config** — a file the skill reads on every run and a human opens rarely — as distinct from
+working state or documentation a user reads and hand-edits, which belongs somewhere visible. So
+don't look for a bare `commit-message-conventions.md` sitting directly at the repo root or inside a
+docs folder, and never create one there.
+
+**Repo root, not project root** — deliberately different from where this repo's other skills put
+their artifacts. Commit conventions are a team standard for a whole git repository; a repo holding
+several projects still has one commit history and one set of conventions, so a per-project file
+would fragment a rule that isn't per-project.
 
 Read whichever exist, in full, fresh every run — don't work from a paraphrased memory of either,
 they can be edited any time and a stale mental copy defeats the point of keeping them external.

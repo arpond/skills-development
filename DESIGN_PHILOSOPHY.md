@@ -18,6 +18,7 @@ address rather than a flat unstructured list.
   - [Unreachable isn't resolved, in either direction](#unreachable-isnt-resolved-in-either-direction)
   - [Malformed stored state gets its own check](#malformed-stored-state-gets-its-own-check)
   - [Don't persist a signal just because it's useful once](#dont-persist-a-signal-just-because-its-useful-once)
+- [Principles vs. specs](#principles-vs-specs)
 - [Structure & reuse](#structure--reuse)
   - [Reuse a judgment test, don't invent a parallel one](#reuse-a-judgment-test-dont-invent-a-parallel-one)
   - [A computed join needs its matching test written down once](#a-computed-join-needs-its-matching-test-written-down-once)
@@ -129,6 +130,29 @@ judgement) needs its own staleness-handling the moment it's written — an idea 
 merged, or shipped, and whatever referenced it by name is now wrong. This is about _not storing_
 the judgement in the first place when recomputing it costs little, as distinct from re-checking a
 judgement already stored (see [Re-ground, don't cache](#re-ground-dont-cache)).
+
+## Principles vs. specs
+
+Which of this repo's two shared files a rule belongs in — and the test for deciding, since the
+answer isn't obvious and getting it wrong is why specs end up buried inside principles.
+
+**Ask what failure the rule prevents.** If the failure is *two implementations doing it
+differently* — drift between skills, where each one alone looks fine and only the disagreement is
+wrong — it's a spec, and belongs in `CONVENTIONS.md`. If the failure is *one judgment made badly*
+— this skill, this decision, no second implementation involved — it's a principle, and belongs
+here.
+
+A rule can be both, and usually the embedded spec is the part that got written down first because
+it's easier to state. Split it rather than filing the whole thing under one: the principle keeps
+the *why* and ends with a pointer, the spec takes the exact shape. "Self-correcting knobs share one
+shape" was a principle ("don't write a bespoke counter per knob") wrapped around a spec (increment
+here, reset there, force-reset once surfaced) — the spec had already drifted across three instances
+while the principle read as perfectly sound.
+
+Two things that look like specs and aren't. A **prohibition** ("no machine-specific paths in a
+tracked file") has no shared implementation for anyone to drift from — it's a constraint, not a
+shape to match. And a rule with only one implementation isn't a spec *yet*; it becomes one when a
+second skill needs it, which is the point to move it rather than copy it.
 
 ## Structure & reuse
 

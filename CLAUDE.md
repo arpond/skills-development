@@ -12,10 +12,13 @@ separate offers for the four checks below.
 If the user says yes, run these four checks in order, on whatever was just changed:
 
 1. **Design philosophy.** Check the changed files against every bullet in `DESIGN_PHILOSOPHY.md`.
-   Report violations found; fix what's confirmed. **If the change touched anything `CONVENTIONS.md`
-   covers**, also check the skill's inline copy still matches that spec — the copies are what
-   actually run (a skill can't cite a repo-root file), so drift between them is invisible until two
-   skills disagree inside the same project. **N/A when the change is to
+   Report violations found; fix what's confirmed. **Also check `CONVENTIONS.md`** — if the change
+   touched anything a spec covers, verify the skill's inline copy still matches it, since the
+   copies are what actually run (a skill can't cite a repo-root file) and drift between them stays
+   invisible until two skills disagree inside the same project. **For a brand-new skill, check it
+   against every spec there**, not just ones the diff touched: a new skill has no prior
+   implementation for a drift check to catch, so nothing else would ever flag a spec it simply
+   never implemented. **N/A when the change is to
    `DESIGN_PHILOSOPHY.md` itself** — checking a file against itself is circular, not a real check;
    skip straight to pass 2. **Also check size, not just the diff**: if the skill's always-loaded
    core file (the one read on every invocation, not gated behind a trigger condition) is at or

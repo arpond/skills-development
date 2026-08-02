@@ -97,9 +97,25 @@ archive" note.
   outcome question as one clause instead of asking twice — "Last shipped '<idea>' (<date>) —
   deliver as expected, mixed, miss, or was it reverted? (Note: this was later fixed by '<fixing
   idea>'.)" If the origin already had a real answer (`delivered`/`mixed`/`missed`/`reverted`),
-  reopen it explicitly: "'<idea>' was marked <old outcome>, but was later fixed by '<fixing idea>'
-  — still <old outcome>, or downgrade to mixed/missed/reverted?" Clear `reassess: pending` the
+  reopen it explicitly, allowing either direction: "'<idea>' was marked <old outcome>, but was
+  later fixed by '<fixing idea>' — still <old outcome>, upgrade to delivered, or adjust to
+  mixed/missed/reverted?" Clear `reassess: pending` the
   moment it's answered, same as any other eligible item — see "Answered items" below.
+  - **What the tag measures.** `outcome:` answers one question only: given everything known now,
+    did this idea deliver its intended value? It is not a defect record — whether a bug was found
+    and fixed later is already preserved permanently and independently via the `fixes:`/`reworked:`
+    link on the fixing entry (`SKILL.md` Step 6), regardless of what outcome gets chosen here.
+    Don't fold "there was a bug" into the outcome value itself; that fact isn't lost by leaving
+    outcome at `delivered`, and doesn't need re-litigating by downgrading on principle.
+  - **What reassessment is actually for, then.** Not scoring the bug — the fix is evidence the
+    *original judgement* might have been made on incomplete information, and reassessment exists to
+    check that, not to penalize the idea for having needed a fix. For a `pending` origin, this means
+    giving the first-time judgement full context (e.g. did the bug mean the feature genuinely didn't
+    deliver value for users during the gap before it was fixed?). For an already-answered origin, it
+    means asking whether the original call was actually correct now that more is known (e.g. marked
+    `delivered`, but did the bug mean it wasn't, even at the time?) — not whether the fix itself
+    should move the tag. A same-day, narrow patch (tightening a regex, a one-line guard) rarely
+    implies the original judgement was wrong and is rarely reason to move the tag at all.
 - **Always surface the count** when it's nonzero, even if nothing else here triggers — e.g. a
   trailing "(3 ships pending feedback, 1 needs reassessment)" note, calling out the reassess subset
   separately since it's a different kind of pending. This is what stops the backlog from silently

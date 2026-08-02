@@ -341,15 +341,17 @@ marginal/duplicate/out of scope." A vague "nothing comes to mind" isn't enough; 
 what lets the user judge whether the category's actually done or the search just wasn't broad
 enough.
 
-**Track dry top-ups so they don't repeat silently.** When a top-up attempt ends up adding
-nothing — brainstorming found nothing genuinely new, everything proposed was flagged weak, or
-the user declined what was proposed — note it inline under that category's header:
-`(dry runs: N — last: YYYY-MM-DD)`. Increment on each dry attempt; reset to nothing (remove the
-line) the next time a solid idea actually gets added. At `dry runs: 2+`, surface this to the user
-up front the next time this category comes up — e.g. "Features has been topped up 2 times with
+**Track dry top-ups so they don't repeat silently** — a self-correcting knob, same canonical shape
+as `DESIGN_PHILOSOPHY.md`'s "Self-correcting knobs share one shape": note it inline under that
+category's header, `(dry runs: N — last: YYYY-MM-DD)`. Trigger/increment: a top-up attempt ends up
+adding nothing — brainstorming found nothing genuinely new, everything proposed was flagged weak,
+or the user declined what was proposed. Corrected signal/reset: the next time a solid idea actually
+gets added, remove the line entirely. Threshold: at `dry runs: 2+`, surface this to the user up
+front the next time this category comes up — e.g. "Features has been topped up 2 times with
 nothing solid since <date> — possible this category is genuinely done; want to retire/merge it,
-narrow its scope, or keep polling?" — rather than letting the same empty search repeat forever
-unnoticed.
+narrow its scope, or keep polling?" — and force-reset by removing the line once surfaced,
+regardless of which answer they give, so "keep polling" doesn't re-nag on the very next dry
+attempt; it takes two fresh dry runs to surface again.
 
 ## Step 3: Rank candidates against the tiers
 
@@ -593,15 +595,16 @@ cutoff date of the oldest entry now remaining live. This is mechanical bookkeepi
 call about ideas or priorities, so it doesn't need user confirmation the way Steps 2/4/4.5 do —
 only the knob *adjustment* below is confirm-gated, not the routine sweep itself.
 
-**Track which trigger actually fired, to catch a miscalibrated `age`.** Note inline on the
-`Done archive:` line which kind of sweep just ran: `(last sweep: backstop, streak: N)` or
-`(last sweep: age, streak: 0)` — increment `streak` on a `backstop` sweep, reset to 0 on an `age`
-sweep, same shape as Step 2's dry-run counter. **At `streak: 3`** (three backstop-triggered sweeps
-in a row with `age` never once catching anything first), surface it at the next `session-start.md`
-Step 0.5 check-in: `age` is calibrated for a slower project than this one is actually shipping at —
-propose halving it (or raising `backstop`) with a concrete number, wait for confirmation before
-writing (this is a hard rule — see the table above), then reset the streak. Same spirit as Step
-0.5's Goals staleness check: a number can go stale just like a priority order can.
+**Track which trigger actually fired, to catch a miscalibrated `age`** — same canonical shape as
+`DESIGN_PHILOSOPHY.md`'s "Self-correcting knobs share one shape": note inline on the
+`Done archive:` line which kind of sweep just ran, `(last sweep: backstop, streak: N)` or
+`(last sweep: age, streak: 0)`. Trigger/increment: a `backstop` sweep. Corrected signal/reset: an
+`age` sweep, back to 0. Threshold: at `streak: 3` (three backstop-triggered sweeps in a row with
+`age` never once catching anything first), surface it at the next `session-start.md` Step 0.5
+check-in — `age` is calibrated for a slower project than this one is actually shipping at, propose
+halving it (or raising `backstop`) with a concrete number, wait for confirmation before writing
+(this is a hard rule — see the table above) — and force-reset the streak once surfaced regardless
+of the answer, same as Step 2's dry-run counter.
 
 **Trimming doesn't wait on `outcome`** (`Feedback: on` — see `feedback.md`). Archive eligible-by-age
 entries regardless of whether their outcome is still `pending` — otherwise a feedback loop that

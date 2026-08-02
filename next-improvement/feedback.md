@@ -158,15 +158,17 @@ archive" note.
   backlog doesn't wait a full month to be re-offered; the date-based trigger exists so a stalled
   backlog that isn't growing (declined once, then just sits there) still gets re-surfaced instead of
   silently waiting for growth that may never come.
-  - **Backlog not shrinking.** Before updating the stored count, compare it against the current
-    eligible count: if this offer's count is higher than the *previous* offer's, increment
-    `growth-streak`; otherwise reset it to 0. **At `growth-streak: 2`** (two consecutive offers where
-    the backlog grew instead of shrinking), say so plainly as part of the offer — "this backlog's
-    grown across the last two check-ins instead of shrinking; want to shorten `reoffer`, shrink
-    `bulk` so it asks more often in smaller pieces, or leave it as-is?" — surface the pattern and ask
-    rather than picking a fix, since whether the right cause is cadence, batch size, or the user
-    just not being engaged isn't something to guess at. Reset `growth-streak` to 0 once surfaced,
-    same "answered/surfaced once, don't repeat" precedent as a `reassess:` flag.
+  - **Backlog not shrinking** — same canonical shape as `DESIGN_PHILOSOPHY.md`'s "Self-correcting
+    knobs share one shape." Trigger/increment: before updating the stored count, compare it against
+    the current eligible count — if this offer's count is higher than the *previous* offer's,
+    increment `growth-streak`. Corrected signal/reset: otherwise, back to 0. Threshold: at
+    `growth-streak: 2` (two consecutive offers where the backlog grew instead of shrinking), say so
+    plainly as part of the offer — "this backlog's grown across the last two check-ins instead of
+    shrinking; want to shorten `reoffer`, shrink `bulk` so it asks more often in smaller pieces, or
+    leave it as-is?" — surface the pattern and ask rather than picking a fix, since whether the
+    right cause is cadence, batch size, or the user just not being engaged isn't something to guess
+    at — and force-reset `growth-streak` to 0 once surfaced, regardless of the answer, same as Step
+    2's dry-run counter.
   - **All at once** — list every eligible item as a numbered list (oldest first across both files,
     reassess-flagged first within that, no cap — see `SKILL.md` Step 4's numbering rule, which
     applies to this list too), each with its why-and-what line, and let the user answer all of them

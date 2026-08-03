@@ -86,12 +86,12 @@ one, never proof of being current. Backfill `Created:` to `0.0.0`, same mechanic
 bookkeeping as `Next id:`'s lazy-init (see `tracker-maintenance.md`) — the tracker's real creation
 version is unknown, and stamping it to the *current* skill version would falsely claim it started
 life knowing about everything up to today, which is exactly backwards for a tracker old enough to
-predate the field. `0.0.0` says what's actually true: created before versioning existed. `Feature
-check:` gets the same starting value but a different fate: treat it as if it had read version
-`0.0.0` and run Step 0.5's full behind-version disclosure walk (open `changelog.md`, walk every
-entry) before stamping it to current — this tracker is owed disclosure for every feature shipped
-since baseline, not just future ones, since a missing stamp confirms nothing about what it already
-knows. Fold that walk into the same combined check-in as any other Step 0.5 trigger.
+predate the field — `0.0.0` says the true thing instead. `Feature check:` starts at the same value
+but heads to a different fate: treat it as if it had read version `0.0.0` and run Step 0.5's full
+behind-version disclosure walk (open `changelog.md`, walk every entry) before stamping it to
+current — this tracker is owed disclosure for every feature shipped since baseline, not just
+future ones, since a missing stamp confirms nothing about what it already knows. Fold that walk
+into the same combined check-in as any other Step 0.5 trigger.
 
 ## Step 0.5: Check whether goals are stale
 

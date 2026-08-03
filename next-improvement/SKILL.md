@@ -213,10 +213,11 @@ visibly weak ideas the user can see for themselves. Absence from this table does
 | 0 (setup.md) | gate | Interrogate the proposed categories/tiers with the user before writing the initial tracker |
 | 0 (setup.md) | surface | Disclose the behaviours that aren't opt-in (the fixes/reworks question, Done archiving) rather than letting them appear unannounced |
 | 0 (session-start.md) | gate | If the tracker exists but is malformed, ask the user rather than silently rewriting or refusing |
+| 0 (session-start.md) | surface | Flag a foreign `##` section once per project rather than leaving it unmentioned |
 | 0 (risk-register.md) | gate | If `RISK_REGISTER.md` exists but is malformed, ask the user rather than silently rewriting or refusing |
 | 0.5 (session-start.md) | gate | Confirm goal changes with the user before updating Goals / bumping `Last reviewed:` |
 | 0.5 (session-start.md) | gate | Confirm before adjusting `Done archive:` knobs or `Feedback:`'s cadence knobs off the back of a detected drift signal |
-| 0.5 (session-start.md) | surface | Raise a stale-Goals check-in when due, and a `Feature check:` version gap (or an unexpectedly-ahead stamp) |
+| 0.5 (session-start.md) | surface | Raise a stale-Goals check-in when due, and a `Feature check:` version gap — including a missing stamp, walked as `0.0.0` — or an unexpectedly-ahead stamp |
 | 0.6 (session-start.md) | surface | Surface standalone `reassess: pending` flags when `Feedback:` is explicitly `off` |
 | 0.7 (session-start.md) | surface | Surface Rejected entries whose `revisit-after:` date has passed |
 | 2 | gate | Show proposed new ideas, or a category retirement/merge/narrow, and wait for confirmation before writing anything |

@@ -8,7 +8,9 @@ section below names its own trigger. This exists to keep this rare, occasional-e
 
 **Trigger: an id is actually needed** — a fresh Step 2 append, or an existing id-less entry that
 something now wants to reference (a `fixes:` link, a risk entry's `mitigated-by:` tag, a reassess
-flag).
+flag) — **or `session-start.md` Step 0 discovering a tracker with zero ids and no `Next id:` line at
+all**, which runs the first-adoption case below immediately rather than waiting for this section's
+usual lazy trigger to eventually fire.
 
 All of it is mechanical, no-confirmation bookkeeping, same as Step 6's Done-trimming — never a
 judgement call, and never a reason to stop and ask.

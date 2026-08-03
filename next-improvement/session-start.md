@@ -14,19 +14,22 @@ Once this file's steps are done, continue to Step 1 in `SKILL.md`.
 something to raise, and they're all raised at the start of the same run — so whatever's due this
 run gets asked in a single message, never stacked back-to-back. If Goals are stale, a reassess flag
 is waiting, and a `revisit-after:` date has passed, that's one message with three questions in it,
-not three prompts. If only one is due, ask just that one, and never manufacture a second question
-to fill out a combined message. Each step below says what it contributes; none of them re-decides
-this. They also share one throttle: each surfaces at most once per session, tracked in conversation
-context only, never written to the tracker.
+not three prompts. **A backfilled tracker's baseline-subsystems catch-up (Step 0, below) is the
+same kind of contribution** — one more question folded into this run's combined message, not a
+separate prompt of its own. If only one item across all of these is due, ask just that one, and
+never manufacture a second question to fill out a combined message. Each step below says what it
+contributes; none of them re-decides this. They also share one throttle: each surfaces at most once
+per session, tracked in conversation context only, never written to the tracker.
 
-**Mechanical bookkeeping is a blocking gate, not optional prose to skim past.** Three items below
-need no user response — backfilling missing `Created:`/`Feature check:` (Step 0), flagging a
-closed-tracker-sections violation (Step 0), and re-deriving the Done archive sweep (Step 0.5) — and
-because none of them wait on an answer, it's easy for a run to jump straight from "found the
-tracker" to the check-in questions (0.5/0.6/0.7) and skip these silently, since skipping them
-produces no visible error. That's not a shortened Step 0, it's an incomplete one: all three must
-actually execute (files written, flag raised if applicable) before continuing to Step 1, every run,
-regardless of whether anything below turns out to be due this run.
+**Mechanical bookkeeping is a blocking gate, not optional prose to skim past.** Four items below
+need no user response — backfilling missing `Created:`/`Feature check:` (Step 0), bulk id-backfill
+for a tracker with zero ids and no `Next id:` line (Step 0), flagging a closed-tracker-sections
+violation (Step 0), and re-deriving the Done archive sweep (Step 0.5) — and because none of them
+wait on an answer, it's easy for a run to jump straight from "found the tracker" to the check-in
+questions (0.5/0.6/0.7) and skip these silently, since skipping them produces no visible error.
+That's not a shortened Step 0, it's an incomplete one: all four must actually execute (files
+written, flag raised if applicable) before continuing to Step 1, every run, regardless of whether
+anything below turns out to be due this run.
 
 ## Step 0: Find or bootstrap the tracker
 
@@ -95,6 +98,33 @@ exactly as if this tracker had really been sitting at `0.0.0` all along. This tr
 disclosure for every feature shipped since baseline, not just future ones — a missing stamp confirms
 nothing about what it already knows, so treating the whole paragraph as routine bookkeeping and
 jumping straight to the current-version stamp is exactly the failure mode this note exists to block.
+
+**This backfilled tracker also never went through `setup.md`'s own bootstrap interrogation** — it
+predates this skill's full feature set, or was created by hand. Two different things follow, and
+they must not be conflated:
+
+- **The id system, `Done archive:` mechanics, and the closed-section rule are core and mandatory,
+  never gated on presence** — contrast `Selection strategy:`/`Feedback:`/`Risk register:`, which
+  genuinely are optional and read by *value*, not presence (see `SKILL.md`'s tracker-format note).
+  If this tracker has zero ids anywhere and no `Next id:` line at all, that's exactly
+  `tracker-maintenance.md`'s "Minting and migrating ids" first-adoption case — run its one-time bulk
+  backfill right here, as the same mechanical no-confirmation bookkeeping as the version-stamp
+  backfill above, rather than waiting for that section's ordinary "an id is actually needed" trigger
+  to eventually fire on some later Step 2 append (which might never happen this session, leaving the
+  tracker looking id-less indefinitely). Never frame this as "want to start using ids?" — it isn't a
+  choice; it's baseline mechanics this tracker was always going to have. Mention it in one clause if
+  it actually ran ("also backfilled ids for the N entries that didn't have one yet") — silent
+  otherwise, same as any other automatic action that didn't change what's visible this run.
+- **`Selection strategy:`, `Feedback:`, and `Risk register:` are genuinely optional, and this
+  tracker never got `setup.md` Step 4's one-time offer of them.** Give it that same offer now, for
+  whichever of the three are still genuinely absent — an existing line already answers that question
+  even if it just spells out the default, so only ask about the ones with no line at all. Fold
+  whatever's still due into this run's combined check-in — the same brief questions `setup.md` Step 4
+  asks a brand-new tracker (the full option set for `Selection strategy:`, per `strategies.md`'s own
+  Setup section; a single short yes/no each for `Feedback:` and `Risk register:`). This is distinct
+  from the changelog walk above: that walk discloses *changes* since baseline; this discloses
+  baseline features the tracker never had a chance to decline or accept at all, since it skipped
+  `setup.md` entirely.
 
 ## Step 0.5: Check whether goals are stale
 

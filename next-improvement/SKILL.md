@@ -136,7 +136,11 @@ Done archive: age=60, floor=5, backstop=40   <!-- optional, default shown, see S
   line means `feedback.md` *does* get read. Keying off presence instead would silently strand every
   tracker that simply never had reason to write the line, which defeats having a default at all.
 - **Every idea gets an id** (`I<N>`) the moment it's added to a category (Step 2) — one counter
-  for the whole tracker, tracked as `Next id:` under Goals, never reused. **Written as a leading
+  for the whole tracker, tracked as `Next id:` under Goals, never reused. **Unlike the optional trio
+  just above, this is core and never gated on presence or value, the same way `Done archive:`'s
+  sweep always runs regardless of whether that line is written out** — a tracker with no ids yet
+  isn't declining a feature, it's just old enough to need `tracker-maintenance.md`'s one-time
+  backfill (see there, and `session-start.md` Step 0's Created:/Feature check: handling). **Written as a leading
   `I<N>:` prefix on the line, not a trailing `(id: I<N>)`** — scanning a long category or Done list
   for a specific id is the common case, and a prefix reads left-to-right without having to parse
   into the parenthetical first. Rejected entries are the one exception: most have no id at all,
@@ -214,6 +218,8 @@ visibly weak ideas the user can see for themselves. Absence from this table does
 | 0 (setup.md) | surface | Disclose the behaviours that aren't opt-in (the fixes/reworks question, Done archiving) rather than letting them appear unannounced |
 | 0 (session-start.md) | gate | If the tracker exists but is malformed, ask the user rather than silently rewriting or refusing |
 | 0 (session-start.md) | surface | Flag a foreign `##` section once per project rather than leaving it unmentioned |
+| 0 (session-start.md) | surface | Bulk-backfill ids for a tracker with zero ids and no `Next id:` line, rather than waiting for the lazy per-entry trigger to eventually fire |
+| 0 (session-start.md) | surface | Give a backfilled tracker the one-time baseline-subsystems catch-up (`Selection strategy:`/`Feedback:`/`Risk register:`) it never got via `setup.md` |
 | 0 (risk-register.md) | gate | If `RISK_REGISTER.md` exists but is malformed, ask the user rather than silently rewriting or refusing |
 | 0.5 (session-start.md) | gate | Confirm goal changes with the user before updating Goals / bumping `Last reviewed:` |
 | 0.5 (session-start.md) | gate | Confirm before adjusting `Done archive:` knobs or `Feedback:`'s cadence knobs off the back of a detected drift signal |

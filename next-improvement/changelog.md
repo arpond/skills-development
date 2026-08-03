@@ -66,9 +66,14 @@ anything to opt into**:
   for the same reason — areas scope a risk more precisely, and two join keys can drift apart.
   Entries do need `areas:` to match against anything, so the first time an older entry comes up,
   propose areas for it as part of whatever write is already happening.
-- **1.0.0** — baseline. Everything in this skill as of the version field's introduction: idea ids
-  (leading `I<N>:` prefix on new entries; existing entries in the older trailing `(id: I<N>)` style
-  stay valid and don't need rewriting — both are readable, only new writes use the prefix),
-  `Selection strategy:`, `Feedback:`, `Risk register:`, `Done archive:`, closed tracker sections.
-  No disclosure owed for reaching baseline itself — a tracker backfilled to `1.0.0` (see
-  `session-start.md` Step 0) isn't behind anything, it's caught up.
+- **1.0.0** — baseline. Everything in this skill as of the version field's introduction, split into
+  two kinds: **core, mandatory, never gated on presence** — idea ids (leading `I<N>:` prefix on new
+  entries; existing entries in the older trailing `(id: I<N>)` style stay valid and don't need
+  rewriting — both are readable, only new writes use the prefix), `Done archive:`, closed tracker
+  sections; and **genuinely optional, gated on value** — `Selection strategy:`, `Feedback:`,
+  `Risk register:`. No *changelog* disclosure is owed for reaching baseline itself — a tracker
+  backfilled to `1.0.0` (see `session-start.md` Step 0) isn't behind on anything this file tracks,
+  since nothing here is a change from baseline. That's not the same as having been asked about the
+  optional trio, though: a tracker old enough to need this backfill also never went through
+  `setup.md`'s own bootstrap interrogation, and `session-start.md` Step 0 gives it that one-time
+  catch-up separately from this walk.

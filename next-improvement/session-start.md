@@ -19,6 +19,15 @@ to fill out a combined message. Each step below says what it contributes; none o
 this. They also share one throttle: each surfaces at most once per session, tracked in conversation
 context only, never written to the tracker.
 
+**Mechanical bookkeeping is a blocking gate, not optional prose to skim past.** Three items below
+need no user response — backfilling missing `Created:`/`Feature check:` (Step 0), flagging a
+closed-tracker-sections violation (Step 0), and re-deriving the Done archive sweep (Step 0.5) — and
+because none of them wait on an answer, it's easy for a run to jump straight from "found the
+tracker" to the check-in questions (0.5/0.6/0.7) and skip these silently, since skipping them
+produces no visible error. That's not a shortened Step 0, it's an incomplete one: all three must
+actually execute (files written, flag raised if applicable) before continuing to Step 1, every run,
+regardless of whether anything below turns out to be due this run.
+
 ## Step 0: Find or bootstrap the tracker
 
 First establish the project: the nearest enclosing directory with its own README, package manifest,
@@ -71,11 +80,16 @@ looks like it should live instead (`DEVELOPMENT.md`, a design doc, project docs)
 it moved, do that as its own small edit; if they want it left as a deliberate exception, don't
 re-ask on future runs — note that call was made and move on.
 
-**If `Created:` or `Feature check:` is missing** (tracker predates the version-stamp fields), lazy-
-backfill both to `SKILL.md`'s current skill version, same mechanical no-confirmation bookkeeping as
-`Next id:`'s lazy-init (see `tracker-maintenance.md`). A tracker backfilled this way
-starts caught up, not behind — it isn't owed a disclosure for versions that shipped before it was
-even reading them, only for whatever ships from here forward (see Step 0.5's version check).
+**If `Created:` or `Feature check:` is missing** (tracker predates the version-stamp fields), don't
+treat that as already caught up — a missing stamp is stronger evidence of being behind than a stale
+one, never proof of being current. Backfill `Created:` to `SKILL.md`'s current skill version, same
+mechanical no-confirmation bookkeeping as `Next id:`'s lazy-init (see `tracker-maintenance.md`) — it
+only records when this tracker started being stamped, not real history, so it's fine to set
+silently. `Feature check:` is different: treat it as if it had read version `0.0.0` and run Step
+0.5's full behind-version disclosure walk (open `changelog.md`, walk every entry) before stamping it
+to current — this tracker is owed disclosure for every feature that's ever shipped, not just future
+ones, since a missing stamp confirms nothing about what it already knows. Fold that walk into the
+same combined check-in as any other Step 0.5 trigger.
 
 ## Step 0.5: Check whether goals are stale
 
@@ -133,7 +147,8 @@ combined message per the rule above: `age` is calibrated for a slower project th
 propose a concrete new number (e.g. halve it) or a higher `backstop`, wait for confirmation (hard
 rule, see the table in `SKILL.md`), then reset the streak either way once asked.
 
-**Check the tracker's `Feature check:` version against `SKILL.md`'s current skill version.** Compare
+**Check the tracker's `Feature check:` version against `SKILL.md`'s current skill version** (this is
+also the walk Step 0 triggers for a missing stamp, treated as `0.0.0`). Compare
 as standard semver — major first, then minor, then patch, numerically (`1.10.0` is newer than
 `1.9.0`, not older) — never as plain string/lexicographic comparison. **Behind**: open `changelog.md`
 (only now — this is exactly its trigger condition, see its own header) and walk every entry newer

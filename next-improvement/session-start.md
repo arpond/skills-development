@@ -152,7 +152,11 @@ also the walk Step 0 triggers for a missing stamp, treated as `0.0.0`). Compare
 as standard semver — major first, then minor, then patch, numerically (`1.10.0` is newer than
 `1.9.0`, not older) — never as plain string/lexicographic comparison. **Behind**: open `changelog.md`
 (only now — this is exactly its trigger condition, see its own header) and walk every entry newer
-than the stored version, folding them into the same combined check-in: "This tracker's on v1.0.0;
+than the stored version **in ascending version order (oldest first), applying each one's migration
+before moving to the next** — `changelog.md` itself lists newest-first for a human skimming what's
+new, but that's a reading order, not an application order, and a later entry's migration can assume
+an earlier one already landed. Fold them into the same combined check-in in that same order: "This
+tracker's on v1.0.0;
 v1.1.0 added <one-line description> — want to turn it on, or leave as-is?" For each one the user
 wants, hand off to that feature's *own* setup ask (`feedback.md`/`strategies.md`/`risk-register.md`'s
 Setup sections, or the relevant inline instructions for a non-file feature) rather than writing the

@@ -82,16 +82,19 @@ re-ask on future runs — note that call was made and move on.
 
 **If `Created:` or `Feature check:` is missing** (tracker predates the version-stamp fields), don't
 treat that as already caught up — a missing stamp is stronger evidence of being behind than a stale
-one, never proof of being current. Backfill `Created:` to `0.0.0`, same mechanical no-confirmation
-bookkeeping as `Next id:`'s lazy-init (see `tracker-maintenance.md`) — the tracker's real creation
+one, never proof of being current. **These two fields split into a mechanical part and a check-in
+part — don't let the first blur into skipping the second.** Backfill `Created:` to `0.0.0` as
+mechanical, no-confirmation bookkeeping (see `tracker-maintenance.md`) — the tracker's real creation
 version is unknown, and stamping it to the *current* skill version would falsely claim it started
 life knowing about everything up to today, which is exactly backwards for a tracker old enough to
-predate the field — `0.0.0` says the true thing instead. `Feature check:` starts at the same value
-but heads to a different fate: treat it as if it had read version `0.0.0` and run Step 0.5's full
-behind-version disclosure walk (open `changelog.md`, walk every entry) before stamping it to
-current — this tracker is owed disclosure for every feature shipped since baseline, not just
-future ones, since a missing stamp confirms nothing about what it already knows. Fold that walk
-into the same combined check-in as any other Step 0.5 trigger.
+predate the field — `0.0.0` says the true thing instead. `Feature check:` also backfills to `0.0.0`
+as that same mechanical first step, **but stamping it to the current version is never mechanical** —
+that can only happen *after* actually running Step 0.5's full behind-version disclosure walk (open
+`changelog.md`, walk every entry, oldest first) and folding the result into the combined check-in,
+exactly as if this tracker had really been sitting at `0.0.0` all along. This tracker is owed
+disclosure for every feature shipped since baseline, not just future ones — a missing stamp confirms
+nothing about what it already knows, so treating the whole paragraph as routine bookkeeping and
+jumping straight to the current-version stamp is exactly the failure mode this note exists to block.
 
 ## Step 0.5: Check whether goals are stale
 

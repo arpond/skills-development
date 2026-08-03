@@ -13,12 +13,33 @@ flag).
 All of it is mechanical, no-confirmation bookkeeping, same as Step 6's Done-trimming — never a
 judgement call, and never a reason to stop and ask.
 
-- **A missing `Next id:`** (a tracker predating the field): initialize it the first time something
-  actually needs it — from 1, or from the highest existing id + 1 if some entries already have one.
-- **An id-less entry that now needs referencing**: mint the next counter value for *that one entry*
-  in place. Don't rewrite every other id-less entry while you're there — being id-less is the
-  expected steady state for anything that hasn't needed a reference yet, not an error, and not a
-  malformed-tracker case either (contrast `session-start.md` Step 0's malformed handling).
+**The bulk-backfill ordering rule** — used both by first-time adoption below and by the one-time
+retroactive backfill further down, stated once here rather than twice: assign ids in one pass,
+oldest-first — Done entries in `shipped`-date order (including the archive,
+`IMPROVEMENT_TRACKER_DONE.md`, if it exists, treating live Done and the archive as the one combined
+pool, same rule as everywhere else that reads Done history), then each outstanding category
+top-to-bottom in file order. Skip Rejected — an entry there already carrying a hand-typed `id: I<N>`
+stays as it is, nothing else in Rejected gets one. Before assigning each id, apply the same
+hand-typed-id collision check as any other minting (see below) — skip past anything already in use
+rather than assuming the run of numbers is clear.
+
+- **A missing `Next id:`** splits into two cases, not one:
+  - **No entries have an id yet** (a tracker predating the id system entirely — `Created: 0.0.0` from
+    `session-start.md`'s backfill, or otherwise never having written the field): this is a one-time
+    full adoption, not routine lazy minting. Apply the bulk-backfill ordering rule above, starting the
+    count at 1, then set `Next id:` to one past the highest id assigned. Doing this in one pass, rather
+    than lazily per-entry as each is first referenced, is what keeps ids roughly tracking age/position
+    instead of tracking "whenever something happened to reference it" — see the bulk-backfill section
+    below for the same fix applied retroactively to a tracker that already went through the old lazy
+    behavior before this existed.
+  - **Some entries already have ids** (the field itself just wasn't written down, or this is the
+    steady state after the bulk pass above has already run): initialize `Next id:` from the highest
+    existing id + 1, and mint the rest lazily per-entry as covered next.
+- **An id-less entry that now needs referencing** (steady state *after* initial adoption, not the
+  bulk-adoption case above): mint the next counter value for *that one entry* in place. Don't rewrite
+  every other id-less entry while you're there — being id-less is the expected steady state for
+  anything that hasn't needed a reference yet, not an error, and not a malformed-tracker case either
+  (contrast `session-start.md` Step 0's malformed handling).
 - **Older entries in the trailing `(id: I<N>)` style**, from before the leading-`I<N>:`-prefix
   convention: a styling change, not a breaking one — read both, write the new style. Those entries
   stay exactly as they are, don't get bulk-rewritten, and remain valid to read and reference. Only
@@ -28,6 +49,23 @@ judgement call, and never a reason to stop and ask.
   collides, skip forward past every id already in use (checking the live tracker, and
   `IMPROVEMENT_TRACKER_DONE.md`/`RISK_REGISTER.md` if either exists), mint the first free one, then
   set `Next id:` to one past whatever got minted.
+
+## One-time bulk id backfill for a tracker migrated before this fix (changelog 2.2.0)
+
+**Trigger: `changelog.md`'s 2.2.0 entry, disclosed via `session-start.md` Step 0.5's version-gap
+walk, and the user accepts it.** Only relevant for a tracker whose `Next id:` already existed before
+this fix — one that's never had `Next id:` gets the same result automatically via the bulk-adoption
+case above, so nothing further applies to it here.
+
+Apply the bulk-backfill ordering rule above to every entry that's still id-less, starting the count
+from the current `Next id:` value rather than from 1 — this tracker already has ids in circulation
+(including any stray hand-typed ones in Rejected), and the collision check folded into that rule is
+what keeps this pass from handing out a number already spoken for. Set `Next id:` to one past the
+highest id assigned by this pass.
+
+This is a one-time sweep, not an ongoing state: once it's run (or declined), `Feature check:`
+advances past 2.2.0 and it isn't offered again — any id-less entry appearing after this point is
+ordinary steady state, handled by lazy per-entry minting like any other.
 
 ## One-time heads-up on a tracker that predates the fixes/reworks question
 

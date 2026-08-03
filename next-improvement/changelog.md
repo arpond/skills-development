@@ -27,6 +27,18 @@ anything to opt into**:
   since leaving old and new spellings mixed indefinitely is exactly the drift this kind of change
   exists to close.
 
+- **2.2.0** — *opt-in, only trackers whose `Next id:` already existed before this fix — nothing to
+  opt into for a tracker adopting ids fresh under 2.2.0's own bulk-adoption behavior.* A tracker that
+  adopted the id system before this fix left its pre-existing entries lazily id-less — minted only
+  whenever something first referenced them — while entries added since adoption got ids immediately,
+  in order. That made id numbers track "whenever something happened to get referenced," not age or
+  position: an old entry near the top of a category could end up with a higher id than newer entries
+  below it, once it finally got referenced. Setup ask: offer a one-time bulk backfill — assign ids to
+  every still-id-less entry in one pass, Done entries by `shipped` date oldest-first, then each
+  outstanding category top-to-bottom in file order (Rejected untouched, per the format's usual
+  id-less-by-default rule) — continuing `Next id:` from the highest id assigned. See
+  `tracker-maintenance.md`'s bulk-backfill section for the mechanics. Declining or accepting either
+  way still advances `Feature check:` past 2.2.0, so this is asked once per project.
 - **2.1.0** — *automatic, all projects, nothing to opt into.* Done's archive sweep (age vs.
   `floor`/`backstop`) now also runs at every session start (`session-start.md` Step 0.5), not only
   as a side effect of Step 6 recording a fresh ship. The append-triggered sweep could go

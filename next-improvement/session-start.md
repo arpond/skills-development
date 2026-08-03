@@ -87,8 +87,8 @@ mechanical no-confirmation bookkeeping as `Next id:`'s lazy-init (see `tracker-m
 only records when this tracker started being stamped, not real history, so it's fine to set
 silently. `Feature check:` is different: treat it as if it had read version `0.0.0` and run Step
 0.5's full behind-version disclosure walk (open `changelog.md`, walk every entry) before stamping it
-to current — this tracker is owed disclosure for every feature that's ever shipped, not just future
-ones, since a missing stamp confirms nothing about what it already knows. Fold that walk into the
+to current — this tracker is owed disclosure for every feature shipped since baseline, not just
+future ones, since a missing stamp confirms nothing about what it already knows. Fold that walk into the
 same combined check-in as any other Step 0.5 trigger.
 
 ## Step 0.5: Check whether goals are stale

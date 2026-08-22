@@ -26,6 +26,10 @@ A collection of custom skills for [Claude Code](https://claude.com/product/claud
 - **[jira-ticket-audit](jira-ticket-audit/README.md)** — audits a single Jira ticket for
   ambiguity, internal inconsistency, gaps, oversized scope, and missing links to sibling tickets
   in its epic, producing per-dimension findings backed by evidence quoted from the ticket.
+- **[ste-writing](ste-writing/README.md)** — rewrites or reviews prose (docs, READMEs, PR text,
+  error messages — never code) in ASD-STE100 Simplified Technical English to strip "AI slop",
+  with a bundled lint script that scores the result. Vendored from woosal1337's "The cure for AI
+  slop" episode; see its README for origin and local changes.
 
 ## Installation
 

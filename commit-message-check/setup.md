@@ -23,14 +23,15 @@ something specific, not a vague gesture at "standard practice."
      similar. If found, offer to use it as the starting point: show what was found, ask if it
      should be copied in as-is, edited, or ignored in favor of a fresh interrogation.
    - **Example commits or repo history.** If the user offers example commits, or points at a
-     repo's `git log`, look for *consistent* patterns — imperative mood already in use, a ticket
+     repo's `git log`, look for *consistent* patterns (imperative mood already in use, a ticket
      prefix format, whether bodies are typically present and how they're formatted, a spelling
-     variant — and propose them as a starting ruleset. Real history is messy: don't manufacture a
-     rule from one or two commits, and don't paper over genuine inconsistency by picking whichever
-     style happens to be more common — surface it as "commits go both ways on X, which do you
-     want?" rather than silently picking one. This is inference from observed behavior, not a
-     stated preference — treat it as a hypothesis to confirm, not a fact to adopt, same discipline
-     as any input that's a claim rather than ground truth.
+     variant) and propose them as a starting ruleset. Real history is messy:
+     - Don't manufacture a rule from one or two commits.
+     - Don't paper over genuine inconsistency by picking whichever style happens to be more
+       common. Ask: "commits go both ways on X, which do you want?"
+     - This is inference from observed behavior, not a stated preference. Treat it as a
+       hypothesis to confirm, not a fact to adopt, same discipline as any input that's a claim
+       rather than ground truth.
    - **A README, CONTRIBUTING doc, or similar in the current repo** that already states commit
      conventions in prose, even if never formalized into this skill's format.
 
@@ -41,17 +42,19 @@ something specific, not a vague gesture at "standard practice."
    (like Footer) it never had reason to mention.
 
 2. **Show the full set of parts in one message, defaults included, then ask.** Location included,
-   per this project's "one check-in, not two":
+   as one gate, not two:
 
    - **Location.** Present as two numbered options: 1) personal
      (`~/.claude/commit-message-conventions.md` — applies for this user across every repo), 2)
      repo-level (`.claude/commit-message-conventions.md` at the current repo's root — a team's
-     shared, committed convention, applying to anyone who works in this repo). If the repo is
-     clearly shared with a team, or the conventions look like a team standard rather than personal
-     taste, say so and suggest repo-level rather than defaulting to personal without asking. Either
-     file can exist alongside the other — `SKILL.md`'s Step 0 merges them per heading — so this is
-     "which file gets this content," not an exclusive choice. If repo-level is chosen, mention it
-     needs to actually be committed for "shared" to mean anything.
+     shared, committed convention, applying to anyone who works in this repo).
+     - If the repo is clearly shared with a team, or the conventions look like a team standard
+       rather than personal taste, say so and suggest repo-level rather than defaulting to
+       personal without asking.
+     - Either file can exist alongside the other (`SKILL.md`'s Step 0 merges them per heading),
+       so this is "which file gets this content," not an exclusive choice.
+     - If repo-level is chosen, mention it needs to actually be committed for "shared" to mean
+       anything.
 
    - **Prefix.** No built-in default (most users don't use one). Does this user's work involve
      ticket keys (Jira, Linear, GitHub issues) that should prefix commit subjects? If yes: what
@@ -90,9 +93,9 @@ something specific, not a vague gesture at "standard practice."
      doesn't cleanly belong to one part above — revert message conventions, how iteration/WIP
      commits within one piece of work should relate to each other, repo-specific overrides, a rule
      that only makes sense considering more than one part at once. Don't manufacture questions
-     nobody would think to ask; this is a genuine catch-all for whatever the user volunteers, not
-     a mandatory checklist item — but whatever does go here still gets checked every run (see
-     `SKILL.md` Step 6), it is not a lower-priority bucket.
+     nobody would think to ask. This is a genuine catch-all for whatever the user volunteers, not
+     a mandatory checklist item. Whatever does go here still gets checked every run (see
+     `SKILL.md` Step 6); it is not a lower-priority bucket.
 
 3. **Write the file** at whichever path the location question settled on, under the six headings,
    with the confirmed value for *every* part above, including the ones where the answer was "yes,
@@ -128,8 +131,8 @@ something specific, not a vague gesture at "standard practice."
    <anything else volunteered, or omit the heading entirely if nothing was volunteered>
    ```
 
-4. Confirm the written file with the user before moving on to actually checking a commit message
-   — this is a stored preference file the skill will keep trusting on every future run, so it's
+4. Confirm the written file with the user before moving on to actually checking a commit message.
+   This is a stored preference file the skill will keep trusting on every future run, so it's
    worth getting right the first time rather than silently guessing and correcting later.
 
 5. **If a repo-level file was just written, check it's actually tracked** (`git status` on that

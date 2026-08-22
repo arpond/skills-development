@@ -19,18 +19,20 @@ across users; the conventions file is one person's preferences, specific to them
 
 **The checklist is organized around the structural parts of a commit message — Prefix, Subject,
 Body, Footer, Whole-message, Miscellaneous — matching the conventions file's six headings, not
-around a fixed list of named rules.** Every step below does exactly the same thing: *iterate every
-rule the conventions file lists under that heading, check the draft against each one
-individually.* Same mechanism, six times, not six bespoke ones — so a brand new rule always has a
-home and always gets checked, without SKILL.md needing to change to accommodate it. This is stated
-once, here; the steps below don't repeat it.
+around a fixed list of named rules.** Every step below does the same thing. **Iterate every rule
+the conventions file lists under that heading, and check the draft against each one
+individually.** Same mechanism, six times, not six bespoke ones, so a brand new rule always has a
+home and always gets checked, without SKILL.md needing to change to accommodate it. This is
+stated once, here; the steps below name their heading and refer back.
 
-**If two rules genuinely conflict** — two rules under one heading, rules across two headings, or
-a rule against a built-in default — that's the same third state Step 1 already handles for an
-unclear prefix: not a coin flip. Don't silently pick whichever rule is more specific, more recent,
-or easier to satisfy. Stop, show the user the specific conflict (both rules, quoted), and ask.
-Whatever they say resolves it going forward is a conventions-file edit — write gate 2 below — not
-a one-off judgment call repeated silently on every future commit that hits the same conflict.
+**If two rules genuinely conflict** (two rules under one heading, rules across two headings, or
+a rule against a built-in default), that's the same third state Step 1 already handles for an
+unclear prefix: not a coin flip.
+- Don't silently pick whichever rule is more specific, more recent, or easier to satisfy.
+- Stop, show the user the specific conflict (both rules, quoted), and ask.
+- Whatever they say resolves it going forward is a conventions-file edit (write gate 2 below),
+  not a one-off judgment call repeated silently on every future commit that hits the same
+  conflict.
 
 This skill has more than one point where it writes something consequential; per this repo's
 "propose, don't just do," each is gated on user confirmation and none skips it:
@@ -72,41 +74,47 @@ Two possible locations, checked in this order:
 **config** — a file the skill reads on every run and a human opens rarely — as distinct from
 working state or documentation a user reads and hand-edits, which belongs somewhere visible. So
 don't look for a bare `commit-message-conventions.md` sitting directly at the repo root or inside a
-docs folder, and never create one there.
+docs folder. Never create one there.
 
 **Repo root, not project root.** Deliberately different from where this repo's other skills put
 their artifacts. Commit conventions are a team standard for a whole git repository; a repo holding
 several projects still has one commit history and one set of conventions, so a per-project file
 would fragment a rule that isn't per-project.
 
-Read whichever exist, in full, fresh every run — don't work from a paraphrased memory of either,
-they can be edited any time and a stale mental copy defeats the point of keeping them external.
-**Precedence is per heading, not whole-file**: for each of the six headings, use the repo-level
-file's version if it defines that heading, otherwise the personal file's version, otherwise the
-built-in default (Steps 2 and 5 below). An empty or absent heading in either file just falls
-through to the next source — it doesn't mean the matching step gets skipped without looking.
+Read whichever exist, in full, fresh every run. Don't work from a paraphrased memory of either;
+they can be edited any time, and a stale mental copy defeats the point of keeping them external.
+**Precedence is per heading, not whole-file:**
+- For each of the six headings, use the repo-level file's version if it defines that heading,
+  otherwise the personal file's version, otherwise the built-in default (Steps 2 and 5 below).
+- An empty or absent heading in either file falls through to the next source. It doesn't mean the
+  matching step gets skipped without looking.
 
 If neither file exists, read `setup.md` and run the bootstrap interrogation before continuing.
 Don't improvise conventions from general commit-message knowledge or from this skill's own worked
-examples — those illustrate the mechanism, they aren't a default ruleset. `setup.md` covers why
+examples. Those illustrate the mechanism, they aren't a default ruleset. `setup.md` covers why
 every built-in default below gets shown and confirmed there rather than assumed, and where the
 bootstrapped file ends up (repo-level or personal).
 
-**If a file exists but doesn't parse** — none of the six headings present, or content that doesn't
-resemble this structure at all — don't silently reinterpret it, discard it, or fall back to
+**If a file exists but doesn't parse** (none of the six headings present, or content that doesn't
+resemble this structure at all), don't silently reinterpret it, discard it, or fall back to
 bootstrapping over it. Show the user what was found and ask them to pick, as a numbered choice:
-1) fix it up into the expected format, 2) replace it via `setup.md`, or 3) leave it as-is with a
-one-off manual read for this commit only.
+1. fix it up into the expected format
+2. replace it via `setup.md`
+3. leave it as-is with a one-off manual read for this commit only
 
 ## Step 1 — Prefix
 
 Not every user or repo uses a ticket-key or other prefix — this step is conditional on whether
 `## Prefix` has any rules, not a universal requirement.
 
-If it does, it should specify: which repos it applies to (a detection rule, e.g. "repos with
-existing TICKET-#### style history"), the format, and what to do when no ticket key is known (a
-placeholder value, and/or a threshold for when to stop and ask instead of defaulting). Apply
-exactly that rule, checking each listed condition individually:
+If it does, it should specify:
+- which repos it applies to (a detection rule, e.g. "repos with existing TICKET-#### style
+  history")
+- the format
+- what to do when no ticket key is known (a placeholder value, and/or a threshold for when to
+  stop and ask instead of defaulting)
+
+Apply exactly that rule, checking each listed condition individually:
 
 - Repo matches the convention's detection rule → prefix required, following its format/placeholder
   rules.
@@ -119,8 +127,8 @@ If `## Prefix` is empty, skip straight to Step 2.
 
 ## Step 2 — Subject
 
-Check the drafted subject against every rule listed under `## Subject`, individually — don't
-eyeball the whole line at once and call it good. If that section is silent on a point, these are
+Check the drafted subject against `## Subject`, per the iteration rule above. Don't eyeball the
+whole line at once and call it good. If that section is silent on a point, these are
 the skill's built-in defaults (shown and confirmed at setup, not assumed here):
 
 - Imperative, present tense (`Add`, `Fix`, `Remove` — not `Added`, `Fixed`, `Adding`).
@@ -138,7 +146,7 @@ subject.
 First: does this commit even need a body? Check `## Body` for a stated policy; the built-in
 default is *no, unless the why genuinely isn't recoverable from the subject alone*.
 
-If a body is written, check it against every rule listed under `## Body`, individually. Built-in
+If a body is written, check it against `## Body`, per the iteration rule above. Built-in
 default (deliberately light — no format imposed, applies only to whatever isn't overridden):
 
 - Explain *why* the change happened, not what changed or how — the diff already shows the
@@ -158,31 +166,34 @@ footer to add.
 
 ## Step 5 — Whole-message
 
-Check the fully composed message (prefix + subject + body + footer together) against every rule
-listed under `## Whole-message` — rules that apply uniformly across the entire text rather than to
-one part (e.g. a language/spelling convention, a tone rule). One built-in default always applies
-here regardless of what the conventions file says, unless it explicitly opts out for a specific
-commit:
+Check the fully composed message (prefix + subject + body + footer together) against
+`## Whole-message`, per the iteration rule above. Those are rules that apply uniformly across the
+entire text rather than to one part (e.g. a language/spelling convention, a tone rule). One
+built-in default always applies here regardless of what the conventions file says, unless it
+explicitly opts out for a specific commit:
 
 - Scan for `Claude`, `Anthropic`, `Generated with`, any `Co-Authored-By` naming an AI,
-  `Claude-Session`, or any other harness-injected AI-authorship trailer. Strip it immediately —
-  this applies even when a tool/template tries to add it automatically, every time, without being
-  asked, unless this specific commit was explicitly asked to include one.
+  `Claude-Session`, or any other harness-injected AI-authorship trailer. Strip it immediately.
+  This applies even when a tool/template tries to add it automatically, every time, without being
+  asked. Exception: this specific commit was explicitly asked to include one.
 
 ## Step 6 — Miscellaneous
 
-Check every rule listed under `## Miscellaneous` — rules that don't cleanly attach to one
-structural part (e.g. how revert messages should read, how iteration commits within one piece of
-work should relate to each other, a rule conditional on more than one part at once).
+Check the message against `## Miscellaneous`, per the iteration rule above. Those are rules that
+don't cleanly attach to one structural part (e.g. how revert messages should read, how iteration
+commits within one piece of work should relate to each other, a rule conditional on more than one
+part at once).
 
 ## Step 7 — Only now, show it or commit it
 
 The message may only be shown to the user or passed to `git commit` once Steps 1-6 have all been
-walked through for *this* draft — not carried over from an earlier draft in the same conversation.
-If the user pushes back on something you show them, that means the checklist was skipped or
-rushed: go back to Step 1 on the corrected version rather than only patching the specific
-complaint they happened to notice. If the pushback reveals a conventions file rule itself is wrong
-or out of date, that's a separate, explicit edit — write gate 2 in the table above — confirm the
-change with the user before writing it. With two possible files, also confirm
-*which one*: a wrong team standard belongs in the repo-level file, a wrong personal preference in
-the personal one — don't assume based on which file happened to already define that heading.
+walked through for *this* draft, not carried over from an earlier draft in the same conversation.
+- If the user pushes back on something you show them, the checklist was skipped or rushed. Go
+  back to Step 1 on the corrected version rather than only patching the specific complaint they
+  happened to notice.
+- If the pushback reveals a conventions file rule itself is wrong or out of date, that's a
+  separate, explicit edit (write gate 2 in the table above). Confirm the change with the user
+  before writing it.
+- With two possible files, also confirm *which one*. A wrong team standard belongs in the
+  repo-level file, a wrong personal preference in the personal one; don't assume based on which
+  file happened to already define that heading.

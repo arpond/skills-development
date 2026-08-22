@@ -12,11 +12,11 @@ Before proposing creation, check the project's existing documentation for conten
 not after. These files are supposed to document the repo *as designed* (or, for a troubleshooting
 guide, as curated reference), but in practice they often accumulate gotcha-shaped bullets anyway,
 simply because there was nowhere else to put them before now. This isn't the redundancy test from
-`SKILL.md` Step 2 — the content is already written down, that's the premise — it's a
-classification question: does this bullet describe a deliberate convention/decision or curated
-guidance (leave it), or an incidentally-discovered quirk/root-cause that ended up there for lack of
-a better home (candidate to migrate)? See `SKILL.md`'s intro for the full CLAUDE.md/KNOWLEDGE.md
-boundary this test is drawing on.
+`SKILL.md` Step 2 (the content is already written down, that's the premise). It's a
+classification question. **Does this bullet describe a deliberate convention, decision, or curated
+guidance (leave it), or an incidentally-discovered quirk or root-cause that ended up there for
+lack of a better home (candidate to migrate)?** See `SKILL.md`'s intro for the full
+CLAUDE.md/KNOWLEDGE.md boundary this test is drawing on.
 
 Check a curated, bounded set of conventional locations — not every markdown file in the repo,
 which would make this slow and noisy over content that's mostly unrelated (changelogs, ADRs, API
@@ -38,8 +38,8 @@ skill's hard rules (see the table in `SKILL.md`):
     cost real time to discover and aren't recorded anywhere else.
   - mentioning that it'll periodically prompt a "judgment-drift review" on its own (roughly every
     60-90 days, or sooner if entries have piled up) to prune stale entries (see
-    `session-start.md`), so accepting the default means agreeing to that occasional check-in, not
-    just to the file existing.
+    `session-start.md`), so accepting the default means agreeing to that occasional review
+    prompt, not just to the file existing.
 - If the project has a `CLAUDE.md`, propose adding a single pointer line to it (e.g. "See
   KNOWLEDGE.md for known repo gotchas and quirks") — keeps the two files DRY without duplicating
   content.
@@ -64,11 +64,13 @@ On confirmation:
 
 **Check it's actually tracked.** The skill's "no archive needed, git history covers it" design
 (see `SKILL.md`) only holds if `KNOWLEDGE.md` is actually committed, not gitignored or left
-untracked. Right after creating it, check (`git status` on the path) that it isn't ignored; if it
-is, say so and suggest committing it — a one-time check here, not repeated on later runs.
+untracked. Right after creating it:
+- Check (`git status` on the path) that it isn't ignored.
+- If it is, say so and suggest committing it.
+- This is a one-time check here, not repeated on later runs.
 
 If the user names another location in answer to the open-ended question, check it with the same
-classification test and propose whatever turns up as its own follow-up confirmation — this is new
+classification test and propose whatever turns up as its own follow-up gate. This is new
 information arriving after the first answer, not a second ask of the same question.
 
 ## Available on demand later, too

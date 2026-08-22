@@ -12,8 +12,8 @@ captured in commit messages (commit quality varies by author, so "it's probably 
 isn't a safe assumption). This skill is project-agnostic: everything project-specific lives in
 `KNOWLEDGE.md` inside that project, not in this skill.
 
-This file covers Steps 1-3, the steady-state reference/capture/removal loop. Three companion files
-live alongside it:
+This file covers Steps 1-3, the steady-state reference/capture/removal loop. Three files live
+alongside it; `session-start.md` is a second core file, the other two are companions:
 
 - `session-start.md` — Step 0 (find `KNOWLEDGE.md`, or defer to `setup.md` to bootstrap it).
   **Not optional** — read it every run, right after this intro, before Step 1. Split out purely to
@@ -97,23 +97,23 @@ doesn't mean optional.
 | 3 | Confirm before removing an entry for staleness (a failed mechanical check alone isn't enough) |
 | review.md | Present prune/needs-review candidates and wait for confirmation before removing anything |
 
-*Update this table in the same edit whenever a hard rule is added, removed, or moved* — it's a
+*Update this table in the same edit whenever a hard rule is added, removed, or moved.* It's a
 mirror of the steps, not independent prose, so it's the one place to check rather than several
 scattered cross-references.
 
-**Whenever two or more options are presented for the user to pick from — migration candidates at
-Step 0, prune/needs-review candidates in `review.md`, several entries flagged at once — number them
-`1.`, `2.`, `3.`… in a single sequential list**, whatever label each carries. A label explains an
-option; a number is what the user can say back ("go with 2") to pick one unambiguously. A single
-unambiguous recommendation with nothing else to choose between doesn't need one. This applies at
-every such point in this skill, including any added later.
+**Whenever two or more options are presented for the user to pick from, number them `1.`, `2.`,
+`3.`… in a single sequential list**, whatever label each carries. Sites in this skill: migration
+candidates at Step 0, prune/needs-review candidates in `review.md`, several entries surfaced at
+once. A label explains an option; a number is what the user can say back ("go with 2") to pick
+one unambiguously. A single unambiguous recommendation with nothing else to choose between doesn't
+need one. This applies at every such point in this skill, including any added later.
 
 ## Step 0: Find/bootstrap the knowledge file
 
 Read `session-start.md` and follow it before continuing — it covers finding `KNOWLEDGE.md`
 (deferring to `setup.md` to bootstrap it if missing), the malformed-file case, and checking
-whether a judgment-drift review is due. This is the one companion file that's read every run, not
-gated behind a trigger condition; see the intro above for why it's split out. Once it says to,
+whether a judgment-drift review is due. It's a second core file, read every run, not gated behind
+a trigger condition; see the intro above for why it's split out. Once it says to,
 continue to Step 1 below.
 
 ## Step 1: Reference existing knowledge
@@ -129,11 +129,13 @@ right now, when they're about to be relied on.
 
 - If the pointer still resolves: use the entry, then bump `Last referenced:` to today and
   increment the reference count.
-- If it doesn't: mark `Status: needs-review` inline and say so plainly in the session — don't
-  silently keep trusting it, and don't silently drop it either (see Step 3 for what happens next).
-  Don't bump `Last referenced:` or the count in this case — a broken pointer wasn't actually a
-  usable reference, and counting it would inflate the usage signal past what it means (see the
-  knowledge-file notes above on what the count is for).
+- If it doesn't:
+  - Mark `Status: needs-review` inline and say so plainly in the session.
+  - Don't silently keep trusting it, and don't silently drop it either (see Step 3 for what
+    happens next).
+  - Don't bump `Last referenced:` or the count. A broken pointer wasn't actually a usable
+    reference, and counting it would inflate the usage signal past what it means (see the
+    knowledge-file notes above on what the count is for).
 - If an entry is already marked `needs-review` from an earlier session, re-run the check rather
   than assuming the flag is still accurate — it may have been fixed (Evidence updated, or the
   underlying thing restored) without anyone clearing the flag. Re-checking is cheap; don't nag
@@ -141,12 +143,12 @@ right now, when they're about to be relied on.
 - If more than one relevant entry needs a decision from the user in the same pass (e.g. two
   touched entries both flagged `needs-review`), number them in one list rather than asking about
   each in turn — same convention as `review.md`'s candidate list.
-- Two special cases where "check it still resolves" needs care: Evidence **pointing outside the
-  current checkout** (another repo — common for cross-repo entries) can't be checked from here at
-  all, treat as "unreachable isn't resolved" and say so, rather than passing, failing, or silently
-  skipping it. Evidence that's a **side-effectful command** (a migration, a deploy) should only be
-  checked for still being defined/reachable (e.g. still present in `package.json`/a `Makefile`) —
-  never actually run to verify it.
+- Evidence **pointing outside the current checkout** (another repo — common for cross-repo
+  entries) can't be checked from here at all. Treat it as "unreachable isn't resolved" and say
+  so, rather than passing, failing, or silently skipping it.
+- Evidence that's a **side-effectful command** (a migration, a deploy): check only that it's
+  still defined/reachable (e.g. still present in `package.json`/a `Makefile`). Never actually run
+  it to verify.
 
 ## Step 2: Capture new knowledge
 
@@ -184,13 +186,15 @@ substance reason ("too narrow to be useful," "not actually surprising") usually 
 genuinely unsure, it's fine to re-propose with a note ("this was declined before for X — has that
 changed?").
 
-If it clears the bar, propose a concise entry (title, description, Evidence, Captured) and wait
-for confirmation before writing anything — this is one of the skill's hard rules (see the table
-above): capture is a recommendation, not a decision. If more than one candidate clears the bar in
-the same pass, number them in one list rather than proposing them one at a time. Match
-`KNOWLEDGE.md`'s existing format and voice for whatever gets added. **If declined, add it to
-`Declined` with the reason given** (or your best summary of it if terse) rather than just dropping
-it — that's what makes the check above work next time.
+If it clears the bar:
+- Propose a concise entry (title, description, Evidence, Captured) and wait for confirmation
+  before writing anything. This is one of the skill's hard rules (see the table above): capture
+  is a recommendation, not a decision.
+- If more than one candidate clears the bar in the same pass, number them in one list rather than
+  proposing them one at a time.
+- Match `KNOWLEDGE.md`'s existing format and voice for whatever gets added.
+- **If declined, add it to `Declined` with the reason given** (or your best summary of it if
+  terse) rather than just dropping it. That's what makes the check above work next time.
 
 **Never write secrets, credentials, or PII into an entry or a `Declined` line.** If a capture
 candidate — or the reason for declining one — touches something sensitive (an internal URL, a
@@ -203,17 +207,16 @@ pressure.
 Three triggers, and only these three — removal is never time-based or automatic:
 
 - **A fix supersedes the entry.** When a change fixes the root cause an entry describes, remove
-  the entry as part of that same change. Mention it in the session rather than doing it invisibly
-  — low-stakes given git history, but still a change worth naming. **Don't rely solely on Step 1
-  having already surfaced the entry.** A root-cause fix often lands in a different file than the
-  entry's Evidence points at (Evidence tends to record where the symptom showed up, not
+  the entry as part of that same change. Mention it in the session rather than doing it
+  invisibly; low-stakes given git history, but still a change worth naming. **Don't rely solely on
+  Step 1 having already surfaced the entry.** A root-cause fix often lands in a different file
+  than the entry's Evidence points at (Evidence tends to record where the symptom showed up, not
   necessarily where the eventual fix happens), so Step 1's file-overlap check can miss it
-  entirely. When wrapping up a fix for something that felt like the kind of thing that might have
-  an entry, take a moment to check `KNOWLEDGE.md` for a match before moving on — the mechanical
-  check in Step 1 only verifies a pointer still resolves, not that the behavior it describes is
-  still true, so a genuinely-fixed bug won't flag itself on its own.
-- **The mechanical check fails and the user confirms it's actually gone.** Step 1 flagging
+  entirely. **After fixing a root cause, check `KNOWLEDGE.md` for a matching entry before moving
+  on.** The mechanical check in Step 1 only verifies a pointer still resolves, not that the
+  behavior it describes is still true, so a genuinely-fixed bug won't surface itself on its own.
+- **The mechanical check fails and the user confirms it's actually gone.** Step 1 marking
   `Status: needs-review` isn't enough on its own (a failed pointer check could mean the thing
-  moved, not that it's resolved) — confirm with the user before removing.
+  moved, not that it's resolved). Confirm with the user before removing.
 - **Surfaced as a prune candidate during `review.md`.** Never-referenced or long-stale entries get
-  raised there, not removed on sight; see `review.md` for how that's presented.
+  surfaced there, not removed on sight; see `review.md` for how that's presented.

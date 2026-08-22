@@ -104,8 +104,7 @@ and conformance is a grep for the right-hand column. Vendored skills (`ste-writi
 upstream wording.
 
 **Open gap:** `DESIGN_PHILOSOPHY.md` "One check-in, not two" (heading and anchor), `CLAUDE.md`
-("see 'one check-in, not two'"), and `plan-technical-jira-ticket`'s `Confirm-point(s)` column still use
-right-hand names. Renaming that heading means re-pointing every anchor to it, so it's its own edit.
+("see 'one check-in, not two'") still use right-hand names. Renaming that heading means re-pointing every anchor to it, so it's its own edit.
 Sites listed under an open gap are known; a review doesn't re-report them.
 
 ## The hard-rules table
@@ -142,7 +141,7 @@ Then:
 - Each rule's full mechanics stay at the step; the table is an index, not a second copy.
 
 Column naming is free to fit the skill (`Step`/`Hard rule`, `#`/`What gets written`/`Gated where`,
-`Step`/`Confirm-point(s)` are all in use and all fine). The invariants above are what must match.
+`Step`/`Gate(s)` are all in use and all fine). The invariants above are what must match.
 
 Stated in: all six skills, each in its own `SKILL.md`. Their scopes genuinely differ — only
 `next-improvement`'s is confined to confirm-before-write gates; the rest carry prohibitions and

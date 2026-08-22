@@ -74,6 +74,36 @@ Stated in: `next-improvement` — `SKILL.md` Step 4; `repo-knowledge` and `commi
 `SKILL.md`, just above Step 0. Each states it once and names its own option-presenting sites, so a
 site added later inherits the rule instead of having to rediscover it.
 
+## Vocabulary
+
+One name per concept, across every file in this repo and every skill's own text. A concept named
+two ways reads as two concepts: the reader has to guess whether "check-in" and "gate" differ, and
+a grep for one misses the other. Qualifying a canonical term is fine (`write gate`, `core file`).
+Substituting a synonym for it is not.
+
+| Term | Means | Not |
+|---|---|---|
+| gate | a point where a skill shows a proposed action and waits for the user's answer before doing it | check-in, confirm-point, confirmation (as the point itself) |
+| surface | tell the user something without waiting for an answer | flag, raise, report |
+| principle | an entry in `DESIGN_PHILOSOPHY.md` | bullet |
+| spec | an entry in this file | convention, rule (when a spec is meant) |
+| hard rule | a rule that fails silently when skipped, indexed in a skill's hard-rules table | — |
+| core file | the skill file read on every invocation | always-loaded file, base file |
+| companion file | a skill file read only when its trigger condition is met | — |
+| artifact | a file a skill maintains inside the user's project | output, state file |
+
+Add a row when review turns up a second name for an existing concept: pick one, rename the
+other. The rule is ASD-STE100's 1.11; the 875-word dictionary that rule assumes is not adopted,
+so this table is the whole list.
+
+Unlike the other specs this one has no inline copy. A skill implements it by using the words,
+and conformance is a grep for the right-hand column. Vendored skills (`ste-writing`) keep their
+upstream wording.
+
+**Open gap:** `DESIGN_PHILOSOPHY.md` "One check-in, not two" (heading and anchor), `CLAUDE.md`
+("see 'one check-in, not two'"), and `commit-message-check`'s `Confirm-point(s)` column still use
+right-hand names. Renaming that heading means re-pointing every anchor to it, so it's its own edit.
+
 ## The hard-rules table
 
 Any skill with more than one rule that **fails silently when skipped** carries a table of them, so

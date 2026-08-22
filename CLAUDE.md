@@ -38,6 +38,15 @@ If the user says yes, run these four checks in order, on whatever was just chang
    skill; on `CONVENTIONS.md`, checking specs against each other, and each spec against its own
    inline copies — a spec restated in three skills is three chances for the same sentence to say
    three slightly different things.
+
+   Three concrete tests, from `DESIGN_PHILOSOPHY.md`'s "A rule is a sentence" and
+   `CONVENTIONS.md`'s "Vocabulary":
+   - a rule not in its own sentence, or in one over twenty-five words — split it
+   - several instructions in one paragraph — make it a list, one per item
+   - a concept named by a word in the Vocabulary table's right-hand column — use the left-hand one
+
+   `python ste-writing/scripts/ste-lint.py --json <file>` counts the first two (`long_sentence`,
+   `long_paragraph`). It can't tell a rule from its explanation, so read the hits, don't count them.
 3. **Gaps.** Functional/logical holes, not wording — contradictory inputs, malformed stored state,
    ambiguous write targets when more than one file/location can hold state, claims about external
    facts (committed, installed, reachable) that are asserted but never checked, third states

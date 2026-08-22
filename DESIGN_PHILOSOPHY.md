@@ -40,6 +40,7 @@ principle that only ever gets applied outward isn't being applied.
 - [Principles vs. specs](#principles-vs-specs)
 - [Structure & reuse](#structure--reuse)
   - [Index what fails silently](#index-what-fails-silently)
+  - [A rule is a sentence, an instruction block is a list](#a-rule-is-a-sentence-an-instruction-block-is-a-list)
   - [Reuse a judgment test, don't invent a parallel one](#reuse-a-judgment-test-dont-invent-a-parallel-one)
   - [A computed join needs its matching test written down once](#a-computed-join-needs-its-matching-test-written-down-once)
   - [Self-correcting knobs share one shape — reuse it](#self-correcting-knobs-share-one-shape--reuse-it)
@@ -198,6 +199,29 @@ Keeping the test sharp is what keeps the index useful. An index that grows to co
 the skill is no longer checkable at a glance, which was the entire point — so a rule that doesn't
 pass the test stays where it's stated and simply isn't indexed. The index's exact shape is a spec —
 see `CONVENTIONS.md`, "The hard-rules table."
+
+### A rule is a sentence, an instruction block is a list
+
+A rule in the fourth clause of a sixty-word sentence reads as part of the explanation around it,
+not as a rule. The reader here is a model scanning for what to do. A constraint it has to extract
+from a subordinate clause is one it will sometimes not extract, and nothing flags when that
+happens — the same silent failure [Index what fails silently](#index-what-fails-silently) exists
+for, one level down. A rule that isn't its own sentence also can't be indexed, grepped, or quoted
+in a review without trimming it, so the two go together: the table can only hold what the prose
+already separates.
+
+So: state each rule as its own sentence, under twenty-five words. The explanation around it —
+the why, the worked failure, the contrast with what it isn't — stays as long as it needs to be.
+The cap is for the sentence a reader would copy into a table, not for the paragraph. Where a
+block is several instructions rather than one rule with its reasoning, make it a list, one
+instruction per item. Six instructions in one paragraph is six chances to stop reading before
+the last one; `CLAUDE.md`'s review-loop check 1 was the worked instance.
+
+The twenty-five-word cap and the one-instruction-per-item shape are borrowed from ASD-STE100
+(rules 6.3 and 5.2). The rest of that standard deliberately isn't: it strips voice, and the
+reasoning in this file is the voice. `ste-writing/scripts/ste-lint.py --json <file>` counts
+sentences over the cap (`long_sentence`) and paragraphs over six sentences (`long_paragraph`).
+It can't tell a rule from its explanation, so its hits are where to look, not a verdict.
 
 ### Reuse a judgment test, don't invent a parallel one
 

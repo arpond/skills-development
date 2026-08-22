@@ -2,7 +2,7 @@
 
 Read this file unless the tracker's `Feedback:` line explicitly says `off`, or whenever the user is
 setting it up or asking to change it. **This setting's default is `on`, so an absent line means
-read this file** — unlike `Selection strategy:` and `Risk register:`, whose defaults are off (see
+read this file.** Unlike `Selection strategy:` and `Risk register:`, whose defaults are off (see
 `SKILL.md`'s read-gate note). Only an explicit `Feedback: off` means none of this applies.
 
 The idea: shipped work can look great as a plan and still not deliver. This loop asks, lazily
@@ -17,24 +17,30 @@ In the Goals block:
 Feedback: on(wait=7, bulk=5, batch=5, reoffer=30) (bulk-offer last: <N>, <YYYY-MM-DD>, growth-streak: <N>)
 ```
 
-`on`/`off`, default `on` — an absent line means `on`, and only a spelled-out `off` disables this.
-`off` disables the whole feedback check in `session-start.md`'s Step 0.5 — no prompts, no pending
+`on`/`off`, default `on`. An absent line means `on`, and only a spelled-out `off` disables this.
+`off` disables the whole feedback check in `session-start.md`'s Step 0.5: no prompts, no pending
 count shown (but see `session-start.md`'s Step 0.6, which still surfaces standalone `reassess:`
-flags in that case, since those aren't part of this subsystem). `wait`, `bulk`, `batch`, and `reoffer` are optional and independently settable (unset
-means the defaults shown — 7, 5, 5, and 30 respectively) — plain `Feedback: on` with no parens is
-equivalent to `Feedback: on(wait=7, bulk=5, batch=5, reoffer=30)` and is the normal way to write it
-when none need changing; only spell out the parens when overriding one. `wait` is the eligibility
-window in days (see Checking in), `bulk` is the bulk-offer threshold, `batch` is the chunk size for
-the batched-offer mode (same section), `reoffer` is the days-based re-offer trigger (see below) —
-four unrelated numbers, set independently (`batch` defaults to whatever `bulk` is set to, but
-doesn't silently ride on it — set it separately if the two should differ, e.g. offering in chunks
-smaller than the threshold that triggers the offer), same independent-knob treatment as the
-`Selection strategy:` counts. The `(bulk-offer last: N, <date>, growth-streak: <N>)` note records
+flags in that case, since those aren't part of this subsystem).
+
+The four numbers are optional and independently settable. Plain `Feedback: on` with no parens is
+equivalent to `Feedback: on(wait=7, bulk=5, batch=5, reoffer=30)` and is the normal way to write
+it when none need changing; only spell out the parens when overriding one.
+- `wait` (default 7): the eligibility window in days (see Checking in).
+- `bulk` (default 5): the bulk-offer threshold.
+- `batch` (default: whatever `bulk` is set to, so 5): the chunk size for the batched-offer mode
+  (same section). It doesn't silently ride on `bulk`; set it separately if the two should differ,
+  e.g. offering in chunks smaller than the threshold that triggers the offer.
+- `reoffer` (default 30): the days-based re-offer trigger (see below).
+
+Four unrelated numbers, set independently, same independent-knob treatment as the
+`Selection strategy:` counts.
+
+The `(bulk-offer last: N, <date>, growth-streak: <N>)` note records
 the eligible-count and date at which the most recent bulk-style offer (all-at-once or batched) was
 made or declined — this is what lets Step 0.5 know when to re-offer (see
 below); it's a real stored field, not something inferred from the eligible count alone, since that
 count fluctuates as items get answered or new ones ship. **"Never offered" is its own state, not a
-count of zero** — write it as `(bulk-offer last: never, growth-streak: 0)`. A first-ever offer has
+count of zero.** Write it as `(bulk-offer last: never, growth-streak: 0)`. A first-ever offer has
 no previous offer to have grown from, so it's neither growth nor a reset; treating the sentinel as
 a real prior measurement of 0 would score every first offer as growth. `growth-streak` counts consecutive offers
 where the eligible count was higher than at the previous offer — see "Backlog not shrinking" below.
@@ -53,7 +59,7 @@ different words. `effective` = worked as intended; `partial` = landed but with r
 partial value; `ineffective` = shipped but didn't deliver the intended value at all; `reverted` =
 actually undone, a stronger, costlier signal than `ineffective` worth its own tag rather than
 folding in; `skipped` = user declined to judge this one. **These definitions are for me, not
-something the user is assumed to already know** — see "Checking in" below for where they actually
+something the user is assumed to already know.** See "Checking in" below for where they actually
 get told this, not just the Setup question.
 
 ## Setup (from `setup.md`)
@@ -138,7 +144,7 @@ backlog quietly shrink on paper without anyone answering anything.
   intended, partial = landed with real rough edges, ineffective = didn't deliver the value,
   reverted = actually undone)" — to whatever wording the mode below would otherwise use. Every later question,
   in any mode, drops it; the tags are self-evident once they've been used once.
-- **Every item shown in any mode below gets a why-and-what line, not just name + date** — the
+- **Every item shown in any mode below gets a why-and-what line, not just name + date.** The
   longer it's been, the harder those two things are to tell apart from memory. Pull both from text
   already stored, nothing new to record: the idea's original one-line rationale (from when it was
   added to its category) and the Done entry's "what actually shipped" note. Format: `"<Idea name>
@@ -153,27 +159,31 @@ backlog quietly shrink on paper without anyone answering anything.
 - **At or above `bulk`, and *either* the eligible count exceeds `bulk-offer last:`'s stored count by
   at least `bulk`, *or* it's been ≥`reoffer` days since `bulk-offer last:`'s stored date** (a
   `never` sentinel satisfies this outright — reaching `bulk` for the first time is itself the
-  trigger): offer a
-  choice instead of the single drip question — "N ships pending feedback (M need reassessment) —
-  clear them all now, N at a time, one-by-one until you say stop, or just the oldest for now?"
-  Whichever is chosen (or declined outright), update `bulk-offer last:`'s count and date to the
-  current eligible count and today, immediately. The count-based trigger exists so a fast-growing
-  backlog doesn't wait a full month to be re-offered; the date-based trigger exists so a stalled
-  backlog that isn't growing (declined once, then just sits there) still gets re-surfaced instead of
-  silently waiting for growth that may never come.
+  trigger):
+  1. Offer a choice instead of the single drip question: "N ships pending feedback (M need
+     reassessment) — clear them all now, N at a time, one-by-one until you say stop, or just the
+     oldest for now?"
+  2. Whichever is chosen (or declined outright), update `bulk-offer last:`'s count and date to the
+     current eligible count and today, immediately.
+
+  The count-based trigger exists so a fast-growing backlog doesn't wait a full month to be
+  re-offered; the date-based trigger exists so a stalled backlog that isn't growing (declined once,
+  then just sits there) still gets re-surfaced instead of silently waiting for growth that may
+  never come.
   - **Backlog not shrinking** — a self-correcting counter, same shape as `SKILL.md` Step 2's
     dry-run tracking. Trigger/increment: before updating the stored count, compare it against
     the current eligible count — if this offer's count is higher than the *previous* offer's,
     increment `growth-streak`. Corrected signal/reset: otherwise, back to 0. **If `bulk-offer last:`
-    is `never`, do neither** — leave the streak at 0 and just record this offer, since there's no
-    previous count to compare against. Threshold: at
-    `growth-streak: 2` (two consecutive offers where the backlog grew instead of shrinking), say so
-    plainly as part of the offer — "this backlog's grown across the last two check-ins instead of
-    shrinking; want to shorten `reoffer`, shrink `bulk` so it asks more often in smaller pieces, or
-    leave it as-is?" — surface the pattern and ask rather than picking a fix, since whether the
-    right cause is cadence, batch size, or the user just not being engaged isn't something to guess
-    at — and force-reset `growth-streak` to 0 once surfaced, regardless of the answer, same as Step
-    2's dry-run counter.
+    is `never`, do neither.** Leave the streak at 0 and just record this offer, since there's no
+    previous count to compare against. Threshold: `growth-streak: 2` (two consecutive offers where
+    the backlog grew instead of shrinking). At the threshold:
+    1. Say so plainly as part of the offer: "this backlog's grown across the last two check-ins
+       instead of shrinking; want to shorten `reoffer`, shrink `bulk` so it asks more often in
+       smaller pieces, or leave it as-is?"
+    2. Surface the pattern and ask rather than picking a fix. Whether the right cause is cadence,
+       batch size, or the user just not being engaged isn't something to guess at.
+    3. Force-reset `growth-streak` to 0 once surfaced, regardless of the answer, same as Step 2's
+       dry-run counter.
   - **All at once** — list every eligible item as a numbered list (oldest first across both files,
     reassess-flagged first within that, no cap — see `SKILL.md` Step 4's numbering rule, which
     applies to this list too), each with its why-and-what line, and let the user answer all of them

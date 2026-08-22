@@ -162,7 +162,7 @@ turn it on any time later once that's no longer true, same lightweight edit-in-p
 
 ## Creating or updating an entry
 
-**Always a proposal, never a silent write** — this is one of the skill's hard rules (see the table
+**Always a proposal, never a silent write.** This is one of the skill's hard rules (see the table
 in `SKILL.md`): show the proposed theme, **the concrete areas it covers**, and the evidence, then
 wait for confirmation before writing to `RISK_REGISTER.md`, same gate as Step 2's new-idea
 proposals. The areas are the part worth actually negotiating rather than assuming — they're what
@@ -256,13 +256,14 @@ below applies from `pending` onward only.
 
 A `mitigated-by:` idea's `outcome:` follows the exact same eligibility/check-in machinery as
 `feedback.md`'s ship outcomes (`wait`/`bulk`/`batch` windows, drip/batched/continuous-drip/
-all-at-once offer, once-per-session throttle) — don't build a parallel mechanism, extend that one:
-when `feedback.md`'s check-in reaches a Done entry that's also tagged as some risk entry's
-`mitigated-by:`, ask about it using the *risk* vocabulary instead of the generic one ("did R1 stay
-quiet since this shipped, or has it recurred?") and write the answer as that risk entry's
-`mitigated-by: I23 (outcome: <answer>)`, not as the idea's own `outcome:` field (the idea already
-has its own routine outcome from the ordinary feedback loop, if `Feedback:` is also on — the two
-are separate judgements about the same ship: did it deliver, and did it actually fix the risk).
+all-at-once offer, once-per-session throttle). Don't build a parallel mechanism, extend that one:
+- When `feedback.md`'s check-in reaches a Done entry that's also tagged as some risk entry's
+  `mitigated-by:`, ask about it using the *risk* vocabulary instead of the generic one ("did R1
+  stay quiet since this shipped, or has it recurred?").
+- Write the answer as that risk entry's `mitigated-by: I23 (outcome: <answer>)`, not as the idea's
+  own `outcome:` field. The idea already has its own routine outcome from the ordinary feedback
+  loop, if `Feedback:` is also on. The two are separate judgements about the same ship: did it
+  deliver, and did it actually fix the risk.
 
 **This is a hard dependency on `Feedback: on`.** `feedback.md`'s check-in only runs from
 `session-start.md` Step 0.5 when `Feedback:` is on — if `Risk register: on` and `Feedback: off`,

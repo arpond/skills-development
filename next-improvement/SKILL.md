@@ -31,7 +31,7 @@ alongside it:
   or when setting/changing it.
 - `feedback.md` — an optional loop that asks how past ships actually landed and feeds that back
   into future judgement. Read it whenever `Feedback:` isn't spelled out as `off`, or when
-  setting/changing it. **This one defaults to `on`, so an absent line means read it** — see the
+  setting/changing it. **This one defaults to `on`, so an absent line means read it.** See the
   read-gate note under the tracker format below.
 - `risk-register.md` — an optional loop that traces which shipped ideas needed follow-up fixes or
   rework, persists that as a named risk area, and factors active risks into future proposals. Read
@@ -130,7 +130,7 @@ Done archive: age=60, floor=5, backstop=40   <!-- optional, default shown, see S
   may be absent. Their full format and behaviour live in `strategies.md`, `feedback.md`,
   `risk-register.md`, and Step 6 below respectively — don't inline their details here.
   **Gate reading each companion file on the setting's *value*, not on whether the line is
-  present** — an absent line means that setting's documented default, and the defaults differ:
+  present.** An absent line means that setting's documented default, and the defaults differ:
   `Selection strategy:` and `Risk register:` default to off (`top-tier` / `off`), so an absent line
   means don't read `strategies.md`/`risk-register.md`; `Feedback:` defaults to **on**, so an absent
   line means `feedback.md` *does* get read. Keying off presence instead would silently strand every
@@ -138,10 +138,10 @@ Done archive: age=60, floor=5, backstop=40   <!-- optional, default shown, see S
 - **Every idea gets an id** (`I<N>`) the moment it's added to a category (Step 2) — one counter
   for the whole tracker, tracked as `Next id:` under Goals, never reused. **Unlike the optional trio
   just above, this is core and never gated on presence or value, the same way `Done archive:`'s
-  sweep always runs regardless of whether that line is written out** — a tracker with no ids yet
+  sweep always runs regardless of whether that line is written out.** A tracker with no ids yet
   isn't declining a feature, it's just old enough to need `tracker-maintenance.md`'s one-time
   backfill (see there, and `session-start.md` Step 0's Created:/Feature check: handling). **Written as a leading
-  `I<N>:` prefix on the line, not a trailing `(id: I<N>)`** — scanning a long category or Done list
+  `I<N>:` prefix on the line, not a trailing `(id: I<N>)`.** Scanning a long category or Done list
   for a specific id is the common case, and a prefix reads left-to-right without having to parse
   into the parenthetical first. Rejected entries are the one exception: most have no id at all,
   so a leading `I<N>:` would misleadingly suggest every Rejected line has one — keep
@@ -150,7 +150,7 @@ Done archive: age=60, floor=5, backstop=40   <!-- optional, default shown, see S
   an earlier one reliably even after the earlier one's name gets reworded. An entry carrying no id
   at all is an expected steady state, not an error to flag — nothing mints one until something
   actually needs to reference it. **Minting and migration are all mechanical, and none of it is
-  needed to run the normal loop** — an id-less entry that now needs referencing, a missing
+  needed to run the normal loop.** An id-less entry that now needs referencing, a missing
   `Next id:`, an older tracker's trailing `(id: I<N>)` style, or a collision with a hand-typed id:
   see `tracker-maintenance.md`'s "Minting and migrating ids" at the point one of those actually
   comes up.
@@ -179,7 +179,7 @@ Done archive: age=60, floor=5, backstop=40   <!-- optional, default shown, see S
   category in parens — useful bookkeeping regardless of any optional subsystem; legacy entries
   without a tag just aren't counted by anything that relies on it, no migration needed.
 - **Done grows unbounded over a project's life, so it's kept trimmed to a recent window in the
-  live tracker, with the rest moved out to a sibling `IMPROVEMENT_TRACKER_DONE.md`** — same
+  live tracker, with the rest moved out to a sibling `IMPROVEMENT_TRACKER_DONE.md`.** Same
   directory, same project, read only when Step 2's history-check or an explicit user question
   actually needs older history (see Step 6 for exactly when this move happens and what it must
   never move).
@@ -338,7 +338,7 @@ marginal/duplicate/out of scope." A vague "nothing comes to mind" isn't enough; 
 what lets the user judge whether the category's actually done or the search just wasn't broad
 enough.
 
-**Track dry top-ups so they don't repeat silently** — a self-correcting counter (increment on the
+**Track dry top-ups so they don't repeat silently.** A self-correcting counter (increment on the
 miscalibration signal, reset on the corrected one, force-reset once surfaced): note it inline under
 that category's header, `(dry runs: N — last: YYYY-MM-DD)`. Trigger/increment: a top-up attempt ends up
 adding nothing — brainstorming found nothing genuinely new, everything proposed was flagged weak,
@@ -373,7 +373,7 @@ factor if it's tier fit, a genuine synergy (below), or an active strategy signal
 swung the pick.
 
 **If `Risk register: on`, a candidate that mitigates an active risk is a distinct, stronger signal
-than synergy** — it's not "these two ideas help each other," it's "this specific candidate is what
+than synergy.** It's not "these two ideas help each other," it's "this specific candidate is what
 an already-persisted risk area names as its mitigation," which was itself already confirmed through
 its own gate when the risk entry was created. This covers a candidate tagged `mitigated-by:
 ... (outcome: planned)` (proposed at Step 2 specifically as the fix, not yet built) the same as one
@@ -431,7 +431,7 @@ qualitatively when judging candidates here too — see `feedback.md`.
 ## Step 4: Propose, then wait
 
 **Whenever more than one option is presented, number them `1.`, `2.`, `3.`... in a single
-sequential list, in the order listed below** — regardless of strategy (top-tier close
+sequential list, in the order listed below.** Regardless of strategy (top-tier close
 contenders, spread's tier picks, wildcard/quick-win additions, tied-goal co-contenders). This is
 so the user can confirm by number ("go with 2") instead of by re-typing a name. Any descriptive
 label a mode adds (`Tier 1 pick:`, `Wildcard:`, `Quick win:`) stays as text within that numbered
@@ -564,7 +564,7 @@ plausible, record the ship normally with no `fixes:`/`reworked:` tag — don't f
 doesn't exist.
 
 **A clean ship (no `fixes:`/`reworked:` tag) in an active risk entry's areas is counter-evidence
-against that risk** — nothing to record for it, since exposure was never stored; it's read out of
+against that risk.** Nothing to record for it, since exposure was never stored; it's read out of
 Done whenever archival is next considered. See `risk-register.md`'s archival trigger.
 
 **After appending, check whether Done needs trimming.** This isn't the only place this sweep runs —
@@ -588,18 +588,20 @@ cutoff date of the oldest entry now remaining live. This is mechanical bookkeepi
 call about ideas or priorities, so it doesn't need user confirmation the way Steps 2/4/4.5 do —
 only the knob *adjustment* below is confirm-gated, not the routine sweep itself.
 
-**Track which trigger actually fired, to catch a miscalibrated `age`** — a self-correcting counter,
+**Track which trigger actually fired, to catch a miscalibrated `age`.** A self-correcting counter,
 same shape as Step 2's dry-run tracking: note inline on the `Done archive:` line which kind of
 sweep just ran, `(last sweep: backstop, streak: N)` or `(last sweep: age, streak: 0)`. **If the
 `Done archive:` line isn't present** (the normal case — it's absent whenever the defaults haven't
 been changed), write it out with its default values first and annotate that, rather than dropping
 the note somewhere else or silently skipping the tracking; there's no other line it belongs on. Trigger/increment: a `backstop` sweep. Corrected signal/reset: an
-`age` sweep, back to 0. Threshold: at `streak: 3` (three backstop-triggered sweeps in a row with
-`age` never once catching anything first), surface it at the next `session-start.md` Step 0.5
-check-in — `age` is calibrated for a slower project than this one is actually shipping at, propose
-halving it (or raising `backstop`) with a concrete number, wait for confirmation before writing
-(this is a hard rule — see the table above) — and force-reset the streak once surfaced regardless
-of the answer, same as Step 2's dry-run counter.
+`age` sweep, back to 0. Threshold: `streak: 3` (three backstop-triggered sweeps in a row with
+`age` never once catching anything first). At the threshold, at the next `session-start.md`
+Step 0.5 check-in:
+1. Surface it: `age` is calibrated for a slower project than this one is actually shipping at.
+2. Propose halving `age` (or raising `backstop`) with a concrete number.
+3. Wait for confirmation before writing. This is a hard rule (see the table above).
+4. Force-reset the streak once surfaced, regardless of the answer, same as Step 2's dry-run
+   counter.
 
 **Trimming doesn't wait on `outcome`** (`Feedback: on` — see `feedback.md`). Archive eligible-by-age
 entries regardless of whether their outcome is still `pending` — otherwise a feedback loop that

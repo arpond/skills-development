@@ -20,7 +20,7 @@ anything to opt into**:
 - **Automatic entries** change how something already turned on behaves. There's nothing to accept
   or decline, so don't pose one as a question — mention it in a clause if it changes what the user
   will see, or skip it silently if it doesn't, and bump `Feature check:` either way.
-- **A pure rename of existing values is automatic too** — no confirm gate, since a rewrite that
+- **A pure rename of existing values is automatic too.** No confirm gate, since a rewrite that
   preserves meaning exactly has no judgement in it (same category as the id-restyling mechanics in
   `tracker-maintenance.md`). Say it happened in the same disclosure clause, then sweep every
   occurrence across the live tracker and its archive in that one edit — not lazily on next touch,

@@ -15,21 +15,24 @@ something to raise, and they're all raised at the start of the same run — so w
 run gets asked in a single message, never stacked back-to-back. If Goals are stale, a reassess flag
 is waiting, and a `revisit-after:` date has passed, that's one message with three questions in it,
 not three prompts. **A backfilled tracker's baseline-subsystems catch-up (Step 0, below) is the
-same kind of contribution** — one more question folded into this run's combined message, not a
+same kind of contribution.** One more question folded into this run's combined message, not a
 separate prompt of its own. If only one item across all of these is due, ask just that one, and
 never manufacture a second question to fill out a combined message. Each step below says what it
 contributes; none of them re-decides this. They also share one throttle: each surfaces at most once
 per session, tracked in conversation context only, never written to the tracker.
 
 **Mechanical bookkeeping is a blocking gate, not optional prose to skim past.** Four items below
-need no user response — backfilling missing `Created:`/`Feature check:` (Step 0), bulk id-backfill
-for a tracker with zero ids and no `Next id:` line (Step 0), flagging a closed-tracker-sections
-violation (Step 0), and re-deriving the Done archive sweep (Step 0.5) — and because none of them
-wait on an answer, it's easy for a run to jump straight from "found the tracker" to the check-in
-questions (0.5/0.6/0.7) and skip these silently, since skipping them produces no visible error.
-That's not a shortened Step 0, it's an incomplete one: all four must actually execute (files
-written, flag raised if applicable) before continuing to Step 1, every run, regardless of whether
-anything below turns out to be due this run.
+need no user response:
+- backfilling missing `Created:`/`Feature check:` (Step 0)
+- bulk id-backfill for a tracker with zero ids and no `Next id:` line (Step 0)
+- surfacing a closed-tracker-sections violation (Step 0)
+- re-deriving the Done archive sweep (Step 0.5)
+
+Because none of them wait on an answer, it's easy for a run to jump straight from "found the
+tracker" to the check-in questions (0.5/0.6/0.7) and skip these silently, since skipping them
+produces no visible error. That's not a shortened Step 0, it's an incomplete one. All four must
+actually execute (files written, violation surfaced if applicable) before continuing to Step 1,
+every run, regardless of whether anything below turns out to be due this run.
 
 ## Step 0: Find or bootstrap the tracker
 
@@ -54,7 +57,7 @@ permission to strand a second copy.
 **Found nowhere**: read `setup.md` and follow it before doing anything else — a one-time-per-project
 bootstrap, kept out of this file since most invocations don't need it. It creates the tracker in
 `<docs-dir>/` if the project already has one, otherwise at `<project>/`. **Never create a docs
-directory to hold it** — that imposes a layout the project didn't choose.
+directory to hold it.** That imposes a layout the project didn't choose.
 
 **Found somewhere other than location 1**: that's normal, not something to fix. Leave it there and
 use it; existing files never get moved as a side effect of a run.
@@ -85,26 +88,32 @@ re-ask on future runs — note that call was made and move on.
 
 **If `Created:` or `Feature check:` is missing** (tracker predates the version-stamp fields), don't
 treat that as already caught up — a missing stamp is stronger evidence of being behind than a stale
-one, never proof of being current. **These two fields split into a mechanical part and a check-in
-part — don't let the first blur into skipping the second.** Backfill `Created:` to `0.0.0` as
-mechanical, no-confirmation bookkeeping (see `tracker-maintenance.md`) — the tracker's real creation
-version is unknown, and stamping it to the *current* skill version would falsely claim it started
-life knowing about everything up to today, which is exactly backwards for a tracker old enough to
-predate the field — `0.0.0` says the true thing instead. `Feature check:` also backfills to `0.0.0`
-as that same mechanical first step, **but stamping it to the current version is never mechanical** —
-that can only happen *after* actually running Step 0.5's full behind-version disclosure walk (open
-`changelog.md`, walk every entry, oldest first) and folding the result into the combined check-in,
-exactly as if this tracker had really been sitting at `0.0.0` all along. This tracker is owed
-disclosure for every feature shipped since baseline, not just future ones — a missing stamp confirms
-nothing about what it already knows, so treating the whole paragraph as routine bookkeeping and
-jumping straight to the current-version stamp is exactly the failure mode this note exists to block.
+one, never proof of being current.
 
-**This backfilled tracker also never went through `setup.md`'s own bootstrap interrogation** — it
+**These two fields split into a mechanical part and a check-in part. Don't let the first blur
+into skipping the second.**
+- Backfill `Created:` to `0.0.0` as mechanical, no-confirmation bookkeeping (see
+  `tracker-maintenance.md`). The tracker's real creation version is unknown, and stamping it to
+  the *current* skill version would falsely claim it started life knowing about everything up to
+  today, which is exactly backwards for a tracker old enough to predate the field. `0.0.0` says
+  the true thing instead.
+- Backfill `Feature check:` to `0.0.0` as that same mechanical first step.
+- **Stamping `Feature check:` to the current version is never mechanical.** It can only happen
+  *after* actually running Step 0.5's full behind-version disclosure walk (open `changelog.md`,
+  walk every entry, oldest first) and folding the result into the combined check-in, exactly as
+  if this tracker had really been sitting at `0.0.0` all along.
+
+This tracker is owed disclosure for every feature shipped since baseline, not just future ones. A
+missing stamp confirms nothing about what it already knows, so treating the whole paragraph as
+routine bookkeeping and jumping straight to the current-version stamp is exactly the failure mode
+this note exists to block.
+
+**This backfilled tracker also never went through `setup.md`'s own bootstrap interrogation.** It
 predates this skill's full feature set, or was created by hand. Two different things follow, and
 they must not be conflated:
 
 - **The id system, `Done archive:` mechanics, and the closed-section rule are core and mandatory,
-  never gated on presence** — contrast `Selection strategy:`/`Feedback:`/`Risk register:`, which
+  never gated on presence.** Contrast `Selection strategy:`/`Feedback:`/`Risk register:`, which
   genuinely are optional and read by *value*, not presence (see `SKILL.md`'s tracker-format note).
   If this tracker has zero ids anywhere and no `Next id:` line at all, that's exactly
   `tracker-maintenance.md`'s "Minting and migrating ids" first-adoption case — run its one-time bulk
@@ -138,7 +147,7 @@ reviewed:` date under Goals:
   add/remove a tier, or fold in a new priority entirely.
 - **Recently reviewed and nothing suggests drift**: skip the prompt, proceed straight to Step 1.
 
-**Don't update the Goals section until the user has responded to the check-in** — this is one of
+**Don't update the Goals section until the user has responded to the check-in.** This is one of
 the skill's hard rules (see the table in `SKILL.md`). If the user changes anything, update the
 Goals section and bump `Last reviewed:` to today. If they confirm as-is, still bump the date so
 the next run doesn't re-ask right away. This check is a single short question, not a repeat of the

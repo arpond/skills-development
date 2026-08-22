@@ -103,7 +103,7 @@ Each entry below covers what the mode means *and* what Step 4 does with it — o
   tier 1 equally well and its category hasn't shipped recently"). Only affects the base
   `top-tier`/`spread(N)` pick's own close-call, not each `spread(N)` tier independently; never
   overrides a clear tier-1-vs-lower-tier win, only breaks ties. **This mode sits last of the four
-  signals that can bear on the same close call** — see `SKILL.md` Step 3's precedence ladder for
+  signals that can bear on the same close call.** See `SKILL.md` Step 3's precedence ladder for
   the full ordering; it loses to a stored tie-break rule, to risk-mitigation, and to synergy, since
   it's a content-blind diversity heuristic and those are all grounded in something specific.
 
@@ -129,7 +129,7 @@ not a mandatory extra setup burden — don't turn it into another long interroga
 choice as the `Selection strategy:` line, using the combinable space- or `+`-separated syntax
 described above.
 
-**This is a single message, not a negotiation** — show the menu below (or an equivalent one
+**This is a single message, not a negotiation.** Show the menu below (or an equivalent one
 covering the same ground) once, then wait for their pick; don't ask a bare "want a selection
 strategy?" first and only reveal the options if they say yes. Something along these lines
 satisfies it:

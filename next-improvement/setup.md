@@ -10,7 +10,7 @@ instead).
 `documentation/`), otherwise at the project root, and never create a docs directory just to hold
 it. Whichever it lands in is where this skill's other files go too.
 
-**Create it before doing anything else** — this is part of the skill, not a separate setup step
+**Create it before doing anything else.** This is part of the skill, not a separate setup step
 the user has to remember to do first:
 
 1. Propose 2-4 idea categories based on what this project actually is (read its README/CLAUDE.md/

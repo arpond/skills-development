@@ -5,8 +5,8 @@ config/infra change) into an implementation plan grounded in the actual codebase
 rather than just restating the ticket in different words. It fetches the ticket plus everything
 that might carry context the ticket body doesn't — linked issues, remote links, attachments, a
 parent epic — verifies the ticket's claims (and the local checkout's freshness) against real code
-rather than trusting either at face value, and recaps its understanding once in a single check-in
-before spending any effort exploring. Deliberately narrow in scope: it flags rather than plans
+rather than trusting either at face value, and recaps its understanding once in a single gate
+before spending any effort exploring. Deliberately narrow in scope: it surfaces rather than plans
 epics, bug reports, and multi-integration feature tickets, since each of those needs a different
 process than "plan one well-defined technical change."
 
@@ -22,7 +22,7 @@ This is a heavier-weight skill, not a quick lookup — it fetches the ticket plu
 issues/remote docs/parent epic, then explores and verifies claims against real code in every repo
 confirmed in scope (Step 5). Expect noticeably more tool calls and tokens than a single-shot
 question, in exchange for a plan actually grounded in the current codebase rather than a restated
-ticket. The skill itself flags this to the user before Step 1 starts.
+ticket. The skill itself surfaces this to the user before Step 1 starts.
 
 ## What it writes
 

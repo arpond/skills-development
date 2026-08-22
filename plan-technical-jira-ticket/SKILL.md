@@ -173,9 +173,9 @@ actually right, and still current?" Look for:
   in the ticket, comments, or linked issues; linked tickets in a different Jira project; and
   anything in this repo's own docs/CLAUDE.md/memory about which repos usually pair with this kind
   of change. If Step 2 found a parent epic spanning repos beyond what this ticket's own text
-  implies, don't fold the epic's full span in here by default — a sibling ticket may already own
-  that repo, so treat epic-wide repo signals as weaker evidence than signals from the ticket's own
-  text, and let Step 4 resolve the ambiguity with the user rather than assuming either way. Form a
+  implies, don't fold the epic's full span in here by default: a sibling ticket may already own
+  that repo. Treat epic-wide repo signals as weaker evidence than signals from the ticket's own
+  text. Let Step 4 resolve the ambiguity with the user rather than assuming either way. Form a
   read of the scope here — it gets confirmed with the user in Step 4, not taken for granted, since
   a plan scoped to the wrong repo (or missing one) can send the user off to build the wrong half
   of the change.
@@ -250,9 +250,9 @@ path pinned down in Step 4 for each repo, and repeating the following per repo:
   git tooling, not a git repo, no remote configured to compare against — say so and note the
   limitation in the plan rather than treating an unverifiable checkout as freshness confirmed by
   default. Use the narrowest command that answers the freshness question (`git status` alone
-  usually already says whether the branch is ahead/behind/up to date with its tracking branch) —
-  don't reach for broader ones like `git remote -v` unless the remote's actual URL is genuinely
-  needed, since remotes configured with credentials embedded in the URL will print them in plain
+  usually already says whether the branch is ahead/behind/up to date with its tracking branch).
+  Don't run `git remote -v` or any other URL-printing command unless the remote's actual URL is
+  genuinely needed. Remotes configured with credentials embedded in the URL print them in plain
   text; that's a real, recurring way to leak a token into a transcript or shell history for a
   check that didn't need the URL at all.
 - Check whether anyone's already started this work before assuming a clean slate: search recent

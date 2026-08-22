@@ -1,8 +1,8 @@
 # Session start: find/bootstrap the tracker, check staleness
 
 Read this file every time the skill triggers, right after `SKILL.md`'s intro — this is Steps 0
-through 0.7 of the loop. Unlike the other companion files, this one has no gate at all: every run
-starts here, since every run needs
+through 0.7 of the loop. This is a second core file, not a companion: every run starts here,
+since every run needs
 a tracker to read and needs to know whether its Goals are still trustworthy before ranking
 anything against them. It lives in its own file purely to keep `SKILL.md` focused on the
 steady-state propose/build/record loop — the split is about what's loaded into the common-case
@@ -83,13 +83,14 @@ long as the tracker lives, the exact failure mode Step 0.5 already exists to pre
 This is one of the skill's hard rules (see the table in `SKILL.md`).
 
 **A `##` section that isn't Goals, a category, Done, or Rejected is a content-placement problem,
-not a parsing problem** (see `SKILL.md`'s "closed sections" rule) — lighter-weight than the
-malformed cases above, so it doesn't block the run. Surface it once per project (track in
-conversation context whether it's already been surfaced this session, same throttle as the
-check-ins below; don't re-surface every run once declined): name what's actually in the section and suggest where it
-looks like it should live instead (`DEVELOPMENT.md`, a design doc, project docs). If the user wants
-it moved, do that as its own small edit; if they want it left as a deliberate exception, don't
-re-ask on future runs — note that call was made and move on.
+not a parsing problem** (see `SKILL.md`'s "closed sections" rule). It's lighter-weight than the
+malformed cases above, so it doesn't block the run.
+- Surface it once per session, tracked in conversation context, same throttle as the check-ins
+  below. Don't re-surface every run once declined.
+- Name what's actually in the section and suggest where it looks like it should live instead
+  (`DEVELOPMENT.md`, a design doc, project docs).
+- If the user wants it moved, do that as its own small edit. If they want it left as a deliberate
+  exception, note that call was made and don't re-ask on future runs.
 
 **If `Created:` or `Feature check:` is missing** (tracker predates the version-stamp fields), don't
 treat that as already caught up — a missing stamp is stronger evidence of being behind than a stale
@@ -118,7 +119,7 @@ predates this skill's full feature set, or was created by hand. Two different th
 they must not be conflated:
 
 - **The id system, `Done archive:` mechanics, and the closed-section rule are core and mandatory,
-  never gated on presence.** Contrast `Selection strategy:`/`Feedback:`/`Risk register:`, which
+  never dependent on presence.** Contrast `Selection strategy:`/`Feedback:`/`Risk register:`, which
   genuinely are optional and read by *value*, not presence (see `SKILL.md`'s tracker-format note).
   If this tracker has zero ids anywhere and no `Next id:` line at all, that's exactly
   `tracker-maintenance.md`'s "Minting and migrating ids" first-adoption case:
@@ -132,12 +133,12 @@ they must not be conflated:
     didn't have one yet"); silent otherwise, same as any other automatic action that didn't
     change what's visible this run.
 - **`Selection strategy:`, `Feedback:`, and `Risk register:` are genuinely optional, and this
-  tracker never got `setup.md` Step 4's one-time offer of them.** Give it that same offer now, for
-  whichever of the three are still genuinely absent — an existing line already answers that question
-  even if it just spells out the default, so only ask about the ones with no line at all. Fold
-  whatever's still due into this run's combined check-in — the same brief questions `setup.md` Step 4
-  asks a brand-new tracker (the full option set for `Selection strategy:`, per `strategies.md`'s own
-  Setup section; a single short yes/no each for `Feedback:` and `Risk register:`). This is distinct
+  tracker never got `setup.md` Step 4's one-time offer of them.** Offer each of the three that has
+  no line at all. An existing line already answers the question, even if it just spells out the
+  default. Fold whatever's still due into this run's combined check-in: the same brief questions
+  `setup.md` Step 4 asks a brand-new tracker (the full option set for `Selection strategy:`, per
+  `strategies.md`'s own Setup section; a single short yes/no each for `Feedback:` and
+  `Risk register:`). This is distinct
   from the changelog walk above: that walk discloses *changes* since baseline; this discloses
   baseline features the tracker never had a chance to decline or accept at all, since it skipped
   `setup.md` entirely.
@@ -180,25 +181,24 @@ says `off`. That check-in contributes its own line to this run's combined messag
 
 **Also re-run Done's own archive sweep here, not only after Step 6 records a fresh ship.** The
 sweep described in `SKILL.md` Step 6 ("After appending, check whether Done needs trimming") only
-fires as a side effect of that one event — a tracker that predates the `Done archive:` field, was
+fires as a side effect of that one event. A tracker that predates the `Done archive:` field, was
 hand-edited, or had a session end before that check completed can carry a Done section that's
-overdue for archiving with nothing left to trigger it. Re-derive eligibility the same way Step 6
-does (age vs. `floor`/`backstop`) every session start, and run the sweep if anything qualifies —
-this is the same mechanical, no-confirmation bookkeeping as Step 6's own sweep, not a new
-judgement call, so it doesn't wait for the combined check-in gate above. Update the same
-`(last sweep: ..., streak: N)` counter Step 6 uses regardless of which step actually performed the
-sweep — the counter tracks whether `age` is catching sweeps at all, not which step happened to run
-one. Mention it in one clause if it actually moved anything ("archived 12 entries older than 60
-days into `IMPROVEMENT_TRACKER_DONE.md`"); otherwise silent, same rule as the id backfill in
-Step 0.
+overdue for archiving with nothing left to trigger it. Every session start:
+1. Re-derive eligibility the same way Step 6 does (age vs. `floor`/`backstop`).
+2. Run the sweep if anything qualifies. This is the same mechanical, no-confirmation bookkeeping
+   as Step 6's own sweep, not a new judgement call, so it doesn't wait for the combined check-in
+   gate above.
+3. Update the same `(last sweep: ..., streak: N)` counter Step 6 uses, regardless of which step
+   performed the sweep. The counter tracks whether `age` is catching sweeps at all, not which
+   step happened to run one.
+4. Mention it in one clause if it actually moved anything ("archived 12 entries older than 60
+   days into `IMPROVEMENT_TRACKER_DONE.md`"); otherwise silent, same rule as the id backfill in
+   Step 0.
 
 **If `SKILL.md` Step 6's Done-archive `streak` has hit 3** (three backstop-triggered sweeps in a
 row, `age` never once catching anything first), that's also due this step. Fold it into the same
-combined message per the rule above:
-1. Say that `age` is calibrated for a slower project than this one.
-2. Propose a concrete new number (e.g. halve it) or a higher `backstop`.
-3. Wait for confirmation (hard rule, see the table in `SKILL.md`).
-4. Reset the streak either way once asked.
+combined message per the rule above, and follow Step 6's threshold steps there (surface, propose,
+wait for confirmation, reset).
 
 **Check the tracker's `Feature check:` version against `SKILL.md`'s current skill version.** This
 is also the walk Step 0 triggers for a missing stamp, treated as `0.0.0`. Compare as standard
@@ -240,7 +240,7 @@ one) is standalone of `Feedback:` — it exists regardless of whether that subsy
 feedback is running, the flag is folded into `feedback.md`'s own check-in instead (see that file)
 and this step does nothing. **This step fires only when `Feedback:` is spelled out as `off`** —
 an *absent* line means the default `on`, so feedback is running and this step stays quiet.
-Firing on an absent line would surface the flag twice, which is exactly what this gate prevents.
+Firing on an absent line would surface the flag twice, which is exactly what this condition prevents.
 
 Scan Done for `reassess: pending` entries, per the combined-pool rule (`SKILL.md` Step 6's
 "Reading the archive"). If any exist, surface the

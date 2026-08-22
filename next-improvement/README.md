@@ -10,10 +10,10 @@ planning, or starts building anything without the user confirming first.
 
 Files:
 - `SKILL.md` — the steady-state loop (ties, idea top-up, ranking, propose/
-  confirm/plan/build/record). Always loaded when the skill triggers.
+  confirm/plan/build/record). The core file, read every time the skill triggers.
 - `session-start.md` — finding/bootstrapping the tracker and checking whether Goals are stale.
-  Read every run, right after `SKILL.md`'s intro — unlike the other companion files below, it's
-  not optional or one-time, just split out to keep `SKILL.md` itself focused on the loop.
+  Read every run, right after `SKILL.md`'s intro — a second core file, not a companion: not
+  optional or one-time, just split out to keep `SKILL.md` itself focused on the loop.
 - `setup.md` — the one-time-per-project bootstrap interrogation. Only read the
   first time the skill runs for a project, before its tracker file exists.
 - `strategies.md` — optional alternate ways of presenting candidates (spread

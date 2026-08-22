@@ -20,7 +20,7 @@ Step 3 already computed — it never changes how ranking itself works.
 
 Numbering the final list is `SKILL.md` Step 4's rule, not this file's — it applies regardless of
 strategy. What this file adds: display order within that numbered list is base-mode pick(s) first
-(tier order for `spread(N)`), then `wildcard`, then `quick-win` — and each mode's gate checks
+(tier order for `spread(N)`), then `wildcard`, then `quick-win` — and each mode's read condition checks
 against every pick placed earlier in that order, not just the base pick, so the same candidate
 never occupies two numbered lines under two different labels.
 
@@ -96,11 +96,11 @@ Each entry below covers what the mode means *and* what Step 4 does with it — o
   quick-win always shows, uncounted by `max-options(N)`.
 - **`category-rotation`** or **`category-rotation(window=N)`** (default N=5) — when the base
   pick's ranking has a genuine close call, Step 4 prefers whichever candidate's category hasn't
-  appeared in the last N Done entries (across all categories combined, oldest-first count, live
-  tracker only — the one deliberate exception to the combined-pool rule, since this is a "what
-  shipped lately" window rather than a history lookup; fewer than N total live Done entries ->
-  insufficient history, skip the bias), and says so ("Y also serves
-  tier 1 equally well and its category hasn't shipped recently"). Only affects the base
+  appeared in the last N Done entries, and says so ("Y also serves tier 1 equally well and its
+  category hasn't shipped recently"). The window counts across all categories combined,
+  oldest-first, live tracker only: the one deliberate exception to the combined-pool rule, since
+  this is a "what shipped lately" window rather than a history lookup. **Fewer than N live Done
+  entries in total means insufficient history: skip the bias.** Only affects the base
   `top-tier`/`spread(N)` pick's own close-call, not each `spread(N)` tier independently; never
   overrides a clear tier-1-vs-lower-tier win, only breaks ties. **This mode sits last of the four
   signals that can bear on the same close call.** See `SKILL.md` Step 3's precedence ladder for

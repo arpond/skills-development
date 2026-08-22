@@ -110,7 +110,7 @@ to Rejected doesn't retract that reference. This applies to any outstanding idea
 Rejected, not just a category-retirement drop.
 
 **If `Risk register: on`, check for a `mitigated-by:` tag naming it** (`risk-register.md`). That's
-the only place a risk entry references an idea by id, and it's a promise that a fix is coming: if
-the idea is dropped instead of shipped, remove the tag rather than leaving a risk entry pointing at
-a fix that will never arrive. Nothing else needs cleaning up — exposure to a risk area is computed
+the only place a risk entry references an idea by id, and it's a promise that a fix is coming.
+**If the idea is dropped instead of shipped, remove the tag.** Otherwise a risk entry points at a
+fix that will never arrive. Nothing else needs cleaning up; exposure to a risk area is computed
 from the entry's `areas:`, never stored against an idea, so a dropped idea simply stops matching.

@@ -17,8 +17,8 @@ the priority tiers are, what's already been decided) lives in a file inside the 
 not in this skill. That file is what makes this skill reusable across every project rather than
 rewritten per repo.
 
-This file covers Steps 1-6, the steady-state propose/build/record loop. Seven companion files live
-alongside it:
+This file covers Steps 1-6, the steady-state propose/build/record loop. Seven files live
+alongside it; `session-start.md` is a second core file, the other six are companions:
 
 - `session-start.md` — Steps 0 through 0.7 (find/bootstrap the tracker, check whether Goals need a
   check-in, surface standalone reassess flags and due Rejected revisits). **Not optional** — read
@@ -43,7 +43,7 @@ alongside it:
   narrowing a category, one-time disclosures to an older tracker). Read it only when that specific
   trigger actually fires — each section names its own.
 
-Of these, only `session-start.md` is unconditional. The other six are gated on their own trigger
+Of these, only `session-start.md` is unconditional. The other six are read on their own trigger
 condition, to keep the common-case read lean — note that `feedback.md`'s read condition is met by
 default, so it's read on most runs too.
 
@@ -137,7 +137,7 @@ Done archive: age=60, floor=5, backstop=40   <!-- optional, default shown, see S
   tracker that simply never had reason to write the line, which defeats having a default at all.
 - **Every idea gets an id** (`I<N>`) the moment it's added to a category (Step 2) — one counter
   for the whole tracker, tracked as `Next id:` under Goals, never reused. **Unlike the optional trio
-  just above, this is core and never gated on presence or value, the same way `Done archive:`'s
+  just above, this is core and never depends on presence or value, the same way `Done archive:`'s
   sweep always runs regardless of whether that line is written out.** A tracker with no ids yet
   isn't declining a feature, it's just old enough to need `tracker-maintenance.md`'s one-time
   backfill (see there, and `session-start.md` Step 0's Created:/Feature check: handling). **Written as a leading
@@ -148,7 +148,7 @@ Done archive: age=60, floor=5, backstop=40   <!-- optional, default shown, see S
   `id: I<N>` inside the parenthetical there, only when actually present. The id carries forward
   unchanged through Done (and into Rejected when it has one); it's what lets a later ship reference
   an earlier one reliably even after the earlier one's name gets reworded. An entry carrying no id
-  at all is an expected steady state, not an error to flag — nothing mints one until something
+  at all is an expected steady state, not an error to surface — nothing mints one until something
   actually needs to reference it. **Minting and migration are all mechanical, and none of it is
   needed to run the normal loop.** An id-less entry that now needs referencing, a missing
   `Next id:`, an older tracker's trailing `(id: I<N>)` style, or a collision with a hand-typed id:
@@ -249,9 +249,9 @@ scattered cross-references.
 Read `session-start.md` and follow it before continuing — it covers finding or bootstrapping the
 tracker (including the malformed-tracker case), checking whether Goals are stale, (Step 0.6,
 `Feedback: off` only) surfacing standalone reassess flags, and (Step 0.7) surfacing any Rejected
-entries whose `revisit-after:` date has passed. This is the
-one companion file that's read every run, not gated behind a trigger condition; see the intro
-above for why it's split out. Once it says to, continue to Step 1 below.
+entries whose `revisit-after:` date has passed. It's a second core file, read every run, not on
+a trigger condition; see the intro above for why it's split out. Once it says to, continue to
+Step 1 below.
 
 ## Step 1: Count what's outstanding
 
@@ -293,15 +293,18 @@ reappearing, so anything that referenced it by id (a `mitigated-by:` tag, a `fix
 resolves correctly. Only mint fresh for an idea that's never been appended before.
 
 **If `Risk register: on`, cross-reference each candidate against active risk areas** before
-presenting it — read `RISK_REGISTER.md`'s active entries and check whether the candidate touches
-the `areas:` of one **or more**, using `risk-register.md`'s "The area match" test (that's the one
-definition of touching; don't improvise a second) and checking all active entries rather than
-stopping at the first hit. If any
-match, say so when presenting it (see `risk-register.md`) rather than leaving the match implicit,
-and ask whether the candidate is merely exposed to the risk or specifically meant to fix it. Only
-the "meant to fix it" answer writes anything — a `mitigated-by: ... (outcome: planned)` tag, made
-in the same write as appending the idea itself. Mere exposure is recomputed from the areas every
-time and is never recorded (see `risk-register.md`'s Cross-referencing new ideas section).
+presenting it:
+1. Read `RISK_REGISTER.md`'s active entries.
+2. Check whether the candidate touches the `areas:` of one **or more**, using `risk-register.md`'s
+   "The area match" test. That's the one definition of touching; don't improvise a second.
+3. Check all active entries rather than stopping at the first hit.
+4. If any match, say so when presenting it (see `risk-register.md`) rather than leaving the match
+   implicit.
+5. Ask whether the candidate is merely exposed to the risk or specifically meant to fix it. Only
+   the "meant to fix it" answer writes anything: a `mitigated-by: ... (outcome: planned)` tag,
+   made in the same write as appending the idea itself. Mere exposure is recomputed from the
+   areas every time and is never recorded (see `risk-register.md`'s Cross-referencing new ideas
+   section).
 
 **Check Rejected before proposing.** If a candidate closely resembles something already in
 Rejected, don't just skip it or blindly re-propose it — read the recorded reason and judge
@@ -539,10 +542,12 @@ add at this step. Leave everything else in the file untouched. If the work surfa
 follow-on ideas that weren't there before, add them to the relevant category now rather than
 losing them — that's the loop closing, not scope creep.
 
-**Ask whether this ship fixes or reworks an earlier one.** Every recording, ask directly — with an
-auto-detect suggestion, not a blind open question: scan recent Done entries (and the branch/commit
-context, if this session touched a specific bug or reopened specific files) for a plausible origin,
-propose it, and let the user confirm, correct, or say no.
+**Ask whether this ship fixes or reworks an earlier one.** Every recording, ask directly, with an
+auto-detect suggestion rather than a blind open question:
+1. Scan recent Done entries (and the branch/commit context, if this session touched a specific
+   bug or reopened specific files) for a plausible origin.
+2. Propose it.
+3. Let the user confirm, correct, or say no.
 
 If `Next id:` was missing before this recording, this is the first time this project has ever been
 asked — give the one-time heads-up in `tracker-maintenance.md` before asking.

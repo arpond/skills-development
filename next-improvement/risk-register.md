@@ -218,7 +218,7 @@ as its own case, not folded into trigger 1's generic "2nd+ link" counting:
 ## Cross-referencing new ideas (from `SKILL.md` Step 2)
 
 Before presenting a newly-proposed idea, check whether it touches any **active** entry's `areas:`.
-On a match, say so as part of presenting the idea (not a separate confirmation step) — e.g. "this
+On a match, say so as part of presenting the idea (not a separate gate) — e.g. "this
 also touches R1 — <theme> — past ships here needed 2 follow-up fixes, worth extra care on scope/
 tests upfront." Then ask the exposed-vs-fix follow-up **for each matching entry separately**: is
 this candidate merely *exposed* to that risk, or *meant to fix it*? A candidate can match more
@@ -240,13 +240,13 @@ planned mitigation.
 ## Recording a planned mitigation (from `SKILL.md` Step 6)
 
 A `mitigated-by:` entry tagged `outcome: planned` was proposed at Step 2 specifically to fix an
-active risk, but hasn't shipped yet. When *that specific idea* is the one being recorded in Step 6,
-flip `outcome: planned → pending` on the risk entry (not a new tag — the same `mitigated-by: I<N>`
-reference, just its state advancing) — this is what starts the real wait/bulk outcome-check timing
-from the actual ship date, same as any other mitigation reaching `pending`. If the idea shipped in a
-substantially different shape than originally planned, or turned out not to actually address the
-risk, say so rather than mechanically flipping the state — that's a judgement call worth a word, not
-silent bookkeeping.
+active risk, but hasn't shipped yet. **When *that specific idea* is the one being recorded in
+Step 6, flip `outcome: planned → pending` on the risk entry.** Not a new tag: the same
+`mitigated-by: I<N>` reference, just its state advancing. This is what starts the real wait/bulk
+outcome-check timing from the actual ship date, same as any other mitigation reaching `pending`.
+If the idea shipped in a substantially different shape than originally planned, or turned out not
+to actually address the risk, say so rather than mechanically flipping the state. That's a
+judgement call worth a word, not silent bookkeeping.
 
 ## Checking on mitigations
 

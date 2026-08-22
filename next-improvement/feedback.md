@@ -139,12 +139,13 @@ backlog quietly shrink on paper without anyone answering anything.
   separate sessions, not about repeating every round within one.
 - **The first outcome question ever asked for a project includes the tag definitions; later ones
   don't repeat them.** Setup's yes/no already stated them once, but that can be weeks before the
-  first Done entry actually becomes eligible — long enough to forget. Detect "first ever" cheaply,
-  without a new stored field — it can be computed fresh at no real cost, so don't write it down
-  just because it'd be convenient to have: if no Done entry anywhere (live tracker or the archive) yet carries a non-`pending`
-  outcome, this is the first real question, so append the gloss inline — "(effective = worked as
-  intended, partial = landed with real rough edges, ineffective = didn't deliver the value,
-  reverted = actually undone)" — to whatever wording the mode below would otherwise use. Every later question,
+  first Done entry actually becomes eligible — long enough to forget. **The test for "first ever":
+  no Done entry anywhere (live tracker or the archive) yet carries a non-`pending` outcome.**
+  Detect it cheaply, without a new stored field; it can be computed fresh at no real cost, so
+  don't write it down just because it'd be convenient to have. When it's the first real question,
+  append the gloss inline — "(effective = worked as intended, partial = landed with real rough
+  edges, ineffective = didn't deliver the value, reverted = actually undone)" — to whatever wording
+  the mode below would otherwise use. Every later question,
   in any mode, drops it; the tags are self-evident once they've been used once.
 - **Every item shown in any mode below gets a why-and-what line, not just name + date.** The
   longer it's been, the harder those two things are to tell apart from memory. Pull both from text

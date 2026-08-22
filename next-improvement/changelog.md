@@ -67,10 +67,10 @@ anything to opt into**:
   Entries do need `areas:` to match against anything, so the first time an older entry comes up,
   propose areas for it as part of whatever write is already happening.
 - **1.0.0** — baseline. Everything in this skill as of the version field's introduction, split into
-  two kinds: **core, mandatory, never gated on presence** — idea ids (leading `I<N>:` prefix on new
+  two kinds: **core, mandatory, never dependent on presence** — idea ids (leading `I<N>:` prefix on new
   entries; existing entries in the older trailing `(id: I<N>)` style stay valid and don't need
   rewriting — both are readable, only new writes use the prefix), `Done archive:`, closed tracker
-  sections; and **genuinely optional, gated on value** — `Selection strategy:`, `Feedback:`,
+  sections; and **genuinely optional, read by value** — `Selection strategy:`, `Feedback:`,
   `Risk register:`. No *changelog* disclosure is owed for reaching baseline itself — a tracker
   backfilled to `1.0.0` (see `session-start.md` Step 0) isn't behind on anything this file tracks,
   since nothing here is a change from baseline. That's not the same as having been asked about the

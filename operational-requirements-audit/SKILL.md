@@ -74,7 +74,7 @@ OR "generally" says, since requirements get refined over time and the specific p
 "only *if* your service uses a database", "*if* top-tier service") drives whether something is
 even applicable.
 
-**Check the file's actual age before relying on it** — don't lean on "if it looks out of date" as
+**Check the file's actual age before relying on it.** Don't lean on "if it looks out of date" as
 the only signal, that's a soft heuristic easy to skip past. Run `git log -1 --format=%ai --
 references/operational-requirements.md` (from this skill's own install directory) once per audit;
 if it's been more than ~12 months since the last extraction, say so explicitly alongside the

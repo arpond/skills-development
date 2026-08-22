@@ -72,13 +72,17 @@ the user has to remember to do first:
      `strategies.md`'s Setup gives its own knobs); archived entries stay just as readable/askable,
      nothing is deleted. If it's clear from the categories/goals just discussed that this project
      ships in unusually large or frequent bursts (or, at the other extreme, very rarely), mention
-     that the skill will flag it and propose a number adjustment if the default turns out to be
+     that the skill will surface it and propose a number adjustment if the default turns out to be
      miscalibrated, rather than requiring the user to notice and ask.
    Both are core-loop, not toggles — say so plainly rather than letting either show up unannounced
    the first time it fires.
-6. Write the file with the confirmed tiers, `Selection strategy:`, `Feedback:`, `Risk register:`,
-   and (only if changed from the default) `Done archive:` setting, today's date as
-   `Last reviewed:`, and `SKILL.md`'s current version as both `Created:` and `Feature check:`
-   (identical at setup time — they only diverge once a later skill version ships something new),
-   then proceed to Step 1 in `SKILL.md` (it will find the categories empty, which is an expected
-   and normal case of "running low," not an error).
+6. Write the file with:
+   - the confirmed tiers
+   - `Selection strategy:`, `Feedback:`, `Risk register:`
+   - `Done archive:`, only if changed from the default
+   - today's date as `Last reviewed:`
+   - `SKILL.md`'s current version as both `Created:` and `Feature check:` (identical at setup
+     time; they only diverge once a later skill version ships something new)
+
+   Then proceed to Step 1 in `SKILL.md`. It will find the categories empty, which is an expected
+   and normal case of "running low," not an error.

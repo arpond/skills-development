@@ -11,17 +11,21 @@ read, not about this content being rare.
 Once this file's steps are done, continue to Step 1 in `SKILL.md`.
 
 **Every check-in in this file folds into one message.** Steps 0.5, 0.6 and 0.7 can each turn up
-something to raise, and they're all raised at the start of the same run — so whatever's due this
-run gets asked in a single message, never stacked back-to-back. If Goals are stale, a reassess flag
-is waiting, and a `revisit-after:` date has passed, that's one message with three questions in it,
-not three prompts. **A backfilled tracker's baseline-subsystems catch-up (Step 0, below) is the
-same kind of contribution.** One more question folded into this run's combined message, not a
-separate prompt of its own. If only one item across all of these is due, ask just that one, and
-never manufacture a second question to fill out a combined message. Each step below says what it
-contributes; none of them re-decides this. They also share one throttle: each surfaces at most once
-per session, tracked in conversation context only, never written to the tracker.
+something to surface, and they're all surfaced at the start of the same run.
+- Whatever is due this run gets asked in a single message, never stacked back-to-back. If Goals
+  are stale, a reassess flag is waiting, and a `revisit-after:` date has passed, that's one
+  message with three questions in it, not three prompts.
+- **A backfilled tracker's baseline-subsystems catch-up (Step 0, below) is the same kind of
+  contribution.** One more question folded into this run's combined message, not a separate
+  prompt of its own.
+- If only one item across all of these is due, ask just that one. Never manufacture a second
+  question to fill out a combined message.
+- Each item surfaces at most once per session, tracked in conversation context only, never
+  written to the tracker.
 
-**Mechanical bookkeeping is a blocking gate, not optional prose to skim past.** Four items below
+Each step below says what it contributes; none of them re-decides this.
+
+**Mechanical bookkeeping is a required step, not optional prose to skim past.** Four items below
 need no user response:
 - backfilling missing `Created:`/`Feature check:` (Step 0)
 - bulk id-backfill for a tracker with zero ids and no `Next id:` line (Step 0)
@@ -65,11 +69,12 @@ use it; existing files never get moved as a side effect of a run.
 If it does exist, read it as-is and continue — don't re-ask full setup questions on later runs.
 Goals aren't fixed forever though: see Step 0.5 below.
 
-**If it exists but is malformed** (no `## Goals` section, a tier line that doesn't parse as
+**If it exists but is malformed, don't silently rewrite it back into shape, and don't refuse to
+proceed either.** Malformed means: no `## Goals` section, a tier line that doesn't parse as
 priority order, an unrecognised `Selection strategy:`/`Feedback:`/`Risk register:`/`Done archive:`
-value, or a `Created:`/`Feature check:` that isn't a valid `X.Y.Z` version) — this is a case of
-"unreachable isn't resolved," not a normal empty/stale tracker: don't silently rewrite it back
-into shape (that guesses at intent the user never confirmed) and don't refuse to proceed either.
+value, or a `Created:`/`Feature check:` that isn't a valid `X.Y.Z` version. This is a case of
+"unreachable isn't resolved," not a normal empty/stale tracker. Rewriting it guesses at intent the
+user never confirmed.
 Name the specific thing that doesn't parse and ask directly: fix it by hand, or walk through
 re-doing just that broken piece (e.g. re-running the Goals portion of `setup.md` if only Goals is
 broken, leaving categories/Done/Rejected untouched). Never fabricate a plausible-looking Goals
@@ -79,9 +84,9 @@ This is one of the skill's hard rules (see the table in `SKILL.md`).
 
 **A `##` section that isn't Goals, a category, Done, or Rejected is a content-placement problem,
 not a parsing problem** (see `SKILL.md`'s "closed sections" rule) — lighter-weight than the
-malformed cases above, so it doesn't block the run. Flag it once per project (track in conversation
-context whether it's already been raised this session, same throttle as the check-ins below —
-don't re-raise every run once declined): name what's actually in the section and suggest where it
+malformed cases above, so it doesn't block the run. Surface it once per project (track in
+conversation context whether it's already been surfaced this session, same throttle as the
+check-ins below; don't re-surface every run once declined): name what's actually in the section and suggest where it
 looks like it should live instead (`DEVELOPMENT.md`, a design doc, project docs). If the user wants
 it moved, do that as its own small edit; if they want it left as a deliberate exception, don't
 re-ask on future runs — note that call was made and move on.
@@ -116,14 +121,16 @@ they must not be conflated:
   never gated on presence.** Contrast `Selection strategy:`/`Feedback:`/`Risk register:`, which
   genuinely are optional and read by *value*, not presence (see `SKILL.md`'s tracker-format note).
   If this tracker has zero ids anywhere and no `Next id:` line at all, that's exactly
-  `tracker-maintenance.md`'s "Minting and migrating ids" first-adoption case — run its one-time bulk
-  backfill right here, as the same mechanical no-confirmation bookkeeping as the version-stamp
-  backfill above, rather than waiting for that section's ordinary "an id is actually needed" trigger
-  to eventually fire on some later Step 2 append (which might never happen this session, leaving the
-  tracker looking id-less indefinitely). Never frame this as "want to start using ids?" — it isn't a
-  choice; it's baseline mechanics this tracker was always going to have. Mention it in one clause if
-  it actually ran ("also backfilled ids for the N entries that didn't have one yet") — silent
-  otherwise, same as any other automatic action that didn't change what's visible this run.
+  `tracker-maintenance.md`'s "Minting and migrating ids" first-adoption case:
+  - Run its one-time bulk backfill right here, as the same mechanical no-confirmation bookkeeping
+    as the version-stamp backfill above. Waiting for that section's ordinary "an id is actually
+    needed" trigger might never fire this session, leaving the tracker looking id-less
+    indefinitely.
+  - Never frame this as "want to start using ids?" It isn't a choice; it's baseline mechanics this
+    tracker was always going to have.
+  - Mention it in one clause if it actually ran ("also backfilled ids for the N entries that
+    didn't have one yet"); silent otherwise, same as any other automatic action that didn't
+    change what's visible this run.
 - **`Selection strategy:`, `Feedback:`, and `Risk register:` are genuinely optional, and this
   tracker never got `setup.md` Step 4's one-time offer of them.** Give it that same offer now, for
   whichever of the three are still genuinely absent — an existing line already answers that question
@@ -166,8 +173,8 @@ previously-distinct tiers — same edit-and-bump mechanism as any other repriori
 
 If `Selection strategy:` is present (or the user wants to add/change it), see `strategies.md` —
 it's not fixed at setup either and is edited the same lightweight way. Same for `risk-register.md`
-if `Risk register:` is present. **`Feedback:` gates on value, not presence** (`SKILL.md`'s
-read-gate note): its default is `on`, so run `feedback.md`'s check-in unless the line explicitly
+if `Risk register:` is present. **`Feedback:` is read by value, not presence** (`SKILL.md`'s
+read-condition note): its default is `on`, so run `feedback.md`'s check-in unless the line explicitly
 says `off`. That check-in contributes its own line to this run's combined message — including a
 "backlog not shrinking" flag when its `growth-streak` hits 2.
 
@@ -182,39 +189,48 @@ judgement call, so it doesn't wait for the combined check-in gate above. Update 
 `(last sweep: ..., streak: N)` counter Step 6 uses regardless of which step actually performed the
 sweep — the counter tracks whether `age` is catching sweeps at all, not which step happened to run
 one. Mention it in one clause if it actually moved anything ("archived 12 entries older than 60
-days into `IMPROVEMENT_TRACKER_DONE.md`") — silent otherwise, same as any other automatic action
-that didn't change what's visible this run.
+days into `IMPROVEMENT_TRACKER_DONE.md`"); otherwise silent, same rule as the id backfill in
+Step 0.
 
 **If `SKILL.md` Step 6's Done-archive `streak` has hit 3** (three backstop-triggered sweeps in a
-row, `age` never once catching anything first), that's also due this step — fold it into the same
-combined message per the rule above: `age` is calibrated for a slower project than this one, so
-propose a concrete new number (e.g. halve it) or a higher `backstop`, wait for confirmation (hard
-rule, see the table in `SKILL.md`), then reset the streak either way once asked.
+row, `age` never once catching anything first), that's also due this step. Fold it into the same
+combined message per the rule above:
+1. Say that `age` is calibrated for a slower project than this one.
+2. Propose a concrete new number (e.g. halve it) or a higher `backstop`.
+3. Wait for confirmation (hard rule, see the table in `SKILL.md`).
+4. Reset the streak either way once asked.
 
-**Check the tracker's `Feature check:` version against `SKILL.md`'s current skill version** (this is
-also the walk Step 0 triggers for a missing stamp, treated as `0.0.0`). Compare
-as standard semver — major first, then minor, then patch, numerically (`1.10.0` is newer than
-`1.9.0`, not older) — never as plain string/lexicographic comparison. **Behind**: open `changelog.md`
-(only now — this is exactly its trigger condition, see its own header) and walk every entry newer
-than the stored version **in ascending version order (oldest first), applying each one's migration
-before moving to the next** — `changelog.md` itself lists newest-first for a human skimming what's
-new, but that's a reading order, not an application order, and a later entry's migration can assume
-an earlier one already landed. Fold them into the same combined check-in in that same order: "This
-tracker's on v1.0.0;
-v1.1.0 added <one-line description> — want to turn it on, or leave as-is?" For each one the user
-wants, hand off to that feature's *own* setup ask (`feedback.md`/`strategies.md`/`risk-register.md`'s
-Setup sections, or the relevant inline instructions for a non-file feature) rather than writing the
-tracker line directly here — reuse the existing confirm-gated flow per feature, don't invent a
-second one. Whatever the user decides for each item, bump `Feature check:` to the skill's current
-version once this has been asked — same "surfaced once, advance the marker" shape as `bulk-offer
-last:`/dry-run counters, so a declined feature doesn't get re-offered every session. **Ahead** (the
-tracker's `Feature check:` is newer than this skill install's current version — a downgraded skill
-install, or a tracker copied over from a machine running a newer version) is a genuinely surprising
-input, not a normal case to silently resolve either direction: say so once ("this tracker's stamped
-v1.2.0 but this skill install is on v1.1.0 — that's unexpected, is the skill install stale?") and
-don't attempt any disclosure walk, since nothing in this install's `changelog.md` is actually newer.
+**Check the tracker's `Feature check:` version against `SKILL.md`'s current skill version.** This
+is also the walk Step 0 triggers for a missing stamp, treated as `0.0.0`. Compare as standard
+semver: major first, then minor, then patch, numerically (`1.10.0` is newer than `1.9.0`, not
+older), never as plain string/lexicographic comparison.
+
+**Behind:**
+1. Open `changelog.md` (only now; this is exactly its trigger condition, see its own header).
+2. Walk every entry newer than the stored version in ascending version order (oldest first),
+   applying each one's migration before moving to the next. `changelog.md` itself lists
+   newest-first for a human skimming what's new, but that's a reading order, not an application
+   order, and a later entry's migration can assume an earlier one already landed.
+3. Fold them into the same combined check-in in that same order: "This tracker's on v1.0.0;
+   v1.1.0 added <one-line description> — want to turn it on, or leave as-is?"
+4. For each one the user wants, hand off to that feature's *own* setup ask
+   (`feedback.md`/`strategies.md`/`risk-register.md`'s Setup sections, or the relevant inline
+   instructions for a non-file feature) rather than writing the tracker line directly here. Reuse
+   the existing confirm-gated flow per feature; don't invent a second one.
+5. Whatever the user decides for each item, bump `Feature check:` to the skill's current version
+   once this has been asked. Same "surfaced once, advance the marker" shape as `bulk-offer
+   last:`/dry-run counters, so a declined feature doesn't get re-offered every session.
+
+**Ahead** (the tracker's `Feature check:` is newer than this skill install's current version — a
+downgraded skill install, or a tracker copied over from a machine running a newer version) is a
+genuinely surprising input, not a normal case to silently resolve either direction:
+1. Say so once ("this tracker's stamped v1.2.0 but this skill install is on v1.1.0 — that's
+   unexpected, is the skill install stale?").
+2. Don't attempt any disclosure walk, since nothing in this install's `changelog.md` is actually
+   newer.
+
 If only this check is due this run (Goals and Done-archive both fine), it still gets its own short
-message — it doesn't need another trigger to piggyback on, just doesn't stack as a *second* message
+message. It doesn't need another trigger to piggyback on, just doesn't stack as a *second* message
 if others are already due.
 
 ## Step 0.6: Surface standalone reassess flags (explicit `Feedback: off` only)

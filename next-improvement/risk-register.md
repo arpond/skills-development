@@ -7,7 +7,7 @@ absent), none of this applies and you never need to read it.
 The idea: some ideas ship clean, some come back — a bug fix, a rework, a repeat
 `ineffective`/`partial` outcome in the same part of the project. That recurrence is a signal about *where this project
 needs more rigor*, not just a fact about one idea. This loop names that pattern once, persists it,
-and feeds it back into future proposals so the same kind of risk gets flagged before it repeats a
+and feeds it back into future proposals so the same kind of risk gets surfaced before it repeats a
 third time, not just noticed after the fact.
 
 This is a genuinely separate concern from the rest of the skill's steady-state loop — different
@@ -220,10 +220,10 @@ as its own case, not folded into trigger 1's generic "2nd+ link" counting:
 Before presenting a newly-proposed idea, check whether it touches any **active** entry's `areas:`.
 On a match, say so as part of presenting the idea (not a separate confirmation step) — e.g. "this
 also touches R1 — <theme> — past ships here needed 2 follow-up fixes, worth extra care on scope/
-tests upfront." Then, **for each matching entry separately** (a candidate can match more than one —
-it may be the intended fix for one and merely exposed to another; don't ask one global question
-covering all matches at once), ask the exposed-vs-fix follow-up: is this candidate merely *exposed*
-to that risk, or *meant to fix it*?
+tests upfront." Then ask the exposed-vs-fix follow-up **for each matching entry separately**: is
+this candidate merely *exposed* to that risk, or *meant to fix it*? A candidate can match more
+than one entry (the intended fix for one and merely exposed to another), so don't ask one global
+question covering all matches at once.
 
 - **Exposed, not a fix** (the normal case): the flag is the whole output — whether spoken or kept
   as a short note in the idea's own rationale once appended, it names the theme alongside the id
@@ -266,13 +266,13 @@ all-at-once offer, once-per-session throttle). Don't build a parallel mechanism,
   deliver, and did it actually fix the risk.
 
 **This is a hard dependency on `Feedback: on`.** `feedback.md`'s check-in only runs from
-`session-start.md` Step 0.5 when `Feedback:` is on — if `Risk register: on` and `Feedback: off`,
+`session-start.md` Step 0.5 when `Feedback:` is on. If `Risk register: on` and `Feedback: off`,
 there is no periodic mechanism to ever ask about a `mitigated-by:` outcome, and it would sit at
-`pending` indefinitely with nothing surfacing that fact. Don't silently let this happen: if a
-project has `Risk register: on` while `Feedback:` is off, say so the first time a `mitigated-by:`
-tag would be added ("mitigation outcomes need `Feedback: on` to ever get checked — turn it on too,
-or this one will just stay `pending`?") and let the user decide, same as any other setup-time
-disclosure rather than a silently-dead feature.
+`pending` indefinitely with nothing surfacing that fact. **If a project has `Risk register: on`
+while `Feedback:` is off, say so the first time a `mitigated-by:` tag would be added.** E.g.
+"mitigation outcomes need `Feedback: on` to ever get checked — turn it on too, or this one will
+just stay `pending`?" Then let the user decide, same as any other setup-time disclosure rather
+than a silently-dead feature.
 
 ## Archival and reactivation
 
@@ -281,7 +281,7 @@ disclosure rather than a silently-dead feature.
 `reworked:` link, no new `ineffective`/`partial`/`reverted` outcome, checked live per the "no stored cause
 list" note above). On confirmation: flip `status: active → archived`, move the entry from
 `## Active` to `## Archived`, and note the archival date and reason inline. Outstanding ideas stop
-being flagged against it automatically, since the cross-reference only looks at active entries.
+being surfaced against it automatically, since the cross-reference only looks at active entries.
 
 **Don't archive while any `mitigated-by:` on that entry is still `outcome: planned`.** A fix is
 already in flight — archiving now would mean Step 6's flip-check (which only scans **active**

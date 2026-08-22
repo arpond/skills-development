@@ -18,8 +18,8 @@ anything to opt into**:
   `risk-register.md`'s Setup sections, or the relevant inline instructions) — never a new
   confirm-gate of its own; reuse the feature's own flow, don't invent a parallel one.
 - **Automatic entries** change how something already turned on behaves. There's nothing to accept
-  or decline, so don't pose one as a question — mention it in a clause if it changes what the user
-  will see, or skip it silently if it doesn't, and bump `Feature check:` either way.
+  or decline, so don't pose one as a question. Mention it in a clause if it changes what the user
+  will see; skip it silently if it doesn't. Bump `Feature check:` either way.
 - **A pure rename of existing values is automatic too.** No confirm gate, since a rewrite that
   preserves meaning exactly has no judgement in it (same category as the id-restyling mechanics in
   `tracker-maintenance.md`). Say it happened in the same disclosure clause, then sweep every

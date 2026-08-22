@@ -77,9 +77,9 @@ Each entry below covers what the mode means *and* what Step 4 does with it — o
   - `tagged` — only pulls ideas the user explicitly marked `(wildcard)` when adding them, e.g.
     `- I7: **Idea name** (wildcard) — rationale...`. None tagged -> no wildcard to offer this run.
 
-  Gate: only add a wildcard if there's a candidate left over that isn't already one of the base
-  picks. If the pool's too small for a distinct pick, skip the wildcard silently rather than
-  re-listing the same item under a different label — that's padding, not variety. When the gate
+  Read condition: only add a wildcard if there's a candidate left over that isn't already one of
+  the base picks. If the pool's too small for a distinct pick, skip the wildcard silently rather
+  than re-listing the same item under a different label — that's padding, not variety. When the condition
   passes, the wildcard always shows — it's not counted by or trimmed for `max-options(N)` (see
   Capping); it's a fixed, self-limiting +1, not part of the base-mode count.
 - **`quick-win`** — Step 4 appends the cheapest/fastest outstanding candidate with clear value,
@@ -88,11 +88,11 @@ Each entry below covers what the mode means *and* what Step 4 does with it — o
   same way you'd judge tier fit in Step 3: think concretely about what building each candidate
   would actually involve (scope described in its rationale, files/functions it touches if named)
   and pick whichever reads as smallest, with a defensible one-line reason ("touches one function,
-  no new UI"). Same gate as
+  no new UI"). Same read condition as
   wildcard, extended to cover wildcard's own pick too: skip it if the cheapest candidate is
   already one of the base picks *or* already the wildcard pick (checked in that order, since
   wildcard is placed earlier in display order — see Modes intro) — a candidate never occupies two
-  numbered lines under two different labels. Same exemption as `wildcard`: when the gate passes,
+  numbered lines under two different labels. Same exemption as `wildcard`: when the read condition passes,
   quick-win always shows, uncounted by `max-options(N)`.
 - **`category-rotation`** or **`category-rotation(window=N)`** (default N=5) — when the base
   pick's ranking has a genuine close call, Step 4 prefers whichever candidate's category hasn't
@@ -162,7 +162,7 @@ rather than guessing at what they mean — don't make them already know the synt
 
 `max-options(N)` (default 4) caps the **base mode's own picks** — `top-tier`'s close contenders,
 or `spread(N)`'s tier picks — not the total shown. `wildcard` and `quick-win` are separate, fixed
-extras: each shows at most once, whenever its own gate passes, and neither is trimmed for or
+extras: each shows at most once, whenever its own read condition passes, and neither is trimmed for or
 counted by `max-options(N)`. So the actual total on screen can be `max-options(N)` +1 (wildcard)
 +1 (quick-win) at most — a small, bounded, predictable overshoot, not the unranked pile this skill
 exists to avoid; always mark exactly one pick as *the* top recommendation regardless of how many

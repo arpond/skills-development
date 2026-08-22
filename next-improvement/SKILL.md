@@ -32,7 +32,7 @@ alongside it:
 - `feedback.md` — an optional loop that asks how past ships actually landed and feeds that back
   into future judgement. Read it whenever `Feedback:` isn't spelled out as `off`, or when
   setting/changing it. **This one defaults to `on`, so an absent line means read it.** See the
-  read-gate note under the tracker format below.
+  read-condition note under the tracker format below.
 - `risk-register.md` — an optional loop that traces which shipped ideas needed follow-up fixes or
   rework, persists that as a named risk area, and factors active risks into future proposals. Read
   it when `Risk register: on`, or when setting/changing it.
@@ -44,7 +44,7 @@ alongside it:
   trigger actually fires — each section names its own.
 
 Of these, only `session-start.md` is unconditional. The other six are gated on their own trigger
-condition, to keep the common-case read lean — note that `feedback.md`'s gate is satisfied by
+condition, to keep the common-case read lean — note that `feedback.md`'s read condition is met by
 default, so it's read on most runs too.
 
 A project's tracker may also grow a sibling `IMPROVEMENT_TRACKER_DONE.md` — the overflow of old
@@ -125,12 +125,12 @@ Done archive: age=60, floor=5, backstop=40   <!-- optional, default shown, see S
   back to something concrete like "prefer whichever is cheaper/faster to build" or "ask me when
   it happens" — but prefer capturing their actual reasoning if they have one. Keep tie groups
   small (2, rarely 3); a tier that keeps growing tied entries is a smell that ranking has stopped
-  meaning anything, and is worth flagging (see Step 0.5).
+  meaning anything, and is worth surfacing (see Step 0.5).
 - `Selection strategy:`, `Feedback:`, `Risk register:`, and `Done archive:` are optional lines that
   may be absent. Their full format and behaviour live in `strategies.md`, `feedback.md`,
   `risk-register.md`, and Step 6 below respectively — don't inline their details here.
-  **Gate reading each companion file on the setting's *value*, not on whether the line is
-  present.** An absent line means that setting's documented default, and the defaults differ:
+  **Read each companion file by the setting's *value*, not by whether the line is present.** An
+  absent line means that setting's documented default, and the defaults differ:
   `Selection strategy:` and `Risk register:` default to off (`top-tier` / `off`), so an absent line
   means don't read `strategies.md`/`risk-register.md`; `Feedback:` defaults to **on**, so an absent
   line means `feedback.md` *does* get read. Keying off presence instead would silently strand every
@@ -217,20 +217,23 @@ visibly weak ideas the user can see for themselves. Absence from this table does
 | 0 (setup.md) | gate | Interrogate the proposed categories/tiers with the user before writing the initial tracker |
 | 0 (setup.md) | surface | Disclose the behaviours that aren't opt-in (the fixes/reworks question, Done archiving) rather than letting them appear unannounced |
 | 0 (session-start.md) | gate | If the tracker exists but is malformed, ask the user rather than silently rewriting or refusing |
-| 0 (session-start.md) | surface | Flag a foreign `##` section once per project rather than leaving it unmentioned |
+| 0 (session-start.md) | surface | Surface a foreign `##` section once per project rather than leaving it unmentioned |
 | 0 (session-start.md) | surface | Bulk-backfill ids for a tracker with zero ids and no `Next id:` line, rather than waiting for the lazy per-entry trigger to eventually fire |
 | 0 (session-start.md) | surface | Give a backfilled tracker the one-time baseline-subsystems catch-up (`Selection strategy:`/`Feedback:`/`Risk register:`) it never got via `setup.md` |
 | 0 (risk-register.md) | gate | If `RISK_REGISTER.md` exists but is malformed, ask the user rather than silently rewriting or refusing |
 | 0.5 (session-start.md) | gate | Confirm goal changes with the user before updating Goals / bumping `Last reviewed:` |
 | 0.5 (session-start.md) | gate | Confirm before adjusting `Done archive:` knobs or `Feedback:`'s cadence knobs off the back of a detected drift signal |
-| 0.5 (session-start.md) | surface | Raise a stale-Goals check-in when due, and a `Feature check:` version gap — including a missing stamp, walked as `0.0.0` — or an unexpectedly-ahead stamp |
+| 0.5 (session-start.md) | surface | Surface a stale-Goals check-in when due |
+| 0.5 (session-start.md) | surface | Surface a `Feature check:` version gap, including a missing stamp, walked as `0.0.0` |
+| 0.5 (session-start.md) | surface | Surface an unexpectedly-ahead `Feature check:` stamp rather than resolving it either way |
 | 0.6 (session-start.md) | surface | Surface standalone `reassess: pending` flags when `Feedback:` is explicitly `off` |
 | 0.7 (session-start.md) | surface | Surface Rejected entries whose `revisit-after:` date has passed |
 | 2 | gate | Show proposed new ideas, or a category retirement/merge/narrow, and wait for confirmation before writing anything |
-| 2 | surface | Raise a category sitting at `dry runs: 2+` rather than silently polling it again |
+| 2 | surface | Surface a category sitting at `dry runs: 2+` rather than silently polling it again |
 | 2/4.5/6 (risk-register.md) | gate | Show a proposed risk-area creation or update (any trigger), and an archival/reactivation, and wait for confirmation before writing to `RISK_REGISTER.md` |
 | 4 | gate | Do not start planning or implementing until the user confirms which one (if any) to build |
-| 4 | surface | Flag a feature-type pick as such, and flag every candidate's risk-register signals (mitigates vs. merely exposed) |
+| 4 | surface | Surface a feature-type pick as such |
+| 4 | surface | Surface every candidate's risk-register signals (mitigates vs. merely exposed) |
 | 4.5 | gate | Get the plan approved before writing any code |
 | 6 | surface | Sweep Done into the archive whenever age/floor/backstop makes an entry eligible, not only when someone happens to notice |
 | 0.5 (session-start.md) | surface | Re-run that same Done sweep independently of Step 6, so a missed append-time sweep gets caught at the next session start |
@@ -254,7 +257,7 @@ above for why it's split out. Once it says to, continue to Step 1 below.
 
 Count remaining (not-in-Done) items in each idea category.
 
-**If `session-start.md`'s Step 0.7 flagged any due `revisit-after:` entries and the user chose to
+**If `session-start.md`'s Step 0.7 surfaced any due `revisit-after:` entries and the user chose to
 reconsider one**, it goes back through Step 2 like any other candidate — confirm before appending,
 reuse its existing id per the id-scheme note above.
 
@@ -315,19 +318,19 @@ of "something actually needs older history" case Step 6 has in mind, not a norma
 
 **Show the proposed new ideas and wait for confirmation before appending anything.** This is one
 of the skill's hard rules (see the table above): brainstorming is a recommendation, not a
-decision — the user may accept all of it, drop some, tweak wording, or say none of it's worth
-keeping. Don't write to
-the tracker until they've had a chance to react. Whatever gets declined, add it to **Rejected**
-with the reason given (or your best summary of it if the user was terse) — don't just drop it
-silently, that's what lets the check above work next time. **If the reason is timing/priority-based
-rather than substance**, ask for (or suggest) a rough `revisit-after:` date — "worth checking again
-in a month or two, or should I just re-check whenever it comes up again?" — and store it if they
-give one; a substance-based decline gets no such field, per the Rejected-format note above. Match
-that file's existing format and voice for whatever does get appended. Don't pad a thin category
-with filler just to hit a count:
-if there are only one or two solid ideas, say so and move on rather than inventing weak ones. If
-`Selection strategy:` includes `wildcard(tagged)`, see `strategies.md` for the idea-tagging
-convention that mode depends on.
+decision. The user may accept all of it, drop some, tweak wording, or say none of it's worth
+keeping. Don't write to the tracker until they've had a chance to react. Then:
+- Whatever gets declined, add it to **Rejected** with the reason given (or your best summary of it
+  if the user was terse). Don't drop it silently; that's what lets the check above work next time.
+- **If the reason is timing/priority-based rather than substance**, ask for (or suggest) a rough
+  `revisit-after:` date ("worth checking again in a month or two, or should I just re-check
+  whenever it comes up again?") and store it if they give one. A substance-based decline gets no
+  such field, per the Rejected-format note above.
+- Match that file's existing format and voice for whatever does get appended.
+- Don't pad a thin category with filler just to hit a count. If there are only one or two solid
+  ideas, say so and move on rather than inventing weak ones.
+- If `Selection strategy:` includes `wildcard(tagged)`, see `strategies.md` for the idea-tagging
+  convention that mode depends on.
 
 **Exhausted is a valid outcome, not a failure to fix.** If brainstorming (grounded in the checks
 above) turns up nothing genuinely new or worth building, say so explicitly rather than quietly
@@ -343,13 +346,14 @@ miscalibration signal, reset on the corrected one, force-reset once surfaced): n
 that category's header, `(dry runs: N — last: YYYY-MM-DD)`. Trigger/increment: a top-up attempt ends up
 adding nothing — brainstorming found nothing genuinely new, everything proposed was flagged weak,
 or the user declined what was proposed. Corrected signal/reset: the next time a solid idea actually
-gets added, remove the line entirely. Threshold: at `dry runs: 2+`, surface this to the user up
-front the next time this category comes up — e.g. "Features has been topped up 2 times with
-nothing solid since <date> — possible this category is genuinely done; want to retire/merge it,
-narrow its scope, or keep polling?" (see `tracker-maintenance.md` for the mechanics of whichever
-they pick) — and force-reset by removing the line once surfaced,
-regardless of which answer they give, so "keep polling" doesn't re-nag on the very next dry
-attempt; it takes two fresh dry runs to surface again.
+gets added, remove the line entirely. Threshold: `dry runs: 2+`. At the threshold, the next time
+this category comes up:
+1. Surface it up front, e.g. "Features has been topped up 2 times with nothing solid since
+   <date> — possible this category is genuinely done; want to retire/merge it, narrow its scope,
+   or keep polling?" (see `tracker-maintenance.md` for the mechanics of whichever they pick).
+2. Force-reset by removing the line once surfaced, regardless of which answer they give, so "keep
+   polling" doesn't re-nag on the very next dry attempt. It takes two fresh dry runs to surface
+   again.
 
 ## Step 3: Rank candidates against the tiers
 
@@ -446,12 +450,12 @@ is configurable (`max-options(N)`) — see `strategies.md`. If Step 3 noticed a 
 synergy with another outstanding candidate, mention it here too ("this also lays the groundwork
 for Y") — it's part of the reasoning, not a separate line item.
 
-**Flag risk-register signals explicitly, and don't conflate them.** If `Risk register: on`, check
+**Surface risk-register signals explicitly, and don't conflate them.** If `Risk register: on`, check
 **every candidate being presented this round** — not just the top pick, every numbered option in a
 multi-option list (close contenders, `spread(N)` tier picks, wildcard, quick-win alike) — against
-active risk areas (same area match as Step 2). One that mitigates an active risk gets flagged
+active risk areas (same area match as Step 2). One that mitigates an active risk gets surfaced
 plainly ("this also mitigates R3 — <theme>"). One that merely touches an active entry's areas
-without building against them gets flagged too, but as a caution, not a point in its favour ("this
+without building against them gets surfaced too, but as a caution, not a point in its favour ("this
 touches R3's risk area — worth extra care on <what the risk actually is>"). A match that came out
 borderline, or an area that no longer resolves, gets said as such rather than rounded to yes or no. Use the wording that
 matches which one actually applies for each candidate, per Step 3's distinction.
@@ -459,14 +463,14 @@ matches which one actually applies for each candidate, per Step 3's distinction.
 If `Selection strategy:` is set to anything else, read `strategies.md` and build the
 presentation as it describes instead.
 
-**Flag feature-type picks explicitly.** If the top pick (or a close contender) comes from a
+**Surface feature-type picks explicitly.** If the top pick (or a close contender) comes from a
 features/new-functionality category rather than maintenance/quality/refactor-style work, say so
 plainly as part of its reasoning line (e.g. "this is a new feature, not a maintenance item — ...")
 rather than leaving the category implicit. This doesn't change the presentation format above or
 add a new confirmation gate — it's one clause within the existing line, same as any other
 reasoning. The reason it's worth calling out: users tend to want more direct say over feature
 scope/direction than over maintenance work, and Step 4.5's plan-approval step is where that
-input actually happens — flagging it here just makes sure the user notices *before* reaching that
+input actually happens — surfacing it here just makes sure the user notices *before* reaching that
 step, instead of registering it only once a plan is already drafted.
 
 If Step 3 carried forward an unresolved tied-goal conflict, present that as its own distinct
@@ -567,26 +571,32 @@ doesn't exist.
 against that risk.** Nothing to record for it, since exposure was never stored; it's read out of
 Done whenever archival is next considered. See `risk-register.md`'s archival trigger.
 
-**After appending, check whether Done needs trimming.** This isn't the only place this sweep runs —
+**After appending, check whether Done needs trimming.** This isn't the only place this sweep runs:
 `session-start.md` Step 0.5 re-derives the same eligibility independently at the start of every
 session, so a sweep this step fails to complete (a session ending early, a hand-edited tracker, an
 older tracker predating `Done archive:`) still gets caught rather than leaving Done to grow
-unbounded with nothing left to trigger it. Primary trigger is age, not count — how
-long ago something shipped is what determines whether it's still useful working context, not how
-many entries happen to sit next to it (a project shipping in bursts can produce 20 genuinely-recent
+unbounded with nothing left to trigger it. Primary trigger is age, not count. How long ago
+something shipped is what determines whether it's still useful working context, not how many
+entries happen to sit next to it (a project shipping in bursts can produce 20 genuinely-recent
 entries in two weeks that are all still relevant; a slow project can carry 10 stale ones for a
-year). Archive any Done entry whose `shipped` date is older than `Done archive:`'s `age` (default
-60 days). **Always keep the most recent `floor` entries live regardless of age** (default 5), so a
-dormant project that just resumed doesn't get its Done section swept to empty. **Count stays as a
-backstop only**: if the live section still exceeds `backstop` entries (default 40) after the age
-sweep — a burst of very recent ships — archive the oldest down to `floor` by age regardless, so one
-hyperactive stretch can't leave the file unbounded between age-sweeps. Move archived entries,
-unedited and in their existing order, to the end of `IMPROVEMENT_TRACKER_DONE.md` (create it, same
-directory as `IMPROVEMENT_TRACKER.md`, with a one-line `# <Project> — archived Done history` header
-if it doesn't exist yet). Update the archive-pointer note under the live `## Done` header to the
-cutoff date of the oldest entry now remaining live. This is mechanical bookkeeping, not a judgement
-call about ideas or priorities, so it doesn't need user confirmation the way Steps 2/4/4.5 do —
-only the knob *adjustment* below is confirm-gated, not the routine sweep itself.
+year). The sweep:
+1. Archive any Done entry whose `shipped` date is older than `Done archive:`'s `age` (default 60
+   days).
+2. **Always keep the most recent `floor` entries live regardless of age** (default 5), so a
+   dormant project that just resumed doesn't get its Done section swept to empty.
+3. **Count stays as a backstop only.** If the live section still exceeds `backstop` entries
+   (default 40) after the age sweep (a burst of very recent ships), archive the oldest down to
+   `floor` by age regardless, so one hyperactive stretch can't leave the file unbounded between
+   age-sweeps.
+4. Move archived entries, unedited and in their existing order, to the end of
+   `IMPROVEMENT_TRACKER_DONE.md`. Create it if it doesn't exist yet, in the same directory as
+   `IMPROVEMENT_TRACKER.md`, with a one-line `# <Project> — archived Done history` header.
+5. Update the archive-pointer note under the live `## Done` header to the cutoff date of the
+   oldest entry now remaining live.
+
+This is mechanical bookkeeping, not a judgement call about ideas or priorities, so it doesn't need
+user confirmation the way Steps 2/4/4.5 do. Only the knob *adjustment* below is confirm-gated, not
+the routine sweep itself.
 
 **Track which trigger actually fired, to catch a miscalibrated `age`.** A self-correcting counter,
 same shape as Step 2's dry-run tracking: note inline on the `Done archive:` line which kind of
@@ -617,10 +627,10 @@ rather than reading the archive file to fill the count.
 
 **Reading the archive.** Only open `IMPROVEMENT_TRACKER_DONE.md` when something actually needs
 older history; otherwise don't read it as part of the normal Step 0-6 loop, since that's most of
-the point of moving entries out of the live tracker. **When something does need it, the rule is
-always the same one — treat the live tracker's Done section and the archive as one combined pool**,
-never just the live file: the count is the sum, "oldest" is the oldest across both, and a write
-lands in whichever of the two the entry actually sits in. Everywhere else that scans Done history
+the point of moving entries out of the live tracker. **When something does need it, treat the live
+tracker's Done section and the archive as one combined pool, never just the live file.** The count
+is the sum, "oldest" is the oldest across both, and a write lands in whichever of the two the
+entry actually sits in. Everywhere else that scans Done history
 means this rule, and defers here rather than restating it — Step 2's "has something like this
 already shipped" check, Step 6's `reassess:` write to an origin entry, the user asking about past
 work, `feedback.md`'s eligible-entry scan, and `risk-register.md`'s evidence scan. Archiving is

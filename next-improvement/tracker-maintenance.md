@@ -2,7 +2,7 @@
 
 Read this file only when one of its specific triggers actually fires — not on a normal run. Each
 section below names its own trigger. This exists to keep this rare, occasional-event content out of
-`SKILL.md`'s always-loaded core read — none of it is needed to run the normal Step 0-6 loop.
+the core file `SKILL.md` — none of it is needed to run the normal Step 0-6 loop.
 
 ## Minting and migrating ids
 
@@ -15,15 +15,18 @@ usual lazy trigger to eventually fire.
 All of it is mechanical, no-confirmation bookkeeping, same as Step 6's Done-trimming — never a
 judgement call, and never a reason to stop and ask.
 
-**The bulk-backfill ordering rule** — used both by first-time adoption below and by the one-time
-retroactive backfill further down, stated once here rather than twice: assign ids in one pass,
-oldest-first — Done entries in `shipped`-date order (including the archive,
-`IMPROVEMENT_TRACKER_DONE.md`, if it exists, treating live Done and the archive as the one combined
-pool, same rule as everywhere else that reads Done history), then each outstanding category
-top-to-bottom in file order. Skip Rejected — an entry there already carrying a hand-typed `id: I<N>`
-stays as it is, nothing else in Rejected gets one. Before assigning each id, apply the same
-hand-typed-id collision check as any other minting (see below) — skip past anything already in use
-rather than assuming the run of numbers is clear.
+**The bulk-backfill ordering rule**, used both by first-time adoption below and by the one-time
+retroactive backfill further down, stated once here rather than twice. Assign ids in one pass,
+oldest-first:
+1. Done entries in `shipped`-date order, including the archive (`IMPROVEMENT_TRACKER_DONE.md`) if
+   it exists, treating live Done and the archive as the one combined pool, same rule as everywhere
+   else that reads Done history.
+2. Then each outstanding category top-to-bottom in file order.
+3. Skip Rejected. An entry there already carrying a hand-typed `id: I<N>` stays as it is; nothing
+   else in Rejected gets one.
+4. Before assigning each id, apply the same hand-typed-id collision check as any other minting
+   (see below). Skip past anything already in use rather than assuming the run of numbers is
+   clear.
 
 - **A missing `Next id:`** splits into two cases, not one:
   - **No entries have an id yet** (a tracker predating the id system entirely — `Created: 0.0.0` from

@@ -1,9 +1,8 @@
 # Outcome feedback (optional)
 
 Read this file unless the tracker's `Feedback:` line explicitly says `off`, or whenever the user is
-setting it up or asking to change it. **This setting's default is `on`, so an absent line means
-read this file.** Unlike `Selection strategy:` and `Risk register:`, whose defaults are off (see
-`SKILL.md`'s read-gate note). Only an explicit `Feedback: off` means none of this applies.
+setting it up or asking to change it. **An absent line means `on`** (see `SKILL.md`'s
+read-condition note).
 
 The idea: shipped work can look great as a plan and still not deliver. This loop asks, lazily
 and cheaply, how past ships actually landed, and feeds that back into future ranking/top-up
@@ -103,17 +102,20 @@ backlog quietly shrink on paper without anyone answering anything.
 
 - **`reassess: pending` entries take priority over routine eligible items.** A `reassess` flag
   (`SKILL.md` Step 6: a later ship fixed or reworked this one) means the item's original outcome
-  judgement may no longer hold — surfacing that is more valuable than a routine newly-eligible ask,
+  judgement may no longer hold. Surfacing that is more valuable than a routine newly-eligible ask,
   so reassess-flagged entries always go first, oldest first, ahead of plain eligible items in every
   mode below. Wording is distinct from a routine ask, and depends on what the origin's outcome
-  already was: if it's still `pending` (never answered), fold the fix/rework into the normal
-  outcome question as one clause instead of asking twice — "Last shipped '<idea>' (<date>) —
-  worked as intended, partial, ineffective, or was it reverted? (Note: this was later fixed by
-  '<fixing idea>'.)" If the origin already had a real answer (`effective`/`partial`/`ineffective`/
-  `reverted`), reopen it explicitly, allowing either direction: "'<idea>' was marked <old outcome>,
-  but was later fixed by '<fixing idea>' — still <old outcome>, upgrade to effective, or adjust to
-  partial/ineffective/reverted?" Clear `reassess: pending` the
-  moment it's answered, same as any other eligible item — see "Answered items" below.
+  already was:
+  - Still `pending` (never answered): fold the fix/rework into the normal outcome question as one
+    clause instead of asking twice. "Last shipped '<idea>' (<date>) — worked as intended, partial,
+    ineffective, or was it reverted? (Note: this was later fixed by '<fixing idea>'.)"
+  - Already a real answer (`effective`/`partial`/`ineffective`/`reverted`): reopen it explicitly,
+    allowing either direction. "'<idea>' was marked <old outcome>, but was later fixed by
+    '<fixing idea>' — still <old outcome>, upgrade to effective, or adjust to
+    partial/ineffective/reverted?"
+
+  Clear `reassess: pending` the moment it's answered, same as any other eligible item — see
+  "Answered items" below.
   - **What the tag measures.** `outcome:` answers one question only: given everything known now,
     did this idea deliver its intended value? It is not a defect record — whether a bug was found
     and fixed later is already preserved permanently and independently via the `fixes:`/`reworked:`
@@ -156,10 +158,12 @@ backlog quietly shrink on paper without anyone answering anything.
   immediately (skip -> `outcome: skipped`) in whichever file the item actually lives in (live
   tracker or `IMPROVEMENT_TRACKER_DONE.md`), so that item is never asked about again. At most one
   such question per session, per the throttle above.
-- **At or above `bulk`, and *either* the eligible count exceeds `bulk-offer last:`'s stored count by
-  at least `bulk`, *or* it's been ≥`reoffer` days since `bulk-offer last:`'s stored date** (a
-  `never` sentinel satisfies this outright — reaching `bulk` for the first time is itself the
-  trigger):
+- **At or above `bulk`, and either of:**
+  - the eligible count exceeds `bulk-offer last:`'s stored count by at least `bulk`, or
+  - it's been ≥`reoffer` days since `bulk-offer last:`'s stored date.
+
+  A `never` sentinel satisfies this outright; reaching `bulk` for the first time is itself the
+  trigger. Then:
   1. Offer a choice instead of the single drip question: "N ships pending feedback (M need
      reassessment) — clear them all now, N at a time, one-by-one until you say stop, or just the
      oldest for now?"

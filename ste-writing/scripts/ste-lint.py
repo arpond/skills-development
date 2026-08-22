@@ -39,9 +39,34 @@ def strip_code(t):
     t = re.sub(r"`[^`]*`", " ", t)
     return t
 
+# Lines that stand alone: headings, table rows, horizontal rules. List items
+# start a new block but absorb their own wrapped continuation lines.
+STANDALONE = re.compile(r"^\s*(?:#{1,6}\s|\||-{3,}\s*$|\*{3,}\s*$)")
+LIST_START = re.compile(r"^\s*(?:[-*+]|\d+[.)])\s+")
+
+def unwrap(text):
+    """Join hard-wrapped lines into one line per paragraph or list item.
+    A wrapped line is not a sentence boundary: without this, a 90-word
+    sentence wrapped at 100 columns counts as five short ones and the
+    long-sentence and long-paragraph checks never fire on wrapped markdown."""
+    out, buf = [], []
+    def flush():
+        if buf:
+            out.append(" ".join(buf)); buf.clear()
+    for line in text.split("\n"):
+        s = line.strip()
+        if not s or STANDALONE.match(line):
+            flush(); out.append(line)
+        elif LIST_START.match(line):
+            flush(); buf.append(s)
+        else:
+            buf.append(s)
+    flush()
+    return "\n".join(out)
+
 def sentences(text):
     out = []
-    for line in text.split("\n"):
+    for line in unwrap(text).split("\n"):
         s = line.strip()
         if not s: continue
         s = re.sub(r"^\s*#{1,6}\s*", "", s)

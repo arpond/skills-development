@@ -1,2 +1,3 @@
 DEPLOY.local.md
 .serena/
+__pycache__/

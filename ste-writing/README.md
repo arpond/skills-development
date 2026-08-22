@@ -15,8 +15,10 @@ reads naturally). Never applied to code, identifiers, or command syntax.
 **Origin.** Vendored from
 [woosal1337/blog — ep01 "The cure for AI slop"](https://github.com/woosal1337/blog/tree/main/videos/ep01-the-cure-for-ai-slop),
 not authored in this repo. Local changes: the lint script moved to `scripts/`, `python3` became
-`python` in the lint instructions, and a hard-rules table was added to `SKILL.md` to match this
-repo's conventions. Rule content is unchanged. The skill is unofficial and not affiliated with
+`python` in the lint instructions, a hard-rules table was added to `SKILL.md` to match this
+repo's conventions, and the lint script now unwraps hard-wrapped paragraphs before splitting
+sentences (upstream counts each wrapped line as a sentence, so long sentences in wrapped
+markdown never registered). Rule content is unchanged. The skill is unofficial and not affiliated with
 ASD; the full standard is free at https://asd-ste100.org.
 
 Files:

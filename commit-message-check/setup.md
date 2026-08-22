@@ -5,7 +5,7 @@ conventions file. This is a one-time interrogation for whichever file is missing
 exists, later runs never need this file again (the user can always ask for it to be edited
 directly, which doesn't require re-running this bootstrap).
 
-**Create it before checking any commit message** — this is part of the skill, not a separate
+**Create it before checking any commit message.** This is part of the skill, not a separate
 setup step the user has to remember to do first.
 
 The conventions file is organized around the structural parts of a commit message — `## Prefix`,
@@ -40,7 +40,7 @@ something specific, not a vague gesture at "standard practice."
    skill's part-based structure won't already be organized that way, and won't already cover parts
    (like Footer) it never had reason to mention.
 
-2. **Show the full set of parts in one message, defaults included, then ask** — location included,
+2. **Show the full set of parts in one message, defaults included, then ask.** Location included,
    per this project's "one check-in, not two":
 
    - **Location.** Present as two numbered options: 1) personal
@@ -95,13 +95,16 @@ something specific, not a vague gesture at "standard practice."
      `SKILL.md` Step 6), it is not a lower-priority bucket.
 
 3. **Write the file** at whichever path the location question settled on, under the six headings,
-   with the confirmed value for *every* part above — including the ones where the answer was "yes,
-   keep the default." Write out what the default concretely does, don't just write "(default)" as
-   a placeholder that points back at `SKILL.md` — that file may change later, and the conventions
-   file needs to stay a complete, accurate record of what this user actually agreed to at the
-   time, not a pointer that can drift out from under them. Keep the format plain prose/bullets —
-   this file is read by a model, not parsed by code, so there's no fixed schema beyond the six
-   headings themselves. Shape:
+   with the confirmed value for *every* part above, including the ones where the answer was "yes,
+   keep the default."
+   - Write out what the default concretely does. Don't just write "(default)" as a placeholder
+     that points back at `SKILL.md`: that file may change later, and the conventions file needs to
+     stay a complete, accurate record of what this user actually agreed to at the time, not a
+     pointer that can drift out from under them.
+   - Keep the format plain prose/bullets. This file is read by a model, not parsed by code, so
+     there's no fixed schema beyond the six headings themselves.
+
+   Shape:
 
    ```markdown
    # Commit message conventions

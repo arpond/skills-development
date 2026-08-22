@@ -74,7 +74,7 @@ working state or documentation a user reads and hand-edits, which belongs somewh
 don't look for a bare `commit-message-conventions.md` sitting directly at the repo root or inside a
 docs folder, and never create one there.
 
-**Repo root, not project root** — deliberately different from where this repo's other skills put
+**Repo root, not project root.** Deliberately different from where this repo's other skills put
 their artifacts. Commit conventions are a team standard for a whole git repository; a repo holding
 several projects still has one commit history and one set of conventions, so a per-project file
 would fragment a rule that isn't per-project.

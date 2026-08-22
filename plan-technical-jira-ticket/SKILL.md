@@ -12,7 +12,7 @@ change" — a ticket description is written for whoever triages the backlog, not
 to edit files, so it usually under-specifies the actual mechanics and sometimes describes a
 problem or a codebase that's since moved on.
 
-**One principle runs through every step below: ask early rather than assume, because a clarifying
+**One rule runs through every step below: ask early rather than assume, because a clarifying
 question costs seconds but a plan built on a wrong guess costs a re-plan — or worse, an approved
 change that solves the wrong problem.** Each step calls this out where it applies; it isn't
 re-argued from scratch each time.
@@ -48,7 +48,7 @@ table doesn't mean optional.
 | 4 | combined recap (understanding + repo scope) |
 | 5 | stale/diverged checkout, existing work-in-progress, scope bigger than expected |
 | 6 | plan approval (hard rule), pre-presentation checklist (unaddressed AC, drafting assumption, stale ticket claim) |
-| 7 | optional Jira-comment confirm |
+| 7 | optional Jira-comment gate |
 
 *Update this table in the same edit whenever a step gains or loses a gate* — it's a
 mirror of the steps, not independent prose, so it should never need to be reconstructed from
@@ -96,9 +96,9 @@ blocked and an epic), fold them into one message rather than stopping the user o
     rather than describing a known change to make): say so rather than planning it as though the
     fix were already understood. Root-causing a bug — reproducing it, tracing it to an actual
     cause — is a different exercise from planning a change whose shape is already clear, and
-    deserves its own process. Ask whether the user wants a bug-investigation process instead, or
-    — if the root cause is already known and agreed and what's left really is just "make this
-    specific change" — confirm that and proceed on that narrower, already-diagnosed basis.
+    deserves its own process. Ask whether the user wants a bug-investigation process instead. If
+    the root cause is already known and agreed, and what's left really is just "make this
+    specific change", confirm that and proceed on that narrower, already-diagnosed basis.
   - **A feature-building ticket** (new user-facing functionality pulling together multiple
     integrations or systems — a new UI plus a new API plus a third-party service, work a product
     manager scoped rather than an engineer): say so rather than planning it as though it were
@@ -111,13 +111,13 @@ blocked and an epic), fold them into one message rather than stopping the user o
 ## Step 2: Gather full context
 
 Before interpreting what the ticket is actually asking (Step 3), gather everything else that
-might carry context the core fields in Step 1 didn't already surface:
+might carry context the core fields in Step 1 didn't already expose:
 
 - **"Relates to" / other softer links**: usually context rather than a hard constraint — worth a
   quick read for anything that shapes scope or approach (and feeds Step 3's repo-scope read if it
   points at work in another project), but doesn't need the status check Step 1 gives blockers.
-- **Remote/web links** (a Confluence spec, a design doc, a GitHub PR, a Slack thread — surfaced
-  via `mcp__jira__getJiraIssueRemoteIssueLinks`, or just a plain URL sitting in the description or
+- **Remote/web links** (a Confluence spec, a design doc, a GitHub PR, a Slack thread — returned
+  by `mcp__jira__getJiraIssueRemoteIssueLinks`, or just a plain URL sitting in the description or
   a comment): fetch and read these too. Acceptance criteria and design detail often live in a
   linked doc rather than the ticket body itself, so skipping these risks building Step 3's
   understanding on an incomplete picture.
@@ -184,7 +184,7 @@ actually right, and still current?" Look for:
 - Anything genuinely ambiguous or underspecified — e.g. "migrate off the old auth library" without
   saying which parts depend on library-specific behaviour, or "add validation" without saying what
   counts as valid. If a gap like this would change the shape of the plan, ask rather than pick an
-  interpretation and hope; reserve silent, stated assumptions for details that are genuinely
+  interpretation and hope. Reserve silent, stated assumptions for details that are genuinely
   inconsequential (a variable name, the order of two independent edits). If you're unsure whether a
   gap is consequential, that uncertainty is itself a reason to ask.
 - Anything that reads as a claim you can check rather than a decision you have to make: which
@@ -205,9 +205,13 @@ actually right, and still current?" Look for:
 ## Step 4: Recap understanding and scope, then let the user adjust it
 
 Before spending any effort exploring code, put your read of the whole picture in front of the user
-in one go: the ticket's ask as you've understood it, which repo(s) you believe are in scope, and
-any stated assumptions from Step 3. Keep it short — a few lines, not a restatement of the ticket —
-but concrete enough that a misreading would actually show up in it. This is one gate, not two.
+in one go:
+- the ticket's ask as you've understood it
+- which repo(s) you believe are in scope
+- any stated assumptions from Step 3
+
+Keep it short — a few lines, not a restatement of the ticket — but concrete enough that a
+misreading would actually show up in it. This is one gate, not two.
 Fold repo scope and the recap into the same message rather than asking about scope separately and
 then recapping right after, e.g. "Here's what I'm taking this ticket to mean: <summary>. It looks
 like this is scoped to <repo(s)> — let me know if any of that's wrong before I go dig into the
@@ -358,9 +362,9 @@ stopping at the first thing that looks fine:
 - **Stale ticket claims**: did Step 5 turn up a claim in the ticket that conflicts with the current
   codebase — a removed or refactored file/feature, a described behaviour that's no longer
   accurate, debt that's already been cleaned up elsewhere? Don't fold it in as a quiet caveat.
-  Stop and put it to the user before finalizing the plan: what the ticket claims, what you
-  actually found, and how they want to proceed (update the ticket, proceed on the corrected
-  understanding, or something else). A plan built on a stale premise is one the user only
+  Stop and put it to the user before finalizing the plan. Give three things: what the ticket
+  claims, what you actually found, and how they want to proceed (update the ticket, proceed on
+  the corrected understanding, or something else). A plan built on a stale premise is one the user only
   discovers is wrong after it's been acted on.
 
 If Claude Code's plan mode is available, use it naturally (EnterPlanMode / ExitPlanMode) so the
@@ -392,9 +396,7 @@ Implementation is still a reasonable thing for the user to ask for next, and if 
 go ahead and code it, do that rather than insisting on the Jira comment first — the comment is the
 preferred default next step to offer, not a mandatory gate before implementation. If they do want
 to proceed to code, follow the plan and whatever conventions this project's own
-docs/CLAUDE.md/memory establish for how code gets written, tested, and verified here. This skill's
-job was getting from ticket to approved plan; it doesn't change how you write code once that's
-done.
+docs/CLAUDE.md/memory establish for how code gets written, tested, and verified here.
 
 When composing that comment, write it to stand on its own for anyone reading the ticket later,
 not for someone who was in this conversation. Two things that means in practice:

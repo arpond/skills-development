@@ -28,7 +28,7 @@ JQL query), so expect a handful of Jira MCP calls per audit rather than a single
 
 ## What it writes
 
-**By default, nothing.** A single-ticket audit is answered in the conversation. Both outputs below
+**By default, nothing.** A single-ticket audit is answered in the conversation. Both writes below
 happen only if you ask, or if you're auditing several tickets at once — and each is shown in full
 and confirmed before anything is written.
 

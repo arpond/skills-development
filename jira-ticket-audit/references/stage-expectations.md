@@ -7,9 +7,7 @@ file is used and how new entries get added.
 
 Each entry maps status/label signals to what's realistically expected to be filled in at that
 point. This only governs **process placeholders** (unfilled template prompts, blank
-administrative fields) — **content gaps** (missing acceptance criteria, unhandled edge cases the
-ticket's own scope implies) are always reported regardless of stage; they're out of scope for this
-file.
+administrative fields). **Content gaps** are out of scope here; see `SKILL.md` Step 3.
 
 No entries yet — this file starts empty and grows per-installation as `SKILL.md` Step 2 asks
 about and records each new project key it encounters. Shape of an entry, once one exists:

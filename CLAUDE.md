@@ -23,7 +23,7 @@ If the user says yes, run these four checks in order, on whatever was just chang
    never implemented. **N/A when the change is to
    `DESIGN_PHILOSOPHY.md` itself** — checking a file against itself is circular, not a real check;
    skip straight to pass 2. **Also check size, not just the diff**: if the skill's always-loaded
-   core file (the one read on every invocation, not gated behind a trigger condition) is at or
+   core file (the one read on every invocation, not read on a trigger condition) is at or
    above ~500 lines, do a quick whole-file skim — not just the changed lines — specifically for
    Progressive disclosure violations: content that only matters rarely/once but lives in the core
    read anyway. A diff-scoped pass can't catch drift sitting in untouched sections, which is exactly
@@ -47,9 +47,15 @@ If the user says yes, run these four checks in order, on whatever was just chang
    - a concept named by a word in the Vocabulary table's right-hand column — use the left-hand one
 
    `python ste-writing/scripts/ste-lint.py --cap 25 --show <file>` lists the first two with line
-   numbers. It can't tell a rule from its explanation, so read the hits, don't count them. The
-   principle's out-of-scope list (frontmatter, README prose and dialogue, vendored text) and
-   `CONVENTIONS.md`'s open-gap sites aren't findings.
+   numbers. It can't tell a rule from its explanation, so read the hits, don't count them.
+
+   Not findings, for any of the three tests: the principle's out-of-scope list (frontmatter,
+   README prose and dialogue, vendored text) and `CONVENTIONS.md`'s open-gap sites. Not
+   repetition: a hard-rules table row restating its step (the table is an index by spec), a
+   mandated inline copy of a `CONVENTIONS.md` spec, a core file's pointer to a companion, and a
+   README summarising `SKILL.md` (documentation travels with the skill). Repetition is the same
+   rule stated twice in operative prose, or a README procedure and its `SKILL.md` twin drifting
+   apart.
 3. **Gaps.** Functional/logical holes, not wording — contradictory inputs, malformed stored state,
    ambiguous write targets when more than one file/location can hold state, claims about external
    facts (committed, installed, reachable) that are asserted but never checked, third states

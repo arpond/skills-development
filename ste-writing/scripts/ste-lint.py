@@ -88,6 +88,14 @@ def sentences(text):
         out += split_sentences(line)
     return out
 
+def rule_words(s):
+    """Word count for --show: parenthetical examples and a leading bold label
+    don't count toward the cap, since a reader skips them to reach the rule.
+    lint()'s totals keep STE's plain count; this applies only to --show."""
+    s = re.sub(r"\([^()]*\)", " ", s)
+    s = re.sub(r"^\s*\*\*[^*]+\*\*:?\s*", "", s)
+    return wc(s)
+
 def located(text, cap, para_cap=6):
     """Long sentences and long paragraphs with the line each starts on, for
     --show. Line numbers are of the original (unstripped) text, which is why
@@ -96,7 +104,8 @@ def located(text, cap, para_cap=6):
     long_s = []
     for line_no, block in unwrap_blocks(text):
         for s in split_sentences(block):
-            if wc(s) > cap: long_s.append((line_no, wc(s), s))
+            n = rule_words(s)
+            if n > cap: long_s.append((line_no, n, s))
     long_p, line_no = [], 1
     for para in re.split(r"(\n\s*\n)", text):
         if para.strip() and not re.fullmatch(r"\n\s*\n", para):

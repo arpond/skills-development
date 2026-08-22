@@ -100,8 +100,9 @@ other. The rule is ASD-STE100's 1.11; the 875-word dictionary that rule assumes 
 so this table is the whole list.
 
 Unlike the other specs this one has no inline copy. A skill implements it by using the words,
-and conformance is a grep for the right-hand column. Vendored skills (`ste-writing`) keep their
-upstream wording.
+and conformance is a grep for the right-hand column, over every file including frontmatter and
+README prose. Example dialogue quoting how Claude speaks is exempt. Vendored skills
+(`ste-writing`) keep their upstream wording.
 
 **Open gap:** `DESIGN_PHILOSOPHY.md` "One check-in, not two" (heading and anchor), `CLAUDE.md`
 ("see 'one check-in, not two'") still use right-hand names. Renaming that heading means re-pointing every anchor to it, so it's its own edit.

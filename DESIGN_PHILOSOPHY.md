@@ -212,11 +212,20 @@ already separates.
 
 So: state each rule as its own sentence, of at most twenty-five words. The explanation around
 it — the why, the worked failure, the contrast with what it isn't — stays as long as it needs to
-be. The cap is for the sentence a reader would copy into a table, not for the paragraph. Where a
-sentence or paragraph is several instructions rather than one rule with its reasoning, make it a
-list, one instruction per item. A chain of imperatives joined by dashes is the usual disguise. Six
-instructions in one paragraph is six chances to stop reading before the last one; `CLAUDE.md`'s
-review-loop check 1 was the worked instance.
+be. Where a sentence or paragraph is several instructions rather than one rule with its
+reasoning, make it a list, one instruction per item. A chain of imperatives joined by dashes is
+the usual disguise. Six instructions in one paragraph is six chances to stop reading before the
+last one; `CLAUDE.md`'s review-loop check 1 was the worked instance.
+
+**The cap applies to the sentence a reader would copy into a hard-rules table, and that is the
+test, not an illustration.** A sentence is rule-bearing if it belongs in such a table (it fails
+silently when skipped), or if it is an imperative the reader executes as a step. Everything else
+is explanation and has no cap. Within a rule-bearing sentence:
+- Count to the full stop. "Rule — reason" and "rule; reason" are one sentence; if the rule clause
+  alone fits the cap, a full stop at the dash is the whole fix.
+- Parenthetical examples, `e.g.` lists, and a bold label (`**Found nowhere**:`) don't count.
+- A list item that is one instruction plus its reasoning is fine at any length. Split an item only
+  when it carries two or more instructions.
 
 **Which sentence is the rule: the one a reader needs in order to act.** A short bold lead
 followed by a sixty-word sentence carrying the actual mechanics has its rule in the long one, and
@@ -232,8 +241,9 @@ The twenty-five-word cap and the one-instruction-per-item shape are borrowed fro
 (rules 6.3 and 5.2). The rest of that standard deliberately isn't: it strips voice, and the
 reasoning in this file is the voice. `python ste-writing/scripts/ste-lint.py --cap 25 --show
 <file>` lists each sentence over the cap and each paragraph over six sentences, with the line its
-paragraph starts on. It can't tell a rule from its explanation, so its hits are where to look,
-not a verdict.
+paragraph starts on; `--show` skips parentheticals and bold labels when counting, matching the
+rule above. It can't tell a rule from its explanation, so its hits are where to look, not a
+verdict. There is no sentence-count cap on a paragraph; `long_paragraph` is a locator only.
 
 ### Reuse a judgment test, don't invent a parallel one
 

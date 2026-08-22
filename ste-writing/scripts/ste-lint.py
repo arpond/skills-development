@@ -72,8 +72,9 @@ def sentences(text):
         s = re.sub(r"^\s*#{1,6}\s*", "", s)
         s = re.sub(r"^\s*(?:[-*+]|\d+[.)])\s+", "", s)
         if not s: continue
-        # A sentence can open with markdown emphasis (**Also check ...**).
-        parts = re.split(r"(?<=[.!?:])\s+(?=[A-Z0-9\"'\-*_])", s)
+        # A sentence can open with markdown emphasis (**Also check ...**) and
+        # can close with it after the punctuation (**Do this first.** Then ...).
+        parts = re.split(r"(?:(?<=[.!?:])|(?<=[.!?:]\*)|(?<=[.!?:]\*\*))\s+(?=[A-Z0-9\"'\-*_])", s)
         for p in parts:
             p = p.strip()
             if p: out.append(p)

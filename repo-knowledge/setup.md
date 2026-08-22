@@ -23,7 +23,7 @@ which would make this slow and noisy over content that's mostly unrelated (chang
 docs, contributing guides):
 - At the project root: `README.md`, `CLAUDE.md`/`AGENTS.md`, `TSG.md`/`TROUBLESHOOTING.md`,
   `RUNBOOK.md`.
-- The same filenames one level inside a `docs/` or `documentation/` folder, if one exists — don't
+- The same filenames one level inside a `docs/`, `doc/`, or `documentation/` folder, if one exists — don't
   recurse further. A project with docs nested deeper than that needs the on-demand path (below)
   pointed at the specific file, since the automatic scan won't find it.
 

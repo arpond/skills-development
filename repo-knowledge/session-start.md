@@ -52,9 +52,9 @@ This is one of the skill's hard rules (see the table in `SKILL.md`).
 **If it exists but clearly isn't ours, don't touch it, and don't bolt entries onto someone else's
 document.** "Clearly isn't ours" means it reads as unrelated documentation with no `## Entries`
 section and no resemblance to this schema at all, rather than a broken/partial version of it: a
-naming collision, not a malformed file. Say so and ask where this skill's file should live instead
-(a different filename is the obvious fix; note the actual name chosen wherever this skill would
-otherwise assume `KNOWLEDGE.md`).
+naming collision, not a malformed file. Say so and ask where this skill's file should live
+instead; a different filename is the obvious fix. Note the actual name chosen wherever this skill
+would otherwise assume `KNOWLEDGE.md`.
 
 ## Checking whether a judgment-drift review is due
 

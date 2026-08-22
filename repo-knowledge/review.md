@@ -46,8 +46,9 @@ recently, or may confirm it's genuinely gone.
 Whatever the user decides:
 - Confirmed-gone entries are removed outright — no archive section, git history already preserves
   them (see `SKILL.md`'s "no archive section" note).
-- Entries the user wants to keep stay exactly as they are. If an entry had been `needs-review`
-  and the user confirms it's still valid (e.g. the thing moved rather than disappeared), reset
-  `Status` to `active` and update Evidence to the new location instead of leaving it marked.
+- Entries the user wants to keep stay exactly as they are.
+- If a kept entry had been `needs-review` and the user confirms it's still valid (e.g. the thing
+  moved rather than disappeared): reset `Status` to `active`, and update Evidence to the new
+  location instead of leaving it marked.
 - **Bump `Last reviewed:` to today regardless of outcome.** Same as `next-improvement`'s Goals
   check-in — so the next run doesn't re-prompt immediately even if nothing changed.

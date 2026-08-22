@@ -70,8 +70,8 @@ Last reviewed: <YYYY-MM-DD>
 - **No archive section for removed entries.** The file is git-tracked, so a removed entry is fully
   recoverable via `git log`/`git blame` — don't build a second history mechanism for something git
   already gives for free.
-- **Declined** is append-only history, never deleted from, for capture *proposals the user
-  explicitly turned down* — not for candidates the capture bar itself filtered out before ever
+- **Declined** is append-only history, never deleted from. It holds capture *proposals the user
+  explicitly turned down*, not candidates the capture bar itself filtered out before ever
   reaching the user (those aren't logged anywhere; that's the capture bar doing its job, not a
   decline). Distinct from removed entries (which have git history) because a declined proposal was
   never written anywhere, so without this there'd be nothing to check before re-proposing the same
@@ -110,24 +110,22 @@ need one. This applies at every such point in this skill, including any added la
 
 ## Step 0: Find/bootstrap the knowledge file
 
-Read `session-start.md` and follow it before continuing — it covers finding `KNOWLEDGE.md`
+Read `session-start.md` and follow it before continuing. It covers finding `KNOWLEDGE.md`
 (deferring to `setup.md` to bootstrap it if missing), the malformed-file case, and checking
-whether a judgment-drift review is due. It's a second core file, read every run, not gated behind
-a trigger condition; see the intro above for why it's split out. Once it says to,
-continue to Step 1 below.
+whether a judgment-drift review is due. Once it says to, continue to Step 1 below.
 
 ## Step 1: Reference existing knowledge
 
 When current work touches a file, module, command, or area that an existing entry's **Evidence**
-overlaps with, surface that entry rather than letting the same ground get rediscovered.
+overlaps with, surface that entry. Don't let the same ground get rediscovered.
 
-Before relying on it, mechanically check the Evidence pointer still resolves — does the file/
-symbol still exist, does the command still run the way it's described, does the config key still
-exist. This is the staleness check, and it's deliberately event-triggered rather than a full sweep
+Before relying on it, mechanically check the Evidence pointer still resolves. Resolves means: the
+file/symbol still exists; the command still runs the way it's described; the config key still
+exists. This is the staleness check, and it's deliberately event-triggered rather than a full sweep
 of every entry every session: only check the entries actually relevant to what's being touched
 right now, when they're about to be relied on.
 
-- If the pointer still resolves: use the entry, then bump `Last referenced:` to today and
+- If the pointer still resolves: use the entry. Then bump `Last referenced:` to today and
   increment the reference count.
 - If it doesn't:
   - Mark `Status: needs-review` inline and say so plainly in the session.
@@ -137,12 +135,12 @@ right now, when they're about to be relied on.
     reference, and counting it would inflate the usage signal past what it means (see the
     knowledge-file notes above on what the count is for).
 - If an entry is already marked `needs-review` from an earlier session, re-run the check rather
-  than assuming the flag is still accurate — it may have been fixed (Evidence updated, or the
-  underlying thing restored) without anyone clearing the flag. Re-checking is cheap; don't nag
-  about the same flag more than once per session, though — surface it, then move on.
+  than assuming the flag is still accurate. It may have been fixed (Evidence updated, or the
+  underlying thing restored) without anyone clearing the flag. Re-checking is cheap. Don't nag
+  about the same flag more than once per session: surface it, then move on.
 - If more than one relevant entry needs a decision from the user in the same pass (e.g. two
-  touched entries both flagged `needs-review`), number them in one list rather than asking about
-  each in turn — same convention as `review.md`'s candidate list.
+  touched entries both flagged `needs-review`), number them in one list (the numbering rule
+  above).
 - Evidence **pointing outside the current checkout** (another repo — common for cross-repo
   entries) can't be checked from here at all. Treat it as "unreachable isn't resolved" and say
   so, rather than passing, failing, or silently skipping it.
@@ -167,7 +165,7 @@ with noise:
      commit message have covered this."
    - Already recorded in `KNOWLEDGE.md`, in substance, under a different title or wording? If a
      candidate is genuinely the same fact as an existing entry (or a refinement of it — a broader
-     case, an updated workaround, Evidence that's moved), don't propose a duplicate: propose an
+     case, an updated workaround, Evidence that's moved), don't propose a duplicate. Propose an
      **edit to the existing entry** instead, and say what's changing and why. If it's a
      genuinely distinct fact that merely touches the same area, a new entry is fine — the test is
      substance, not just topical overlap.
@@ -190,31 +188,34 @@ If it clears the bar:
 - Propose a concise entry (title, description, Evidence, Captured) and wait for confirmation
   before writing anything. This is one of the skill's hard rules (see the table above): capture
   is a recommendation, not a decision.
-- If more than one candidate clears the bar in the same pass, number them in one list rather than
-  proposing them one at a time.
+- If more than one candidate clears the bar in the same pass, number them in one list (the
+  numbering rule above).
 - Match `KNOWLEDGE.md`'s existing format and voice for whatever gets added.
 - **If declined, add it to `Declined` with the reason given** (or your best summary of it if
   terse) rather than just dropping it. That's what makes the check above work next time.
 
 **Never write secrets, credentials, or PII into an entry or a `Declined` line.** If a capture
-candidate — or the reason for declining one — touches something sensitive (an internal URL, a
-credential, customer data specifics), say so explicitly and ask how to phrase it safely rather than
-writing the sensitive detail verbatim. This is a hard rule, not a judgment call to skip under time
+candidate, or the reason for declining one, touches something sensitive (an internal URL, a
+credential, customer data specifics), say so explicitly and ask how to phrase it safely. Don't
+write the sensitive detail verbatim. This is a hard rule, not a judgment call to skip under time
 pressure.
 
 ## Step 3: Removal
 
 Three triggers, and only these three — removal is never time-based or automatic:
 
-- **A fix supersedes the entry.** When a change fixes the root cause an entry describes, remove
-  the entry as part of that same change. Mention it in the session rather than doing it
-  invisibly; low-stakes given git history, but still a change worth naming. **Don't rely solely on
-  Step 1 having already surfaced the entry.** A root-cause fix often lands in a different file
-  than the entry's Evidence points at (Evidence tends to record where the symptom showed up, not
-  necessarily where the eventual fix happens), so Step 1's file-overlap check can miss it
-  entirely. **After fixing a root cause, check `KNOWLEDGE.md` for a matching entry before moving
-  on.** The mechanical check in Step 1 only verifies a pointer still resolves, not that the
-  behavior it describes is still true, so a genuinely-fixed bug won't surface itself on its own.
+- **A fix supersedes the entry.**
+  - When a change fixes the root cause an entry describes, remove the entry as part of that same
+    change.
+  - Mention it in the session rather than doing it invisibly; low-stakes given git history, but
+    still a change worth naming.
+  - **After fixing a root cause, check `KNOWLEDGE.md` for a matching entry before moving on.**
+    Don't rely solely on Step 1 having already surfaced it. A root-cause fix often lands in a
+    different file than the entry's Evidence points at (Evidence tends to record where the symptom
+    showed up, not necessarily where the eventual fix happens), so Step 1's file-overlap check can
+    miss it entirely. The mechanical check in Step 1 only verifies a pointer still resolves, not
+    that the behavior it describes is still true, so a genuinely-fixed bug won't surface itself on
+    its own.
 - **The mechanical check fails and the user confirms it's actually gone.** Step 1 marking
   `Status: needs-review` isn't enough on its own (a failed pointer check could mean the thing
   moved, not that it's resolved). Confirm with the user before removing.

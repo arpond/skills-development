@@ -57,33 +57,32 @@ something specific, not a vague gesture at "standard practice."
        anything.
 
    - **Prefix.** No built-in default (most users don't use one). Does this user's work involve
-     ticket keys (Jira, Linear, GitHub issues) that should prefix commit subjects? If yes: what
-     format, which repos it applies to (a detection rule the skill can check against, e.g. "repos
-     with existing TICKET-#### history"), what to do when no ticket is known (a placeholder,
-     and/or a rule for when to stop and ask instead of defaulting for non-trivial work). If no:
-     record that explicitly.
-   - **Subject.** Built-in default: imperative mood, no trailing period, well under 72 characters,
-     always names the object of the verb (`Fix broken retry loop`, not bare `Fix`). Show this
-     concretely, ask if it fits or if anything should change or be added (e.g. a language/spelling
-     convention belongs under Whole-message instead, not here — see below).
+     ticket keys (Jira, Linear, GitHub issues) that should prefix commit subjects? If yes, record
+     the three things `SKILL.md` Step 1 needs: the format, which repos it applies to (a detection
+     rule), and what to do when no ticket is known. If no: record that explicitly.
+   - **Subject.** Built-in default: the four rules `SKILL.md` Step 2 lists. Show them verbatim,
+     with an example (`Fix broken retry loop`, not bare `Fix`). Ask if it fits or if anything
+     should change or be added (e.g. a language/spelling convention belongs under Whole-message
+     instead, not here — see below).
    - **Body — whether one's needed.** Built-in default: no body unless the subject genuinely can't
      carry the why. Ask if that fits, or whether this user wants something else (always a body,
      never a body, a specific template).
    - **Body — format.** No built-in default (a formatting choice, not a git convention): ask which
      of 1) bulleted list, 2) free prose, or 3) something else (name it) — as a numbered choice, not
      a prose "or" list.
-   - **Body — strip-test (optional).** Not a `SKILL.md` built-in, just an option to offer: delete
-     every proper noun/class/function/library/config-key name from a bullet, check what's left
-     still reads as a complete, standalone rationale, rewrite if not. If wanted, write the full
-     procedure into `## Body` — the conventions file is the only place this technique's definition
-     lives, so spell it out in full rather than "strip-test: on". If not wanted, skip it; the light
-     default above is already a complete, valid choice on its own.
+   - **Body — strip-test (optional).** Not a `SKILL.md` built-in, just an option to offer:
+     1. Delete every proper noun/class/function/library/config-key name from a bullet.
+     2. Check what's left still reads as a complete, standalone rationale.
+     3. Rewrite the bullet if not.
+
+     If wanted, write the full procedure into `## Body`; the conventions file is the only place
+     this technique's definition lives, so spell it out in full rather than "strip-test: on". If
+     not wanted, skip it; the light default above is already a complete, valid choice on its own.
    - **Footer.** No built-in default. Does this user want anything appended after the body —
      a required link (ticket, PR, doc), a co-author trailer policy, anything else that goes at the
      end? If no: record that explicitly rather than leaving it blank and ambiguous.
-   - **Whole-message.** Built-in default: always scan the finished message for `Claude`,
-     `Anthropic`, `Generated with`, any AI-naming `Co-Authored-By`, `Claude-Session`, or similar,
-     and strip it. Show this list as a numbered choice: 1) stay as-is, 2) add/remove specific items
+   - **Whole-message.** Built-in default: the AI-authorship scan `SKILL.md` Step 5 lists. Show
+     that list verbatim as a numbered choice: 1) stay as-is, 2) add/remove specific items
      (name them), 3) this user actually wants an AI-attribution trailer included by default (rare,
      but don't assume against it). Also ask here about anything that applies
      uniformly across the whole message rather than to one part — a language/spelling variant

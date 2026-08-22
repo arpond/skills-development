@@ -68,7 +68,7 @@ Two possible locations, checked in this order:
    team's shared, committed convention — if it exists, it's not one person's file to silently
    defer to or override.
 2. **Personal**: `~/.claude/commit-message-conventions.md` (the user's home directory on whichever
-   machine this is running on — never a path copied from a different machine or account).
+   machine this is running on). Never use a path copied from a different machine or account.
 
 **Both paths are `.claude/`, deliberately, and that's also where a new one gets created.** This is
 **config** — a file the skill reads on every run and a human opens rarely — as distinct from
@@ -84,8 +84,10 @@ would fragment a rule that isn't per-project.
 Read whichever exist, in full, fresh every run. Don't work from a paraphrased memory of either;
 they can be edited any time, and a stale mental copy defeats the point of keeping them external.
 **Precedence is per heading, not whole-file:**
-- For each of the six headings, use the repo-level file's version if it defines that heading,
-  otherwise the personal file's version, otherwise the built-in default (Steps 2 and 5 below).
+- For each of the six headings, take the first of these that defines it:
+  1. the repo-level file
+  2. the personal file
+  3. the built-in default (Steps 2 and 5 below)
 - An empty or absent heading in either file falls through to the next source. It doesn't mean the
   matching step gets skipped without looking.
 
@@ -104,8 +106,7 @@ bootstrapping over it. Show the user what was found and ask them to pick, as a n
 
 ## Step 1 — Prefix
 
-Not every user or repo uses a ticket-key or other prefix — this step is conditional on whether
-`## Prefix` has any rules, not a universal requirement.
+This step is conditional on `## Prefix` having any rules; not every user or repo uses a prefix.
 
 If it does, it should specify:
 - which repos it applies to (a detection rule, e.g. "repos with existing TICKET-#### style
@@ -169,8 +170,7 @@ footer to add.
 Check the fully composed message (prefix + subject + body + footer together) against
 `## Whole-message`, per the iteration rule above. Those are rules that apply uniformly across the
 entire text rather than to one part (e.g. a language/spelling convention, a tone rule). One
-built-in default always applies here regardless of what the conventions file says, unless it
-explicitly opts out for a specific commit:
+built-in default always applies here regardless of what the conventions file says:
 
 - Scan for `Claude`, `Anthropic`, `Generated with`, any `Co-Authored-By` naming an AI,
   `Claude-Session`, or any other harness-injected AI-authorship trailer. Strip it immediately.
@@ -186,8 +186,8 @@ part at once).
 
 ## Step 7 — Only now, show it or commit it
 
-The message may only be shown to the user or passed to `git commit` once Steps 1-6 have all been
-walked through for *this* draft, not carried over from an earlier draft in the same conversation.
+**Show or commit the message only after Steps 1-6 have run on *this* draft.** An earlier draft's
+walk-through in the same conversation doesn't count.
 - If the user pushes back on something you show them, the checklist was skipped or rushed. Go
   back to Step 1 on the corrected version rather than only patching the specific complaint they
   happened to notice.

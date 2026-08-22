@@ -79,17 +79,19 @@ site added later inherits the rule instead of having to rediscover it.
 One name per concept, across every file in this repo and every skill's own text. A concept named
 two ways reads as two concepts: the reader has to guess whether "check-in" and "gate" differ, and
 a grep for one misses the other. Qualifying a canonical term is fine (`write gate`, `core file`).
-Substituting a synonym for it is not.
+Substituting a synonym for it is not. The reverse holds too: a canonical term carries one meaning,
+so `gate` is never a read condition and `surface` is never a data tag.
 
 | Term | Means | Not |
 |---|---|---|
-| gate | a point where a skill shows a proposed action and waits for the user's answer before doing it | confirm-point, confirmation (as the point itself) |
-| surface | tell the user something without waiting for an answer | flag, raise (when telling the user is meant — an audit still *flags* a finding) |
+| gate | a point where a skill shows a proposed action and waits for the user's answer before doing it; "wait for confirmation" names the act and is fine | confirm-point, confirmation (as the point itself), check-in (outside `next-improvement`) |
+| surface | tell the user something without waiting for an answer | flag, raise (as verbs meaning tell the user). Exempt: `flag` as a noun or tag (`reassess flag`), an audit flagging a finding in its report, notes inside a plan or template that aren't addressed to the user |
 | check-in | a question folded into `next-improvement`'s session-start message; it blocks only the write it asks about | — (a `check-in` is a gate with a fixed home; say `gate` everywhere else) |
+| read condition | a setting value that decides whether a companion file is read, or whether a mode's pick is shown | gate |
 | principle | an entry in `DESIGN_PHILOSOPHY.md` | bullet |
 | spec | an entry in this file | convention, rule (when a spec is meant) |
 | hard rule | a rule that fails silently when skipped, indexed in a skill's hard-rules table | — |
-| core file | the skill file read on every invocation | always-loaded file, base file |
+| core file | any skill file read on every invocation; a skill can have more than one (`SKILL.md` plus a `session-start.md`) | always-loaded file, base file, companion file (for an every-run file) |
 | companion file | a skill file read only when its trigger condition is met | — |
 | artifact | a file a skill maintains inside the user's project | output, state file |
 
@@ -104,6 +106,7 @@ upstream wording.
 **Open gap:** `DESIGN_PHILOSOPHY.md` "One check-in, not two" (heading and anchor), `CLAUDE.md`
 ("see 'one check-in, not two'"), and `plan-technical-jira-ticket`'s `Confirm-point(s)` column still use
 right-hand names. Renaming that heading means re-pointing every anchor to it, so it's its own edit.
+Sites listed under an open gap are known; a review doesn't re-report them.
 
 ## The hard-rules table
 

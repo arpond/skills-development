@@ -210,18 +210,30 @@ for, one level down. A rule that isn't its own sentence also can't be indexed, g
 in a review without trimming it, so the two go together: the table can only hold what the prose
 already separates.
 
-So: state each rule as its own sentence, under twenty-five words. The explanation around it —
-the why, the worked failure, the contrast with what it isn't — stays as long as it needs to be.
-The cap is for the sentence a reader would copy into a table, not for the paragraph. Where a
+So: state each rule as its own sentence, of at most twenty-five words. The explanation around
+it — the why, the worked failure, the contrast with what it isn't — stays as long as it needs to
+be. The cap is for the sentence a reader would copy into a table, not for the paragraph. Where a
 sentence or paragraph is several instructions rather than one rule with its reasoning, make it a
-list, one instruction per item. A chain of imperatives joined by dashes is the usual disguise. Six instructions in one paragraph is six chances to stop reading before
-the last one; `CLAUDE.md`'s review-loop check 1 was the worked instance.
+list, one instruction per item. A chain of imperatives joined by dashes is the usual disguise. Six
+instructions in one paragraph is six chances to stop reading before the last one; `CLAUDE.md`'s
+review-loop check 1 was the worked instance.
+
+**Which sentence is the rule: the one a reader needs in order to act.** A short bold lead
+followed by a sixty-word sentence carrying the actual mechanics has its rule in the long one, and
+that is the sentence to split. The usual end-loaded shape is "If ‹forty-word condition›, ‹rule›
+rather than ‹contrast›": condition as its own sentence, then the rule, then the contrast.
+
+Out of scope: a skill's frontmatter `description` (trigger text, one sentence by construction),
+README prose and example dialogue (a human reads the prose, and dialogue quotes how Claude
+speaks), and a vendored skill's upstream text. README procedures — install steps, a refresh
+command — are in scope.
 
 The twenty-five-word cap and the one-instruction-per-item shape are borrowed from ASD-STE100
 (rules 6.3 and 5.2). The rest of that standard deliberately isn't: it strips voice, and the
-reasoning in this file is the voice. `ste-writing/scripts/ste-lint.py --json <file>` counts
-sentences over the cap (`long_sentence`) and paragraphs over six sentences (`long_paragraph`).
-It can't tell a rule from its explanation, so its hits are where to look, not a verdict.
+reasoning in this file is the voice. `python ste-writing/scripts/ste-lint.py --cap 25 --show
+<file>` lists each sentence over the cap and each paragraph over six sentences, with the line its
+paragraph starts on. It can't tell a rule from its explanation, so its hits are where to look,
+not a verdict.
 
 ### Reuse a judgment test, don't invent a parallel one
 

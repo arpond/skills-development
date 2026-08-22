@@ -35,8 +35,10 @@ when then than not no is are was were be been being am do does did has have had 
 may might must should shall it its their your our his her they we you i""".split())
 
 def strip_code(t):
-    t = re.sub(r"```.*?```", " ", t, flags=re.S)
-    t = re.sub(r"`[^`]*`", " ", t)
+    # Keep the newlines a fenced block spans, so line numbers stay true and
+    # the paragraphs either side of a block aren't merged into one.
+    t = re.sub(r"```.*?```", lambda m: "\n" * m.group(0).count("\n"), t, flags=re.S)
+    t = re.sub(r"`[^`\n]*`", " ", t)
     return t
 
 # Lines that stand alone: headings, table rows, horizontal rules. List items
@@ -44,41 +46,64 @@ def strip_code(t):
 STANDALONE = re.compile(r"^\s*(?:#{1,6}\s|\||-{3,}\s*$|\*{3,}\s*$)")
 LIST_START = re.compile(r"^\s*(?:[-*+]|\d+[.)])\s+")
 
-def unwrap(text):
-    """Join hard-wrapped lines into one line per paragraph or list item.
-    A wrapped line is not a sentence boundary: without this, a 90-word
-    sentence wrapped at 100 columns counts as five short ones and the
-    long-sentence and long-paragraph checks never fire on wrapped markdown."""
-    out, buf = [], []
+def unwrap_blocks(text):
+    """Join hard-wrapped lines into one block per paragraph or list item.
+    Returns (first_line_number, text) pairs, 1-based. A wrapped line is not a
+    sentence boundary: without this, a 90-word sentence wrapped at 100 columns
+    counts as five short ones and the long-sentence and long-paragraph checks
+    never fire on wrapped markdown."""
+    out, buf, start = [], [], 0
     def flush():
         if buf:
-            out.append(" ".join(buf)); buf.clear()
-    for line in text.split("\n"):
+            out.append((start, " ".join(buf))); buf.clear()
+    for n, line in enumerate(text.split("\n"), 1):
         s = line.strip()
         if not s or STANDALONE.match(line):
-            flush(); out.append(line)
+            flush(); out.append((n, line))
         elif LIST_START.match(line):
-            flush(); buf.append(s)
+            flush(); start = n; buf.append(s)
         else:
+            if not buf: start = n
             buf.append(s)
     flush()
-    return "\n".join(out)
+    return out
+
+def unwrap(text):
+    return "\n".join(t for _, t in unwrap_blocks(text))
+
+def split_sentences(line):
+    s = line.strip()
+    if not s: return []
+    s = re.sub(r"^\s*#{1,6}\s*", "", s)
+    s = re.sub(r"^\s*(?:[-*+]|\d+[.)])\s+", "", s)
+    if not s: return []
+    # A sentence can open with markdown emphasis (**Also check ...**) and
+    # can close with it after the punctuation (**Do this first.** Then ...).
+    parts = re.split(r"(?:(?<=[.!?:])|(?<=[.!?:]\*)|(?<=[.!?:]\*\*))\s+(?=[A-Z0-9\"'\-*_])", s)
+    return [p.strip() for p in parts if p.strip()]
 
 def sentences(text):
     out = []
-    for line in unwrap(text).split("\n"):
-        s = line.strip()
-        if not s: continue
-        s = re.sub(r"^\s*#{1,6}\s*", "", s)
-        s = re.sub(r"^\s*(?:[-*+]|\d+[.)])\s+", "", s)
-        if not s: continue
-        # A sentence can open with markdown emphasis (**Also check ...**) and
-        # can close with it after the punctuation (**Do this first.** Then ...).
-        parts = re.split(r"(?:(?<=[.!?:])|(?<=[.!?:]\*)|(?<=[.!?:]\*\*))\s+(?=[A-Z0-9\"'\-*_])", s)
-        for p in parts:
-            p = p.strip()
-            if p: out.append(p)
+    for _, line in unwrap_blocks(text):
+        out += split_sentences(line)
     return out
+
+def located(text, cap, para_cap=6):
+    """Long sentences and long paragraphs with the line each starts on, for
+    --show. Line numbers are of the original (unstripped) text, which is why
+    strip_code keeps newlines."""
+    text = strip_code(text)
+    long_s = []
+    for line_no, block in unwrap_blocks(text):
+        for s in split_sentences(block):
+            if wc(s) > cap: long_s.append((line_no, wc(s), s))
+    long_p, line_no = [], 1
+    for para in re.split(r"(\n\s*\n)", text):
+        if para.strip() and not re.fullmatch(r"\n\s*\n", para):
+            n = len(sentences(para))
+            if n > para_cap: long_p.append((line_no, n, para.strip().split("\n")[0]))
+        line_no += para.count("\n")
+    return long_s, long_p
 
 def wc(s):
     return len([w for w in re.findall(r"[A-Za-z0-9][A-Za-z0-9'\-/]*", s)])
@@ -107,14 +132,14 @@ def noun_trains(text):
                 run = []
     return hits
 
-def lint(text, strict=False):
+def lint(text, strict=False, cap=20):
     raw = text
     text = strip_code(text)
     sents = sentences(text)
     words = sum(wc(s) for s in sents) or 1
     v = {}
-    longs = [(wc(s), s) for s in sents if wc(s) > 20]
-    v["long_sentence(>20w)"] = len(longs)
+    longs = [(wc(s), s) for s in sents if wc(s) > cap]
+    v[f"long_sentence(>{cap}w)"] = len(longs)
     v["semicolon"] = text.count(";")
     v["contraction"] = len(re.findall(r"\b\w+['’](?:t|re|ve|ll|d|s|m)\b", text))
     passive_parts = re.findall(rf"\b{BE}\s+(\w+ed|{PP_IRREG})\b", text, re.I)
@@ -155,30 +180,44 @@ def lint(text, strict=False):
     }
 
 if __name__ == "__main__":
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     args = sys.argv[1:]
     strict = "--strict" in args
     as_json = "--json" in args
+    show = "--show" in args        # list each long sentence/paragraph with its line
     fail_over = None
     if "--fail-over" in args:
         i = args.index("--fail-over")
         fail_over = float(args[i + 1])
         del args[i:i + 2]
-    files = [a for a in args if a not in ("--strict", "--json")]
+    cap = 20                        # --cap N: long-sentence threshold (STE: 20 instruction, 25 descriptive)
+    if "--cap" in args:
+        i = args.index("--cap")
+        cap = int(args[i + 1])
+        del args[i:i + 2]
+    files = [a for a in args if a not in ("--strict", "--json", "--show")]
     worst = 0.0
     if not files:
         sys.stdin.reconfigure(encoding="utf-8")
-        r = lint(sys.stdin.read(), strict=strict)
+        r = lint(sys.stdin.read(), strict=strict, cap=cap)
         print(json.dumps(r, indent=2))
         worst = r["total_per100w"]
     else:
         exp = []
         for f in files: exp += sorted(glob.glob(f)) if any(c in f for c in "*?[") else [f]
         for f in exp:
-            with open(f, encoding="utf-8") as fh: r = lint(fh.read(), strict=strict)
+            with open(f, encoding="utf-8") as fh: text = fh.read()
+            r = lint(text, strict=strict, cap=cap)
             worst = max(worst, r["total_per100w"])
             if as_json:
                 print(json.dumps({"file": f, **r}, indent=2))
             else:
                 print(f"{os.path.basename(f):32} words={r['words']:4d} total={r['total']:3d} per100w={r['total_per100w']:6.2f} em_dash={r['em_dash(slop-marker)']:2d}")
+            if show:
+                long_s, long_p = located(text, cap)
+                for line_no, n, s in long_s:
+                    print(f"  {f}:{line_no}: [{n}w] {s}")
+                for line_no, n, first in long_p:
+                    print(f"  {f}:{line_no}: [{n} sentences] {first[:80]}")
     if fail_over is not None and worst > fail_over:
         sys.exit(1)

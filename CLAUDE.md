@@ -41,12 +41,15 @@ If the user says yes, run these four checks in order, on whatever was just chang
 
    Three concrete tests, from `DESIGN_PHILOSOPHY.md`'s "A rule is a sentence" and
    `CONVENTIONS.md`'s "Vocabulary":
-   - a rule not in its own sentence, or in one over twenty-five words — split it
+   - a rule not in its own sentence, or in one over twenty-five words — split it (exactly
+     twenty-five passes)
    - several instructions in one sentence or paragraph — make it a list, one per item
    - a concept named by a word in the Vocabulary table's right-hand column — use the left-hand one
 
-   `python ste-writing/scripts/ste-lint.py --json <file>` counts the first two (`long_sentence`,
-   `long_paragraph`). It can't tell a rule from its explanation, so read the hits, don't count them.
+   `python ste-writing/scripts/ste-lint.py --cap 25 --show <file>` lists the first two with line
+   numbers. It can't tell a rule from its explanation, so read the hits, don't count them. The
+   principle's out-of-scope list (frontmatter, README prose and dialogue, vendored text) and
+   `CONVENTIONS.md`'s open-gap sites aren't findings.
 3. **Gaps.** Functional/logical holes, not wording — contradictory inputs, malformed stored state,
    ambiguous write targets when more than one file/location can hold state, claims about external
    facts (committed, installed, reachable) that are asserted but never checked, third states

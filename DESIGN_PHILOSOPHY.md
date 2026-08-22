@@ -213,8 +213,8 @@ already separates.
 So: state each rule as its own sentence, under twenty-five words. The explanation around it —
 the why, the worked failure, the contrast with what it isn't — stays as long as it needs to be.
 The cap is for the sentence a reader would copy into a table, not for the paragraph. Where a
-block is several instructions rather than one rule with its reasoning, make it a list, one
-instruction per item. Six instructions in one paragraph is six chances to stop reading before
+sentence or paragraph is several instructions rather than one rule with its reasoning, make it a
+list, one instruction per item. A chain of imperatives joined by dashes is the usual disguise. Six instructions in one paragraph is six chances to stop reading before
 the last one; `CLAUDE.md`'s review-loop check 1 was the worked instance.
 
 The twenty-five-word cap and the one-instruction-per-item shape are borrowed from ASD-STE100

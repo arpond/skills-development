@@ -42,7 +42,7 @@ If the user says yes, run these four checks in order, on whatever was just chang
    Three concrete tests, from `DESIGN_PHILOSOPHY.md`'s "A rule is a sentence" and
    `CONVENTIONS.md`'s "Vocabulary":
    - a rule not in its own sentence, or in one over twenty-five words — split it
-   - several instructions in one paragraph — make it a list, one per item
+   - several instructions in one sentence or paragraph — make it a list, one per item
    - a concept named by a word in the Vocabulary table's right-hand column — use the left-hand one
 
    `python ste-writing/scripts/ste-lint.py --json <file>` counts the first two (`long_sentence`,

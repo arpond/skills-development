@@ -83,8 +83,9 @@ Substituting a synonym for it is not.
 
 | Term | Means | Not |
 |---|---|---|
-| gate | a point where a skill shows a proposed action and waits for the user's answer before doing it | check-in, confirm-point, confirmation (as the point itself) |
-| surface | tell the user something without waiting for an answer | flag, raise, report |
+| gate | a point where a skill shows a proposed action and waits for the user's answer before doing it | confirm-point, confirmation (as the point itself) |
+| surface | tell the user something without waiting for an answer | flag, raise (when telling the user is meant — an audit still *flags* a finding) |
+| check-in | a question folded into `next-improvement`'s session-start message; it blocks only the write it asks about | — (a `check-in` is a gate with a fixed home; say `gate` everywhere else) |
 | principle | an entry in `DESIGN_PHILOSOPHY.md` | bullet |
 | spec | an entry in this file | convention, rule (when a spec is meant) |
 | hard rule | a rule that fails silently when skipped, indexed in a skill's hard-rules table | — |
@@ -101,7 +102,7 @@ and conformance is a grep for the right-hand column. Vendored skills (`ste-writi
 upstream wording.
 
 **Open gap:** `DESIGN_PHILOSOPHY.md` "One check-in, not two" (heading and anchor), `CLAUDE.md`
-("see 'one check-in, not two'"), and `commit-message-check`'s `Confirm-point(s)` column still use
+("see 'one check-in, not two'"), and `plan-technical-jira-ticket`'s `Confirm-point(s)` column still use
 right-hand names. Renaming that heading means re-pointing every anchor to it, so it's its own edit.
 
 ## The hard-rules table

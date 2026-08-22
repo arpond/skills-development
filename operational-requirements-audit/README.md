@@ -130,9 +130,9 @@ Claude: [invokes operational-requirements-audit — narrow scope, so it reads
 
 ## Keeping the ORs current
 
-The bundled reference is a snapshot, not a live feed. When Findmypast's Discourse ORs change, re-save
-the affected topics as HTML ("Save Page As" — only the first post matters, later replies are
-discussion) into a folder, then run:
+The bundled reference is a snapshot, not a live feed. When Findmypast's Discourse ORs change,
+re-save the affected topics as HTML into a folder ("Save Page As" — only the first post matters,
+later replies are discussion). Then run:
 
 ```
 python scripts/extract_ors.py <path_to_html_export_folder> references/operational-requirements.md

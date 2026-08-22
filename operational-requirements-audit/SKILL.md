@@ -26,7 +26,8 @@ inside it. Absence from this table doesn't mean optional.
 | 1 | If the repo holds more than one independently-deployed service, ask which service(s) are in scope rather than auditing the whole repo as one undifferentiated thing |
 | 3 | Treat the repo's own README/TSG/docs as claims, not proof — verify against actual config/code before crediting a verdict to them |
 | 3 | Never quote a secret/credential value into an evidence citation — cite the file/line/key instead |
-| 4 | For a narrow, single-OR question, answer conversationally by default; only write the report file for a full (or explicitly multi-OR) audit, or if asked |
+| 4 | For a narrow, single-OR question, answer conversationally by default |
+| 4 | Write the report file only for a full (or explicitly multi-OR) audit, or if asked |
 | 4 | Show the summary table and wait for confirmation before writing the report file |
 | 4 | If a report file of the same name already exists, say so explicitly before overwriting it |
 
@@ -37,51 +38,58 @@ inside it. Absence from this table doesn't mean optional.
 Work out which repo/service is being audited (current working directory if that's clearly what's
 meant, git repo or not; otherwise ask) and whether the user wants a full audit (all ORs) or just a
 subset (e.g. "just check the database ORs" or "does this meet the backups requirement?"). For a
-partial request, only investigate and report on the ORs actually asked about — don't pad the report
-with the rest, and don't force a written report file for a single quick question (see Step 4).
+partial request, only investigate and report on the ORs actually asked about. Don't pad the
+report with the rest. Don't force a written report file for a single quick question (see Step 4).
 
 If the repo is a monorepo holding several independently-deployed services (common in Findmypast
-repos — check for multiple deployment manifests, separate `Dockerfile`s, or a services/apps-style
-top-level layout), ORs apply per-service, not per-repo: a top-tier-only OR like database failover
-might apply to one service and not another in the same checkout. List the discovered services as
-a numbered choice and ask which are in scope, rather than guessing or silently auditing everything
-as one blob — fold this into the same scope question as full-vs-subset above, one check-in rather
-than two. Whatever's chosen, the
+repos), ORs apply per-service, not per-repo: a top-tier-only OR like database failover might
+apply to one service and not another in the same checkout.
+- Detect it by multiple deployment manifests, separate `Dockerfile`s, or a services/apps-style
+  top-level layout.
+- List the discovered services as a numbered choice and ask which are in scope. Don't guess or
+  silently audit everything as one blob.
+- Fold this into the same scope question as full-vs-subset above: one gate, not two.
+
+Whatever's chosen, the
 eventual report (if one is written) lands at that scope's own root — the repo root for a
 whole-repo/single-service repo, or the specific service's subdirectory when scoped to one service
 within a monorepo.
 
-**Check for a prior audit first.** If a report from an earlier run already exists at that location
-but doesn't match the per-OR table structure in Step 4 (hand-edited, partial, an older format) —
-a different failure mode from "no prior report" — don't feed it into the re-verify step as if it
-were valid: say what was found and ask whether to re-derive from scratch or attempt to re-verify
-it anyway. Otherwise, treat its verdicts as a starting hypothesis, not a rubber stamp — cheaply
-re-check whether each cited evidence path still exists and still says what it did, the same
-"mechanical check" discipline as re-grounding any stored judgement. Verdicts whose evidence still
-holds can be carried forward without re-deriving them from scratch; anything whose evidence has
-moved, changed, or disappeared
-needs a fresh look. This keeps repeat audits fast and consistent instead of silently drifting from
-run to run — but only applies when a prior report is actually found; don't go looking for one that
-isn't there, and always do a full fresh investigation if the user explicitly asks for one.
+**Check for a prior audit first.**
+- None at that location: skip this. Don't go looking for one that isn't there.
+- One exists but doesn't match the per-OR table structure in Step 4 (hand-edited, partial, an
+  older format): a different failure mode from "no prior report". Don't feed it into the
+  re-verify step as if it were valid. Say what was found and ask whether to re-derive from
+  scratch or attempt to re-verify it anyway.
+- One exists and is well-formed: treat its verdicts as a starting hypothesis, not a rubber stamp.
+  Cheaply re-check whether each cited evidence path still exists and still says what it did, the
+  same "mechanical check" discipline as re-grounding any stored judgement. Verdicts whose evidence
+  still holds carry forward without re-deriving them; anything whose evidence has moved, changed,
+  or disappeared needs a fresh look.
+- If the user explicitly asks for a full fresh investigation, do that regardless.
+
+This keeps repeat audits fast and consistent instead of silently drifting from run to run.
 
 ## Step 2: Read the bundled ORs
 
 Read `references/operational-requirements.md` in full before auditing anything. It's organized by
 category, each entry carrying the requirement's own text (first-post-only — Discourse reply/
 discussion content is intentionally excluded, since that's debate, not the requirement itself).
-Treat this file as the source of truth for wording; don't rely on background knowledge of what an
-OR "generally" says, since requirements get refined over time and the specific phrasing (e.g.
+Treat this file as the source of truth for wording. Don't rely on background knowledge of what an
+OR "generally" says; requirements get refined over time, and the specific phrasing (e.g.
 "only *if* your service uses a database", "*if* top-tier service") drives whether something is
 even applicable.
 
 **Check the file's actual age before relying on it.** Don't lean on "if it looks out of date" as
-the only signal, that's a soft heuristic easy to skip past. Run `git log -1 --format=%ai --
-references/operational-requirements.md` (from this skill's own install directory) once per audit;
-if it's been more than ~12 months since the last extraction, say so explicitly alongside the
-report as a caveat on every verdict, rather than silently trusting text that's plausibly stale —
-this is a cheap, mechanical check, not a judgment call, so it costs nothing to run every time. If
-the audit *also* surfaces something that reads as out of date relative to current Findmypast
-practice, say that too; see "Keeping the ORs current" below.
+the only signal; that's a soft heuristic easy to skip past.
+- Run `git log -1 --format=%ai -- references/operational-requirements.md` (from this skill's own
+  install directory) once per audit.
+- If it's been more than ~12 months since the last extraction, say so explicitly alongside the
+  report as a caveat on every verdict. Don't silently trust text that's plausibly stale.
+- If the audit *also* surfaces something that reads as out of date relative to current Findmypast
+  practice, say that too; see "Keeping the ORs current" below.
+
+This is a cheap, mechanical check, not a judgment call, so it costs nothing to run every time.
 
 ## Step 3: Investigate each OR with real evidence
 
@@ -113,11 +121,12 @@ precondition doesn't hold, the verdict is **N/A**, with a one-line reason citing
 **Depth over speed.** This is a "deep per-OR investigation" audit, not a keyword-existence check —
 grep for evidence, then open the actual file to confirm it does what the OR requires (e.g. finding
 a `dashboards/` folder isn't enough; check it actually renders the business metrics the OR asks
-for). For a large/monorepo target where this would mean auditing many independent services,
-consider parallelizing the investigation with the Explore agent (one per category or per service),
-then synthesize their findings yourself into the single report in Step 4 — don't let subagents
-write the report directly, since the verdicts need to be reconciled against the exact OR wording
-you read in Step 2.
+for). For a large/monorepo target where this would mean auditing many independent services:
+- Consider parallelizing the investigation with the Explore agent (one per category or per
+  service).
+- Synthesize their findings yourself into the single report in Step 4.
+- Don't let subagents write the report directly. The verdicts need to be reconciled against the
+  exact OR wording you read in Step 2.
 
 **Claims aren't proof.** A README or TSG that *asserts* compliance ("we have automated backups",
 "critical alerts page on-call") isn't itself evidence — it's the repo's own claim about itself, and
@@ -138,12 +147,12 @@ stale, or the claim was never true) — don't quietly resolve it either directio
   actually runs a quarterly restore test, whether the ops team's centralized DB backups actually
   cover this service. If the repo has no artifact that could confirm or deny it either way, say
   that plainly and name what would need checking outside the repo (a Grafana link, an ops-team
-  contact, a PagerDuty/VictorOps config) rather than forcing it into Not Met — collapsing "couldn't
+  contact, a PagerDuty/VictorOps config). Don't force it into Not Met; collapsing "couldn't
   check" into "failed" makes the report actively misleading, not just incomplete.
 
 If you're genuinely unsure whether something clears the bar (e.g. a TSG exists but you can't judge
-whether an outside engineer could follow it), say so as a caveat on the verdict rather than forcing
-a confident Met/Not Met — a false-confident audit is worse than a flagged uncertainty.
+whether an outside engineer could follow it), say so as a caveat on the verdict. Don't force a
+confident Met/Not Met; a false-confident audit is worse than a stated uncertainty.
 
 **Never quote a secret into an evidence citation.** If the evidence for a verdict happens to be a
 config file that also contains a credential, connection string, or token, cite the file/line/key
@@ -153,17 +162,17 @@ leave the actual secret value out of the report entirely.
 ## Step 4: Report the findings
 
 **A single narrow question doesn't need a file.** If Step 1 established the ask was about one OR
-(or a couple), just answer conversationally — verdict, reasoning, evidence — the same rigor as
-below, just not packaged as a standing report. Offer to write it to a file if the user wants a
+(or a couple), answer conversationally with verdict, reasoning, and evidence. Same rigor as below,
+just not packaged as a standing report. Offer to write it to a file if the user wants a
 persistent record, but don't create one unasked; a one-line answer buried in a new file is more
 friction than help. Skip the rest of this step in that case.
 
 For a full (or explicitly multi-OR) audit: once every OR in scope has a verdict, show the summary
-table (below) in the conversation and wait for confirmation before writing anything to disk — the
-verdicts are judgment calls, and it's cheap to let the user flag a disagreement or an OR you
+table (below) in the conversation and wait for confirmation before writing anything to disk. The
+verdicts are judgment calls, and it's cheap to let the user point out a disagreement or an OR you
 misjudged before it's committed to a file. If a report file of the same name already exists at the
-target location, say so explicitly as part of that same message (one check-in, not two) rather than
-raising it separately.
+target location, say so explicitly as part of that same message (one gate, not two) rather than
+surfacing it separately.
 
 Once confirmed, write `OPERATIONAL_REQUIREMENTS_AUDIT.md` at the audited scope's root (see Step 1
 for repo-root vs. service-subdirectory), using this structure:

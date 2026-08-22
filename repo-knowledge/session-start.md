@@ -31,12 +31,12 @@ permission to strand a second copy.
 **Found nowhere**: read `setup.md` and follow it before doing anything else — a one-time-per-project
 bootstrap, kept out of this file since every run after the first doesn't need it. It creates the
 file in `<docs-dir>/` if the project already has one, otherwise at `<project>/`. **Never create a
-docs directory to hold it** — that imposes a layout the project didn't choose.
+docs directory to hold it.** That imposes a layout the project didn't choose.
 
 **Found somewhere other than location 1**: normal, not something to fix. Use it where it is;
 existing files never get moved as a side effect of a run.
 
-**If it exists, read it as-is and continue** — don't re-run setup. Judgment-drift review timing is
+**If it exists, read it as-is and continue.** Don't re-run setup. Judgment-drift review timing is
 handled separately below, not here.
 
 **If it exists but is malformed** (no `## Entries` section, an entry missing one of the required

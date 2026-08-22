@@ -31,14 +31,15 @@ docs, contributing guides):
 
 Fold all of the following into a single message rather than asking in stages — this is one of the
 skill's hard rules (see the table in `SKILL.md`):
-- Propose creating `KNOWLEDGE.md` — in `<docs-dir>/` if the project already has one (`docs/`,
-  `doc/`, `documentation/`), otherwise at the project root, and never creating a docs directory
-  just to hold it — with a one-line explanation of what it's for (a place for repo
-  gotchas/quirks/root-causes that cost real time to discover and aren't recorded anywhere else),
-  and mention that it'll periodically prompt a "judgment-drift review" on its own — roughly every
-  60-90 days, or sooner if entries have piled up — to prune stale entries (see
-  `session-start.md`), so accepting the default means agreeing to that occasional check-in, not
-  just to the file existing.
+- Propose creating `KNOWLEDGE.md`:
+  - in `<docs-dir>/` if the project already has one (`docs/`, `doc/`, `documentation/`),
+    otherwise at the project root. Never create a docs directory just to hold it.
+  - with a one-line explanation of what it's for: a place for repo gotchas/quirks/root-causes that
+    cost real time to discover and aren't recorded anywhere else.
+  - mentioning that it'll periodically prompt a "judgment-drift review" on its own (roughly every
+    60-90 days, or sooner if entries have piled up) to prune stale entries (see
+    `session-start.md`), so accepting the default means agreeing to that occasional check-in, not
+    just to the file existing.
 - If the project has a `CLAUDE.md`, propose adding a single pointer line to it (e.g. "See
   KNOWLEDGE.md for known repo gotchas and quirks") — keeps the two files DRY without duplicating
   content.
@@ -51,12 +52,15 @@ skill's hard rules (see the table in `SKILL.md`):
   on-demand path (below) covers it, since by then the user can just name a file directly instead
   of being asked in the abstract.
 
-On confirmation: create `KNOWLEDGE.md` with an empty `## Entries` section and today's date as
-`Last reviewed:` (no `## Declined` section yet — that's added the first time a proposal is
-actually declined, see `SKILL.md` Step 2); add the CLAUDE.md pointer if confirmed; move (don't
-duplicate) each confirmed migration candidate into `KNOWLEDGE.md` as a proper entry, filling in
-Evidence from what's described and noting `Captured: <today> — migrated from <source file>` (the
-original discovery date isn't recoverable, so don't guess one), removing it from the source file.
+On confirmation:
+1. Create `KNOWLEDGE.md` with an empty `## Entries` section and today's date as `Last reviewed:`.
+   No `## Declined` section yet; that's added the first time a proposal is actually declined, see
+   `SKILL.md` Step 2.
+2. Add the CLAUDE.md pointer if confirmed.
+3. Move (don't duplicate) each confirmed migration candidate into `KNOWLEDGE.md` as a proper
+   entry, filling in Evidence from what's described and noting `Captured: <today> — migrated from
+   <source file>`. The original discovery date isn't recoverable, so don't guess one.
+4. Remove each migrated candidate from its source file.
 
 **Check it's actually tracked.** The skill's "no archive needed, git history covers it" design
 (see `SKILL.md`) only holds if `KNOWLEDGE.md` is actually committed, not gitignored or left

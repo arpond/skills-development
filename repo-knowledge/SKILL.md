@@ -154,7 +154,7 @@ Two ways in: proactively, whenever something surfaces mid-session that clears th
 debugging session resolves with a non-obvious root cause, a dependency/build/test/environment
 quirk trips something up); and explicitly, when asked to note something in repo knowledge.
 
-**Apply the capture bar before proposing anything** — this is what keeps the file from filling
+**Apply the capture bar before proposing anything.** This is what keeps the file from filling
 with noise:
 
 1. **Redundancy test.** Two checks, both before proposing anything new:
@@ -205,7 +205,7 @@ Three triggers, and only these three — removal is never time-based or automati
 - **A fix supersedes the entry.** When a change fixes the root cause an entry describes, remove
   the entry as part of that same change. Mention it in the session rather than doing it invisibly
   — low-stakes given git history, but still a change worth naming. **Don't rely solely on Step 1
-  having already surfaced the entry** — a root-cause fix often lands in a different file than the
+  having already surfaced the entry.** A root-cause fix often lands in a different file than the
   entry's Evidence points at (Evidence tends to record where the symptom showed up, not
   necessarily where the eventual fix happens), so Step 1's file-overlap check can miss it
   entirely. When wrapping up a fix for something that felt like the kind of thing that might have

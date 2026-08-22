@@ -38,7 +38,7 @@ CLAUDE.md or fixing properly instead of staying a workaround note." (The high-re
 suggestion stays outside the numbered list — nothing is being removed there, so there's no
 selection to make.)
 
-**Wait for confirmation before removing or archiving anything** — this is one of the skill's hard
+**Wait for confirmation before removing or archiving anything.** This is one of the skill's hard
 rules (see the table in `SKILL.md`). A needs-review flag or a zero reference count is a candidate,
 not a verdict; the user may know the entry is still exactly right and just hasn't come up
 recently, or may confirm it's genuinely gone.
@@ -49,5 +49,5 @@ Whatever the user decides:
 - Entries the user wants to keep stay exactly as they are, `Status` reset to `active` if it had
   been `needs-review` and the user confirms it's still valid (e.g. the thing moved rather than
   disappeared — update Evidence to the new location instead of leaving it flagged).
-- **Bump `Last reviewed:` to today regardless of outcome** — same as `next-improvement`'s Goals
+- **Bump `Last reviewed:` to today regardless of outcome.** Same as `next-improvement`'s Goals
   check-in — so the next run doesn't re-prompt immediately even if nothing changed.

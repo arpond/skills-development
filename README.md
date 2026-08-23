@@ -52,7 +52,13 @@ stay available even once it's installed elsewhere.
 
 See [DESIGN_PHILOSOPHY.md](DESIGN_PHILOSOPHY.md) for the principles applied consistently across
 the skills in this repo, and [CONVENTIONS.md](CONVENTIONS.md) for the concrete cross-skill specs
-they all implement identically — currently where each skill writes the files it maintains inside
-a user's project. Both are authoring references: since installing a skill copies only its own
-folder, neither file travels with it, so every spec is also restated inside each skill that
-implements it.
+they all implement identically: counters, numbered choices, vocabulary, the hard-rules table,
+artifact locations, and README contents. Both are authoring references: since installing a skill
+copies only its own folder, neither file travels with it, so every spec is also restated inside
+each skill that implements it.
+
+## Changelog
+
+[CHANGELOG.md](CHANGELOG.md) records the changes worth a reader's attention, newest first: what
+a skill now does differently for its user, what an author here has to follow, how the repo is
+organised. It is curated, not a commit log.

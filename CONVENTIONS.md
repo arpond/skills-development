@@ -142,7 +142,7 @@ Then:
 - Each rule's full mechanics stay at the step; the table is an index, not a second copy.
 
 Column naming is free to fit the skill (`Step`/`Hard rule`, `#`/`What gets written`/`Gated where`,
-`Step`/`Gate(s)` are all in use and all fine). The invariants above are what must match.
+`Step`/`Kind`/`Gate or surface` are all in use and all fine). The invariants above are what must match.
 
 Stated in: all six skills, each in its own `SKILL.md`. Their scopes genuinely differ — only
 `next-improvement`'s is confined to confirm-before-write gates; the rest carry prohibitions and

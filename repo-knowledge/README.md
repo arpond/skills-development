@@ -26,6 +26,9 @@ Files:
 - `review.md` — the occasional judgment-drift review/prune pass (mechanical staleness is handled
   inline in `SKILL.md`; this is the human-judgment pass on top of it). Read when a review is due,
   or on explicit request.
+- `changelog.md` — what each skill version changed, and the versioning policy. Read only when
+  `KNOWLEDGE.md`'s `Feature check:` stamp is behind the skill's current version, so the skill
+  tells an existing file what is new once.
 
 ## What it writes
 
@@ -45,7 +48,9 @@ All inside the project you're working in — nothing elsewhere on your machine, 
 finds one and never moves it. Creating a new one goes into the docs directory if the project
 already has one, otherwise the project root — it won't create a docs directory to hold it.
 
-Every write is shown and confirmed first, including the first one that creates the file.
+Every write is shown and confirmed first, including the first one that creates the file. The one
+exception is the `Feature check:` skill-version stamp in the file's header. The skill moves that
+line itself, after it says what changed since the stamped version.
 
 ## Requires
 

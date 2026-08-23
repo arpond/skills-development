@@ -226,6 +226,55 @@ which makes it the one most likely to drift unnoticed, since nothing at runtime 
 wrong path there misdirects someone before they ever invoke the skill. Changing a resolve order is
 three edits per skill, not two.
 
+## Skill versioning
+
+A skill carries a version number only when an artifact outside this repo compares against it.
+The test: does the skill leave a file in the user's project whose format or behaviour can fall
+behind the skill? If yes, version it. If not, do not. Git history and `CHANGELOG.md` already
+answer "what changed when", and a number nothing reads goes stale without anyone noticing.
+
+Every versioned skill implements one mechanism:
+
+```
+SKILL.md, top:           **Skill version: X.Y.Z.**
+artifact header:         Feature check: vX.Y.Z
+skill companion file:    changelog.md
+```
+
+- **The number** is semver. MINOR for a change an existing artifact could want told about: an
+  opt-in feature, or an automatic change to behaviour that is already on. MAJOR for a format
+  change that needs migration. Wording and bug fixes do not bump it. Patch stays `0`.
+- **The stamp** is the skill version last disclosed to the artifact. Bootstrap writes it. Only
+  the check below moves it. A skill may add stamps of its own beside it (`next-improvement`'s
+  `Created:`). This spec covers only `Feature check:`.
+- **`changelog.md`** restates this policy, then lists one entry per MINOR+ version, newest first.
+  Each entry says what changed and whether there is anything to opt into. Its only read condition
+  is the check finding a gap.
+- **The check** runs in `session-start.md`, every run, after the skill finds the artifact and
+  before its main loop:
+  - Backfill a missing stamp to `0.0.0` as mechanical bookkeeping, then treat it as behind. A
+    missing stamp is evidence of being behind, never of being current.
+  - An unparseable stamp is the skill's malformed-artifact gate.
+  - Compare as semver, each component numerically, never as strings.
+  - Behind: walk the entries newer than the stamp, oldest first. Fold them into the session-start
+    message. Opt-in items hand off to the feature's own gate. Say automatic items in a clause, or
+    stay silent if they are invisible. Then stamp the current version, whatever the user decided.
+  - Ahead: surface once. Do not walk. Do not touch the stamp.
+- **Stamping is never mechanical.** To backfill to `0.0.0` and then stamp the current version
+  without the walk is the failure this spec exists to block.
+
+### Implemented by
+
+| Skill | Where it's stated |
+|---|---|
+| `next-improvement` | `SKILL.md` intro and "The tracker file" (number, stamp), `session-start.md` Step 0 (backfill) and Step 0.5 (check), `changelog.md` (policy, entries) |
+| `repo-knowledge` | `SKILL.md` intro and "The knowledge file" (number, stamp), `session-start.md` "Checking the skill version" (backfill, check), `changelog.md` (policy, entries) |
+
+Unversioned, by the test above: `commit-message-check` (its conventions file has no fixed schema
+to fall behind), `jira-ticket-audit`, `plan-technical-jira-ticket`, and
+`operational-requirements-audit` (no artifact), and `ste-writing` (no artifact). `ste-writing` is
+vendored, so its README pins the upstream commit instead, a different kind of version.
+
 ## Skill README contents
 
 Installing a skill copies only its own folder, so its `README.md` is everything a human has to

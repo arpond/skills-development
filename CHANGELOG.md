@@ -8,6 +8,17 @@ the repo is organised. `next-improvement` keeps a versioned changelog in
 Format: one heading per period, named by theme and dated by its start. Three fixed sections:
 Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `ste-writing`.
 
+## Skill versioning · 2026-08-23
+
+**Skills**
+- `repo-knowledge`: versioned, at 1.0.0. `KNOWLEDGE.md` gets a `Feature check:` stamp. New
+  `changelog.md`.
+- `next-improvement`: `changelog.md`'s policy sentence matches the new spec. No behaviour change.
+
+**Standards**
+- Spec: *Skill versioning*. Version a skill only when an artifact outside the repo compares
+  against it. One mechanism for the skills that do.
+
 ## Writing standards and `ste-writing` · 2026-08-22
 
 **Skills**

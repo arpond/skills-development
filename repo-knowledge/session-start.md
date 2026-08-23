@@ -39,8 +39,9 @@ handled separately below, not here.
 
 **If it exists but is malformed, don't silently reshape it back into form, and don't refuse to
 proceed either.** Malformed means: no `## Entries` section, an entry missing one of the required
-fields, an unparseable `Last reviewed:` date. This is a case of "unreachable isn't resolved," not
-a normal empty file; reshaping guesses at intent the user never confirmed.
+fields, an unparseable `Last reviewed:` date, or a `Feature check:` that is not a valid `X.Y.Z`
+version. This is a case of "unreachable isn't resolved," not a normal empty file; reshaping
+guesses at intent the user never confirmed.
 - Name the specific thing that doesn't parse and ask directly: fix it by hand, or walk through
   repairing just that piece, leaving everything else untouched.
 - Never fabricate plausible-looking Evidence or dates to paper over a broken entry. A wrong guess
@@ -55,6 +56,40 @@ section and no resemblance to this schema at all, rather than a broken/partial v
 naming collision, not a malformed file. Say so and ask where this skill's file should live
 instead; a different filename is the obvious fix. Note the actual name chosen wherever this skill
 would otherwise assume `KNOWLEDGE.md`.
+
+## Checking the skill version
+
+`KNOWLEDGE.md`'s `Feature check:` stamp records the skill version last disclosed to this file.
+Compare it against `SKILL.md`'s current skill version every run, once Step 0 finds the file and
+before Step 1.
+
+**Missing** (the file predates the field, or someone created it by hand): not malformed. Backfill
+it to `0.0.0` as mechanical, no-confirmation bookkeeping, then continue as behind. A missing stamp
+is evidence of being behind, never proof of being current. To stamp it straight to the current
+version and skip the walk below is exactly the failure this paragraph exists to block.
+
+**Compare as semver**: major, then minor, then patch, each numerically. `1.10.0` is newer than
+`1.9.0`. Never compare as strings.
+
+**Behind:**
+1. Read `changelog.md`. This is its only read condition.
+2. Walk every entry newer than the stamp, oldest first. `changelog.md` lists newest first for a
+   human reader. Application order is the reverse, because a later entry can assume an earlier
+   one landed.
+3. Fold the result into the same message as any judgment-drift review that is due (below), not a
+   second message. An opt-in item hands off to its own gate. Say an automatic item in a clause if
+   it changes what the user will see. Otherwise stay silent about it.
+4. Bump `Feature check:` to the current skill version after the disclosure, whatever the user
+   decided. Do not re-offer a declined item every session.
+
+**Ahead** (the stamp is newer than this install's version: a downgraded install, or a file copied
+from a machine running a newer skill): surprising input, not a case to resolve either way. Say so
+once and ask whether the install is stale. Do not walk `changelog.md`, because nothing in it is
+newer. Do not touch the stamp.
+
+**Current**: nothing to do.
+
+Both surfaces here are hard rules (see the table in `SKILL.md`).
 
 ## Checking whether a judgment-drift review is due
 

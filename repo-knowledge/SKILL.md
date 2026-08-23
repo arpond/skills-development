@@ -5,6 +5,10 @@ description: Maintains a per-project KNOWLEDGE.md — a git-tracked, human-reada
 
 # Repo knowledge
 
+**Skill version: 1.0.0.** `session-start.md`'s version check compares `KNOWLEDGE.md`'s
+`Feature check:` stamp against this number. `changelog.md` holds what shipped at each version and
+the versioning policy. Read it only when that check finds a gap, not on every run.
+
 A place for the "why"-shaped facts that cost someone real time to figure out but don't live
 anywhere else in the repo — not derivable from reading the code, not covered by `CLAUDE.md`
 (which documents the repo as designed, not gotchas discovered along the way), and not reliably
@@ -12,8 +16,8 @@ captured in commit messages (commit quality varies by author, so "it's probably 
 isn't a safe assumption). This skill is project-agnostic: everything project-specific lives in
 `KNOWLEDGE.md` inside that project, not in this skill.
 
-This file covers Steps 1-3, the steady-state reference/capture/removal loop. Three files live
-alongside it; `session-start.md` is a second core file, the other two are companions:
+This file covers Steps 1-3, the steady-state reference/capture/removal loop. Four files live
+alongside it. `session-start.md` is a second core file, the other three are companions:
 
 - `session-start.md` — Step 0 (find `KNOWLEDGE.md`, or defer to `setup.md` to bootstrap it).
   **Not optional** — read it every run, right after this intro, before Step 1. Split out purely to
@@ -24,6 +28,9 @@ alongside it; `session-start.md` is a second core file, the other two are compan
 - `review.md` — the occasional judgment-drift review/prune pass. Read it when `KNOWLEDGE.md`'s
   `Last reviewed:` date says it's due (see `session-start.md`), or when the user explicitly asks
   to review/prune repo knowledge.
+- `changelog.md` — what each skill version changed, for telling an existing `KNOWLEDGE.md` what
+  it is missing. Read it only when `session-start.md`'s version check finds its `Feature check:`
+  behind the current skill version.
 
 ## The knowledge file
 
@@ -40,6 +47,7 @@ Format:
 # Repo Knowledge
 
 Last reviewed: <YYYY-MM-DD>
+Feature check: v<X.Y.Z>
 
 ## Entries
 
@@ -67,6 +75,9 @@ Last reviewed: <YYYY-MM-DD>
   a flag for a human to look at, never a silent deletion.
 - **Last reviewed:** at the top drives `review.md`'s occasional judgment-drift prompt — same
   mechanism as `next-improvement`'s Goals staleness date.
+- **`Feature check:`** is a skill-version stamp: the skill version last disclosed to this file.
+  `session-start.md` owns it (backfill, compare, bump after disclosure). Nothing in Steps 1-3
+  reads or writes it.
 - **No archive section for removed entries.** The file is git-tracked, so a removed entry is fully
   recoverable via `git log`/`git blame` — don't build a second history mechanism for something git
   already gives for free.
@@ -80,22 +91,26 @@ Last reviewed: <YYYY-MM-DD>
   Step 2). Whatever gets written here is still subject to the same secrets/PII rule as entries.
 
 **Hard rules by step, so a review can check none have gone missing.** Scope: rules that fail
-*silently* if skipped — confirm-before-write gates, the secrets/PII prohibition, and must-ask
-obligations alike, since all three break without anything visibly going wrong (a leaked credential
-surfaces long after the fact; an unasked question just never gets asked). It deliberately doesn't
-list every-run behaviour whose omission shows up on its own — referencing an entry when work
-touches its area, running an entry's mechanical check before relying on it. Absence from this table
-doesn't mean optional.
+*silently* if skipped — gates (including must-ask obligations), the secrets/PII prohibition, and
+surfaces alike, since all three break without anything visibly going wrong (a leaked credential
+surfaces long after the fact, an unasked question never gets asked, an unsaid version gap stays
+unsaid). The **Kind** column marks which: **gate** (show, then wait for
+an answer), **surface** (say it, no answer needed), **prohibition** (never do it). It deliberately
+does not list every-run behaviour whose omission shows up on its own — referencing an entry when
+work touches its area, running an entry's mechanical check before relying on it. Absence from this
+table does not mean optional.
 
-| Step | Hard rule |
-|---|---|
-| 0 (setup.md) | Propose creating `KNOWLEDGE.md`, migration candidates, and the CLAUDE.md pointer in one message, and wait for confirmation before writing/moving anything |
-| 0 (setup.md) | Ask whether there's anywhere else worth checking, don't assume the curated list is exhaustive |
-| 0 (session-start.md) | If the file exists but is malformed, ask the user rather than silently rewriting |
-| 2 | Show the proposed new entry (or edit to an existing one) and wait for confirmation before writing it |
-| 2 | Never write secrets, credentials, or PII into an entry or a Declined line — ask if uncertain |
-| 3 | Confirm before removing an entry for staleness (a failed mechanical check alone isn't enough) |
-| review.md | Present prune/needs-review candidates and wait for confirmation before removing anything |
+| Step | Kind | Hard rule |
+|---|---|---|
+| 0 (setup.md) | gate | Propose creating `KNOWLEDGE.md`, migration candidates, and the CLAUDE.md pointer in one message, and wait for confirmation before writing/moving anything |
+| 0 (setup.md) | gate | Ask whether there's anywhere else worth checking, don't assume the curated list is exhaustive |
+| 0 (session-start.md) | gate | If the file exists but is malformed, ask the user rather than silently rewriting |
+| 0 (session-start.md) | surface | Surface a `Feature check:` version gap, including a missing stamp, walked as `0.0.0` |
+| 0 (session-start.md) | surface | Surface an unexpectedly-ahead `Feature check:` stamp rather than resolving it either way |
+| 2 | gate | Show the proposed new entry (or edit to an existing one) and wait for confirmation before writing it |
+| 2 | prohibition | Never write secrets, credentials, or PII into an entry or a Declined line — ask if uncertain |
+| 3 | gate | Confirm before removing an entry for staleness (a failed mechanical check alone isn't enough) |
+| review.md | gate | Present prune/needs-review candidates and wait for confirmation before removing anything |
 
 *Update this table in the same edit whenever a hard rule is added, removed, or moved.* It's a
 mirror of the steps, not independent prose, so it's the one place to check rather than several

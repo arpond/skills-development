@@ -5,7 +5,7 @@ behind `SKILL.md`'s current skill version — most sessions, for most projects, 
 up and this file is never opened.
 
 **Versioning policy.** Semver, bumped only for changes that matter to an existing tracker: MINOR
-for a new optional feature/behavior a pre-existing tracker might want to opt into, MAJOR for a
+for an opt-in feature, or an automatic change to behaviour that is already on. MAJOR for a
 breaking tracker-format change that needs migration. Ordinary wording/bug fixes don't bump it —
 patch stays `0`, unused. The current version lives at the top of `SKILL.md`; only MINOR+ versions
 get an entry below, since those are the only ones a tracker could be behind on in a way it'd want

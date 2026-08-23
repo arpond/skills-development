@@ -53,9 +53,9 @@ skill's hard rules (see the table in `SKILL.md`):
   of being asked in the abstract.
 
 On confirmation:
-1. Create `KNOWLEDGE.md` with an empty `## Entries` section and today's date as `Last reviewed:`.
-   No `## Declined` section yet; that's added the first time a proposal is actually declined, see
-   `SKILL.md` Step 2.
+1. Create `KNOWLEDGE.md` with an empty `## Entries` section, today's date as `Last reviewed:`, and
+   the current skill version (top of `SKILL.md`) as `Feature check:`. No `## Declined` section
+   yet. That is added the first time a proposal is actually declined, see `SKILL.md` Step 2.
 2. Add the CLAUDE.md pointer if confirmed.
 3. Move (don't duplicate) each confirmed migration candidate into `KNOWLEDGE.md` as a proper
    entry, filling in Evidence from what's described and noting `Captured: <today> — migrated from

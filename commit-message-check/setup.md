@@ -14,7 +14,7 @@ The conventions file is organized around the structural parts of a commit messag
 these six headings, including the ones with a built-in default.** A default the user never saw
 isn't a confirmed preference, it's a silent behavior — and a step that always applies with no
 visible way to change it stops being a choice at all. Don't summarize this as "just use the
-defaults?" and move on; actually list each default's concrete effect so the user is agreeing to
+defaults?" and move on. List each default's concrete effect, so the user is agreeing to
 something specific, not a vague gesture at "standard practice."
 
 1. **Check for an existing seed first.** Three possible sources, any combination:

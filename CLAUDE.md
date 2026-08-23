@@ -52,10 +52,10 @@ If the user says yes, run these four checks in order, on whatever was just chang
    Not findings, for any of the three tests: the principle's out-of-scope list (frontmatter,
    README prose and dialogue, vendored text) and `CONVENTIONS.md`'s open-gap sites. Not
    repetition: a hard-rules table row restating its step (the table is an index by spec), a
-   mandated inline copy of a `CONVENTIONS.md` spec, a core file's pointer to a companion, and a
-   README summarising `SKILL.md` (documentation travels with the skill). Repetition is the same
-   rule stated twice in operative prose, or a README procedure and its `SKILL.md` twin drifting
-   apart.
+   mandated inline copy of a `CONVENTIONS.md` spec, a core file's pointer to a companion, a file's
+   own intro previewing the steps below it, and a README summarising `SKILL.md` (documentation
+   travels with the skill). Repetition is the same rule stated twice in operative prose, or a
+   README procedure and its `SKILL.md` twin drifting apart.
 3. **Gaps.** Functional/logical holes, not wording — contradictory inputs, malformed stored state,
    ambiguous write targets when more than one file/location can hold state, claims about external
    facts (committed, installed, reachable) that are asserted but never checked, third states

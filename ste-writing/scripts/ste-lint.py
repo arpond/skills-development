@@ -34,11 +34,13 @@ FUNC_WORDS = set("""a an the this that these those of for to in on at by with fr
 when then than not no is are was were be been being am do does did has have had will would can could
 may might must should shall it its their your our his her they we you i""".split())
 
-def strip_code(t):
+def strip_code(t, keep_inline=False):
     # Keep the newlines a fenced block spans, so line numbers stay true and
     # the paragraphs either side of a block aren't merged into one.
     t = re.sub(r"```.*?```", lambda m: "\n" * m.group(0).count("\n"), t, flags=re.S)
-    t = re.sub(r"`[^`\n]*`", " ", t)
+    # Inline spans: dropped for the STE score (identifiers aren't prose), kept
+    # for --show (a reader still reads them, so they count toward a rule's cap).
+    t = re.sub(r"`([^`\n]*)`", r"\1" if keep_inline else " ", t)
     return t
 
 # Lines that stand alone: headings, table rows, horizontal rules. List items
@@ -89,10 +91,12 @@ def sentences(text):
     return out
 
 def rule_words(s):
-    """Word count for --show: parenthetical examples and a leading bold label
-    don't count toward the cap, since a reader skips them to reach the rule.
-    lint()'s totals keep STE's plain count; this applies only to --show."""
+    """Word count for --show: parenthetical examples, dash-enclosed example
+    runs, and a leading bold label don't count toward the cap, since a reader
+    skips them to reach the rule. lint()'s totals keep STE's plain count; this
+    applies only to --show."""
     s = re.sub(r"\([^()]*\)", " ", s)
+    s = re.sub(r"\s[—–]\s[^—–]*\s[—–]\s", " ", s)
     s = re.sub(r"^\s*\*\*[^*]+\*\*:?\s*", "", s)
     return wc(s)
 
@@ -100,7 +104,7 @@ def located(text, cap, para_cap=6):
     """Long sentences and long paragraphs with the line each starts on, for
     --show. Line numbers are of the original (unstripped) text, which is why
     strip_code keeps newlines."""
-    text = strip_code(text)
+    text = strip_code(text, keep_inline=True)
     long_s = []
     for line_no, block in unwrap_blocks(text):
         for s in split_sentences(block):

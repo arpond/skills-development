@@ -223,9 +223,12 @@ silently when skipped), or if it is an imperative the reader executes as a step.
 is explanation and has no cap. Within a rule-bearing sentence:
 - Count to the full stop. "Rule — reason" and "rule; reason" are one sentence; if the rule clause
   alone fits the cap, a full stop at the dash is the whole fix.
-- Parenthetical examples, `e.g.` lists, and a bold label (`**Found nowhere**:`) don't count.
+- Parenthetical examples, `e.g.` lists, a dash-enclosed example run, and a bold label
+  (`**Found nowhere**:`) don't count. Inline `code` spans do count; they're words the reader reads.
+- An imperative inside a parenthetical is still an instruction. Move it out; the exemption is for
+  examples, not for rules hidden in them.
 - A list item that is one instruction plus its reasoning is fine at any length. Split an item only
-  when it carries two or more instructions.
+  when it carries three or more instructions; two, each its own short sentence, are fine.
 
 **Which sentence is the rule: the one a reader needs in order to act.** A short bold lead
 followed by a sixty-word sentence carrying the actual mechanics has its rule in the long one, and

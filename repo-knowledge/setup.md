@@ -32,8 +32,8 @@ docs, contributing guides):
 Fold all of the following into a single message rather than asking in stages — this is one of the
 skill's hard rules (see the table in `SKILL.md`):
 - Propose creating `KNOWLEDGE.md`:
-  - in `<docs-dir>/` if the project already has one (`docs/`, `doc/`, `documentation/`),
-    otherwise at the project root. Never create a docs directory just to hold it.
+  - at the location `session-start.md`'s "Found nowhere" rule resolves (an existing docs
+    directory, else the project root; never a new one).
   - with a one-line explanation of what it's for: a place for repo gotchas/quirks/root-causes that
     cost real time to discover and aren't recorded anywhere else.
   - mentioning that it'll periodically prompt a "judgment-drift review" on its own (roughly every

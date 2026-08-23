@@ -85,15 +85,15 @@ is never a read condition and `surface` is never a data tag.
 | Term | Means | Not |
 |---|---|---|
 | gate | a point where a skill shows a proposed action and waits for the user's answer before it acts. "Wait for confirmation" names the act and is fine | confirm-point, confirmation (as the point itself), check-in (outside `next-improvement`) |
-| surface | tell the user something without a wait for an answer | flag, raise (as verbs that mean tell the user). Exempt: `flag` as a noun or tag (`reassess flag`), an audit that flags a finding in its report, notes inside a plan or template that are not addressed to the user |
+| surface | tell the user something without a wait for an answer | flag (as a verb that means tell the user), raise (as a verb that means tell the user). Exempt: `flag` as a noun or tag (`reassess flag`), an audit that flags a finding in its report, notes inside a plan or template that are not addressed to the user |
 | check-in | a question folded into `next-improvement`'s session-start message. It blocks only the write it asks about | — (a `check-in` is a gate with a fixed home. Say `gate` everywhere else) |
 | read condition | a setting value that decides whether a companion file is read, or whether a mode's pick is shown | gate |
-| principle | an entry in `DESIGN_PHILOSOPHY.md` | bullet |
-| spec | an entry in this file | convention, rule (when a spec is meant) |
+| principle | an entry in `DESIGN_PHILOSOPHY.md` | bullet (as a name for a principle) |
+| spec | an entry in this file | convention (when a spec is meant), rule (when a spec is meant) |
 | hard rule | a rule that fails silently when skipped, indexed in a skill's hard-rules table | — |
 | core file | any skill file read on every invocation. A skill can have more than one (`SKILL.md` plus a `session-start.md`) | always-loaded file, base file, companion file (for an every-run file) |
 | companion file | a skill file read only when its trigger condition is met | — |
-| artifact | a file a skill maintains inside the user's project | output, state file |
+| artifact | a file a skill maintains inside the user's project | output (as a name for an artifact), state file |
 | mechanical bookkeeping | a write a skill makes without a gate, because it carries no judgement (a backfilled stamp, an archive sweep) | no-confirmation bookkeeping, routine bookkeeping, silent bookkeeping |
 
 Add a row when a review finds a second name for an existing concept: pick one, rename the other.
@@ -102,7 +102,8 @@ table is the whole list.
 
 Unlike the other specs this one has no inline copy. A skill implements it by use of the words.
 Conformance is a grep for the right-hand column, over every file, frontmatter and README prose
-included. Example dialogue that quotes how Claude speaks is exempt. Vendored skills (`ste-writing`)
+included. `python check-vocabulary.py` runs that grep from this table and shows each hit with
+its condition. Example dialogue that quotes how Claude speaks is exempt. Vendored skills (`ste-writing`)
 keep their upstream wording.
 
 No open gaps at present.

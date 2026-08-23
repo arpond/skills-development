@@ -40,6 +40,8 @@ Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `st
 - Spec *The hard-rules table*: `prohibition` is the third `Kind` value.
 
 **Tooling**
+- `check-vocabulary.py`: greps every banned name in the Vocabulary table, condition beside each hit.
+  Fails loudly on an unparseable table.
 - `ste-lint.py`: a possessive `'s` no longer counts as a contraction. Scores drop by about 1 per
   100 words on prose-heavy files.
 

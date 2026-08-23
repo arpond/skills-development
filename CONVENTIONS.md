@@ -300,8 +300,8 @@ whole point is to let someone pick the cheap one deliberately.
 
 Skill-specific sections beyond these are fine and need no justification.
 
-The prose is in `ste-writing`'s flavored mode, linted under 2.5 per 100 words. Fenced example
-dialogue quotes how Claude speaks and is exempt. `CLAUDE.md`'s "Prose standards" holds the rule.
+The prose is in `ste-writing`'s flavored mode. `CLAUDE.md`'s "Prose standards" holds the rule,
+the lint target, and the exemptions.
 
 **`## What it writes` is the section people most often skip**, and the one that matters most
 before an install. It names every artifact, says where the skill looks for an existing one, marks

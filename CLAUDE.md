@@ -106,8 +106,8 @@ time without the offer.
 
 After an edit to a skill's files in this repo, redeploy to make the change live for this session's
 own use. Overwrite the matching folder under the user's local `~/.claude/skills/<name>/` with the
-repo's version, then commit the repo change. Both steps belong to the edit, not only the edit
-itself.
+repo's version, then commit the repo change. Both steps are part of a finished edit, not extras
+after it.
 
 ## Prose standards
 
@@ -119,7 +119,8 @@ voice, simple tenses, no semicolons, no contractions. British spelling, per this
 It applies to:
 - `CHANGELOG.md`
 - every `README.md`, repo root and per skill. The prose only, not the fenced example dialogue,
-  which quotes how Claude speaks.
+  which quotes how Claude speaks. A quoted user phrasing in a trigger list is a quotation too,
+  and exempt.
 - every per-skill `changelog.md`. Its entries reach the user nearly verbatim on a version gap.
 - `CONVENTIONS.md` and this file. Both are facts and procedures, not reasoning.
 

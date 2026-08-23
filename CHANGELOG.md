@@ -11,8 +11,8 @@ Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `st
 ## README prose in STE · 2026-08-23
 
 **Skills**
-- All seven `README.md` files and `next-improvement/changelog.md`: rewritten in flavored STE. No
-  content change.
+- All seven `README.md` files and `next-improvement/changelog.md`: rewritten in flavored STE. One
+  stale fact fixed: the 1.0.0 entry's backfill value.
 
 **Standards**
 - `CLAUDE.md` *Prose standards*: every README and per-skill changelog is in flavored STE, like

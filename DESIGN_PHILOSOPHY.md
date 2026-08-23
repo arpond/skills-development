@@ -27,7 +27,7 @@ principle that only ever gets applied outward isn't being applied.
 - [Write gates & confirmation](#write-gates--confirmation)
   - [Propose, don't just do](#propose-dont-just-do)
   - [A default the user never saw isn't a default](#a-default-the-user-never-saw-isnt-a-default)
-  - [One check-in, not two](#one-check-in-not-two)
+  - [One gate, not two](#one-gate-not-two)
   - [Numbered choices, not just labels](#numbered-choices-not-just-labels)
 - [Trust & staleness](#trust--staleness)
   - [Re-ground, don't cache](#re-ground-dont-cache)
@@ -81,10 +81,10 @@ strategy, a term list) must surface that fallback's concrete effect during setup
 it confirmed, not just ask "want the defaults?" and move on — a special case of
 [Propose, don't just do](#propose-dont-just-do), applied to defaults specifically.
 
-### One check-in, not two
+### One gate, not two
 
 When a skill needs several related confirmations before proceeding (e.g. scope and understanding),
-fold them into a single message rather than gating twice in a row. Back-to-back stops for adjacent
+fold them into a single gate rather than gating twice in a row. Back-to-back stops for adjacent
 information don't add safety — they train the user to skim past confirmations instead of actually
 reading them, which undermines [Propose, don't just do](#propose-dont-just-do) more than it
 reinforces it.

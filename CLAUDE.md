@@ -48,6 +48,9 @@ If the user says yes, run these four checks in order, on whatever was just chang
 
    `python ste-writing/scripts/ste-lint.py --cap 25 --show <file>` lists the first two with line
    numbers. It can't tell a rule from its explanation, so read the hits, don't count them.
+   `python check-hard-rules.py` does the rule-bearing half mechanically: for every hard-rules
+   table row in every skill, it finds the closest prose sentence and reports whether that sentence
+   fits the cap. A row with no close sentence is a rule that lives only in the index.
 
    Not findings, for any of the three tests: the principle's out-of-scope list (frontmatter,
    README prose and dialogue, vendored text) and `CONVENTIONS.md`'s open-gap sites. Not
@@ -94,7 +97,7 @@ If the user says yes, run these four checks in order, on whatever was just chang
    gate.
 
 Timing: offer once, after the change is otherwise done and deployed — not mid-edit, and not
-stacked as a second ask right after some other confirmation (see "one check-in, not two"). If
+stacked as a second ask right after some other confirmation (see "One gate, not two"). If
 declined, don't re-offer for that same change; the user can ask for any individual pass (or the
 whole loop) at any time without waiting for the offer.
 

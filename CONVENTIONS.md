@@ -104,8 +104,7 @@ and conformance is a grep for the right-hand column, over every file including f
 README prose. Example dialogue quoting how Claude speaks is exempt. Vendored skills
 (`ste-writing`) keep their upstream wording.
 
-**Open gap:** `DESIGN_PHILOSOPHY.md` "One check-in, not two" (heading and anchor), `CLAUDE.md`
-("see 'one check-in, not two'") still use right-hand names. Renaming that heading means re-pointing every anchor to it, so it's its own edit.
+No open gaps at present.
 Sites listed under an open gap are known; a review doesn't re-report them.
 
 ## The hard-rules table

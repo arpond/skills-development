@@ -5,8 +5,8 @@ one of three things: what a skill now does for its user, what an author here mus
 the repo is organised. `next-improvement` keeps a versioned changelog in
 `next-improvement/changelog.md`. Entries here point to it.
 
-Format: one heading per period, named by theme and dated by its start. Three fixed sections: Skills, Standards, Tooling. One line per
-item. Prose in the flavored mode of `ste-writing`.
+Format: one heading per period, named by theme and dated by its start. Three fixed sections:
+Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `ste-writing`.
 
 ## Writing standards and `ste-writing` · 2026-08-22
 

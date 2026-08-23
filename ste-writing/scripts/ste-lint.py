@@ -154,7 +154,10 @@ def lint(text, strict=False, cap=20):
     longs = [(wc(s), s) for s in sents if wc(s) > cap]
     v[f"long_sentence(>{cap}w)"] = len(longs)
     v["semicolon"] = text.count(";")
-    v["contraction"] = len(re.findall(r"\b\w+['’](?:t|re|ve|ll|d|s|m)\b", text))
+    # 's is a contraction only after a head that cannot take a possessive
+    # (it's, that's, there's); "the skill's folder" is possessive and not counted.
+    v["contraction"] = len(re.findall(r"\b\w+['’](?:t|re|ve|ll|d|m)\b", text)) \
+        + len(re.findall(r"\b(?:it|that|there|here|what|who|where|how|let|he|she|this|when|why)['’]s\b", text, re.I))
     passive_parts = re.findall(rf"\b{BE}\s+(\w+ed|{PP_IRREG})\b", text, re.I)
     v["passive_voice"] = sum(1 for p in passive_parts if not re.fullmatch(STATIVE, p, re.I)) \
         + len(re.findall(rf"\b{BE}\s+{STATIVE}\s+by\b", text, re.I))

@@ -123,4 +123,4 @@ The format keeps the file scannable; match it:
 - Prose in `ste-writing`'s flavored mode: short sentences, active voice, simple tenses, no
   semicolons. British spelling, per this repo. Lint with
   `python ste-writing/scripts/ste-lint.py CHANGELOG.md`; target under 2.5 per 100 words, and
-  treat list-as-paragraph and possessive-`'s` hits as noise.
+  treat list-as-paragraph hits as noise.

@@ -17,11 +17,12 @@ reads naturally). Never applied to code, identifiers, or command syntax.
 at upstream commit `e77daea` (2026-08-08), not authored in this repo. Diff against that commit, not
 `main`, to see what changed upstream since then. Local changes: the lint script moved to `scripts/`, `python3` became
 `python` in the lint instructions, a hard-rules table was added to `SKILL.md` to match this
-repo's conventions, and the lint script diverges from upstream in four ways: it unwraps
+repo's conventions, and the lint script diverges from upstream in five ways: it unwraps
 hard-wrapped paragraphs before splitting sentences (upstream counts each wrapped line as a
 sentence, so long sentences in wrapped markdown never registered); it splits sentences that open
-or close with markdown emphasis; it keeps a code fence's newlines so line numbers stay true; and it
-gains `--cap N` and `--show`, where `--show` lists long sentences with line numbers and counts
+or close with markdown emphasis; it keeps a code fence's newlines so line numbers stay true; it
+counts `'s` as a contraction only after a head that cannot be possessive (`it's`, `that's`), so
+`the skill's folder` does not score; and it gains `--cap N` and `--show`, where `--show` lists long sentences with line numbers and counts
 them the way this repo's "A rule is a sentence" principle does (parentheticals and bold labels
 excluded, inline code included). The STE score itself is computed as upstream does. Rule content
 is unchanged. The skill is unofficial and not affiliated with

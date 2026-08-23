@@ -24,6 +24,10 @@ Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `st
 - Principle *Don't persist a signal*: points at the versioning spec for the when-to-version test.
 - Spec *The hard-rules table*: `prohibition` is the third `Kind` value.
 
+**Tooling**
+- `ste-lint.py`: a possessive `'s` no longer counts as a contraction. Scores drop by about 1 per
+  100 words on prose-heavy files.
+
 ## Writing standards and `ste-writing` · 2026-08-22
 
 **Skills**

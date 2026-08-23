@@ -61,11 +61,12 @@ service within a monorepo.
   older format): a different failure mode from "no prior report". Don't feed it into the
   re-verify step as if it were valid. Say what was found and ask whether to re-derive from
   scratch or attempt to re-verify it anyway.
-- One exists and is well-formed: treat its verdicts as a starting hypothesis, not a rubber stamp.
-  Cheaply re-check whether each cited evidence path still exists and still says what it did, the
-  same "mechanical check" discipline as re-grounding any stored judgement. Verdicts whose evidence
-  still holds carry forward without re-deriving them; anything whose evidence has moved, changed,
-  or disappeared needs a fresh look.
+- One exists and is well-formed:
+  - Treat its verdicts as a starting hypothesis, not a rubber stamp.
+  - Cheaply re-check whether each cited evidence path still exists and still says what it did,
+    the same "mechanical check" discipline as re-grounding any stored judgement.
+  - Verdicts whose evidence still holds carry forward without re-deriving them. Anything whose
+    evidence has moved, changed, or disappeared needs a fresh look.
 - If the user explicitly asks for a full fresh investigation, do that regardless.
 
 This keeps repeat audits fast and consistent instead of silently drifting from run to run.
@@ -143,10 +144,12 @@ resolve it either direction; the docs are stale, or the claim was never true.
   enough." A number of ORs describe things that live entirely outside version control — a Grafana
   dashboard's actual content, whether a VictorOps/Slack alert really pages someone, whether Spanners
   actually runs a quarterly restore test, whether the ops team's centralized DB backups actually
-  cover this service. If the repo has no artifact that could confirm or deny it either way, say
-  that plainly. Name what would need checking outside the repo (a Grafana link, an ops-team
-  contact, a PagerDuty/VictorOps config). Don't force it into Not Met; collapsing "couldn't
-  check" into "failed" makes the report actively misleading, not just incomplete.
+  cover this service. If the repo has no artifact that could confirm or deny it either way:
+  - Say that plainly.
+  - Name what would need checking outside the repo (a Grafana link, an ops-team contact, a
+    PagerDuty/VictorOps config).
+  - Don't force it into Not Met; collapsing "couldn't check" into "failed" makes the report
+    actively misleading, not just incomplete.
 
 If you're genuinely unsure whether something clears the bar (e.g. a TSG exists but you can't judge
 whether an outside engineer could follow it), say so as a caveat on the verdict. Don't force a
@@ -160,10 +163,12 @@ the actual secret value out of the report entirely.
 ## Step 4: Report the findings
 
 **A single narrow question doesn't need a file.** If Step 1 established the ask was about one OR
-(or a couple), answer conversationally with verdict, reasoning, and evidence. Same rigor as below,
-just not packaged as a standing report. Offer to write it to a file if the user wants a
-persistent record. Don't create one unasked; a one-line answer buried in a new file is more
-friction than help. Skip the rest of this step in that case.
+(or a couple):
+- Answer conversationally with verdict, reasoning, and evidence. Same rigor as below, just not
+  packaged as a standing report.
+- Offer to write it to a file if the user wants a persistent record.
+- Don't create one unasked; a one-line answer buried in a new file is more friction than help.
+- Skip the rest of this step.
 
 **For a full (or explicitly multi-OR) audit, show the summary table and wait for confirmation
 before writing to disk.** Do this once every OR in scope has a verdict. The verdicts are judgment

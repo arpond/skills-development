@@ -107,3 +107,20 @@ After editing a skill's files in this repo, redeploy to make the change live for
 own use: overwrite the matching folder under the user's local `~/.claude/skills/<name>/` with the
 repo's version, then commit the repo change. Both steps belong to finishing an edit, not just the
 edit itself.
+
+## Changelog
+
+`CHANGELOG.md` gets an entry when a change alters what a skill does for its user, what an author
+here has to follow, or how the repo is organised. Not every commit. Write it in the same edit as
+the change.
+
+The format keeps the file scannable; match it:
+- One heading per period (a date range). Start a new period when the theme changes, not the
+  date.
+- Three fixed sections in order, omitted when empty: **Skills**, **Standards**, **Tooling**.
+- One line per item, skill or file name first, at most 25 words. Reasoning stays in the linked
+  file or the commit.
+- Prose in `ste-writing`'s flavored mode: short sentences, active voice, simple tenses, no
+  semicolons. British spelling, per this repo. Lint with
+  `python ste-writing/scripts/ste-lint.py CHANGELOG.md`; target under 2.5 per 100 words, and
+  treat list-as-paragraph and possessive-`'s` hits as noise.

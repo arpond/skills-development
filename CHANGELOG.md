@@ -14,6 +14,7 @@ Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `st
 - `repo-knowledge`: versioned, at 1.0.0. `KNOWLEDGE.md` gets a `Feature check:` stamp. New
   `changelog.md`.
 - `next-improvement`: `changelog.md`'s policy sentence matches the new spec. No behaviour change.
+- `ste-writing`: the README pins the upstream commit that the skill came from.
 
 **Standards**
 - Spec: *Skill versioning*. Version a skill only when an artifact outside the repo compares

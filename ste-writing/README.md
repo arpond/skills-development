@@ -13,8 +13,9 @@ voice, and noun-cluster discipline, with the 875-word dictionary lockdown relaxe
 reads naturally). Never applied to code, identifiers, or command syntax.
 
 **Origin.** Vendored from
-[woosal1337/blog — ep01 "The cure for AI slop"](https://github.com/woosal1337/blog/tree/main/videos/ep01-the-cure-for-ai-slop),
-not authored in this repo. Local changes: the lint script moved to `scripts/`, `python3` became
+[woosal1337/blog — ep01 "The cure for AI slop"](https://github.com/woosal1337/blog/tree/e77daea86f8ef76241647f750b784468e3267946/videos/ep01-the-cure-for-ai-slop)
+at upstream commit `e77daea` (2026-08-08), not authored in this repo. Diff against that commit, not
+`main`, to see what changed upstream since then. Local changes: the lint script moved to `scripts/`, `python3` became
 `python` in the lint instructions, a hard-rules table was added to `SKILL.md` to match this
 repo's conventions, and the lint script diverges from upstream in four ways: it unwraps
 hard-wrapped paragraphs before splitting sentences (upstream counts each wrapped line as a

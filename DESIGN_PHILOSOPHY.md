@@ -249,6 +249,19 @@ paragraph starts on; `--show` skips parentheticals and bold labels when counting
 rule above. It can't tell a rule from its explanation, so its hits are where to look, not a
 verdict. There is no sentence-count cap on a paragraph; `long_paragraph` is a locator only.
 
+### A review criterion needs a floor
+
+An unbounded rule ("every X must be Y") yields findings in proportion to corpus size, not
+defects, so fixing one round exposes the next. "A rule is a sentence" shipped without its
+scope paragraph: two blind rounds found 119 then ~160 sites, every reviewer raised the same
+four ambiguities, and the findings that mattered were about thirty, all from round one.
+Writing the scope down dropped round three to 74.
+
+So: a new rule ships with its scope — what it covers, what's exempt, what counts. Read a
+round's ambiguities before its findings; anything two reviewers raised independently is a
+defect in the rule, fixed there first. A round that finds as much as the last is measuring
+the corpus, not the work: stop and bound the rule.
+
 ### Reuse a judgment test, don't invent a parallel one
 
 When a skill needs to classify or filter something in a new context — deciding whether existing

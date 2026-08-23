@@ -101,9 +101,9 @@ The rule is ASD-STE100's 1.11. The 875-word dictionary that rule assumes is not 
 table is the whole list.
 
 Unlike the other specs this one has no inline copy. A skill implements it by use of the words.
-Conformance is a grep for the right-hand column, over every file, frontmatter and README prose
-included. `python check-vocabulary.py` runs that grep from this table and shows each hit with
-its condition. Example dialogue that quotes how Claude speaks is exempt. Vendored skills (`ste-writing`)
+Conformance is a grep for the right-hand column, over every markdown file, frontmatter and README
+prose included. `CHANGELOG.md` is exempt, because a rename record names the old word. `python
+check-vocabulary.py` runs that grep from this table and shows each hit with its condition. Example dialogue that quotes how Claude speaks is exempt. Vendored skills (`ste-writing`)
 keep their upstream wording.
 
 No open gaps at present.

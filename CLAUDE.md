@@ -53,7 +53,8 @@ If the user says yes, run these four checks in order, on whatever was just chang
    row in every skill, it finds the closest prose sentence and reports whether that sentence fits
    the cap. A row with no close sentence is a rule that lives only in the index.
    `python check-vocabulary.py` does the third test: it reads the Vocabulary table and greps every
-   banned name, with its condition beside each hit. It refuses to run on a table it cannot parse.
+   banned name, with its condition beside each hit. Pass it the changed files. A whole-repo run
+   puts common words over its floor. It refuses to run on a table it cannot parse.
 
    Not findings, for any of the three tests: the principle's out-of-scope list (frontmatter, README
    prose and dialogue, vendored text) and `CONVENTIONS.md`'s open-gap sites. Not repetition: a

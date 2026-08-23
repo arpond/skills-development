@@ -15,11 +15,15 @@ What it skips, per the spec's own exemptions:
 - CHANGELOG.md (a rename record legitimately names the old word)
 - the Vocabulary table itself
 
-A banned name with a parenthetical condition ("as verbs", "outside
-next-improvement") is still searched, and each hit shows the condition, since
-the script cannot apply it. A name that is also a canonical term, or a
-substring of one (gate, rule, companion file), is not searched: every hit would
-be the canonical use. Treat the output as a locator, not a verdict.
+Matching runs on unwrapped paragraphs, so a name split across a hard wrap
+still hits; the line reported is where the paragraph starts. A banned name
+with a parenthetical condition is still searched and each hit shows the
+condition, since the script cannot apply it. The one exception is a condition
+of the form "outside `dir`", which it applies by skipping that directory. A
+name that is also a canonical term, or a substring of one (gate, rule,
+companion file), is not searched: every hit would be the canonical use. Treat
+the output as a locator, not a verdict. Pass the changed files during a
+review; a whole-repo run puts common words over the floor.
 """
 import os
 import re
@@ -27,6 +31,7 @@ import subprocess
 import sys
 
 sys.dont_write_bytecode = True
+sys.stdout.reconfigure(errors="replace")
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SPEC = os.path.join(ROOT, "CONVENTIONS.md")
 FLOOR = 20          # more hits than this: report the count, not the lines
@@ -84,6 +89,21 @@ def strip_fences(text):
     return re.sub(r"```.*?```", lambda m: "\n" * m.group(0).count("\n"), text, flags=re.S)
 
 
+def paragraphs(text):
+    """Yield (start_line, unwrapped_text) per blank-line-separated block."""
+    start, buf = None, []
+    for i, line in enumerate(text.splitlines(), 1):
+        if line.strip():
+            if start is None:
+                start = i
+            buf.append(line.strip())
+        elif buf:
+            yield start, " ".join(buf)
+            start, buf = None, []
+    if buf:
+        yield start, " ".join(buf)
+
+
 def tracked_md():
     out = subprocess.run(["git", "ls-files", "*.md"], cwd=ROOT, capture_output=True, text=True)
     if out.returncode != 0:
@@ -105,19 +125,22 @@ def main(argv):
         text = read(os.path.join(ROOT, rel))
         if rel == "CONVENTIONS.md":
             text = strip_table(text)
-        files.append((rel, strip_fences(text).splitlines()))
+        files.append((rel, list(paragraphs(strip_fences(text)))))
 
     total = 0
     for name, term, cond in banned:
         low = name.lower()
-        overlap = [c for c in canon if low == c or low in c]
+        overlap = [c for c in canon if (low == c and not re.match(r"outside\s", cond)) or (low != c and low in c)]
         if overlap:
             print(f"-- {name!r} (for {term}): not searched, overlaps canonical {overlap[0]!r}"
                   + (f"; condition: {cond}" if cond else ""))
             continue
         pat = re.compile(r"(?<![\w-])" + re.escape(name).replace(r"\ ", r"[\s-]+") + r"s?(?![\w-])", re.I)
-        hits = [(rel, i, line) for rel, lines in files
-                for i, line in enumerate(lines, 1) if pat.search(line)]
+        om = re.match(r"outside\s+`?([\w-]+)`?$", cond)
+        skip_dir = om.group(1) if om else None
+        hits = [(rel, i, para) for rel, paras in files
+                if not (skip_dir and rel.split("/")[0] == skip_dir)
+                for i, para in paras if pat.search(para)]
         label = f"{name!r} -> use {term!r}" + (f"  [condition: {cond}]" if cond else "")
         if not hits:
             print(f"ok {label}")
@@ -128,7 +151,7 @@ def main(argv):
             continue
         print(f"!! {label}: {len(hits)} hit(s)")
         for rel, i, line in hits:
-            print(f"     {rel}:{i}: {line.strip()[:100]}")
+            print(f"     {rel}:{i}: {pat.sub(lambda m: m.group(0).upper(), line.strip())[:110]}")
     print(f"== {len(banned)} banned names from {len(terms)} terms, {len(files)} files, {total} hits to read")
     return 0
 

@@ -32,23 +32,23 @@ the user has to remember to do first:
    priority is. But don't just default to any of this without thinking — a project
    that's a library has different natural tiers than one that's an end-user tool.
 3. **Interrogate this with the user before writing anything — don't just show a list and wait
-   for a thumbs-up.** This is one of the skill's hard rules (see the table in `SKILL.md`). Walk
-   through the proposed tiers and actively ask: does this order match
-   what actually matters right now, is anything missing, is anything here not actually a
-   priority, would any two tiers swap if a candidate pitted them against each other? Use
-   AskUserQuestion for the ranking itself (e.g. "which matters more right now: A or B?") rather
-   than a single open-ended "sound good?" — it's cheap now and wrong tiers quietly misrank
-   every candidate for as long as the tracker lives. This is a one-time setup cost per project;
-   getting it right once is worth a real back-and-forth rather than silently guessing. If a
-   features-type tier ends up ranked at or above maintenance/quality tiers, confirm that's
-   actually intended rather than letting it pass silently — it's the one case in this step
-   worth double-checking given the default lean described above.
-   If the user resists ranking two tiers against each other — "they're both important",
-   "depends on the week" — that's a signal for a genuine tie, not a cue to keep pushing for a
-   forced order. Confirm it's a real tie, then ask directly for the tie-break rule to store
-   (e.g. "if these two ever conflict on a specific candidate, which should win by default, or
-   would you rather I ask you each time?"), and write both goals at the same tier number with
-   that rule inline (see `SKILL.md`'s tracker format).
+   for a thumbs-up.** This is one of the skill's hard rules (see the table in `SKILL.md`).
+   - Walk through the proposed tiers and ask four things: does this order match what actually
+     matters right now; is anything missing; is anything here not actually a priority; would any
+     two tiers swap if a candidate pitted them against each other?
+   - Use AskUserQuestion for the ranking itself (e.g. "which matters more right now: A or B?")
+     rather than a single open-ended "sound good?". It's cheap now, and wrong tiers quietly
+     misrank every candidate for as long as the tracker lives. This is a one-time setup cost per
+     project; getting it right once is worth a real back-and-forth rather than silently guessing.
+   - If a features-type tier ends up ranked at or above maintenance/quality tiers, confirm that's
+     actually intended rather than letting it pass silently. It's the one case in this step worth
+     double-checking given the default lean described above.
+   - If the user resists ranking two tiers against each other ("they're both important",
+     "depends on the week"), that's a signal for a genuine tie, not a cue to keep pushing for a
+     forced order. Confirm it's a real tie. Then ask directly for the tie-break rule to store
+     (e.g. "if these two ever conflict on a specific candidate, which should win by default, or
+     would you rather I ask you each time?"). Write both goals at the same tier number with that
+     rule inline (see `SKILL.md`'s tracker format).
 4. Ask three more questions — see `strategies.md`, `feedback.md`, and `risk-register.md` for their
    exact wording — covering presentation strategy, outcome feedback, and the risk register. All
    three have a safe, zero-effort default (`top-tier` / `Feedback: on` / `Risk register: off`) if

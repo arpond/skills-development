@@ -19,5 +19,5 @@ Each entry says what is new and **whether there is anything to opt into**:
 
 - **1.0.0** — *baseline, automatic, nothing to opt into.* Everything in this skill as of the
   version field's introduction. A file backfilled from a missing stamp to `0.0.0` is not behind on
-  anything this file tracks. Baseline itself needs no disclosure. The only visible change is the
-  new `Feature check:` header line. Say that in a clause, then stamp.
+  anything this file tracks. The only visible change is the new `Feature check:` header line. Say
+  that in a clause, then stamp.

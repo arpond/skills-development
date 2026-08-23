@@ -60,8 +60,8 @@ would otherwise assume `KNOWLEDGE.md`.
 ## Checking the skill version
 
 `KNOWLEDGE.md`'s `Feature check:` stamp records the skill version last disclosed to this file.
-Compare it against `SKILL.md`'s current skill version every run, once Step 0 finds the file and
-before Step 1.
+Compare it against `SKILL.md`'s current skill version every run, once Step 0 accepts a file as
+ours and before Step 1.
 
 **Missing** (the file predates the field, or someone created it by hand): not malformed. Backfill
 it to `0.0.0` as mechanical, no-confirmation bookkeeping, then continue as behind. A missing stamp

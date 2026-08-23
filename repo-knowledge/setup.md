@@ -40,6 +40,8 @@ skill's hard rules (see the table in `SKILL.md`):
     60-90 days, or sooner if entries have piled up) to prune stale entries (see
     `session-start.md`), so accepting the default means agreeing to that occasional review
     prompt, not just to the file existing.
+  - mentioning that its header carries a `Feature check:` skill-version stamp, which the skill
+    moves itself. After a skill upgrade, the skill says once what changed, then moves the stamp.
 - If the project has a `CLAUDE.md`, propose adding a single pointer line to it (e.g. "See
   KNOWLEDGE.md for known repo gotchas and quirks") — keeps the two files DRY without duplicating
   content.

@@ -13,6 +13,8 @@ Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `st
 **Skills**
 - `repo-knowledge`: versioned, at 1.0.0. `KNOWLEDGE.md` gets a `Feature check:` stamp. New
   `changelog.md`.
+- `repo-knowledge`: bootstrap says the header stamp moves itself and that an upgrade is disclosed
+  once.
 - `next-improvement`: `changelog.md`'s policy sentence matches the new spec. No behaviour change.
 - `ste-writing`: the README pins the upstream commit that the skill came from.
 

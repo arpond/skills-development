@@ -21,6 +21,8 @@ Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `st
 **Standards**
 - Spec: *Skill versioning*. Version a skill only when an artifact outside the repo compares
   against it. One mechanism for the skills that do.
+- Principle *Don't persist a signal*: points at the versioning spec for the when-to-version test.
+- Spec *The hard-rules table*: `prohibition` is the third `Kind` value.
 
 ## Writing standards and `ste-writing` · 2026-08-22
 

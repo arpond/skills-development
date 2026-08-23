@@ -153,6 +153,10 @@ merged, or shipped, and whatever referenced it by name is now wrong. This is abo
 the judgement in the first place when recomputing it costs little, as distinct from re-checking a
 judgement already stored (see [Re-ground, don't cache](#re-ground-dont-cache)).
 
+A skill version number is the same call: keep one only where an artifact compares against it,
+since a number nothing reads is stored state with no staleness handling. The mechanism is a
+spec — see `CONVENTIONS.md`, "Skill versioning."
+
 ## Principles vs. specs
 
 Which of this repo's two shared files a rule belongs in — and the test for deciding, since the

@@ -148,10 +148,11 @@ Stated in: all six skills, each in its own `SKILL.md`. Their scopes genuinely di
 output obligations too. The narrow reading came first only because that skill was written first.
 
 **A table mixing gates with unprompted surfacings should mark which is which** — `next-improvement`
-uses a `Kind` column (`gate` / `surface`). Both fail silently and both belong in the index, but
-they're different obligations: one waits for an answer, the other only has to be said. Without the
-column a reader has to infer which from the wording of each row, and the distinction is exactly
-what the older gates-only scoping existed to protect.
+uses a `Kind` column (`gate` / `surface`), and `repo-knowledge` adds `prohibition` for its secrets
+rule. Reuse those three names rather than coining a fourth. Both gates and surfaces fail silently
+and both belong in the index, but they're different obligations: one waits for an answer, the
+other only has to be said. Without the column a reader has to infer which from the wording of each
+row, and the distinction is exactly what the older gates-only scoping existed to protect.
 
 ## Artifact locations
 

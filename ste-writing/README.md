@@ -16,9 +16,14 @@ reads naturally). Never applied to code, identifiers, or command syntax.
 [woosal1337/blog — ep01 "The cure for AI slop"](https://github.com/woosal1337/blog/tree/main/videos/ep01-the-cure-for-ai-slop),
 not authored in this repo. Local changes: the lint script moved to `scripts/`, `python3` became
 `python` in the lint instructions, a hard-rules table was added to `SKILL.md` to match this
-repo's conventions, and the lint script now unwraps hard-wrapped paragraphs before splitting
-sentences (upstream counts each wrapped line as a sentence, so long sentences in wrapped
-markdown never registered). Rule content is unchanged. The skill is unofficial and not affiliated with
+repo's conventions, and the lint script diverges from upstream in four ways: it unwraps
+hard-wrapped paragraphs before splitting sentences (upstream counts each wrapped line as a
+sentence, so long sentences in wrapped markdown never registered); it splits sentences that open
+or close with markdown emphasis; it keeps a code fence's newlines so line numbers stay true; and it
+gains `--cap N` and `--show`, where `--show` lists long sentences with line numbers and counts
+them the way this repo's "A rule is a sentence" principle does (parentheticals and bold labels
+excluded, inline code included). The STE score itself is computed as upstream does. Rule content
+is unchanged. The skill is unofficial and not affiliated with
 ASD; the full standard is free at https://asd-ste100.org.
 
 Files:

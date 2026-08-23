@@ -41,6 +41,7 @@ principle that only ever gets applied outward isn't being applied.
 - [Structure & reuse](#structure--reuse)
   - [Index what fails silently](#index-what-fails-silently)
   - [A rule is a sentence, an instruction block is a list](#a-rule-is-a-sentence-an-instruction-block-is-a-list)
+  - [A review criterion needs a floor](#a-review-criterion-needs-a-floor)
   - [Reuse a judgment test, don't invent a parallel one](#reuse-a-judgment-test-dont-invent-a-parallel-one)
   - [A computed join needs its matching test written down once](#a-computed-join-needs-its-matching-test-written-down-once)
   - [Self-correcting knobs share one shape — reuse it](#self-correcting-knobs-share-one-shape--reuse-it)

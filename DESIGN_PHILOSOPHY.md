@@ -3,7 +3,7 @@
 Principles applied consistently across the skills in this repo, grouped by the concern they
 address rather than a flat unstructured list.
 
-**These govern this file and `CONVENTIONS.md` too, not only the skills.** The bullets read as
+**These govern this file and `CONVENTIONS.md` too, not only the skills.** The principles read as
 advice about skills because that's what they were written from, but nothing in them is
 skill-specific: both shared files are text that gets read and acted on, so they're subject to the
 same rules. The failure is asymmetric and worth naming, because it has happened repeatedly — the
@@ -64,7 +64,7 @@ principle that only ever gets applied outward isn't being applied.
 ## Write gates & confirmation
 
 When a skill acts on the user's behalf, showing the action before it happens is the safeguard —
-these bullets cover when/how that gate fires.
+these principles cover when/how that gate fires.
 
 ### Propose, don't just do
 

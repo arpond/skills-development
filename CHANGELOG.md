@@ -18,6 +18,8 @@ Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `st
 - `CLAUDE.md` *Prose standards*: every README and per-skill changelog is in flavored STE, like
   `CHANGELOG.md`. Fenced dialogue is exempt.
 - Spec *Skill README contents*: carries the prose rule.
+- `CONVENTIONS.md` and `CLAUDE.md`: rewritten in flavored STE and added to *Prose standards*.
+  Vocabulary fixes there and in `DESIGN_PHILOSOPHY.md`: `bullet` to `principle`, `flags` to `marks`.
 
 ## Skill versioning · 2026-08-23
 

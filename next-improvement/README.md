@@ -1,63 +1,63 @@
 # next-improvement
 
-A repeatable "what should we work on next" loop for any project. Instead of re-deciding from
-scratch every session what to build next, it maintains a per-project `IMPROVEMENT_TRACKER.md`:
-a small set of idea categories, a tiered list of priorities, and a running history of what's
-shipped (and what's been rejected, and why). Each time it runs, it proposes fresh ideas for any
-category that's run thin, ranks whatever's outstanding against the project's own priority
-tiers, and proposes the next thing to build — but never writes a new idea to the tracker, starts
-planning, or starts building anything without the user confirming first.
+A repeatable "what should we work on next" loop for any project. Instead of a fresh decision
+every session about what to build next, it maintains a per-project `IMPROVEMENT_TRACKER.md`: a
+small set of idea categories, a tiered list of priorities, and a running history of what shipped
+and what was rejected, with reasons. Each run proposes fresh ideas for any category that ran thin,
+ranks the outstanding ideas against the project's own priority tiers, and proposes the next thing
+to build. It never writes a new idea to the tracker, starts a plan, or starts a build until the
+user confirms.
 
 Files:
-- `SKILL.md` — the steady-state loop (ties, idea top-up, ranking, propose/
-  confirm/plan/build/record). The core file, read every time the skill triggers.
-- `session-start.md` — finding/bootstrapping the tracker and checking whether Goals are stale.
-  Read every run, right after `SKILL.md`'s intro — a second core file, not a companion: not
-  optional or one-time, just split out to keep `SKILL.md` itself focused on the loop.
-- `setup.md` — the one-time-per-project bootstrap interrogation. Only read the
-  first time the skill runs for a project, before its tracker file exists.
-- `strategies.md` — optional alternate ways of presenting candidates (spread
-  across tiers, a wildcard slot, a quick-win lane, category rotation). Only read when a project
-  actually configures a `Selection strategy:` beyond the default. See that file for the full
-  option reference (syntax, defaults, and how modes combine).
-- `feedback.md` — an optional loop that asks how past ships actually landed
-  (effective / partial / ineffective) and feeds that back into future judgement, capped so it never
-  turns into a nagging backlog. On by default; only skipped when a project sets `Feedback: off`.
-- `risk-register.md` — an optional loop that traces which shipped ideas needed follow-up fixes,
-  reworks, or bad outcomes, persists that as a named risk area (keyed to the files/modules it's
-  actually about) in a sibling `RISK_REGISTER.md`, and cross-references future proposals against
-  it. Off by default; only read when a project has `Risk register: on`.
-- `tracker-maintenance.md` — rare per-project edge cases: minting/migrating idea ids, and
-  retiring, merging, or narrowing an idea category. Only read when one of those actually comes up.
-- `changelog.md` — what each skill version added, plus the versioning policy. Only read when an
-  existing tracker turns out to be behind the installed skill version.
+- `SKILL.md` — the steady-state loop (ties, idea top-up, ranking, propose/confirm/plan/build/
+  record). The core file, read every time the skill triggers.
+- `session-start.md` — finds or bootstraps the tracker and checks whether Goals are stale. Read
+  every run, right after `SKILL.md`'s intro. A second core file, not a companion: not optional
+  or one-time, only separated to keep `SKILL.md` focused on the loop.
+- `setup.md` — the one-time-per-project bootstrap interrogation. Read only the first time the
+  skill runs for a project, before its tracker file exists.
+- `strategies.md` — optional alternate ways to present candidates (spread across tiers, a
+  wildcard slot, a quick-win lane, category rotation). Read only when a project sets a
+  `Selection strategy:` beyond the default. That file holds the full option reference (syntax,
+  defaults, and how modes combine).
+- `feedback.md` — an optional loop that asks how past ships landed (effective / partial /
+  ineffective) and uses the answers in future judgement. Capped, so it never becomes a nagging
+  backlog. On by default. Skipped only when a project sets `Feedback: off`.
+- `risk-register.md` — an optional loop that traces which shipped ideas needed follow-up fixes or
+  reworks, or had bad outcomes. It persists each as a named risk area, keyed to the files or
+  modules it is about, in a sibling `RISK_REGISTER.md`, and cross-references future proposals
+  against it. Off by default. Read only when a project has `Risk register: on`.
+- `tracker-maintenance.md` — rare per-project edge cases: minting or migrating idea ids, and
+  retiring, merging, or narrowing an idea category. Read only when one of those occurs.
+- `changelog.md` — what each skill version added, plus the versioning policy. Read only when an
+  existing tracker is behind the installed skill version.
 
 ## What it writes
 
-All inside the project you're working in — nothing elsewhere on your machine, nothing off it.
+All inside the project you work in. Nothing elsewhere on your machine, nothing off it.
 
 - **`IMPROVEMENT_TRACKER.md`** — the tracker itself, created on first use after a setup
-  conversation. One per project (the directory with its own README/package manifest, not
+  conversation. One per project (the directory with its own README or package manifest, not
   necessarily the repo root).
-- **`IMPROVEMENT_TRACKER_DONE.md`** — appears once Done history gets long; older shipped entries
-  move here automatically so the live tracker stays a manageable read. Only opened when older
-  history is actually needed.
-- **`RISK_REGISTER.md`** — only if you turn `Risk register: on`, which is off by default.
+- **`IMPROVEMENT_TRACKER_DONE.md`** — appears once Done history gets long. Older shipped entries
+  move here automatically, so the live tracker stays a manageable read. Opened only when older
+  history is needed.
+- **`RISK_REGISTER.md`** — only if you set `Risk register: on`. It is off by default.
 
 **Where it looks:** the project root first, then the project's own docs directory (`docs/`,
 `doc/`, `documentation/`) if it has one, then `.claude/`. It uses an existing tracker wherever it
-finds one and never moves it. Creating a new one goes into the docs directory if the project
-already has one, otherwise the project root — it won't create a docs directory to hold it. The
-other two files always sit beside the tracker, wherever that turned out to be.
+finds one and never moves it. A new tracker goes into the docs directory if the project already
+has one, otherwise the project root. It never creates a docs directory to hold it. The other two
+files always sit beside the tracker, wherever that is.
 
-Every write is shown and confirmed first, apart from mechanical bookkeeping (moving a shipped item
-to Done, aging entries into the archive).
+The skill shows and confirms every write first, apart from mechanical bookkeeping (a shipped item
+moved to Done, entries aged into the archive).
 
 ## Requires
 
-Nothing beyond local file read/write — no MCP server, no external service. The one optional
-dependency is Claude Code's plan mode, used for the approval flow in Step 4.5 if available;
-falls back to presenting the plan inline and waiting for a go-ahead otherwise.
+Nothing beyond local file read/write. No MCP server, no external service. The one optional
+dependency is Claude Code's plan mode, used for the approval flow in Step 4.5 if available.
+Without it, the skill presents the plan inline and waits for a go-ahead.
 
 ## When it triggers
 
@@ -142,6 +142,6 @@ Claude: 1. Tier 1 pick: "Fix pagination bug" — because X.
            a second look.
 ```
 
-(The feedback check-in runs at session start, before candidates are ranked — not appended after
-the proposal. If Goals were also due a check-in this run, both questions would be folded into
-that same opening message instead of asked one after another.)
+(The feedback check-in runs at session start, before the skill ranks candidates, not after the
+proposal. If Goals are also due a check-in this run, both questions fold into that same opening
+message instead of one after another.)

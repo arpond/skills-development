@@ -298,6 +298,9 @@ whole point is letting someone pick the cheap one deliberately.
 
 Skill-specific sections beyond these are fine and don't need justifying.
 
+The prose is in `ste-writing`'s flavored mode, linted under 2.5 per 100 words. Fenced example
+dialogue quotes how Claude speaks and is exempt. `CLAUDE.md`'s "Prose standards" holds the rule.
+
 **`## What it writes` is the one people most often skip**, and the one that matters most before
 installing: it names every artifact, says where the skill looks for an existing one, flags anything
 that leaves the machine (a ticket comment is visible to everyone with access, unlike a local file),

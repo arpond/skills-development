@@ -108,6 +108,23 @@ own use: overwrite the matching folder under the user's local `~/.claude/skills/
 repo's version, then commit the repo change. Both steps belong to finishing an edit, not just the
 edit itself.
 
+## Prose standards
+
+Human-facing prose in this repo is in `ste-writing`'s flavored mode: short sentences, active
+voice, simple tenses, no semicolons, no contractions. British spelling, per this repo. Lint with
+`python ste-writing/scripts/ste-lint.py --cap 25 <file>`, the descriptive-prose cap. Target under
+2.5 per 100 words, and treat list-as-paragraph hits as noise.
+
+It applies to:
+- `CHANGELOG.md`
+- every `README.md`, repo root and per skill. The prose only, not the fenced example dialogue,
+  which quotes how Claude speaks.
+- every per-skill `changelog.md`. Its entries reach the user nearly verbatim on a version gap.
+
+It does not apply to `SKILL.md` and its companions, `DESIGN_PHILOSOPHY.md`, `CONVENTIONS.md`,
+this file, vendored text, or a skill's `references/`. Those keep only the 25-word cap and the
+list-per-instruction rule from `DESIGN_PHILOSOPHY.md`.
+
 ## Changelog
 
 `CHANGELOG.md` gets an entry when a change alters what a skill does for its user, what an author
@@ -120,7 +137,3 @@ The format keeps the file scannable; match it:
 - Three fixed sections in order, omitted when empty: **Skills**, **Standards**, **Tooling**.
 - One line per item, skill or file name first, at most 25 words. Reasoning stays in the linked
   file or the commit.
-- Prose in `ste-writing`'s flavored mode: short sentences, active voice, simple tenses, no
-  semicolons. British spelling, per this repo. Lint with
-  `python ste-writing/scripts/ste-lint.py CHANGELOG.md`; target under 2.5 per 100 words, and
-  treat list-as-paragraph hits as noise.

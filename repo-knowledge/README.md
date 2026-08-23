@@ -1,69 +1,68 @@
 # repo-knowledge
 
-A place for the "why"-shaped facts about a repo that cost someone real time to (re)discover but
-don't live anywhere else — not derivable from reading the code, not covered by `CLAUDE.md` (which
-documents the repo as designed, not gotchas hit along the way), and not reliably captured in
-commit messages (commit quality varies by author). Instead of that knowledge staying in Slack
-threads, an incident channel, or someone's head until they leave, this skill captures it into a
-per-project `KNOWLEDGE.md` at the moment it's discovered, applies a deliberate capture bar to keep
-the file from filling with noise, and runs an occasional review to prune entries that have gone
-stale or never turned out to matter.
+A place for the "why"-shaped facts about a repo that cost someone real time to discover or
+rediscover, and that live nowhere else. Not derivable from the code. Not covered by `CLAUDE.md`,
+which documents the repo as designed, not the gotchas hit along the way. Not reliably captured in
+commit messages, because commit quality varies by author. Without this skill, that knowledge stays
+in Slack threads, an incident channel, or someone's head until they leave. This skill captures it
+into a per-project `KNOWLEDGE.md` at the moment of discovery, applies a deliberate capture bar to
+keep the file free of noise, and runs an occasional review to prune entries that went stale or
+never mattered.
 
 Files:
-- `SKILL.md` — the steady-state loop: reference existing entries when relevant work touches them
-  (with a mechanical check that they still hold), capture new entries when something clears the
-  capture bar (checking a `Declined` history first so the same idea isn't silently re-proposed or
-  silently re-suppressed), and remove entries under three specific conditions. Always loaded when
-  the skill triggers.
-- `session-start.md` — finding `KNOWLEDGE.md` and checking whether a judgment-drift review is due.
-  Read every run, right after `SKILL.md`'s intro — not optional, just split out to keep `SKILL.md`
-  itself focused on the loop.
-- `setup.md` — the one-time-per-project bootstrap: creating `KNOWLEDGE.md`, checking a bounded set
-  of the project's existing docs (README, CLAUDE.md/AGENTS.md, a troubleshooting guide/runbook, and
-  their `docs/`-folder equivalents) for gotcha-shaped content that should migrate over instead, and
-  asking whether there's anywhere else worth checking. Only read the first time the skill runs for
-  a project, before `KNOWLEDGE.md` exists.
-- `review.md` — the occasional judgment-drift review/prune pass (mechanical staleness is handled
-  inline in `SKILL.md`; this is the human-judgment pass on top of it). Read when a review is due,
-  or on explicit request.
+- `SKILL.md` — the steady-state loop. It references existing entries when relevant work touches
+  them, with a mechanical check that they still hold. It captures new entries when something
+  clears the capture bar, after a check of the `Declined` history so the same idea is not
+  re-proposed or re-suppressed in silence. It removes entries under three specific conditions.
+  Always loaded when the skill triggers.
+- `session-start.md` — finds `KNOWLEDGE.md` and checks whether a judgment-drift review is due.
+  Read every run, right after `SKILL.md`'s intro. Not optional, only separated to keep `SKILL.md`
+  focused on the loop.
+- `setup.md` — the one-time-per-project bootstrap. It creates `KNOWLEDGE.md`, checks a bounded
+  set of the project's existing docs (README, CLAUDE.md/AGENTS.md, a troubleshooting guide or
+  runbook, and their `docs/`-folder equivalents) for gotcha-shaped content that should migrate
+  over, and asks whether there is anywhere else worth a check. Read only the first time the skill
+  runs for a project, before `KNOWLEDGE.md` exists.
+- `review.md` — the occasional judgment-drift review and prune pass. `SKILL.md` handles
+  mechanical staleness inline. This is the human-judgment pass on top of it. Read when a review
+  is due, or on explicit request.
 - `changelog.md` — what each skill version changed, and the versioning policy. Read only when
   `KNOWLEDGE.md`'s `Feature check:` stamp is behind the skill's current version, so the skill
   tells an existing file what is new once.
 
 ## What it writes
 
-All inside the project you're working in — nothing elsewhere on your machine, nothing off it.
+All inside the project you work in. Nothing elsewhere on your machine, nothing off it.
 
 - **`KNOWLEDGE.md`** — the knowledge file itself, created on first use after a short setup
-  conversation. One per project (the directory with its own README/package manifest, not
-  necessarily the repo root). Meant to be committed; the whole point is that the next person hits
-  the gotcha and finds it already written down.
-- **One line added to an existing `CLAUDE.md`**, if the project has one — a pointer so the file
-  gets found, not a copy of its contents. Proposed and confirmed like anything else, and skipped
-  entirely if there's no `CLAUDE.md` to point from. This is the only file the skill touches that
-  it doesn't own.
+  conversation. One per project (the directory with its own README or package manifest, not
+  necessarily the repo root). Meant for commit. The whole point is that the next person hits the
+  gotcha and finds it already written down.
+- **One line added to an existing `CLAUDE.md`**, if the project has one. A pointer so people find
+  the file, not a copy of its contents. Proposed and confirmed like anything else, and skipped if
+  there is no `CLAUDE.md` to point from. This is the only file the skill touches that it does not
+  own.
 
 **Where it looks:** the project root first, then the project's own docs directory (`docs/`,
 `doc/`, `documentation/`) if it has one, then `.claude/`. It uses an existing file wherever it
-finds one and never moves it. Creating a new one goes into the docs directory if the project
-already has one, otherwise the project root — it won't create a docs directory to hold it.
+finds one and never moves it. A new file goes into the docs directory if the project already has
+one, otherwise the project root. It never creates a docs directory to hold it.
 
-Every write is shown and confirmed first, including the first one that creates the file. The one
-exception is the `Feature check:` skill-version stamp in the file's header. The skill moves that
-line itself, after it says what changed since the stamped version.
+The skill shows and confirms every write first, including the first one that creates the file.
+The one exception is the `Feature check:` skill-version stamp in the file's header. The skill
+moves that line itself, after it says what changed since the stamped version.
 
 ## Requires
 
-Nothing beyond local file read/write — no MCP server, no external service.
+Nothing beyond local file read/write. No MCP server, no external service.
 
 ## When it triggers
 
-Proactively, whenever a session hits something worth recording:
+Proactively, whenever a session hits something worth a record:
 
 - A debugging session resolves with a non-obvious root cause.
-- A dependency, build, test, or environment quirk trips something up in a way that isn't obvious
-  from reading the code.
-- Work is about to touch a file/area that an existing `KNOWLEDGE.md` entry already covers.
+- A dependency, build, test, or environment quirk causes a failure the code does not explain.
+- Work is about to touch a file or area that an existing `KNOWLEDGE.md` entry already covers.
 
 And explicitly, when you say things like:
 

@@ -1,63 +1,64 @@
 # operational-requirements-audit
 
-Audits a repo/service against Findmypast's Operational Requirements (ORs) — org-wide standards
-covering testing, dashboards, databases, deployment, developer experience, documentation,
-logging/instrumentation, monitoring/alerting, resilience, and SLOs — and produces a per-OR
-compliance report (Met / Partial / Not Met / N/A / Unverifiable from repo) backed by concrete
-evidence from the codebase.
+Audits a repo or service against Findmypast's Operational Requirements (ORs). These are org-wide
+standards that cover testing, dashboards, databases, deployment, developer experience,
+documentation, logging and instrumentation, monitoring and alerting, resilience, and SLOs. It
+produces a per-OR compliance report (Met / Partial / Not Met / N/A / Unverifiable from repo)
+backed by concrete evidence from the codebase.
 
 The OR text itself is bundled with the skill (`references/operational-requirements.md`), extracted
-from Discourse pages saved as HTML, rather than re-derived from memory each time — wording matters,
-and requirements get refined over time, so the audit reads the actual current text instead of
-guessing from a requirement's title.
+from Discourse pages saved as HTML, not re-derived from memory each time. Wording matters, and
+requirements get refined over time, so the audit reads the current text instead of a guess from a
+requirement's title.
 
 Files:
 - `SKILL.md` — the audit workflow: confirm scope, read the bundled ORs, investigate each one with
-  real evidence (grep/read the repo, not keyword guessing), then write a structured report.
-- `references/operational-requirements.md` — the bundled OR text, one entry per requirement, grouped
-  by category. Regenerate with `scripts/extract_ors.py` when the source Discourse export refreshes.
-- `scripts/extract_ors.py` — parses a folder of Discourse pages saved as HTML (one OR per page) and
-  extracts each page's title and first post (the requirement definition — later Discourse replies
-  are discussion, not part of the requirement, and are intentionally excluded) into the bundled
-  reference file.
+  real evidence (grep and read the repo, not keyword guessing), then write a structured report.
+- `references/operational-requirements.md` — the bundled OR text, one entry per requirement,
+  grouped by category. Regenerate it with `scripts/extract_ors.py` when the source Discourse
+  export refreshes.
+- `scripts/extract_ors.py` — parses a folder of Discourse pages saved as HTML (one OR per page)
+  and extracts each page's title and first post into the bundled reference file. The first post
+  is the requirement definition. Later Discourse replies are discussion, not part of the
+  requirement, and the script deliberately excludes them.
 
 ## Cost
 
-**The most expensive skill in this repo, for a full audit.** No MCP calls or external services, but
-it reads the whole bundled OR reference and then investigates each requirement against the target
-repo separately — grep and read per OR, across ~10 categories, because a verdict without a cited
-file path isn't a verdict. Expect real exploration time on a repo of any size, and a long
-conversation turn before the summary appears.
+**The most expensive skill in this repo, for a full audit.** No MCP calls or external services,
+but it reads the whole bundled OR reference and then investigates each requirement against the
+target repo separately. That is a grep and a read per OR, across about 10 categories, because a
+verdict without a cited file path is not a verdict. Expect real exploration time on a repo of any
+size, and a long conversation turn before the summary appears.
 
-**A single-OR question is cheap** — it reads that one requirement's text and investigates only
-that. "Does this meet the backups OR?" is a small fraction of a full run, so ask narrowly when you
-only care narrowly rather than running everything and reading one row of the result.
+**A single-OR question is cheap.** It reads that one requirement's text and investigates only
+that. "Does this meet the backups OR?" is a small fraction of a full run. So ask narrowly when you
+only care narrowly, instead of a full run to read one row of the result.
 
 ## What it writes
 
-- **`OPERATIONAL_REQUIREMENTS_AUDIT.md`** — the report, at the root of whatever was audited: the
-  repo root, or a service subdirectory if the repo holds several independently-deployed services
+- **`OPERATIONAL_REQUIREMENTS_AUDIT.md`** — the report, at the root of the audited target: the
+  repo root, or a service subdirectory if the repo holds several independently deployed services
   and you scoped the audit to one.
 
-**Only for a full or explicitly multi-OR audit, or if you ask.** A narrow "does this service meet
-the backups OR?" is answered in the conversation and writes nothing. The summary table is shown and
-confirmed before the file is written, and if a report of the same name already exists you're told
-so in that same message rather than finding out afterwards.
+**Only for a full or explicitly multi-OR audit, or if you ask.** The skill answers a narrow "does
+this service meet the backups OR?" in the conversation and writes nothing. It shows and confirms
+the summary table before it writes the file. If a report of the same name already exists, it says
+so in that same message, not afterwards.
 
-Nothing else is written — no changes to the audited code, and nothing outside the repo.
+It writes nothing else: no changes to the audited code, and nothing outside the repo.
 
 ## Requires
 
-Nothing beyond local file read/search (Read/Grep/Glob) to investigate the target repo. Refreshing
-the bundled ORs requires Python 3 (standard library only, no extra packages) and a fresh HTML export
-from Discourse.
+Nothing beyond local file read and search (Read/Grep/Glob) to investigate the target repo. A
+refresh of the bundled ORs needs Python 3 (standard library only, no extra packages) and a fresh
+HTML export from Discourse.
 
 ## When it triggers
 
 - "Audit this repo against the operational requirements."
 - "Does this service meet the ORs?"
-- "Check whether this meets the backups OR." (a single-OR request — only that one gets investigated
-  and reported on)
+- "Check whether this meets the backups OR." (a single-OR request: the skill investigates and
+  reports only that one)
 - "Is this service production-ready per Findmypast's service standards?"
 
 ## Example: full audit
@@ -131,13 +132,13 @@ Claude: [invokes operational-requirements-audit — narrow scope, so it reads
 ## Keeping the ORs current
 
 The bundled reference is a snapshot, not a live feed. When Findmypast's Discourse ORs change,
-re-save the affected topics as HTML into a folder ("Save Page As" — only the first post matters,
-later replies are discussion). Then run:
+re-save the affected topics as HTML into a folder ("Save Page As"). Only the first post matters.
+Later replies are discussion. Then run:
 
 ```
 python scripts/extract_ors.py <path_to_html_export_folder> references/operational-requirements.md
 ```
 
-This regenerates the whole file deterministically from the HTML — no manual merging. The script
-warns on stderr if a page's first post couldn't be found, which usually means the page was only
-partially saved (the `_files` asset folder exists but the `.html` file itself doesn't).
+This regenerates the whole file deterministically from the HTML. No manual merge. The script warns
+on stderr if it cannot find a page's first post. That usually means the page was only partly
+saved: the `_files` asset folder exists but the `.html` file itself does not.

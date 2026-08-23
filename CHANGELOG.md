@@ -8,6 +8,17 @@ the repo is organised. `next-improvement` keeps a versioned changelog in
 Format: one heading per period, named by theme and dated by its start. Three fixed sections:
 Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `ste-writing`.
 
+## README prose in STE · 2026-08-23
+
+**Skills**
+- All seven `README.md` files and `next-improvement/changelog.md`: rewritten in flavored STE. No
+  content change.
+
+**Standards**
+- `CLAUDE.md` *Prose standards*: every README and per-skill changelog is in flavored STE, like
+  `CHANGELOG.md`. Fenced dialogue is exempt.
+- Spec *Skill README contents*: carries the prose rule.
+
 ## Skill versioning · 2026-08-23
 
 **Skills**

@@ -5,31 +5,31 @@ A collection of custom skills for [Claude Code](https://claude.com/product/claud
 ## Skills
 
 - **[next-improvement](next-improvement/README.md)** — a repeatable "what should we work on
-  next" loop that maintains a per-project priority tracker, brainstorms and ranks ideas against
-  it, and proposes the next thing to build before ever planning or coding anything.
-- **[plan-technical-jira-ticket](plan-technical-jira-ticket/README.md)** — turns a single,
-  well-scoped technical Jira ticket into an implementation plan grounded in the actual
-  codebase(s) it touches, verifying the ticket's claims against real code before proposing a
-  plan for approval.
-- **[repo-knowledge](repo-knowledge/README.md)** — captures repo gotchas, root-causes, and
-  dependency/environment quirks into a per-project `KNOWLEDGE.md` at the moment they're
-  discovered, applies a capture bar to keep it noise-free, and runs an occasional review to
-  prune entries that have gone stale or never proved useful.
+  next" loop. It maintains a per-project priority tracker, brainstorms and ranks ideas against
+  it, and proposes the next thing to build before it plans or codes anything.
+- **[plan-technical-jira-ticket](plan-technical-jira-ticket/README.md)** — turns one
+  well-scoped technical Jira ticket into an implementation plan grounded in the codebase(s) it
+  touches. It checks the ticket's claims against real code before it proposes a plan for
+  approval.
+- **[repo-knowledge](repo-knowledge/README.md)** — captures repo gotchas, root causes, and
+  dependency or environment quirks into a per-project `KNOWLEDGE.md` at the moment of
+  discovery. A capture bar keeps the file free of noise. An occasional review prunes entries
+  that went stale or never proved useful.
 - **[operational-requirements-audit](operational-requirements-audit/README.md)** — audits a repo
-  against Findmypast's Operational Requirements (bundled from Discourse, not re-derived from
-  memory) and produces a per-requirement Met/Partial/Not Met/N/A/Unverifiable report backed by
+  against Findmypast's Operational Requirements, bundled from Discourse and not re-derived from
+  memory. It produces a per-requirement Met/Partial/Not Met/N/A/Unverifiable report backed by
   concrete evidence from the codebase.
-- **[commit-message-check](commit-message-check/README.md)** — a mandatory pre-commit gate that
-  re-reads the user's own conventions file (bootstrapped via interrogation on first use) and
+- **[commit-message-check](commit-message-check/README.md)** — a mandatory pre-commit gate. It
+  re-reads the user's own conventions file, bootstrapped by interrogation on first use, and
   checks a draft message part by part (prefix, subject, body, footer, whole-message,
-  miscellaneous) before it's ever shown or committed.
-- **[jira-ticket-audit](jira-ticket-audit/README.md)** — audits a single Jira ticket for
-  ambiguity, internal inconsistency, gaps, oversized scope, and missing links to sibling tickets
-  in its epic, producing per-dimension findings backed by evidence quoted from the ticket.
+  miscellaneous) before it shows or commits the message.
+- **[jira-ticket-audit](jira-ticket-audit/README.md)** — audits one Jira ticket for ambiguity,
+  internal inconsistency, gaps, oversized scope, and missing links to sibling tickets in its
+  epic. It produces per-dimension findings backed by evidence quoted from the ticket.
 - **[ste-writing](ste-writing/README.md)** — rewrites or reviews prose (docs, READMEs, PR text,
-  error messages — never code) in ASD-STE100 Simplified Technical English to strip "AI slop",
-  with a bundled lint script that scores the result. Vendored from woosal1337's "The cure for AI
-  slop" episode; see its README for origin and local changes.
+  error messages, never code) in ASD-STE100 Simplified Technical English to remove "AI slop". A
+  bundled lint script scores the result. Vendored from woosal1337's "The cure for AI slop"
+  episode. Its README gives the origin and the local changes.
 
 ## Installation
 
@@ -41,21 +41,21 @@ a skill from this repo:
    ```
    cp -r next-improvement ~/.claude/skills/next-improvement
    ```
-2. That's it — no restart needed. Claude Code picks up skills from disk each time it looks for
-   one to trigger.
+2. That is all. No restart needed. Claude Code reads skills from disk each time it looks for one
+   to trigger.
 
-To update an installed skill after pulling changes from this repo, repeat step 1 (overwrite the
-existing folder). Each skill's own `README.md` travels with it, so the usage docs and examples
-stay available even once it's installed elsewhere.
+To update an installed skill after you pull changes from this repo, repeat step 1 and overwrite
+the existing folder. Each skill's own `README.md` travels with it, so the usage docs and examples
+stay available after it is installed elsewhere.
 
 ## Design philosophy
 
-See [DESIGN_PHILOSOPHY.md](DESIGN_PHILOSOPHY.md) for the principles applied consistently across
-the skills in this repo, and [CONVENTIONS.md](CONVENTIONS.md) for the concrete cross-skill specs
-they all implement identically: counters, numbered choices, vocabulary, the hard-rules table,
-artifact locations, and README contents. Both are authoring references: since installing a skill
-copies only its own folder, neither file travels with it, so every spec is also restated inside
-each skill that implements it.
+See [DESIGN_PHILOSOPHY.md](DESIGN_PHILOSOPHY.md) for the principles applied across the skills in
+this repo, and [CONVENTIONS.md](CONVENTIONS.md) for the concrete cross-skill specs they all
+implement identically: counters, numbered choices, vocabulary, the hard-rules table, artifact
+locations, skill versioning, and README contents. Both are authoring references. Installing a
+skill copies only its own folder, so neither file travels with it, and each skill restates the
+specs it implements inside its own folder.
 
 ## Changelog
 

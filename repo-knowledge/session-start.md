@@ -64,7 +64,7 @@ Compare it against `SKILL.md`'s current skill version every run, once Step 0 acc
 ours and before Step 1.
 
 **Missing** (the file predates the field, or someone created it by hand): not malformed. Backfill
-it to `0.0.0` as mechanical, no-confirmation bookkeeping, then continue as behind. A missing stamp
+it to `0.0.0` as mechanical bookkeeping, then continue as behind. A missing stamp
 is evidence of being behind, never proof of being current. To stamp it straight to the current
 version and skip the walk below is exactly the failure this paragraph exists to block.
 

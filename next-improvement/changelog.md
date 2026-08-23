@@ -43,7 +43,7 @@ Each entry says what is new and **whether there is anything to opt into**:
   incomplete for reasons nothing else re-checked: a hand-edited tracker, a session that ended
   before that check ran, an older tracker that predates `Done archive:`. Done could then grow well
   past `age`, `floor`, and `backstop` with nothing left to trigger a catch-up. If eligible entries
-  exist, archiving now also happens automatically at session start, the same no-confirmation
+  exist, archiving now also happens automatically at session start, the same mechanical
   bookkeeping as Step 6's own sweep. Say it in a clause if it moves anything. Otherwise stay
   silent.
 - **2.0.0** — *breaking, `Feedback:` outcome values only, migrated automatically.* The outcome

@@ -246,7 +246,7 @@ Step 6, flip `outcome: planned → pending` on the risk entry.** Not a new tag: 
 outcome-check timing from the actual ship date, same as any other mitigation reaching `pending`.
 If the idea shipped in a substantially different shape than originally planned, or turned out not
 to actually address the risk, say so rather than mechanically flipping the state. That's a
-judgement call worth a word, not silent bookkeeping.
+judgement call worth a word, not mechanical bookkeeping.
 
 ## Checking on mitigations
 

@@ -94,6 +94,7 @@ is never a read condition and `surface` is never a data tag.
 | core file | any skill file read on every invocation. A skill can have more than one (`SKILL.md` plus a `session-start.md`) | always-loaded file, base file, companion file (for an every-run file) |
 | companion file | a skill file read only when its trigger condition is met | — |
 | artifact | a file a skill maintains inside the user's project | output, state file |
+| mechanical bookkeeping | a write a skill makes without a gate, because it carries no judgement (a backfilled stamp, an archive sweep) | no-confirmation bookkeeping, routine bookkeeping, silent bookkeeping |
 
 Add a row when a review finds a second name for an existing concept: pick one, rename the other.
 The rule is ASD-STE100's 1.11. The 875-word dictionary that rule assumes is not adopted, so this

@@ -98,7 +98,7 @@ one, never proof of being current.
 
 **These two fields split into a mechanical part and a check-in part. Don't let the first blur
 into skipping the second.**
-- Backfill `Created:` to `0.0.0` as mechanical, no-confirmation bookkeeping (see
+- Backfill `Created:` to `0.0.0` as mechanical bookkeeping (see
   `tracker-maintenance.md`). The tracker's real creation version is unknown, and stamping it to
   the *current* skill version would falsely claim it started life knowing about everything up to
   today, which is exactly backwards for a tracker old enough to predate the field. `0.0.0` says
@@ -111,7 +111,7 @@ into skipping the second.**
 
 This tracker is owed disclosure for every feature shipped since baseline, not just future ones. A
 missing stamp confirms nothing about what it already knows, so treating the whole paragraph as
-routine bookkeeping and jumping straight to the current-version stamp is exactly the failure mode
+mechanical bookkeeping and jumping straight to the current-version stamp is exactly the failure mode
 this note exists to block.
 
 **This backfilled tracker also never went through `setup.md`'s own bootstrap interrogation.** It
@@ -123,7 +123,7 @@ they must not be conflated:
   genuinely are optional and read by *value*, not presence (see `SKILL.md`'s tracker-format note).
   If this tracker has zero ids anywhere and no `Next id:` line at all, that's exactly
   `tracker-maintenance.md`'s "Minting and migrating ids" first-adoption case:
-  - Run its one-time bulk backfill right here, as the same mechanical no-confirmation bookkeeping
+  - Run its one-time bulk backfill right here, as the same mechanical bookkeeping
     as the version-stamp backfill above. Waiting for that section's ordinary "an id is actually
     needed" trigger might never fire this session, leaving the tracker looking id-less
     indefinitely.
@@ -185,7 +185,7 @@ fires as a side effect of that one event. A tracker that predates the `Done arch
 hand-edited, or had a session end before that check completed can carry a Done section that's
 overdue for archiving with nothing left to trigger it. Every session start:
 1. Re-derive eligibility the same way Step 6 does (age vs. `floor`/`backstop`).
-2. Run the sweep if anything qualifies. This is the same mechanical, no-confirmation bookkeeping
+2. Run the sweep if anything qualifies. This is the same mechanical bookkeeping
    as Step 6's own sweep, not a new judgement call, so it doesn't wait for the combined check-in
    gate above.
 3. Update the same `(last sweep: ..., streak: N)` counter Step 6 uses, regardless of which step

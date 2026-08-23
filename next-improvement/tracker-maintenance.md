@@ -12,7 +12,7 @@ flag) — **or `session-start.md` Step 0 discovering a tracker with zero ids and
 all**, which runs the first-adoption case below immediately rather than waiting for this section's
 usual lazy trigger to eventually fire.
 
-All of it is mechanical, no-confirmation bookkeeping, same as Step 6's Done-trimming — never a
+All of it is mechanical bookkeeping, same as Step 6's Done-trimming — never a
 judgement call, and never a reason to stop and ask.
 
 **The bulk-backfill ordering rule**, used both by first-time adoption below and by the one-time

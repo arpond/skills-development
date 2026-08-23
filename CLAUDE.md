@@ -115,8 +115,8 @@ here has to follow, or how the repo is organised. Not every commit. Write it in 
 the change.
 
 The format keeps the file scannable; match it:
-- One heading per period (a date range). Start a new period when the theme changes, not the
-  date.
+- One heading per period, as `## <theme> · <start date>`. Start a new period when the theme
+  changes, not the date; name it by what changed, not when.
 - Three fixed sections in order, omitted when empty: **Skills**, **Standards**, **Tooling**.
 - One line per item, skill or file name first, at most 25 words. Reasoning stays in the linked
   file or the commit.

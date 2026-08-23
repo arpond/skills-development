@@ -5,10 +5,10 @@ one of three things: what a skill now does for its user, what an author here mus
 the repo is organised. `next-improvement` keeps a versioned changelog in
 `next-improvement/changelog.md`. Entries here point to it.
 
-Format: one heading per period. Three fixed sections: Skills, Standards, Tooling. One line per
+Format: one heading per period, named by theme and dated by its start. Three fixed sections: Skills, Standards, Tooling. One line per
 item. Prose in the flavored mode of `ste-writing`.
 
-## 2026-08-22 to 2026-08-23
+## Writing standards and `ste-writing` · 2026-08-22
 
 **Skills**
 - New: `ste-writing`. Rewrites or reviews prose as Simplified Technical English, with a lint
@@ -36,7 +36,7 @@ item. Prose in the flavored mode of `ste-writing`.
 - `ste-lint.py`: unwraps wrapped markdown, splits bold-edged sentences, and adds `--cap` and
   `--show`.
 
-## 2026-08-02 to 2026-08-03
+## Conventions become specs; `next-improvement` 2.x · 2026-08-02
 
 **Skills**
 - `next-improvement` 1.1.0 to 2.2.0: skill versioning, risk areas keyed to project paths,
@@ -54,7 +54,7 @@ item. Prose in the flavored mode of `ste-writing`.
 - Pointer indexes replace the conformance scorecards. A stored tick rots.
 - Review loop: a core file at or above ~500 lines needs a whole-file skim.
 
-## 2026-08-01
+## Design philosophy as a file; `commit-message-check` rebuilt · 2026-08-01
 
 **Skills**
 - `commit-message-check` rebuilt. Rules live in a user-owned conventions file, bootstrapped by
@@ -69,7 +69,7 @@ item. Prose in the flavored mode of `ste-writing`.
 - Seven principles added. Among them: a default the user never saw is not a default. Split
   skills along orthogonal triggers.
 
-## 2026-07-30 to 2026-07-31
+## `commit-message-check` and `jira-ticket-audit` · 2026-07-30
 
 **Skills**
 - New: `commit-message-check`. A pre-commit gate against conventions the user owns. Rebuilt on
@@ -77,7 +77,7 @@ item. Prose in the flavored mode of `ste-writing`.
 - New: `jira-ticket-audit`. Audits one ticket for ambiguity, gaps, scope, and epic linkage.
   Stage expectations per project. Vertical splits over horizontal.
 
-## 2026-07-15 to 2026-07-23
+## `repo-knowledge`, the OR audit, `next-improvement` split · 2026-07-15
 
 **Skills**
 - New: `repo-knowledge`. A per-project `KNOWLEDGE.md` of repo gotchas, with a capture bar,
@@ -89,7 +89,7 @@ item. Prose in the flavored mode of `ste-writing`.
 - `plan-technical-jira-ticket`: full confirm-points table, mid-plan assumption checks, a plan
   template, a cost warning up front.
 
-## 2026-07-13 to 2026-07-14
+## First two skills · 2026-07-13
 
 **Skills**
 - New: `next-improvement`. A "what next" loop over a per-project tracker, with

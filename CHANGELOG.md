@@ -13,6 +13,8 @@ Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `st
 **Skills**
 - `plan-red-team`: new. Attacks a plan with blind persona subagents, a cross-perspective wave,
   and an aggregator that passes reasoned verdicts.
+- `plan-red-team`: roster derivation now runs as three blind subagents merged on convergence.
+  Configurable at setup, skipped on re-runs.
 
 ## Work streams · 2026-08-26
 

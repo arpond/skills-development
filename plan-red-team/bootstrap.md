@@ -17,6 +17,11 @@ can edit. Unchosen ones stay available to adopt later. Say the file's exact path
 starting point, not a commitment — the panel gate always offers a derived roster too, whatever
 is adopted here.
 
+Also state the derivation default, because a default the user never saw is not a default.
+Derived rosters come from three blind deriver subagents, merged on convergence, before every
+panel that is not a re-run. Both settings (`Blind derivation: on`, `Derivers: 3`) land in the file, are
+independently editable, and can be changed here if the user objects to the cost.
+
 ## Step 2 — Confirm the write
 
 **This is a gate, indexed in `SKILL.md`'s hard-rules table.** Show the exact content the config
@@ -28,10 +33,16 @@ file will hold — the adopted entries verbatim from the library, under this hea
 Preset rosters, one per task type. `plan-red-team` reads this file on every run and offers a
 matching preset verbatim at its panel gate. Edit freely; the format each entry must keep:
 
+Blind derivation: on
+Derivers: 3
+
 ## <Task type name>
 Matches: <one line describing the plans this preset fits>
 - <Angle name>: <attack focus> | Persona: <one sentence of temperament and stance>
 ```
+
+The two settings lines sit above the entries and carry whatever was agreed in Step 1, not always
+these defaults.
 
 Wait for confirmation before writing. If the user picked none, the file still gets written with
 the header alone. An existing empty config is what stops this setup re-firing on every run.

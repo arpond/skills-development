@@ -9,9 +9,11 @@ with reasons. The main thread relays that report and adds its own labeled commen
 not judge alone, because it often wrote the plan under review.
 
 Angles come from two sources. The skill always derives a roster to fit the plan in front of it.
-The user can also keep preset rosters for task types they review often, and a matching preset is
-always offered verbatim beside the derived one. Nothing spawns until the user confirms the
-roster, the cost, and the output target at a single gate.
+Derivation is blind too. Three deriver subagents each propose angles from the plan text alone,
+and the merge marks the angles they converge on. The main thread does not pick the angles for a
+plan it may have written. The user can also keep preset rosters for task types they review
+often, and a matching preset is always offered verbatim beside the derived one. No panel agent
+spawns until the user confirms the roster, the cost, and the output target at a single gate.
 
 Files:
 
@@ -25,14 +27,17 @@ Files:
 
 Expensive by design. One run spawns the roster size plus two subagents, so usually five to
 seven. Each gets the full plan text. When the plan targets the current repo, the wave agents
-also get read-only repo access and spend tokens verifying claims against code. The gate states
-the exact spawn count before anything runs, and you control the roster size there. There is no
-cheap path. For a quick solo critique, ask for one instead of this skill.
+also get read-only repo access and spend tokens verifying claims against code. Roster derivation
+adds three more small spawns before the gate. Those are cheap — plan text in, an angle list out
+— and the setup gate confirms that default. Turn it off in the config file, say "skip
+derivation" for one run, or re-run a previous panel, which skips it by itself. The panel gate
+states the panel's spawn count before it runs, and you control the roster size there. There is
+no cheap path. For a quick solo critique, ask for one instead of this skill.
 
 ## What it writes
 
-- `~/.claude/plan-red-team-presets.md` — the config file that holds your preset rosters. Created
-  at first use, after you confirm its exact content. Later preset additions and edits are each
+- `~/.claude/plan-red-team-presets.md` — the config file that holds your preset rosters and the
+  two derivation settings. Created at first use, after you confirm its exact content. Later preset additions and edits are each
   shown and confirmed first.
 - A report file, only when you pick that output target at the gate. Default placement is beside
   the plan file. An existing file at that path is surfaced, never overwritten silently.
@@ -72,7 +77,8 @@ Claude: [reads config, finds the "Software design plan" preset matches, derives 
   1. Preset "Software design plan", verbatim (recommended) — Security, Operations,
      Scalability, Simplicity, Data integrity (5 angles, personas as saved)
   2. Same preset, adapted — Scalability re-aimed at the token-refresh hot path
-  3. Derived — Security, Operations, Data integrity, plus a Rollout-sequencing angle
+  3. Derived (3 blind derivers) — Security (3 of 3), Data integrity (2 of 3), Operations,
+     plus a Rollout-sequencing angle one deriver proposed
   Output:
   4. Report in chat
   5. Report file beside the plan

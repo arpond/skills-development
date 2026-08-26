@@ -1,7 +1,8 @@
 # One-time setup: the config file and the base directory
 
-Read this only when Step 0 found no `~/.claude/work-streams-config.md`. It runs once per
-machine, not per project or per stream.
+Read this when Step 0 found no `~/.claude/work-streams-config.md`, or when the user asks to
+move the base directory (see "Changing the base later" below). The bootstrap itself runs once
+per machine, not per project or per stream.
 
 ## Step 1 — Check for an existing store
 
@@ -42,5 +43,5 @@ With a custom path, write that path on the `base:` line instead. Then return to 
 Editing the `base:` line is all it takes for new lookups — but the existing store does not move
 itself. Moving it is the user's own copy, done deliberately, never a side effect of a config
 edit. Step 0 catches a configured base that does not exist. A base that exists but is empty
-looks like "no streams yet", so after a config edit, check the old path still holds nothing
-before trusting an empty listing.
+looks like "no streams yet". After a config edit, check the old path still holds nothing before
+trusting an empty listing.

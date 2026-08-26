@@ -61,7 +61,7 @@ User: let's stop here for today
 Claude: Wrapping up. This session's work matches the active stream "skipped-tests"
   (updated 2026-08-20). Here's the wrap-up plan:
 
-  Store (~/.claude/work-streams/titan/skipped-tests/):
+  Store (~/.claude/work-streams/atlas/skipped-tests/):
   - State of play rewritten: 14 of 31 skipped tests re-enabled; the auth suite is
     blocked on a fixture rewrite.
   - context/re-enable-progress.md refreshed with the per-suite table.

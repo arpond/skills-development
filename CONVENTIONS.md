@@ -280,8 +280,8 @@ Unversioned, by the test above: `commit-message-check` (its conventions file has
 to fall behind), `jira-ticket-audit`, `plan-technical-jira-ticket`, and
 `operational-requirements-audit` (no artifact), and `ste-writing` (no artifact). `ste-writing` is
 vendored, so its README pins the upstream commit instead, a different kind of version.
-`work-streams` is also unversioned. Its store sits outside any project, and every wrap-up
-rewrites the manifest wholesale, so no file persists on an old format.
+`work-streams` is also unversioned. Its store sits outside any project, so no file in a user's
+project can fall behind the skill.
 
 ## Skill README contents
 
@@ -316,5 +316,5 @@ someone's `CLAUDE.md` is exactly the sort of thing a person wants to know in adv
 discover afterwards. Where a skill writes nothing by default, say that outright. It is a materially
 different install decision from one that always writes.
 
-Applies to every skill in this repo. `next-improvement` and `repo-knowledge` omit `## Cost`, both
-local-file-only. The other four carry one.
+Applies to every skill in this repo. `next-improvement`, `repo-knowledge`, and `work-streams`
+omit `## Cost`, all local-file-only. The other four carry one.

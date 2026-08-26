@@ -10,14 +10,18 @@ A stream is archived when its goal is met or the user calls it done. Two things 
 together in one message, confirmed once:
 
 1. **The graduation sweep.** Reread State of play, Notes, and the `context/` file names for
-   anything that deserves a permanent home now the stream will stop being read: a gotcha for
-   `repo-knowledge`, progress for an improvement tracker, a fact for a cheatsheet or README.
+   anything that deserves a permanent home now the stream will stop being read. Candidates: a
+   gotcha for `repo-knowledge`, progress for an improvement tracker, a fact for a cheatsheet or
+   README.
    Task-scoped material that dies with the stream stays put — the test is whether someone
    working *outside* this stream would ever want it. Propose each candidate with its
    destination. When the wrap-up's W3 sweep already ran this session, only look for what the
    archive decision itself changes — do not re-propose what W3 just handled.
 2. **The move.** Move the whole stream folder to `<base>/<project-slug>/archive/<stream-slug>/`
-   and add `archived: <YYYY-MM-DD>` to the manifest's frontmatter.
+   and add `archived: <YYYY-MM-DD>` to the manifest's frontmatter. If `archive/` already holds
+   that slug, do not overwrite it. Offer a numbered choice:
+   1. suffix the incoming folder with today's date
+   2. give the incoming folder a new name
 
 An archived stream is read-only history. Nothing updates it, no listing of active streams
 includes it, and its format is whatever it was when archived.
@@ -33,8 +37,8 @@ wait for confirmation. Then:
   2. rename the active one
   3. keep both under new, distinct slugs
 - The repo has moved on since the archive date. Run the same claim-verification as resume's R2 —
-  branches, paths, commands the manifest names — and surface what no longer holds, so the first
-  session back starts from the real current state, not the archived one.
+  branches, paths, commands the manifest names — and surface what no longer holds. The first
+  session back then starts from the real current state, not the archived one.
 
 ## Deleting a stream
 

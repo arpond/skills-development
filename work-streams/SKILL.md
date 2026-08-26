@@ -18,7 +18,8 @@ and wrap-up's job is to notice those and route them there, not to hoard them in 
 
 Two companion files:
 
-- `setup.md` — the one-time config bootstrap. Read it only when Step 0 finds no config file.
+- `setup.md` — the one-time config bootstrap. Read it when Step 0 finds no config file, or when
+  the user asks to move the base directory.
 - `lifecycle.md` — archiving a finished stream, re-activating an archived one, deleting. Read it
   when a stream is declared finished at wrap-up, or when the user asks for any of those directly.
 
@@ -91,8 +92,8 @@ updated: <YYYY-MM-DD>
 
 ## Hard rules
 
-Scope: this table indexes the rules that fail silently when skipped — gates, one prohibition,
-and surfaces. It deliberately omits every-run behaviour whose omission is visible in the output
+Scope: this table indexes the rules that fail silently when skipped — gates, prohibitions, and
+surfaces. It deliberately omits every-run behaviour whose omission is visible in the output
 (a missed stream shows up as a wrong or missing listing). Absence from this table never means
 optional.
 
@@ -101,20 +102,23 @@ optional.
 | 0 (setup.md) | gate | Propose the config file and base directory with their concrete paths, and wait for confirmation before creating either |
 | 0 | gate | If the config file or a manifest is malformed, show what was found and ask — never rewrite it or bootstrap over it |
 | 0 | surface | Say when the configured base directory does not exist, rather than treating it as "no streams yet" |
+| 0 | surface | Surface a slug-matched stream whose `repos:` does not list this repo root, rather than assuming it active |
 | W1 | gate | Propose a new stream (slug, title, goal, update targets) and wait for confirmation before creating it |
 | W2 | surface | Propose context-file prunes at every wrap-up, or say none are needed, rather than letting `context/` grow silently |
-| W5 | gate | Present the whole wrap-up plan in one message and wait for confirmation before writing any of it |
-| every write | prohibition | Never write secrets, credentials, or PII into a stream file, including pasted logs — ask how to redact |
 | W3 | surface | Say when an update target no longer resolves, or a listed skill is unavailable, rather than silently skipping it |
+| W5 | gate | Present the whole wrap-up plan in one message and wait for confirmation before writing any of it |
 | R2 | surface | Surface a mismatch between a stream's claims and the repo's current state, rather than silently reconciling it |
+| R2 | prohibition | Never run a side-effectful command to verify a stream's claims |
 | lifecycle.md | gate | Confirm before archiving, re-activating, or deleting a stream |
+| every write | prohibition | Never write secrets, credentials, or PII into a stream file, including pasted logs — ask how to redact |
 
 *Update this table in the same edit whenever a hard rule is added, removed, or moved.*
 
 **Whenever two or more options are presented for the user to pick from, number them `1.`, `2.`,
 `3.`… in a single sequential list**, whatever label each carries. Sites in this skill: the
-stream pick at W1 and R1, the malformed-config choice at Step 0, the slug collision in
-`lifecycle.md`, and any added later. A label explains an option; a number is what the user can
+stream pick at W1 and R1, the malformed-config choice at Step 0, the base-directory choice in
+`setup.md`, the slug collisions in `lifecycle.md`, and any added later. A label explains an
+option; a number is what the user can
 say back ("go with 2") to pick one unambiguously. A single unambiguous recommendation with
 nothing else to choose between needs no number.
 
@@ -134,7 +138,9 @@ Runs before either flow below.
 4. Resolve `<project-slug>` from the current repo root. A stream is active for this project when
    its folder sits under `<base>/<project-slug>/` outside `archive/`, or its manifest's `repos:`
    lists this repo root (scan the other project folders' manifests for that — it is one glob and
-   a few frontmatter reads).
+   a few frontmatter reads). A slug-matched stream still has to name this repo root in its
+   `repos:`, because two repos can share a folder name. A slug match without a `repos:` match is
+   surfaced, not assumed active.
 5. A manifest that exists but does not parse into the format above gets the malformed gate: show
    it, ask, never rewrite it silently.
 
@@ -146,7 +152,7 @@ Trigger: the user is ending or pausing a session — "wrap up", "park this", "le
 this session's work looks like it belongs to. If none fits, propose a new stream — slug, title,
 goal, and update targets seeded from what the repo already has (a KNOWLEDGE.md, an improvement
 tracker, a CLAUDE.md, an obvious cheatsheet) — and wait for confirmation. If the user declines a
-stream altogether, skip to W3: the repo-file sweep still has value without a store entry, and
+stream altogether, skip to W3. The repo-file sweep still has value without a store entry, and
 nothing gets written to the store.
 
 **W2 — draft the store updates.** Rewrite State of play to the current position. Decide which
@@ -170,8 +176,7 @@ obvious candidate in the repo):
   somewhere permanent? This is the catch-all for what no listed target covers.
 
 **W4 — offer the continuation prompt.** One line, unless the user already said either way. If
-wanted, draft `continuation.md` as the next session's opening brief — rewritten wholesale, a
-page at most, pointing at `context/` files rather than restating them.
+wanted, draft `continuation.md` to its rules under "The manifest" above.
 
 **W5 — one gate, then write.** Assemble everything from W2–W4 into a single plan: store writes,
 repo-file edits, the continuation draft. Alongside it, ask whether the stream is finished or
@@ -186,7 +191,9 @@ we left off", "what streams are open here".
 
 **R1 — identify the stream.** A named stream resolves directly. Otherwise list the active
 streams for this project, numbered, with each one's title and `updated:` date. No active streams
-is a plain answer, not an error.
+is a plain answer, not an error. A named stream missing from the active list may be archived.
+Check `archive/` before answering that it does not exist. On a hit, offer `lifecycle.md`'s
+re-activation.
 
 **R2 — load and verify.** Read the manifest and `continuation.md` if present. List the names of
 what `context/` holds; read individual files as the work needs them, not all up front. The

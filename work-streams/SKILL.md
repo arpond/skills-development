@@ -1,6 +1,6 @@
 ---
 name: work-streams
-description: Parks and resumes named work streams — parallel threads of work in one repo, like "fix skipped tests" or "refactor the auth flow" — in a personal store outside any repo, so a session's context survives exit or /clear. Wrapping up updates the stream's manifest (goal, state of play), refreshes its task-scoped context files (test logs, progress summaries, temporary learnings), sweeps a per-stream list of repo files that may need updating (a cheatsheet, README, KNOWLEDGE.md, an improvement tracker), and optionally writes a continuation prompt addressed to the next session. Resuming loads all of that back into a fresh session and checks it against the repo's current state. Use this whenever the user says "wrap up", "wrap this session up", "park this", "let's stop here for today", "pick up where we left off", "resume the <x> stream", "what streams are open here", or asks to archive, re-activate, or delete a stream — even when they never say the word "stream", ending a session with unfinished work is the trigger. Not for committing code (that is ordinary git work) and not a memory system — a stream is scoped to one piece of work and dies with it.
+description: Parks and resumes named work streams — parallel threads of work in one repo, like "fix skipped tests" or "refactor the auth flow" — in a personal store outside any repo, so a session's context survives exit or /clear. Wrapping up updates the stream's manifest (goal, state of play), refreshes its task-scoped context files (test logs, progress summaries, temporary learnings), sweeps a per-stream list of repo files that may need updating (a cheatsheet, README, KNOWLEDGE.md, an improvement tracker), and optionally writes a continuation prompt addressed to the next session. Resuming loads all of that back into a fresh session and checks it against the repo's current state. Use this whenever the user says "wrap up", "wrap this session up", "park this", "let's stop here for today", "pick up where we left off", "resume the <x> stream", "what streams are open here", or asks to archive, re-activate, or delete a stream — even when they never say the word "stream", ending a session with unfinished work is the trigger. A bare "commit and push" is ordinary git work, not a wrap-up — but an end-of-day remark beside it ("I'm done for today, just commit and push") still earns a one-line wrap-up offer once the git work is done. Not a memory system — a stream is scoped to one piece of work and dies with it.
 ---
 
 # Work streams
@@ -103,6 +103,7 @@ optional.
 | 0 | gate | If the config file or a manifest is malformed, show what was found and ask — never rewrite it or bootstrap over it |
 | 0 | surface | Say when the configured base directory does not exist, rather than treating it as "no streams yet" |
 | 0 | surface | Surface a slug-matched stream whose `repos:` does not list this repo root, rather than assuming it active |
+| trigger | surface | Offer wrap-up in one line when a session-end signal rides another request — never launch unasked, never stay silent |
 | W1 | gate | Propose a new stream (slug, title, goal, update targets) and wait for confirmation before creating it |
 | W2 | surface | Propose context-file prunes at every wrap-up, or say none are needed, rather than letting `context/` grow silently |
 | W3 | surface | Say when an update target no longer resolves, or a listed skill is unavailable, rather than silently skipping it |
@@ -147,6 +148,9 @@ Runs before either flow below.
 ## Wrapping up
 
 Trigger: the user is ending or pausing a session — "wrap up", "park this", "let's stop here".
+When the signal rides another request — "done for today, just commit and push" — complete that
+request first. Then offer wrap-up in one line rather than launching the flow. Silence loses the
+signal, and launching unasked hijacks the request the user actually made.
 
 **W1 — pick the stream.** List the active streams for this project, numbered, and say which one
 this session's work looks like it belongs to. If none fits, propose a new stream — slug, title,

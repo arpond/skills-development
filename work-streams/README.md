@@ -49,6 +49,8 @@ moves on.
 ## When it triggers
 
 - "wrap up" / "wrap this session up" / "park this" / "let's stop here for today"
+- "I'm done for today, just commit and push" — the git work happens first. Then comes a
+  one-line offer to wrap up.
 - "pick up where we left off" / "resume the skipped-tests stream"
 - "what streams are open here?"
 - "archive that stream" / "bring back the auth-refactor stream" / "delete the old stream"

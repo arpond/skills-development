@@ -83,7 +83,7 @@ Claude: [reads config, finds the "Software design plan" preset matches, derives 
   4. Report in chat
   5. Report file beside the plan
 
-  Total spawns: roster + cross + aggregator = 7 for options 1–2, 6 for option 3.
+  Panel spawns: roster + cross + aggregator = 7 for options 1–2, 6 for option 3.
 
 User: 1 and 4
 

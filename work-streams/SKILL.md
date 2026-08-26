@@ -45,6 +45,8 @@ Two companion files:
   can never be a stream slug.
 - **Cross-repo streams** are ordinary streams whose manifest lists more than one repo in `repos:`.
   A stream lives under the project where it started. Step 0's scan finds it from any listed repo.
+- **A stream folder sits at exactly one depth**: directly under its project folder, or directly
+  under that project's `archive/`. A `stream.md` anywhere deeper is a stray, handled at Step 0.
 - The store is personal and machine-local. Absolute paths are fine inside it. Nothing in it is
   ever committed anywhere.
 
@@ -103,6 +105,7 @@ optional.
 | 0 | gate | If the config file or a manifest is malformed, show what was found and ask — never rewrite it or bootstrap over it |
 | 0 | surface | Say when the configured base directory does not exist, rather than treating it as "no streams yet" |
 | 0 | surface | Surface a slug-matched stream whose `repos:` does not list this repo root, rather than assuming it active |
+| 0 | surface | Surface a `stream.md` found at an unexpected depth as a stray — never list it as active, never silently ignore it |
 | trigger | surface | Offer wrap-up in one line when a session-end signal rides another request — never launch unasked, never stay silent |
 | W1 | gate | Propose a new stream (slug, title, goal, update targets) and wait for confirmation before creating it |
 | W2 | surface | Propose context-file prunes at every wrap-up, or say none are needed, rather than letting `context/` grow silently |
@@ -117,8 +120,9 @@ optional.
 
 **Whenever two or more options are presented for the user to pick from, number them `1.`, `2.`,
 `3.`… in a single sequential list**, whatever label each carries. Sites in this skill: the
-stream pick at W1 and R1, the malformed-config choice at Step 0, the base-directory choice in
-`setup.md`, the slug collisions in `lifecycle.md`, and any added later. A label explains an
+stream pick at W1 and R1, the malformed-config and stray-manifest choices at Step 0, the
+base-directory choice in `setup.md`, the slug collisions in `lifecycle.md`, and any added later.
+A label explains an
 option; a number is what the user can
 say back ("go with 2") to pick one unambiguously. A single unambiguous recommendation with
 nothing else to choose between needs no number.
@@ -142,7 +146,14 @@ Runs before either flow below.
    a few frontmatter reads). A slug-matched stream still has to name this repo root in its
    `repos:`, because two repos can share a folder name. A slug match without a `repos:` match is
    surfaced, not assumed active.
-5. A manifest that exists but does not parse into the format above gets the malformed gate: show
+5. Glob `stream.md` at any depth when scanning, not only at the expected level. A manifest
+   deeper than one level under the project folder (or one under `archive/`) is a stray — a
+   botched move, a hand-copied folder, a checkout dropped into the store. Never list a stray as
+   active, and never silently ignore it. Surface each one as a numbered choice:
+   1. move it up to be a real stream
+   2. it is reference material — leave it where it sits
+   3. delete it
+6. A manifest that exists but does not parse into the format above gets the malformed gate: show
    it, ask, never rewrite it silently.
 
 ## Wrapping up

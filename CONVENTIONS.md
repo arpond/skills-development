@@ -147,7 +147,7 @@ Column names are free to fit the skill (`Step`/`Hard rule`, `#`/`What gets writt
 and `Step`/`Kind`/`Gate or surface` are all in use and all fine). The invariants above are what
 must match.
 
-Stated in: all seven skills, each in its own `SKILL.md`. Their scopes genuinely differ. Only
+Stated in: every skill, each in its own `SKILL.md`. Their scopes genuinely differ. Only
 `next-improvement`'s is confined to confirm-before-write gates. The rest carry prohibitions and
 output obligations too. The narrow reading came first only because that skill was written first.
 
@@ -317,4 +317,4 @@ discover afterwards. Where a skill writes nothing by default, say that outright.
 different install decision from one that always writes.
 
 Applies to every skill in this repo. `next-improvement`, `repo-knowledge`, and `work-streams`
-omit `## Cost`, all local-file-only. The other four carry one.
+omit `## Cost`, all local-file-only. The rest carry one.

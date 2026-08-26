@@ -32,6 +32,9 @@ Files:
 - Repo files, only as part of that same confirmed plan. The wrap-up sweep can propose edits to
   files the stream lists as update targets, such as a cheatsheet or a README. It never edits a
   repo file without showing the edit first.
+- Removals, as part of that same plan. Every wrap-up reviews `context/` and proposes the prune
+  of files the work has outgrown, so the folder stays small. The store has no version control,
+  so a confirmed removal is permanent.
 
 The store is personal and machine-local. The skill never commits it, and never commits anything
 else on its own. It never writes secrets, credentials, or PII into a stream file. When pasted

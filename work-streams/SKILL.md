@@ -80,11 +80,14 @@ updated: <YYYY-MM-DD>
   record progress). Seeded at stream creation, edited any time.
 - **`updated:`** moves at every wrap-up as mechanical bookkeeping.
 - **`continuation.md`** is addressed to the next session as its opening brief: where things
-  stand, what to do next, what to avoid. Free-form — whatever the next session most needs read
-  first. It is the most optional piece and only exists if the user wanted one.
+  stand, what to do next, what to avoid. It is rewritten wholesale at each wrap-up, never
+  appended to. Keep it to roughly a page. It points at `context/` files by name for the detail,
+  and inlines nothing a pointer covers. It is the most optional piece and only exists if the
+  user wanted one.
 - **`context/`** holds task-scoped files a later session will actually read: a failing-test log,
   a progress table, a temporary learning too task-bound for the repo. Not a dumping ground —
-  each file kept is one the next session would otherwise have to regenerate.
+  each file kept is one the next session would otherwise have to regenerate. W2 prunes it at
+  every wrap-up, so it only ever holds what the stream still needs.
 
 ## Hard rules
 
@@ -99,6 +102,7 @@ optional.
 | 0 | gate | If the config file or a manifest is malformed, show what was found and ask — never rewrite it or bootstrap over it |
 | 0 | surface | Say when the configured base directory does not exist, rather than treating it as "no streams yet" |
 | W1 | gate | Propose a new stream (slug, title, goal, update targets) and wait for confirmation before creating it |
+| W2 | surface | Propose context-file prunes at every wrap-up, or say none are needed, rather than letting `context/` grow silently |
 | W5 | gate | Present the whole wrap-up plan in one message and wait for confirmation before writing any of it |
 | every write | prohibition | Never write secrets, credentials, or PII into a stream file, including pasted logs — ask how to redact |
 | W3 | surface | Say when an update target no longer resolves, or a listed skill is unavailable, rather than silently skipping it |
@@ -146,7 +150,11 @@ stream altogether, skip to W3: the repo-file sweep still has value without a sto
 nothing gets written to the store.
 
 **W2 — draft the store updates.** Rewrite State of play to the current position. Decide which
-context files to add or refresh, keeping only what a later session will read. Move `updated:`.
+context files to add or refresh, keeping only what a later session will read. Then prune: list
+what `context/` already holds, and propose the removal of anything the work has outgrown — a
+superseded log, a learning now resolved or graduated to a repo file. Propose prunes at every
+wrap-up, or say none are needed, rather than going quiet. An unbounded `context/` defeats the
+folder's point: each stale file kept is one a resume has to consider loading. Move `updated:`.
 Draft, do not write — everything lands together at W5.
 
 **W3 — sweep the update targets.** For each entry in the manifest (or, with no stream, each
@@ -162,7 +170,8 @@ obvious candidate in the repo):
   somewhere permanent? This is the catch-all for what no listed target covers.
 
 **W4 — offer the continuation prompt.** One line, unless the user already said either way. If
-wanted, draft `continuation.md` as the next session's opening brief.
+wanted, draft `continuation.md` as the next session's opening brief — rewritten wholesale, a
+page at most, pointing at `context/` files rather than restating them.
 
 **W5 — one gate, then write.** Assemble everything from W2–W4 into a single plan: store writes,
 repo-file edits, the continuation draft. Alongside it, ask whether the stream is finished or

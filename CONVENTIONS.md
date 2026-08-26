@@ -71,7 +71,8 @@ machine only. Each skill also states it inline, because an installed skill runs 
 neither of the other two.
 
 Stated in: `next-improvement`, `SKILL.md` Step 4. `repo-knowledge` and `commit-message-check`,
-`SKILL.md`, just above Step 0. `work-streams`, `SKILL.md`, below the hard-rules table. Each states
+`SKILL.md`, just above Step 0. `work-streams` and `plan-red-team`, `SKILL.md`, below the
+hard-rules table. Each states
 it once and names its own option-presenting sites, so a site added later inherits the rule instead
 of a rediscovery.
 
@@ -281,7 +282,9 @@ to fall behind), `jira-ticket-audit`, `plan-technical-jira-ticket`, and
 `operational-requirements-audit` (no artifact), and `ste-writing` (no artifact). `ste-writing` is
 vendored, so its README pins the upstream commit instead, a different kind of version.
 `work-streams` is also unversioned. Its store sits outside any project, so no file in a user's
-project can fall behind the skill.
+project can fall behind the skill. `plan-red-team` is unversioned for the same reasons combined:
+its config sits outside any project, and its report is a one-shot snapshot the skill never reads
+back.
 
 ## Skill README contents
 

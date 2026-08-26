@@ -8,6 +8,12 @@ the repo is organised. `next-improvement` keeps a versioned changelog in
 Format: one heading per period, named by theme and dated by its start. Three fixed sections:
 Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `ste-writing`.
 
+## Plan red team · 2026-08-26
+
+**Skills**
+- `plan-red-team`: new. Attacks a plan with blind persona subagents, a cross-perspective wave,
+  and an aggregator that passes reasoned verdicts.
+
 ## Work streams · 2026-08-26
 
 **Skills**

@@ -21,6 +21,8 @@ Files:
 - `setup.md` — the one-time config bootstrap. Read only when no config file exists yet.
 - `lifecycle.md` — archive, re-activate, and delete. Read only when a stream finishes or the
   user asks for one of those.
+- `scripts/session-start-guard.py` — the optional startup guard. Claude never reads it. A
+  SessionStart hook runs it, when you choose to register one.
 
 ## What it writes
 
@@ -54,6 +56,20 @@ moves on.
 - "pick up where we left off" / "resume the skipped-tests stream"
 - "what streams are open here?"
 - "archive that stream" / "bring back the auth-refactor stream" / "delete the old stream"
+
+## Optional startup guard
+
+Claude Code cannot run a model step at session end. So the skill cannot remind you by itself
+when a new session starts over parked work. The bundled `scripts/session-start-guard.py` closes
+that gap as a deterministic hook. On each session start it reads the config, lists the active
+streams for the current repo, and prints one line naming them. The harness injects that line as
+session context, and the skill's own triggers take over from there. No streams, no config, or
+any read problem all mean silence. The guard never writes anything.
+
+To enable it, register a SessionStart hook in your user-level `settings.json`. The hook runs
+the script with `python`, at the script's path inside your skills install. The
+`WORK_STREAMS_CONFIG` environment variable redirects the config path, for tests and sandboxes.
+The skill works fully without the guard. You only lose the unprompted reminder.
 
 ## Example
 

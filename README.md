@@ -26,6 +26,10 @@ A collection of custom skills for [Claude Code](https://claude.com/product/claud
 - **[jira-ticket-audit](jira-ticket-audit/README.md)** — audits one Jira ticket for ambiguity,
   internal inconsistency, gaps, oversized scope, and missing links to sibling tickets in its
   epic. It produces per-dimension findings backed by evidence quoted from the ticket.
+- **[work-streams](work-streams/README.md)** — parks and resumes named streams of work in a
+  personal store outside any repo. Wrap-up records the state, sweeps repo files the stream keeps
+  current, and can write a continuation prompt. Resume loads it all back and checks it against
+  the repo's current state.
 - **[ste-writing](ste-writing/README.md)** — rewrites or reviews prose (docs, READMEs, PR text,
   error messages, never code) in ASD-STE100 Simplified Technical English to remove "AI slop". A
   bundled lint script scores the result. Vendored from woosal1337's "The cure for AI slop"

@@ -71,8 +71,9 @@ machine only. Each skill also states it inline, because an installed skill runs 
 neither of the other two.
 
 Stated in: `next-improvement`, `SKILL.md` Step 4. `repo-knowledge` and `commit-message-check`,
-`SKILL.md`, just above Step 0. Each states it once and names its own option-presenting sites, so a
-site added later inherits the rule instead of a rediscovery.
+`SKILL.md`, just above Step 0. `work-streams`, `SKILL.md`, below the hard-rules table. Each states
+it once and names its own option-presenting sites, so a site added later inherits the rule instead
+of a rediscovery.
 
 ## Vocabulary
 
@@ -146,7 +147,7 @@ Column names are free to fit the skill (`Step`/`Hard rule`, `#`/`What gets writt
 and `Step`/`Kind`/`Gate or surface` are all in use and all fine). The invariants above are what
 must match.
 
-Stated in: all six skills, each in its own `SKILL.md`. Their scopes genuinely differ. Only
+Stated in: all seven skills, each in its own `SKILL.md`. Their scopes genuinely differ. Only
 `next-improvement`'s is confined to confirm-before-write gates. The rest carry prohibitions and
 output obligations too. The narrow reading came first only because that skill was written first.
 
@@ -279,6 +280,8 @@ Unversioned, by the test above: `commit-message-check` (its conventions file has
 to fall behind), `jira-ticket-audit`, `plan-technical-jira-ticket`, and
 `operational-requirements-audit` (no artifact), and `ste-writing` (no artifact). `ste-writing` is
 vendored, so its README pins the upstream commit instead, a different kind of version.
+`work-streams` is also unversioned. Its store sits outside any project, and every wrap-up
+rewrites the manifest wholesale, so no file persists on an old format.
 
 ## Skill README contents
 

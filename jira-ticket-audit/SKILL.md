@@ -38,6 +38,12 @@ obviously full of uncited findings. Absence from this table doesn't mean optiona
 
 *Update this table in the same edit whenever a hard rule is added, removed, or moved.*
 
+**Whenever two or more options are presented for the user to pick from** — the epic-vs-per-ticket
+choice in Step 1, the report-destination choice in Step 4 — **number them `1.`, `2.`, `3.`… in a
+single sequential list**, whatever label each carries. A label explains an option; a number is
+what the user can say back ("go with 2") to pick one unambiguously. A single unambiguous
+recommendation with nothing else to choose between needs no number.
+
 ## Step 1: Resolve the ticket
 
 Accept a bare key (`SD-4597`), a full Jira URL, or a plain description if the user doesn't have

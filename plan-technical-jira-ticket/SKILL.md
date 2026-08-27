@@ -1,6 +1,6 @@
 ---
 name: plan-technical-jira-ticket
-description: Takes a Jira ticket key (e.g. "SD-4597", "look at PROJ-123", a pasted Jira URL) for a well-scoped technical ticket — tech debt, a refactor, a performance fix, a config/infra change — and turns it into a concrete implementation plan grounded in the actual codebase(s) it touches. Fetches the ticket via the Jira MCP tools, recaps its understanding of the ticket and which repo(s) it thinks are in scope for the user to correct in one go, verifies the ticket's claims against real code rather than trusting it as-is, then produces a step-by-step plan the user reviews and approves before any code is touched. Use this whenever the user gives a ticket number for that kind of technical work and asks to plan, scope, break down, or figure out the approach for it, or says something like "what would it take to do SD-1234" or "plan out this ticket". Deliberately narrow in scope for now: not for a whole epic's worth of tickets at once, not for bug fixes, and not for larger feature-building tickets that pull in multiple integrations or systems — flag those rather than planning them (see Step 1).
+description: Takes a Jira ticket key (e.g. "SD-4597", "look at PROJ-123", a pasted Jira URL) for a well-scoped technical ticket — tech debt, a refactor, a performance fix, a config/infra change — and turns it into a concrete implementation plan grounded in the actual codebase(s) it touches. Fetches the ticket via the Jira MCP tools, recaps its understanding of the ticket and which repo(s) it thinks are in scope for the user to correct in one go, verifies the ticket's claims against real code rather than trusting it as-is, then produces a step-by-step plan the user reviews and approves before any code is touched. Use this whenever the user gives a ticket number for that kind of technical work and asks to plan, scope, break down, or figure out the approach for it, or says something like "what would it take to do SD-1234" or "plan out this ticket". Deliberately narrow in scope for now: not for a whole epic's worth of tickets at once, not for bug fixes, and not for larger feature-building tickets that pull in multiple integrations or systems — flag those rather than planning them (see Step 1). Distinct from `jira-ticket-audit`, which reviews whether a ticket is fit to work on at all — audit first, plan once it passes.
 ---
 
 # Plan technical Jira ticket
@@ -56,6 +56,13 @@ a notice, not something to wait on. Absence from this table doesn't mean optiona
 *Update this table in the same edit whenever a step gains or loses a gate* — it's a
 mirror of the steps, not independent prose, so it should never need to be reconstructed from
 memory during a later review.
+
+**Whenever two or more options are presented for the user to pick from** — the multi-candidate
+ticket choice in Step 1, Step 1's three how-to-proceed options (reused by Step 5's escalation) —
+**number them `1.`, `2.`, `3.`… in a single sequential list**, whatever label each carries. A
+label explains an option; a number is what the user can say back ("go with 2") to pick one
+unambiguously. A single unambiguous recommendation with nothing else to choose between needs no
+number.
 
 ## Step 1: Resolve and classify the ticket
 

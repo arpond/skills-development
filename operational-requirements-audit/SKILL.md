@@ -31,6 +31,12 @@ inside it. Absence from this table doesn't mean optional.
 
 *Update this table in the same edit whenever a hard rule is added, removed, or moved.*
 
+**Whenever two or more options are presented for the user to pick from** — the services-in-scope
+choice in Step 1, anything added later — **number them `1.`, `2.`, `3.`… in a single sequential
+list**, whatever label each carries. A label explains an option; a number is what the user can
+say back ("go with 2") to pick one unambiguously. A single unambiguous recommendation with
+nothing else to choose between needs no number.
+
 ## Step 1: Confirm scope
 
 Work out two things before anything else:

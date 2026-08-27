@@ -2,7 +2,7 @@
 
 Read this only when Step 0 found no config file at `~/.claude/plan-red-team-presets.md`. The job
 here: let the user adopt starter presets, then create that file so this never runs again. A
-config with zero presets is a valid outcome — the skill then always derives rosters per plan.
+config with zero presets is a valid outcome — the panel gate then offers only derived rosters.
 
 ## Step 1 — Offer the bundled presets
 
@@ -30,24 +30,27 @@ file will hold — the adopted entries verbatim from the library, under this hea
 ```markdown
 # plan-red-team presets
 
-Preset rosters, one per task type. `plan-red-team` reads this file on every run and offers a
-matching preset verbatim at its panel gate. Edit freely; the format each entry must keep:
+Preset rosters, one per task type, read by plan-red-team on every run. A matching
+preset is offered verbatim at its panel gate. Edit freely. Each entry is a `##`
+heading naming the task type, then a `Matches:` line, then one angle per bullet
+as `<name>: <attack focus> | Persona: <one sentence>`. The settings lines below
+govern blind roster derivation.
 
 Blind derivation: on
 Derivers: 3
-
-## <Task type name>
-Matches: <one line describing the plans this preset fits>
-- <Angle name>: <attack focus> | Persona: <one sentence of temperament and stance>
 ```
 
-The two settings lines sit above the entries and carry whatever was agreed in Step 1, not always
-these defaults.
+The header holds no example entry, deliberately: a literal placeholder entry would parse as a
+preset. The settings lines carry whatever was agreed in Step 1, not always these defaults, and
+adopted entries follow beneath them.
+
+If the user declines the write entirely, write nothing. Continue this run derived-only, and say
+that setup will offer again next run — with no file there is nowhere to record the refusal.
 
 Wait for confirmation before writing. If the user picked none, the file still gets written with
 the header alone. An existing empty config is what stops this setup re-firing on every run.
 
 ## Step 3 — Continue
 
-Write the file, confirm it landed, and return to `SKILL.md` Step 1. Do not re-read the library
-this run; the adopted presets are now in the config Step 2 just wrote.
+Write the file and confirm it landed. Then return to `SKILL.md` Step 1. Do not re-read the
+library this run; the adopted presets are now in the config Step 2 just wrote.

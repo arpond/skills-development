@@ -15,6 +15,8 @@ Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `st
   and an aggregator that passes reasoned verdicts.
 - `plan-red-team`: roster derivation now runs as three blind subagents merged on convergence.
   Configurable at setup, skipped on re-runs.
+- `plan-red-team`: a blind review pass closed thirteen findings. Unavailable derivation or
+  aggregation now falls back to the main thread, always labelled.
 
 ## Work streams · 2026-08-26
 

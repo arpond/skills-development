@@ -5,13 +5,14 @@ one angle, in its own persona, and none sees another's output. Blindness is the 
 reviewer anchors on its first framing and softens toward the author. Independent agents cannot
 converge, so their agreements mean something. After the panel, a cross-perspective agent attacks
 the interactions between findings. A separate aggregator then passes a verdict on every finding,
-with reasons. The main thread relays that report and adds its own labeled commentary. It does
+with reasons. The main thread relays that report and adds its own labelled commentary. It does
 not judge alone, because it often wrote the plan under review.
 
 Angles come from two sources. The skill always derives a roster to fit the plan in front of it.
 Derivation is blind too. Three deriver subagents each propose angles from the plan text alone,
 and the merge marks the angles they converge on. The main thread does not pick the angles for a
-plan it may have written. The user can also keep preset rosters for task types they review
+plan it may have written. When derivation is off, skipped, or fails, the derived roster is the
+main thread's own and the gate labels it so. The user can also keep preset rosters for task types they review
 often, and a matching preset is always offered verbatim beside the derived one. No panel agent
 spawns until the user confirms the roster, the cost, and the output target at a single gate.
 

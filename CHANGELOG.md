@@ -27,8 +27,8 @@ Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `st
   census.
 
 **Tooling**
-- `check-censuses.py`: new. Computes per-skill facts and prints each `CONVENTIONS.md` line that
-  names a skill beside them. No stored verdicts.
+- `check-censuses.py`: new. Computes per-skill facts, prints each standards paragraph that
+  names a skill, and lists backticked names that match no skill folder.
 
 ## Plan red team · 2026-08-26
 

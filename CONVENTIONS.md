@@ -13,9 +13,10 @@ involved.
 
 **That list is a pointer index, not a compliance record.** It says where to look, never whether
 what is there currently passes. Conformance is cheap to recompute (a grep, a read), and the review
-loop checks it on every change anyway. `python check-censuses.py` computes the per-skill facts and
-prints every line here that names a skill beside them, so a census check is one read, not a hunt. A stored verdict would be a second copy to maintain, and it
-would rot. A stale ✓ is worse than no record at all. It becomes a reason to skip the check it was
+loop checks it on every change anyway. `python check-censuses.py` computes the per-skill facts,
+then prints every paragraph here and in `DESIGN_PHILOSOPHY.md` that names a skill, so the
+skill-facts half of a census check is one read. A stored verdict would be a second copy to
+maintain, and it would rot. A stale ✓ is worse than no record at all. It becomes a reason to skip the check it was
 supposed to prompt.
 
 **A change to a spec and a record of a known gap are different acts.** A *change* means an update
@@ -103,6 +104,7 @@ is never a read condition and `surface` is never a data tag.
 | companion file | a skill file read only when its trigger condition is met | — |
 | artifact | a file a skill maintains inside the user's project | output (as a name for an artifact), state file |
 | mechanical bookkeeping | a write a skill makes without a gate, because it carries no judgement (a backfilled stamp, an archive sweep) | no-confirmation bookkeeping, routine bookkeeping, silent bookkeeping |
+| census | a standards-file sentence that says which skills have or lack a thing | pointer index (that is a "Stated in" list of where inline copies live, a different thing) |
 
 Add a row when a review finds a second name for an existing concept: pick one, rename the other.
 The rule is ASD-STE100's 1.11. The 875-word dictionary that rule assumes is not adopted, so this

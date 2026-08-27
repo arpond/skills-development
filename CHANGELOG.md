@@ -23,6 +23,8 @@ Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `st
   interpreter can parse is data*.
 - `CLAUDE.md` *Review loop*: a blind-subagent variant is offered when the change was authored
   in the same session.
+- Spec *Artifact locations*: a personal-primary config (`~/.claude/`), decided by what the
+  setting governs, is a recognised outcome. `plan-red-team` implements it.
 
 ## Work streams · 2026-08-26
 

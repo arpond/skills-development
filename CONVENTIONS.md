@@ -191,11 +191,15 @@ resolve and bootstrap: <repo-root>/.claude/<FILE>
 Human-facing artifacts are per-project because priorities and gotchas are per-project. Config is
 per-repo when what it configures is per-repo. A repo that holds several projects still has one
 commit history, so a per-project split of its commit conventions would fragment a rule that is not
-per-project. A skill whose config genuinely *is* per-project uses `<project>/.claude/` instead.
-Decide from what the setting governs, and say which you chose and why in the skill's own text.
+per-project. A skill whose config genuinely *is* per-project uses `<project>/.claude/` instead. A config
+that governs the user rather than any repo is personal-primary: `~/.claude/<FILE>`, with no
+repo copy at all. Decide from what the setting governs, and say which you chose and why in the
+skill's own text.
 
-Config also supports a personal fallback outside any repo (`~/.claude/<FILE>`) where the skill
-defines one. That is the skill's own business, not this spec's.
+Config also supports a personal fallback outside any repo (`~/.claude/<FILE>`) where a
+repo-level skill defines one. That fallback is the skill's own business, not this spec's. A
+personal-primary config is not a fallback. It is the third outcome of the decide test above,
+and the implemented-by table lists it.
 
 ### Rules that go with it
 
@@ -227,6 +231,7 @@ defines one. That is the skill's own business, not this spec's.
 | `next-improvement` | `session-start.md` Step 0 (resolve/bootstrap), `SKILL.md` "The tracker file" (siblings), `README.md` |
 | `repo-knowledge` | `session-start.md` Step 0, `README.md` |
 | `commit-message-check` | `SKILL.md` Step 0 (config rule), `README.md` |
+| `plan-red-team` | `SKILL.md` Step 0 (personal-primary config, decided by what the settings govern), `README.md` |
 
 **The `README.md` copy is for the human who decides whether to install**, not for Claude at
 runtime. That makes it the copy most likely to drift unnoticed. Nothing at runtime reads it, and a

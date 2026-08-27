@@ -13,7 +13,8 @@ involved.
 
 **That list is a pointer index, not a compliance record.** It says where to look, never whether
 what is there currently passes. Conformance is cheap to recompute (a grep, a read), and the review
-loop checks it on every change anyway. A stored verdict would be a second copy to maintain, and it
+loop checks it on every change anyway. `python check-censuses.py` computes the per-skill facts and
+prints every line here that names a skill beside them, so a census check is one read, not a hunt. A stored verdict would be a second copy to maintain, and it
 would rot. A stale ✓ is worse than no record at all. It becomes a reason to skip the check it was
 supposed to prompt.
 
@@ -57,7 +58,8 @@ threshold  -> surface to the user, then force-reset to 0 regardless of their ans
 
 Stated in: `next-improvement`. `SKILL.md` Step 2 (dry-run tracking) holds the canonical wording.
 `SKILL.md` Step 6 (archive-sweep streak) and `feedback.md` ("Backlog not shrinking") declare their
-own three values and refer back to it. No other skill currently has one.
+own three values and refer back to it. `python check-censuses.py` shows which skills carry the
+shape.
 
 ## Numbered choices
 
@@ -149,9 +151,8 @@ Column names are free to fit the skill (`Step`/`Hard rule`, `#`/`What gets writt
 and `Step`/`Kind`/`Gate or surface` are all in use and all fine). The invariants above are what
 must match.
 
-Stated in: every skill, each in its own `SKILL.md`. Their scopes genuinely differ.
-`commit-message-check`'s is confined to consequential writes. The rest carry prohibitions and
-output obligations too.
+Stated in: every skill, each in its own `SKILL.md`. Their scopes genuinely differ. Read each
+table's own scope line rather than assuming one.
 
 **A table that mixes gates with unprompted surfacings should mark which is which.**
 `next-improvement` uses a `Kind` column (`gate` / `surface`), and `repo-knowledge` adds
@@ -329,5 +330,5 @@ someone's `CLAUDE.md` is exactly the sort of thing a person wants to know in adv
 discover afterwards. Where a skill writes nothing by default, say that outright. It is a materially
 different install decision from one that always writes.
 
-Applies to every skill in this repo. `next-improvement`, `repo-knowledge`, `work-streams`, and
-`ste-writing` omit `## Cost`, all local-file-only. The rest carry one.
+Applies to every skill in this repo. A local-file-only skill omits `## Cost` under the rule
+above. `python check-censuses.py` lists which READMEs carry one.

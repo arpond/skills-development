@@ -21,6 +21,14 @@ Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `st
   numbered-choices copies. Open-gap mechanics moved to the header.
 - `DESIGN_PHILOSOPHY.md`: the hard-rules inclusion test is single-sourced to the spec. Missing
   distinctions stated and pointer wording fixed.
+- `CONVENTIONS.md`: recomputable census verdicts deleted. Pointer lists stay, and the new
+  checker covers the facts.
+- `CLAUDE.md` *Review loop*: check 1 runs `check-censuses.py` when a change touches a skill
+  census.
+
+**Tooling**
+- `check-censuses.py`: new. Computes per-skill facts and prints each `CONVENTIONS.md` line that
+  names a skill beside them. No stored verdicts.
 
 ## Plan red team · 2026-08-26
 

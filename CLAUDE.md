@@ -19,6 +19,10 @@ If the user says yes, run these four checks in order, on whatever was just chang
      skill's inline copy still matches it. The copies are what runs, because a skill cannot cite a
      repo-root file. Drift between them stays invisible until two skills disagree inside the same
      project.
+   - **Also check the censuses.** When a change adds a skill, or touches a spec, an inline copy,
+     or a sentence in `CONVENTIONS.md` that names a skill, run `python check-censuses.py`. It
+     prints the computed per-skill facts beside every census line. It passes no verdicts. Read
+     the two halves against each other and fix any census the facts contradict.
    - **For a brand-new skill, check it against every spec there**, not only the ones the diff
      touched. A new skill has no prior implementation for a drift check to catch, so nothing else
      would ever report a spec it never implemented.

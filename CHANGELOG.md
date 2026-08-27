@@ -8,6 +8,20 @@ the repo is organised. `next-improvement` keeps a versioned changelog in
 Format: one heading per period, named by theme and dated by its start. Three fixed sections:
 Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `ste-writing`.
 
+## Standards audit · 2026-08-27
+
+**Skills**
+- `jira-ticket-audit`, `plan-technical-jira-ticket`, `operational-requirements-audit`: each now
+  states the numbered-choices rule inline, closing an unrecorded gap.
+- `plan-technical-jira-ticket`: its description now names `jira-ticket-audit` as the audit-first
+  sibling.
+
+**Standards**
+- `CONVENTIONS.md`: stale censuses corrected — hard-rules scopes, config artifacts, `## Cost`,
+  numbered-choices copies. Open-gap mechanics moved to the header.
+- `DESIGN_PHILOSOPHY.md`: the hard-rules inclusion test is single-sourced to the spec. Missing
+  distinctions stated and pointer wording fixed.
+
 ## Plan red team · 2026-08-26
 
 **Skills**

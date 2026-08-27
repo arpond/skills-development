@@ -2,7 +2,7 @@
 
 Concrete specs every skill in this repo implements identically. Distinct from
 `DESIGN_PHILOSOPHY.md`, which holds principles you apply judgement to. These are facts to match.
-The only thing that matters is that all the skills agree.
+What matters is that all the skills agree on each requirement as this file states it.
 
 **This file is an authoring reference, not something a skill reads.** A skill's own instructions
 cannot cite a repo-root file (see `DESIGN_PHILOSOPHY.md`, "A skill's own instructions can't depend
@@ -22,7 +22,9 @@ to every skill listed under that spec in the same edit. A spec accidentally ahea
 implementations is the drift this file exists to prevent. A *recorded gap* is deliberate and rare:
 a requirement some skill knowingly does not meet yet. Write it as a short **Open gap** note under
 that spec and remove it when it is closed. That is a decision worth persistence, unlike a
-measurement. Every spec below states the requirement, never the current lowest common denominator.
+measurement. Sites listed under an open gap are known, and a review does not re-report them. No
+note under a spec means no known gap. Every spec below states the requirement, never the current
+lowest common denominator.
 
 **Read this file first when you add a new skill to this repo**, not at review time. Nothing here
 is optional for a skill that has the thing a spec covers. A new skill has no prior implementation
@@ -68,10 +70,12 @@ say back. A single unambiguous recommendation with nothing else to choose betwee
 one for skills in this repo. The user's own global `CLAUDE.md` states it as a personal preference
 that covers everything Claude says, skills or not. That is a broader scope, and it applies to this
 machine only. Each skill also states it inline, because an installed skill runs for people who have
-neither of the other two.
+neither of the other two. The principle in `DESIGN_PHILOSOPHY.md` keeps the why and points here.
+It is not a fourth operative copy.
 
 Stated in: `next-improvement`, `SKILL.md` Step 4. `repo-knowledge` and `commit-message-check`,
-`SKILL.md`, just above Step 0. `work-streams` and `plan-red-team`, `SKILL.md`, below the
+`SKILL.md`, just above Step 0. `work-streams`, `plan-red-team`, `jira-ticket-audit`,
+`plan-technical-jira-ticket`, and `operational-requirements-audit`, `SKILL.md`, below the
 hard-rules table. Each states
 it once and names its own option-presenting sites, so a site added later inherits the rule instead
 of a rediscovery.
@@ -107,9 +111,6 @@ Conformance is a grep for the right-hand column, over every markdown file, front
 prose included. `CHANGELOG.md` is exempt, because a rename record names the old word. `python
 check-vocabulary.py` runs that grep from this table and shows each hit with its condition. Example dialogue that quotes how Claude speaks is exempt. Vendored skills (`ste-writing`)
 keep their upstream wording.
-
-No open gaps at present.
-Sites listed under an open gap are known. A review does not re-report them.
 
 ## The hard-rules table
 
@@ -148,9 +149,9 @@ Column names are free to fit the skill (`Step`/`Hard rule`, `#`/`What gets writt
 and `Step`/`Kind`/`Gate or surface` are all in use and all fine). The invariants above are what
 must match.
 
-Stated in: every skill, each in its own `SKILL.md`. Their scopes genuinely differ. Only
-`next-improvement`'s is confined to confirm-before-write gates. The rest carry prohibitions and
-output obligations too. The narrow reading came first only because that skill was written first.
+Stated in: every skill, each in its own `SKILL.md`. Their scopes genuinely differ.
+`commit-message-check`'s is confined to consequential writes. The rest carry prohibitions and
+output obligations too.
 
 **A table that mixes gates with unprompted surfacings should mark which is which.**
 `next-improvement` uses a `Kind` column (`gate` / `surface`), and `repo-knowledge` adds
@@ -162,7 +163,8 @@ to protect.
 
 ## Artifact locations
 
-Where a skill writes the files it maintains inside a user's project.
+Where a skill writes the files it maintains inside a user's project, and the config it keeps
+for the user outside one.
 
 ### Two kinds of artifact, two rules
 
@@ -181,7 +183,8 @@ bootstrap (nothing found):
 ```
 
 **Config artifacts**: settings a skill reads and a user rarely opens. Currently:
-`commit-message-conventions.md` (`commit-message-check`).
+`commit-message-conventions.md` (`commit-message-check`), `plan-red-team-presets.md`
+(`plan-red-team`), `work-streams-config.md` (`work-streams`).
 
 ```
 resolve and bootstrap: <repo-root>/.claude/<FILE>
@@ -232,6 +235,7 @@ and the implemented-by table lists it.
 | `repo-knowledge` | `session-start.md` Step 0, `README.md` |
 | `commit-message-check` | `SKILL.md` Step 0 (config rule), `README.md` |
 | `plan-red-team` | `SKILL.md` Step 0 (personal-primary config, decided by what the settings govern), `README.md` |
+| `work-streams` | `SKILL.md` "The store" and Step 0 (personal-primary config, fixed location), `README.md` |
 
 **The `README.md` copy is for the human who decides whether to install**, not for Claude at
 runtime. That makes it the copy most likely to drift unnoticed. Nothing at runtime reads it, and a
@@ -262,8 +266,9 @@ skill companion file:    changelog.md
 - **`changelog.md`** restates this policy, then lists one entry per MINOR+ version, newest first.
   Each entry says what changed and whether there is anything to opt into. Its only read condition
   is the check finding a gap.
-- **The check** runs in `session-start.md`, every run, after the skill finds the artifact and
-  before its main loop:
+- **The check** runs on every invocation, after the skill finds the artifact and before its
+  main loop. Both current implementers hold it in `session-start.md`; a versioned skill without
+  one states where its own check runs:
   - Backfill a missing stamp to `0.0.0` as mechanical bookkeeping, then treat it as behind. A
     missing stamp is evidence of being behind, never of being current.
   - An unparseable stamp is the skill's malformed-artifact gate.
@@ -324,5 +329,5 @@ someone's `CLAUDE.md` is exactly the sort of thing a person wants to know in adv
 discover afterwards. Where a skill writes nothing by default, say that outright. It is a materially
 different install decision from one that always writes.
 
-Applies to every skill in this repo. `next-improvement`, `repo-knowledge`, and `work-streams`
-omit `## Cost`, all local-file-only. The rest carry one.
+Applies to every skill in this repo. `next-improvement`, `repo-knowledge`, `work-streams`, and
+`ste-writing` omit `## Cost`, all local-file-only. The rest carry one.

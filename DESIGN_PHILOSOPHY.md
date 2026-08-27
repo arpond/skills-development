@@ -86,8 +86,8 @@ it confirmed, not just ask "want the defaults?" and move on — a special case o
 
 ### One gate, not two
 
-When a skill needs several related confirmations before proceeding (e.g. scope and understanding),
-fold them into a single gate rather than gating twice in a row. Back-to-back stops for adjacent
+When a skill needs the user to confirm several related things before proceeding (e.g. scope and
+understanding), fold them into one gate rather than gating twice in a row. Back-to-back stops for adjacent
 information don't add safety — they train the user to skim past confirmations instead of actually
 reading them, which undermines [Propose, don't just do](#propose-dont-just-do) more than it
 reinforces it.
@@ -122,7 +122,10 @@ Applies the same discipline as [Re-ground, don't cache](#re-ground-dont-cache) t
 from outside the skill on a single pass — a ticket description, a config file, a local checkout.
 None of these are guaranteed accurate just because they were provided: verify them against a more
 authoritative source (the actual code, the actual remote, the actual current state) before
-building on them, and treat a mismatch as something to surface, not quietly reconcile.
+building on them, and treat a mismatch as something to surface, not quietly reconcile. Distinct
+from [A claimed property that isn't self-verifying](#a-claimed-property-that-isnt-self-verifying)
+below: that checks a fact once, at the moment it is created — this verifies at the moment of
+consumption, every pass.
 
 ### A claimed property that isn't self-verifying
 
@@ -130,6 +133,8 @@ Deserves a one-time check at the point it's created. "This should be committed f
 actually work" is a sentence, not a guarantee. Where a skill's behavior depends on an external fact
 holding (a file actually tracked, a dependency actually installed), check it once at the moment
 that matters most — creation — rather than asserting it in prose and trusting it got acted on.
+The consume-side counterpart is [Inputs are claims, not truth](#inputs-are-claims-not-truth)
+above.
 
 ### Unreachable isn't resolved, in either direction
 
@@ -228,17 +233,11 @@ everything passes. **It's whether skipping the rule produces a visible failure.*
 output already reports it and an index adds nothing. If it doesn't, nothing anywhere will ever say
 so, and the index is the only thing standing between a quietly-dropped rule and never finding out.
 
-The clearest case is a confirm-before-write gate ([Propose, don't just do](#propose-dont-just-do)):
-skip it and nothing errors, the write just happens. But that's the clearest case, not the only one
-— a "never write secrets into this file" prohibition fails the same way and more expensively, and
-so does anything that makes an absence look like a legitimate answer ("a dimension with nothing
-wrong says so explicitly, rather than going quiet"). Conversely a rule like "every finding cites
-its evidence" is *out*: drop it and the very next report is visibly full of uncited findings.
-
-Keeping the test sharp is what keeps the index useful. An index that grows to cover every rule in
-the skill is no longer checkable at a glance, which was the entire point — so a rule that doesn't
-pass the test stays where it's stated and simply isn't indexed. The index's exact shape is a spec —
-see `CONVENTIONS.md`, "The hard-rules table."
+Keeping the test sharp is what keeps the index checkable at a glance, which was the entire point:
+a rule that doesn't pass the test stays where it's stated and simply isn't indexed. The test's
+worked examples and counterexamples, and the index's exact shape, are the spec. See
+`CONVENTIONS.md`, "The hard-rules table." Restating them here too is how the two copies drifted
+once already.
 
 ### A rule is a sentence, an instruction block is a list
 
@@ -296,7 +295,8 @@ scope paragraph: two blind rounds found 119 then ~160 sites, every reviewer rais
 four ambiguities, and the findings that mattered were about thirty, all from round one.
 Writing the scope down dropped round three to 74.
 
-So: a new rule ships with its scope — what it covers, what's exempt, what counts. Read a
+So: a new rule ships with its scope — what it covers, what's exempt, what counts. That scope is
+the floor the title means: beneath it, a match is not a finding. Read a
 round's ambiguities before its findings; anything two reviewers raised independently is a
 defect in the rule, fixed there first. A round that finds as much as the last is measuring
 the corpus, not the work: stop and bound the rule.
@@ -481,8 +481,8 @@ looked fine.
 
 Where more than one skill writes into the same project, the resolution order has to be identical
 across them, or the same project ends up with artifacts scattered by whichever skill created each
-one. That shared order is a **concrete spec, not a principle** — it belongs in this repo's
-`CONVENTIONS.md`, with each skill restating it inline, since
+one. That shared order is a **concrete spec, not a principle** — see `CONVENTIONS.md`,
+"Artifact locations". Each skill restates it inline, since
 [a skill can't cite a repo-root file](#a-skills-own-instructions-cant-depend-on-the-dev-repo-around-it)
 and only its own folder travels.
 

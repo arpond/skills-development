@@ -100,6 +100,12 @@ If the user says yes, run these four checks in order, on whatever was just chang
    asks whether passes 2-3 surfaced a wording or structure fix worth an edit now, under the same
    propose-first gate.
 
+Blind variant: when the change under review was authored in this same session, offer a
+blind-subagent run of passes 1-3 beside the inline one. The subagent reads the standards files
+itself. It hears nothing of any inline findings and nothing of who authored the change. It must
+report an explicit "nothing found" for each area it checks. Reason: on the same files, on
+2026-08-27, a blind agent found thirteen findings after an inline pass found five.
+
 Timing: offer once, after the change is otherwise done and deployed. Not mid-edit, and not stacked
 as a second ask right after some other confirmation (see "One gate, not two"). If declined, do not
 re-offer for that same change. The user can ask for any individual pass (or the whole loop) at any

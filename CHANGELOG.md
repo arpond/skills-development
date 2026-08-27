@@ -18,6 +18,12 @@ Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `st
 - `plan-red-team`: a blind review pass closed thirteen findings. Unavailable derivation or
   aggregation now falls back to the main thread, always labelled.
 
+**Standards**
+- `DESIGN_PHILOSOPHY.md`: two new principles, *A fallback wears a label* and *An example an
+  interpreter can parse is data*.
+- `CLAUDE.md` *Review loop*: a blind-subagent variant is offered when the change was authored
+  in the same session.
+
 ## Work streams · 2026-08-26
 
 **Skills**

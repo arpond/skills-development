@@ -35,7 +35,9 @@ principle that only ever gets applied outward isn't being applied.
   - [Inputs are claims, not truth](#inputs-are-claims-not-truth)
   - [A claimed property that isn't self-verifying](#a-claimed-property-that-isnt-self-verifying)
   - [Unreachable isn't resolved, in either direction](#unreachable-isnt-resolved-in-either-direction)
+  - [A fallback wears a label](#a-fallback-wears-a-label)
   - [Malformed stored state gets its own check](#malformed-stored-state-gets-its-own-check)
+  - [An example an interpreter can parse is data](#an-example-an-interpreter-can-parse-is-data)
   - [Don't persist a signal just because it's useful once](#dont-persist-a-signal-just-because-its-useful-once)
 - [Principles vs. specs](#principles-vs-specs)
 - [Structure & reuse](#structure--reuse)
@@ -137,12 +139,45 @@ link, a search with zero results, a missing git remote. That's a third state, di
 treating it as an automatic blocker — is the mistake. Surface the specific thing that couldn't be
 checked and let the user decide, rather than guessing which direction is safer.
 
+### A fallback wears a label
+
+When a mechanism exists to guarantee a property — blindness, independence, freshness,
+verification — its *absence* needs handling as carefully as its failure. A weaker substitute
+that runs unlabeled produces output that looks exactly like the guaranteed thing: nothing
+errors, the reader just trusts a property nothing enforced. So the rule: a substitute says it is
+a substitute, at the point its output is used. Distinct from
+[Unreachable isn't resolved](#unreachable-isnt-resolved-in-either-direction) — that covers
+surfacing a check that couldn't run; this covers a weaker mechanism impersonating a stronger
+one.
+
+Worked instance: `plan-red-team` derives review rosters with blind subagents precisely so the
+plan's likely author doesn't pick the attack angles alone — but derivation can be off by
+config, skipped, or entirely failed, and two of those paths originally dead-ended with no rule,
+leaving silent main-thread improvisation as the only move available. The fix was one rule
+covering every such path. The main thread may substitute, and the gate or report labels it
+prominently. The same rule then covered its aggregator dying, without a second mechanism.
+
 ### Malformed stored state gets its own check
 
 Distinct from "can't reach it." A stored file that *can* be read but doesn't parse into the shape
 a skill expects is a different failure mode from
 [unreachable](#unreachable-isnt-resolved-in-either-direction): don't silently reinterpret it,
 discard it, or bootstrap over it. Stop and ask.
+
+### An example an interpreter can parse is data
+
+Format documentation belongs where the parser never looks. A literal example of a parseable
+shape, written into a file a skill parses by shape, is indistinguishable from a real entry —
+the skill will match against it, list it, and offer it back as if a user created it. It fails
+silently, because the file looks self-documenting and correct. Describe the format in prose
+instead, or keep it in the skill's own files rather than the file it bootstraps.
+
+Worked instance: `plan-red-team`'s bootstrap wrote a config header ending in a placeholder
+entry — a `## <Task type name>` heading, a `Matches:` line, an angle bullet — as format
+documentation. That is exactly the shape the runtime parses, so every bootstrapped config would
+have carried a phantom preset, matched and offered like a real one. A prohibition, not a spec:
+there is no shared implementation to drift from, only a judgement every bootstrap-writing skill
+has to make.
 
 ### Don't persist a signal just because it's useful once
 

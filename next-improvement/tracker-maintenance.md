@@ -29,8 +29,8 @@ oldest-first:
    clear.
 
 - **A missing `Next id:`** splits into two cases, not one:
-  - **No entries have an id yet** (a tracker predating the id system entirely — `Created: 0.0.0` from
-    `session-start.md`'s backfill, or otherwise never having written the field): this is a one-time
+  - **No entries have an id yet** (a tracker predating the id system entirely — `Created: 0.0.0`
+    from the catch-up section below, or otherwise never having written the field): this is a one-time
     full adoption, not routine lazy minting. Apply the bulk-backfill ordering rule above, starting the
     count at 1, then set `Next id:` to one past the highest id assigned. Doing this in one pass, rather
     than lazily per-entry as each is first referenced, is what keeps ids roughly tracking age/position
@@ -75,13 +75,70 @@ ordinary steady state, handled by lazy per-entry minting like any other.
 ## One-time heads-up on a tracker that predates the fixes/reworks question
 
 **Trigger: `SKILL.md` Step 6 is about to ask whether this ship fixes or reworks an earlier one, and
-`Next id:` was missing before this recording** — meaning this project has never seen that question.
+`Next id:` was missing before this recording** — meaning this project has never seen that
+question. `setup.md` writes `Next id:` into every tracker it creates, so a missing field means a
+tracker older than that rule, never a fresh one.
 
 Say so in one clause before asking it, e.g. "(this tracker's picking up a new feature: every ship
 now gets asked if it fixes/reworks an earlier one, used to flag the origin for a second look)" —
 the same disclosure `setup.md` gives a brand-new tracker at bootstrap, given once here since an
 existing tracker never goes through `setup.md` again. Don't repeat it on later ships once
 `Next id:` exists.
+
+## Catching up a tracker that predates the version stamps
+
+**Trigger: `session-start.md` Step 0 finds `Created:` or `Feature check:` missing.** That means a
+tracker older than those fields, or one written by hand. It fires once in such a tracker's life
+and never for one `setup.md` created, which is why it lives here rather than in the every-run read.
+
+Don't treat a missing stamp as already caught up. A missing stamp is stronger evidence of being
+behind than a stale one, and never proof of being current.
+
+**These two fields split into a mechanical part and a check-in part. Don't let the first blur
+into skipping the second.**
+- Backfill `Created:` to `0.0.0` as mechanical bookkeeping. The tracker's real creation version is
+  unknown, and stamping it to the *current* skill version would falsely claim it started life
+  knowing about everything up to today, which is exactly backwards for a tracker old enough to
+  predate the field. `0.0.0` says the true thing instead.
+- Backfill `Feature check:` to `0.0.0` as that same mechanical first step.
+- **Stamping `Feature check:` to the current version is never mechanical.** It can only happen
+  *after* actually running `session-start.md` Step 0.5's full behind-version disclosure walk (open
+  `changelog.md`, walk every entry, oldest first) and folding the result into the combined
+  check-in, exactly as if this tracker had really been sitting at `0.0.0` all along.
+
+This tracker is owed disclosure for every feature shipped since baseline, not just future ones. A
+missing stamp confirms nothing about what it already knows, so treating the whole section as
+mechanical bookkeeping and jumping straight to the current-version stamp is exactly the failure mode
+it exists to block.
+
+**This backfilled tracker also never went through `setup.md`'s own bootstrap interrogation.** It
+predates this skill's full feature set, or was created by hand. Two different things follow, and
+they must not be conflated:
+
+- **The id system, `Done archive:` mechanics, and the closed-section rule are core and mandatory,
+  never dependent on presence.** Contrast `Selection strategy:`/`Feedback:`/`Risk register:`, which
+  genuinely are optional and read by *value*, not presence (see `SKILL.md`'s tracker-format note).
+  If this tracker has zero ids anywhere and no `Next id:` line at all, that's exactly this file's
+  "Minting and migrating ids" first-adoption case:
+  - Run its one-time bulk backfill right here, as the same mechanical bookkeeping
+    as the version-stamp backfill above. Waiting for that section's ordinary "an id is actually
+    needed" trigger might never fire this session, leaving the tracker looking id-less
+    indefinitely.
+  - Never frame this as "want to start using ids?" It isn't a choice; it's baseline mechanics this
+    tracker was always going to have.
+  - Mention it in one clause if it actually ran ("also backfilled ids for the N entries that
+    didn't have one yet"); silent otherwise, same as any other automatic action that didn't
+    change what's visible this run.
+- **`Selection strategy:`, `Feedback:`, and `Risk register:` are genuinely optional, and this
+  tracker never got `setup.md` Step 4's one-time offer of them.** Offer each of the three that has
+  no line at all. An existing line already answers the question, even if it just spells out the
+  default. Fold whatever's still due into this run's combined check-in: the same brief questions
+  `setup.md` Step 4 asks a brand-new tracker (the full option set for `Selection strategy:`, per
+  `strategies.md`'s own Setup section; a single short yes/no each for `Feedback:` and
+  `Risk register:`). This is distinct
+  from the changelog walk above: that walk discloses *changes* since baseline; this discloses
+  baseline features the tracker never had a chance to decline or accept at all, since it skipped
+  `setup.md` entirely.
 
 ## Retiring, merging, or narrowing a category
 

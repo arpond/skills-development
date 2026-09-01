@@ -11,8 +11,9 @@ user confirms.
 Files:
 - `SKILL.md` — the steady-state loop (ties, idea top-up, ranking, propose/confirm/plan/build/
   record). The core file, read every time the skill triggers.
-- `session-start.md` — finds or bootstraps the tracker and checks whether Goals are stale. Read
-  every run, right after `SKILL.md`'s intro. A second core file, not a companion: not optional
+- `session-start.md` — finds or bootstraps the tracker, checks whether the tracker is behind this
+  skill version, checks whether Goals are stale, and surfaces due reassess flags and revisit
+  dates. Read every run, right after `SKILL.md`'s intro. A second core file, not a companion: not optional
   or one-time, only separated to keep `SKILL.md` focused on the loop.
 - `setup.md` — the one-time-per-project bootstrap interrogation. Read only the first time the
   skill runs for a project, before its tracker file exists.
@@ -27,10 +28,20 @@ Files:
   reworks, or had bad outcomes. It persists each as a named risk area, keyed to the files or
   modules it is about, in a sibling `RISK_REGISTER.md`, and cross-references future proposals
   against it. Off by default. Read only when a project has `Risk register: on`.
-- `tracker-maintenance.md` — rare per-project edge cases: minting or migrating idea ids, and
-  retiring, merging, or narrowing an idea category. Read only when one of those occurs.
+- `tracker-maintenance.md` — rare per-project edge cases: minting or migrating idea ids, catching
+  up a tracker older than the skill's version stamps, and retiring, merging, or narrowing an idea
+  category. Read only when one of those occurs.
 - `changelog.md` — what each skill version added, plus the versioning policy. Read only when an
   existing tracker is behind the installed skill version.
+
+## Cost
+
+Cheap on the common path, and no MCP server or external service on any path. Two things cost more
+than a file read. Topping up a category (Step 2) explores the project to ground new ideas: recent
+commits, new or changed files, rough edges, test gaps. That runs only when a category drops below
+about three items, not on every run. Planning a confirmed pick (Step 4.5) can hand off to another
+skill, and one of those may be expensive. `plan-red-team` spawns a panel of subagents. The offer
+says so, the handoff is never automatic, and declining leaves the step as cheap as it ever was.
 
 ## What it writes
 
@@ -55,9 +66,18 @@ moved to Done, entries aged into the archive).
 
 ## Requires
 
-Nothing beyond local file read/write. No MCP server, no external service. The one optional
-dependency is Claude Code's plan mode, used for the approval flow in Step 4.5 if available.
-Without it, the skill presents the plan inline and waits for a go-ahead.
+No hard dependencies. No MCP server, no external service, and nothing the skill cannot do with
+local file read and write plus reading the project it is pointed at (see `## Cost`). Three
+optional dependencies, all in Step 4.5. Claude Code's plan mode carries the approval flow when it is
+available. Without it, the skill presents the plan inline and waits for a go-ahead. A skill that
+interviews you about a plan, such as `grill-me`, gets offered before the plan is drafted. A skill
+that attacks a drafted plan, such as `plan-red-team`, gets offered after it. Without either, the
+skill says nothing and plans as it always did.
+
+One internal dependency is worth knowing before you turn things on. The risk register records a
+mitigation as planned, then relies on the feedback loop to ask how it landed. With the risk
+register on and feedback off, nothing ever asks, so those mitigations stay unchecked for ever. The
+skill says so the first time it would matter, but the pairing is easier to get right at setup.
 
 ## When it triggers
 

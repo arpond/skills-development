@@ -8,7 +8,9 @@ instead).
 `session-start.md` Step 0 has already resolved that no tracker exists anywhere — don't re-look.
 **Create it in `<docs-dir>/` if the project already has one** (`docs/`, `doc/`, or
 `documentation/`), otherwise at the project root, and never create a docs directory just to hold
-it. Whichever it lands in is where this skill's other files go too.
+it. Whichever it lands in is where this skill's other files go too. Where the project has more
+than one such directory, ask which, and don't guess. Two of them usually hold different things,
+and the wrong pick buries the file where nobody looks.
 
 **Create it before doing anything else.** This is part of the skill, not a separate setup step
 the user has to remember to do first:
@@ -74,12 +76,20 @@ the user has to remember to do first:
      ships in unusually large or frequent bursts (or, at the other extreme, very rarely), mention
      that the skill will surface it and propose a number adjustment if the default turns out to be
      miscalibrated, rather than requiring the user to notice and ask.
+   - A category that drops below about three outstanding ideas gets topped up, and a top-up keeps
+     searching until it reaches about six to eight (`SKILL.md` Step 2). Those two numbers decide
+     how often the skill goes looking for new ideas rather than just ranking what is there.
+   - Goals get a check-in when they were last reviewed over about 30 days ago, or five items have
+     shipped since (`session-start.md` Step 0.5). It is a question, never an edit.
    Both are core-loop, not toggles — say so plainly rather than letting either show up unannounced
    the first time it fires.
 6. Write the file with:
    - the confirmed tiers
    - `Selection strategy:`, `Feedback:`, `Risk register:`
    - `Done archive:`, only if changed from the default
+   - `Next id: I1`, always, even though nothing has an id yet. A tracker that leaves it out looks
+     to every later check like one that predates the id system, and gets a backfill and a
+     first-time heads-up it has already had.
    - today's date as `Last reviewed:`
    - `SKILL.md`'s current version as both `Created:` and `Feature check:` (identical at setup
      time; they only diverge once a later skill version ships something new)

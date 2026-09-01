@@ -48,7 +48,8 @@ different concerns.
 
 1. `<project>/IMPROVEMENT_TRACKER.md`
 2. `<project>/<docs-dir>/IMPROVEMENT_TRACKER.md` — where `<docs-dir>` is `docs/`, `doc/`, or
-   `documentation/`, whichever the project already has
+   `documentation/`, whichever the project already has. Where the project has more than one,
+   check every one of them. A tracker in two of them is the ambiguity case below.
 3. `<project>/.claude/IMPROVEMENT_TRACKER.md`
 
 Don't assume location 1 and stop. A tracker that exists somewhere else would be invisible, and the
@@ -72,7 +73,10 @@ Goals aren't fixed forever though: see Step 0.5 below.
 **If it exists but is malformed, don't silently rewrite it back into shape, and don't refuse to
 proceed either.** Malformed means: no `## Goals` section, a tier line that doesn't parse as
 priority order, an unrecognised `Selection strategy:`/`Feedback:`/`Risk register:`/`Done archive:`
-value, or a `Created:`/`Feature check:` that isn't a valid `X.Y.Z` version. This is a case of
+value, or a `Created:`/`Feature check:` that isn't a valid `X.Y.Z` version. Unrecognised means the
+setting itself can't be read: a mode or on/off value that names nothing. A parameter *inside* a
+mode that reads fine is not this case. A degenerate count or a stale cursor is handled where that
+mode is defined (`strategies.md`), announced rather than asked about. This is a case of
 "unreachable isn't resolved," not a normal empty/stale tracker. Rewriting it guesses at intent the
 user never confirmed.
 Name the specific thing that doesn't parse and ask directly: fix it by hand, or walk through
@@ -92,56 +96,11 @@ malformed cases above, so it doesn't block the run.
 - If the user wants it moved, do that as its own small edit. If they want it left as a deliberate
   exception, note that call was made and don't re-ask on future runs.
 
-**If `Created:` or `Feature check:` is missing** (tracker predates the version-stamp fields), don't
-treat that as already caught up — a missing stamp is stronger evidence of being behind than a stale
-one, never proof of being current.
-
-**These two fields split into a mechanical part and a check-in part. Don't let the first blur
-into skipping the second.**
-- Backfill `Created:` to `0.0.0` as mechanical bookkeeping (see
-  `tracker-maintenance.md`). The tracker's real creation version is unknown, and stamping it to
-  the *current* skill version would falsely claim it started life knowing about everything up to
-  today, which is exactly backwards for a tracker old enough to predate the field. `0.0.0` says
-  the true thing instead.
-- Backfill `Feature check:` to `0.0.0` as that same mechanical first step.
-- **Stamping `Feature check:` to the current version is never mechanical.** It can only happen
-  *after* actually running Step 0.5's full behind-version disclosure walk (open `changelog.md`,
-  walk every entry, oldest first) and folding the result into the combined check-in, exactly as
-  if this tracker had really been sitting at `0.0.0` all along.
-
-This tracker is owed disclosure for every feature shipped since baseline, not just future ones. A
-missing stamp confirms nothing about what it already knows, so treating the whole paragraph as
-mechanical bookkeeping and jumping straight to the current-version stamp is exactly the failure mode
-this note exists to block.
-
-**This backfilled tracker also never went through `setup.md`'s own bootstrap interrogation.** It
-predates this skill's full feature set, or was created by hand. Two different things follow, and
-they must not be conflated:
-
-- **The id system, `Done archive:` mechanics, and the closed-section rule are core and mandatory,
-  never dependent on presence.** Contrast `Selection strategy:`/`Feedback:`/`Risk register:`, which
-  genuinely are optional and read by *value*, not presence (see `SKILL.md`'s tracker-format note).
-  If this tracker has zero ids anywhere and no `Next id:` line at all, that's exactly
-  `tracker-maintenance.md`'s "Minting and migrating ids" first-adoption case:
-  - Run its one-time bulk backfill right here, as the same mechanical bookkeeping
-    as the version-stamp backfill above. Waiting for that section's ordinary "an id is actually
-    needed" trigger might never fire this session, leaving the tracker looking id-less
-    indefinitely.
-  - Never frame this as "want to start using ids?" It isn't a choice; it's baseline mechanics this
-    tracker was always going to have.
-  - Mention it in one clause if it actually ran ("also backfilled ids for the N entries that
-    didn't have one yet"); silent otherwise, same as any other automatic action that didn't
-    change what's visible this run.
-- **`Selection strategy:`, `Feedback:`, and `Risk register:` are genuinely optional, and this
-  tracker never got `setup.md` Step 4's one-time offer of them.** Offer each of the three that has
-  no line at all. An existing line already answers the question, even if it just spells out the
-  default. Fold whatever's still due into this run's combined check-in: the same brief questions
-  `setup.md` Step 4 asks a brand-new tracker (the full option set for `Selection strategy:`, per
-  `strategies.md`'s own Setup section; a single short yes/no each for `Feedback:` and
-  `Risk register:`). This is distinct
-  from the changelog walk above: that walk discloses *changes* since baseline; this discloses
-  baseline features the tracker never had a chance to decline or accept at all, since it skipped
-  `setup.md` entirely.
+**If `Created:` or `Feature check:` is missing**, the tracker predates the version-stamp fields.
+Read `tracker-maintenance.md`'s "Catching up a tracker that predates the version stamps" and
+follow it before continuing. It covers the two backfills, the disclosure the tracker is owed, and
+the baseline features it never got offered. Don't treat a missing stamp as already caught up, and
+don't backfill and stamp in one move — both are failures that section exists to block.
 
 ## Step 0.5: Check whether goals are stale
 
@@ -149,7 +108,7 @@ Goals can drift as the project evolves, even without a formal re-setup. Check th
 reviewed:` date under Goals:
 
 - **Missing** (tracker predates this field): treat as stale, ask now.
-- **Older than ~30 days, or the Done list has grown noticeably since the last review**: prompt
+- **Older than ~30 days, or five or more items shipped since the last review**: prompt
   the user with a short check-in — e.g. "Goals were last confirmed on <date> and N items have
   shipped since. Still the right order, or has anything changed?" Offer to keep as-is, reorder,
   add/remove a tier, or fold in a new priority entirely.
@@ -228,6 +187,7 @@ genuinely surprising input, not a normal case to silently resolve either directi
    unexpected, is the skill install stale?").
 2. Don't attempt any disclosure walk, since nothing in this install's `changelog.md` is actually
    newer.
+3. Leave the stamp alone. Don't move it forward to match the install, and don't wind it back.
 
 If only this check is due this run (Goals and Done-archive both fine), it still gets its own short
 message. It doesn't need another trigger to piggyback on, just doesn't stack as a *second* message

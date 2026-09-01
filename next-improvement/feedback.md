@@ -44,6 +44,12 @@ no previous offer to have grown from, so it's neither growth nor a reset; treati
 a real prior measurement of 0 would score every first offer as growth. `growth-streak` counts consecutive offers
 where the eligible count was higher than at the previous offer — see "Backlog not shrinking" below.
 
+**If the `Feedback:` line isn't present, write it out before annotating it.** That's the normal
+case, since an absent line already means `on`. Write `Feedback: on` with the note attached, the
+same way Step 6 writes out an absent `Done archive:` line before annotating its own counter. Both
+fields here need it: the counter, and `bulk-offer last:`, which the re-offer trigger reads back.
+There's no other line either belongs on, so without this they silently stop being recorded at all.
+
 Done entries extend the base format (see `SKILL.md`, which also covers the `id:`, `fixes:`,
 `reworked:`, and `reassess:` fields — those aren't specific to this subsystem) with a ship date and
 an `outcome:` value:

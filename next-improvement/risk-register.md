@@ -134,8 +134,8 @@ protecting nothing.
 So whenever an entry is actually in hand for something (a Step 2 cross-reference, an archival
 judgement) and its areas name concrete paths, check those paths still exist. It's cheap at that
 point, and it only ever runs on entries already in play — never as a sweep. A path that no longer
-resolves is a third state, not a no-match: say so and ask, since it means either the code moved
-(update `areas:`) or the risk is obsolete (propose archiving), and those need different answers.
+resolves is a third state, not a no-match. Say so and ask. Either the code moved (update
+`areas:`) or the risk is obsolete (propose archiving), and those two need different answers.
 
 ## Malformed file
 

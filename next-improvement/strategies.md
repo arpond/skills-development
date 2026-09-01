@@ -179,7 +179,9 @@ follows the same rule).
 **Degenerate values.** Every `N` here (`spread(N)`, `max-options(N)`,
 `category-rotation(window=N)`) means what it says only for N ≥ 1; treat 0, negative, or
 non-numeric input as a typo, not a valid "show nothing" instruction — clamp to 1 and mention the
-correction rather than silently presenting an empty list or erroring. There's always at least one
+correction rather than silently presenting an empty list or erroring. This covers a bad number
+inside a mode that reads fine, which is why it is announced rather than asked about. A mode name
+that reads as nothing at all is `session-start.md`'s malformed case instead, and stops to ask. There's always at least one
 slot: the single top recommendation is never trimmed away by any cap, so `max-options(N)` below
 what's needed to hold it still shows that one pick, even if that means showing fewer than N when
 N was set to something like 1 — `max-options(N)` never zeroes out the base recommendation itself.

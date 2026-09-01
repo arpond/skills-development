@@ -25,6 +25,25 @@ Each entry says what is new and **whether there is anything to opt into**:
   Old and new spellings mixed indefinitely is exactly the drift this kind of change exists to
   close.
 
+- **2.3.0** — *automatic, all projects, nothing to opt into.* Planning a confirmed pick
+  (`SKILL.md` Step 4.5) now has two one-line offers of a handoff to another skill in the session.
+  Before the plan is drafted, a skill that interviews the user until the open decisions are
+  settled: `grill-me` is the reference case. After it is drafted, a skill that examines the plan
+  and argues against it: `plan-red-team` is the reference case. Each offer rides on a message
+  already being sent, the pick acknowledgement and the plan itself, and is asked once per pick.
+  More than one qualifying skill is offered as a numbered choice, never picked between silently.
+  An offer also says what a skill costs, where the skill states one.
+  Declining either, or having no such skill installed, leaves the step exactly as it was. A
+  review returns findings, never approval, so the plan still goes to its usual approval gate.
+  Nothing is stored in the tracker, and no setting turns any of it on or off.
+
+  The same version carries a review pass over the whole skill. What an existing tracker sees:
+  a Rejected line whose idea comes back out is now marked `(reconsidered: YYYY-MM-DD)` instead of
+  standing as if it still applied, which is an optional field and needs no migration. The Goals
+  check-in trigger is now "five or more items shipped since the last review" instead of "grown
+  noticeably". Setup now discloses the top-up thresholds and that check-in trigger, and writes
+  `Next id:` into every new tracker. The Done archive gets the same malformed-file gate the
+  tracker has. Nothing here changes an existing tracker's format or needs anything from the user.
 - **2.2.0** — *opt-in, only for trackers whose `Next id:` existed before this fix. A tracker that
   adopts ids fresh under 2.2.0 has nothing to opt into.* A tracker that adopted the id system
   before this fix left its pre-existing entries without ids. Each got one only when something
@@ -72,8 +91,8 @@ Each entry says what is new and **whether there is anything to opt into**:
   older trailing `(id: I<N>)` style stay valid and need no rewrite. Both are readable, and only new
   writes use the prefix. **Optional, read by value**: `Selection strategy:`, `Feedback:`,
   `Risk register:`. Baseline itself needs no *changelog* disclosure. A tracker backfilled to
-  `0.0.0` (see `session-start.md` Step 0) is not behind on anything this file tracks, because
-  nothing here is a change from baseline. That is not the same as a tracker that was asked about
-  the optional trio. A tracker old enough to need this backfill also never went through
-  `setup.md`'s own bootstrap interrogation. `session-start.md` Step 0 gives it that one-time
-  catch-up separately from this walk.
+  `0.0.0` (see `tracker-maintenance.md`'s catch-up section) is not behind on anything this file
+  tracks, because nothing here is a change from baseline. That is not the same as a tracker that
+  was asked about the optional trio. A tracker old enough to need this backfill also never went
+  through `setup.md`'s own bootstrap interrogation. That same catch-up section gives it the
+  one-time offer, separately from this walk.

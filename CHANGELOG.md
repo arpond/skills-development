@@ -8,6 +8,18 @@ the repo is organised. `next-improvement` keeps a versioned changelog in
 Format: one heading per period, named by theme and dated by its start. Three fixed sections:
 Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `ste-writing`.
 
+## Planning interview · 2026-09-01
+
+**Skills**
+- `next-improvement` 2.3.0: Step 4.5 now offers a skill handoff at each end of planning, an
+  interview before the draft and a review after it. See `next-improvement/changelog.md`.
+- `next-improvement`: a blind review closed sixteen findings. Two spec breaches, a duplicate id,
+  a misfiring first-run check, and two files that disagreed.
+- `next-improvement`: the catch-up for a tracker older than the version stamps moved to
+  `tracker-maintenance.md`, out of the file read on every run.
+- `next-improvement`: `README.md` gains `## Cost`. The skill explores the project at top-up time
+  and can hand off to an expensive skill at planning time.
+
 ## Resume briefing · 2026-09-01
 
 **Skills**

@@ -5,7 +5,7 @@ description: Runs a "what should we work on next" process for whatever project t
 
 # Next improvement
 
-**Skill version: 2.2.0.** `session-start.md`'s version check compares a tracker's `Feature check:`
+**Skill version: 2.3.0.** `session-start.md`'s version check compares a tracker's `Feature check:`
 stamp against this number. `changelog.md` holds both what shipped at each version and the
 versioning policy itself — read it only when that check actually finds a gap, not on every run.
 
@@ -43,9 +43,7 @@ alongside it; `session-start.md` is a second core file, the other six are compan
   narrowing a category, one-time disclosures to an older tracker). Read it only when that specific
   trigger actually fires — each section names its own.
 
-Of these, only `session-start.md` is unconditional. The other six are read on their own trigger
-condition, to keep the common-case read lean — note that `feedback.md`'s read condition is met by
-default, so it's read on most runs too.
+Each bullet above carries its own read condition, and those conditions are the whole rule.
 
 A project's tracker may also grow a sibling `IMPROVEMENT_TRACKER_DONE.md` — the overflow of old
 **Done** history moved out of the live tracker (see Step 6). It's not a companion file of this
@@ -83,7 +81,7 @@ Next id: I<N>                  <!-- next unassigned idea id -->
 Selection strategy: top-tier   <!-- optional, see strategies.md -->
 Feedback: on                   <!-- optional, see feedback.md -->
 Risk register: on              <!-- optional, see risk-register.md -->
-Done archive: age=60, floor=5, backstop=40   <!-- optional, default shown, see Step 6 -->
+Done archive: age=60, floor=5, backstop=40 (last sweep: age, streak: 0)   <!-- optional, default shown, see Step 6 -->
 1. <highest-priority tier>
 2. <tier A> / <tier B> — tied; if a candidate must pick one, prefer: <tie-break rule>
 3. <next tier>
@@ -107,6 +105,8 @@ Done archive: age=60, floor=5, backstop=40   <!-- optional, default shown, see S
 - **Idea name** (Category, YYYY-MM-DD) — one-line reason it was declined.
 - **Idea name** (Category, YYYY-MM-DD, revisit-after: YYYY-MM-DD) — a timing/priority reason
   carries an optional revisit date instead of relying on a coincidental re-proposal to catch it.
+- **Idea name** (Category, YYYY-MM-DD, id: I<N>, reconsidered: YYYY-MM-DD) — history only. The
+  idea is outstanding again under that id, so nothing here applies to it any more.
 ```
 
 - **Goals** is an ordered list, highest priority first, with a `Last reviewed:` date. Earlier
@@ -117,7 +117,7 @@ Done archive: age=60, floor=5, backstop=40   <!-- optional, default shown, see S
 - **`Created:` and `Feature check:` are both skill-version stamps, distinct purposes.** `Created:`
   is set once at setup and never changes — a permanent record of what this tracker started life
   knowing about. `Feature check:` moves forward as new features get disclosed. Both are handled
-  entirely by `session-start.md`'s Step 0/0.5 (including lazy-backfill of a tracker that predates
+  entirely by `session-start.md`'s Step 0/0.5 (with the catch-up for a tracker that predates
   them); nothing in Steps 1-6 reads or writes either.
 - Two or more goals may share the same tier number when they're genuinely equal priority right
   now. A tied group must carry a short tie-break note on the same line: what to do when a real
@@ -140,7 +140,8 @@ Done archive: age=60, floor=5, backstop=40   <!-- optional, default shown, see S
   just above, this is core and never depends on presence or value, the same way `Done archive:`'s
   sweep always runs regardless of whether that line is written out.** A tracker with no ids yet
   isn't declining a feature, it's just old enough to need `tracker-maintenance.md`'s one-time
-  backfill (see there, and `session-start.md` Step 0's Created:/Feature check: handling). **Written as a leading
+  backfill (see there, and its catch-up section for a tracker missing `Created:`/`Feature
+  check:`). **Written as a leading
   `I<N>:` prefix on the line, not a trailing `(id: I<N>)`.** Scanning a long category or Done list
   for a specific id is the common case, and a prefix reads left-to-right without having to parse
   into the parenthetical first. Rejected entries are the one exception: most have no id at all,
@@ -186,6 +187,11 @@ Done archive: age=60, floor=5, backstop=40   <!-- optional, default shown, see S
 - **Rejected** is append-only, same as Done — an idea proposed in Step 2 and declined by the
   user goes here with the reason, not just dropped. See Step 2 for how this gets checked before
   re-proposing something similar; the reason is what matters, not the mere fact of rejection.
+- **An idea that comes back out of Rejected gets its old line marked, not left standing.**
+  Append-only means the line stays; it doesn't mean the line stays current. When a Rejected idea
+  is reconsidered and appended to a category again, reusing its id, mark the Rejected line
+  `(reconsidered: YYYY-MM-DD)` in the same write. Without that the same id sits on two live lines,
+  and Step 2's Rejected check keeps reading a decline reason for an idea that is now outstanding.
 - **`revisit-after:` is optional, only for timing/priority reasons** ("not now, focused on X") —
   not for substance reasons ("doesn't fit," "already tried"), which don't go stale the same way and
   don't need a date. See Step 2 for when it's set and Step 1 for how it gets surfaced once due.
@@ -218,8 +224,8 @@ visibly weak ideas the user can see for themselves. Absence from this table does
 | 0 (setup.md) | surface | Disclose the behaviours that aren't opt-in (the fixes/reworks question, Done archiving) rather than letting them appear unannounced |
 | 0 (session-start.md) | gate | If the tracker exists but is malformed, ask the user rather than silently rewriting or refusing |
 | 0 (session-start.md) | surface | Surface a foreign `##` section once per project rather than leaving it unmentioned |
-| 0 (session-start.md) | surface | Bulk-backfill ids for a tracker with zero ids and no `Next id:` line, rather than waiting for the lazy per-entry trigger to eventually fire |
-| 0 (session-start.md) | surface | Give a backfilled tracker the one-time baseline-subsystems catch-up (`Selection strategy:`/`Feedback:`/`Risk register:`) it never got via `setup.md` |
+| 0 (tracker-maintenance.md) | surface | Bulk-backfill ids for a tracker with zero ids and no `Next id:` line, rather than waiting for the lazy per-entry trigger to eventually fire |
+| 0 (tracker-maintenance.md) | surface | Give a backfilled tracker the one-time baseline-subsystems catch-up (`Selection strategy:`/`Feedback:`/`Risk register:`) it never got via `setup.md` |
 | 0 (risk-register.md) | gate | If `RISK_REGISTER.md` exists but is malformed, ask the user rather than silently rewriting or refusing |
 | 0.5 (session-start.md) | gate | Confirm goal changes with the user before updating Goals / bumping `Last reviewed:` |
 | 0.5 (session-start.md) | gate | Confirm before adjusting `Done archive:` knobs or `Feedback:`'s cadence knobs off the back of a detected drift signal |
@@ -234,10 +240,15 @@ visibly weak ideas the user can see for themselves. Absence from this table does
 | 4 | gate | Do not start planning or implementing until the user confirms which one (if any) to build |
 | 4 | surface | Surface a feature-type pick as such |
 | 4 | surface | Surface every candidate's risk-register signals (mitigates vs. merely exposed) |
+| 4.5 | surface | Offer a qualifying skill at each handoff point, before the draft and after it, rather than drafting or approving straight past it |
+| 4.5 | surface | Name every qualifying skill in an offer, numbered, rather than picking between them |
 | 4.5 | gate | Get the plan approved before writing any code |
 | 6 | surface | Sweep Done into the archive whenever age/floor/backstop makes an entry eligible, not only when someone happens to notice |
+| 6 | gate | If `IMPROVEMENT_TRACKER_DONE.md` exists but is malformed, ask the user rather than rewriting it or reading past the damage |
 | 0.5 (session-start.md) | surface | Re-run that same Done sweep independently of Step 6, so a missed append-time sweep gets caught at the next session start |
 | Checking in (feedback.md) | surface | Always surface the pending-outcome count when it's nonzero, calling out the reassess subset separately |
+| Backlog not shrinking (feedback.md) | surface | Say so at `growth-streak: 2`, since a backlog that keeps growing looks the same as one being worked |
+| Area match (risk-register.md) | surface | Say when an entry's `areas:` path no longer resolves, rather than reading it as a no-match |
 | Checking on mitigations (risk-register.md) | surface | Say so the first time a `mitigated-by:` tag would be added while `Feedback:` is off, since nothing would ever ask about it |
 
 *Update this table in the same edit whenever a hard rule is added, removed, or moved* — it's a
@@ -258,8 +269,9 @@ Step 1 below.
 Count remaining (not-in-Done) items in each idea category.
 
 **If `session-start.md`'s Step 0.7 surfaced any due `revisit-after:` entries and the user chose to
-reconsider one**, it goes back through Step 2 like any other candidate — confirm before appending,
-reuse its existing id per the id-scheme note above.
+reconsider one**, it goes back through Step 2 like any other candidate. Confirm before appending,
+reuse its existing id per the id-scheme note above, and mark its Rejected line `reconsidered:` in
+that same write.
 
 ## Step 2: Top up any category running low
 
@@ -293,22 +305,15 @@ reappearing, so anything that referenced it by id (a `mitigated-by:` tag, a `fix
 resolves correctly. Only mint fresh for an idea that's never been appended before.
 
 **If `Risk register: on`, cross-reference each candidate against active risk areas** before
-presenting it:
-1. Read `RISK_REGISTER.md`'s active entries.
-2. Check whether the candidate touches the `areas:` of one **or more**, using `risk-register.md`'s
-   "The area match" test. That's the one definition of touching; don't improvise a second.
-3. Check all active entries rather than stopping at the first hit.
-4. If any match, say so when presenting it (see `risk-register.md`) rather than leaving the match
-   implicit.
-5. Ask whether the candidate is merely exposed to the risk or specifically meant to fix it. Only
-   the "meant to fix it" answer writes anything: a `mitigated-by: ... (outcome: planned)` tag,
-   made in the same write as appending the idea itself. Mere exposure is recomputed from the
-   areas every time and is never recorded (see `risk-register.md`'s Cross-referencing new ideas
-   section).
+presenting it. That file is loaded whenever this runs, so follow its "Cross-referencing new
+ideas" section rather than a second copy here. Two things about it decide what this step writes.
+Every active entry is checked, not just the first that hits. Only a "meant to fix it" answer
+writes anything at all.
 
 **Check Rejected before proposing.** If a candidate closely resembles something already in
 Rejected, don't just skip it or blindly re-propose it — read the recorded reason and judge
-whether it still applies. A timing/priority reason ("not now, focused on X") can go stale and
+whether it still applies. Skip any line carrying `reconsidered:` — that idea already came back
+out, and its decline reason stopped applying on that date. A timing/priority reason ("not now, focused on X") can go stale and
 stop applying; a substance reason ("doesn't fit this project," "already tried, didn't work")
 usually doesn't. When genuinely unsure, it's fine to re-propose with a note ("this was declined
 before for X — has that changed?") rather than silently suppressing or silently repeating it.
@@ -346,7 +351,14 @@ enough.
 
 **Track dry top-ups so they don't repeat silently.** A self-correcting counter (increment on the
 miscalibration signal, reset on the corrected one, force-reset once surfaced): note it inline under
-that category's header, `(dry runs: N — last: YYYY-MM-DD)`. Trigger/increment: a top-up attempt ends up
+that category's header, `(dry runs: N — last: YYYY-MM-DD)`. Every counter in this skill takes that
+shape and declares only its own three values. Two rules come with the shape, and each instance
+states its own answer to both. **Where the line it annotates may not exist, write that line out
+with its defaults first** — a counter with nowhere to live silently stops counting. **Where the
+increment compares against a previous measurement, "never measured" is a sentinel, not a stored
+0** — otherwise every first measurement scores as a change from a zero that never meant zero.
+Neither applies to this instance: the category header always exists, and a dry run is judged on
+its own, not against a previous count. Trigger/increment: a top-up attempt ends up
 adding nothing — brainstorming found nothing genuinely new, everything proposed was flagged weak,
 or the user declined what was proposed. Corrected signal/reset: the next time a solid idea actually
 gets added, remove the line entirely. Threshold: `dry runs: 2+`. At the threshold, the next time
@@ -443,7 +455,10 @@ contenders, spread's tier picks, wildcard/quick-win additions, tied-goal co-cont
 so the user can confirm by number ("go with 2") instead of by re-typing a name. Any descriptive
 label a mode adds (`Tier 1 pick:`, `Wildcard:`, `Quick win:`) stays as text within that numbered
 line — it's a label, not the list number. A single, unambiguous top pick with nothing else to
-choose between doesn't need a number, since there's no distinct option to point at.
+choose between doesn't need a number, since there's no distinct option to point at. The rule
+holds at every option-presenting site in this skill and its companions, not only this step. Those
+are Step 2's retire/merge/narrow ask, Step 4.5's two handoff offers, `session-start.md`'s Goals
+reorder, and `feedback.md`'s pending-outcome and cadence asks. Any site added later inherits it.
 
 Default (no `Selection strategy:` set, or set to plain `top-tier`): present the top candidate,
 or up to 4 total (winner + close contenders) if the ranking is genuinely close, with reasoning
@@ -495,8 +510,42 @@ implementation plan first: what files/functions get touched, the approach, and h
 verified. **This is one of the skill's hard rules (see the table above): get the plan approved
 before writing any code.**
 
+**Two handoff points, one test.** Other skills in the session can help here, and what a skill
+does with the plan decides where it fits. One that questions the user until the open decisions
+are settled belongs *before* the draft — `grill-me` is the reference case. One that examines a
+drafted plan and argues against it belongs *after* — `plan-red-team` is the reference case. A
+skill that does neither is not offered at this step at all. Both offers work the same way:
+
+- Each is one line, folded into a message already being sent: the acknowledgement of the
+  confirmed pick before the draft, the plan itself after it. Neither is a stop of its own.
+- Each is asked per pick. Nothing is configured, and no answer is remembered.
+- More than one qualifying skill is a numbered choice, per Step 4's rule, each named with the one
+  thing it does differently. Being the reference case doesn't make a skill the winner.
+- Declining stays available beside the numbered skills, and only one runs per handoff point.
+- An offer says what a skill costs, where the skill states a cost of its own. A panel of
+  subagents isn't a free yes, and the offer is where that gets decided.
+- No qualifying skill means silence. An absent skill isn't a finding to report.
+
+**Before the draft**, hand off to the chosen skill's own flow, then plan from what the interview
+settled. Don't re-ask in the plan what the interview already answered. The interview goes before
+the draft for a reason: a plan drafted first anchors it to Claude's guesses about scope. The
+user's answers then arrive as corrections to those guesses, rather than as the input the plan was
+built from. This is most worth taking up on a feature-type pick, for the reason Step 4 already
+gives for surfacing one.
+
+**After the draft**, the offer rides with the plan itself, ahead of the approval gate rather than
+after it. A review comes back with findings, not with a verdict:
+
+- judge each finding rather than applying it
+- revise the plan where one lands
+- say which ones you disagreed with, and why
+
+Then the plan goes to the same approval gate as any other. A review is never approval, however
+clean it comes back.
+
 If Claude Code's plan mode is available in this session, use it naturally for this (EnterPlanMode
-/ ExitPlanMode) — write the plan to the plan file and call ExitPlanMode to request approval. If
+/ ExitPlanMode) — write the plan to the plan file and call ExitPlanMode to request approval. The
+after-draft offer goes in that same message. If
 plan mode isn't available or doesn't fit the context, present the plan inline instead and wait
 for an explicit go-ahead before proceeding.
 
@@ -624,11 +673,9 @@ can't keep pace with shipping would let the live Done section grow without bound
 into the archive while still `pending` doesn't drop out of consideration, per the combined-pool
 rule below — it's still askable, just from the other file.
 
-`category-rotation` (`strategies.md`) counts only the live tracker's Done entries, never the
-archive — its default window (5) is well inside the default `floor`-`backstop` range kept live, so
-this practically never runs short, but if a project sets a much larger window than the live Done
-section holds, treat it the same as "fewer than N total" (insufficient history, skip the bias)
-rather than reading the archive file to fill the count.
+`category-rotation` (`strategies.md`) counts live Done entries only, never the archive. A window
+larger than the live section holds counts as insufficient history there, and never opens the
+archive to fill the count.
 
 **Reading the archive.** Only open `IMPROVEMENT_TRACKER_DONE.md` when something actually needs
 older history; otherwise don't read it as part of the normal Step 0-6 loop, since that's most of
@@ -641,3 +688,10 @@ already shipped" check, Step 6's `reassess:` write to an origin entry, the user 
 work, `feedback.md`'s eligible-entry scan, and `risk-register.md`'s evidence scan. Archiving is
 purely about what gets loaded on a routine run; it never narrows what a deliberate history lookup
 is allowed to see.
+
+**An archive that doesn't parse gets the same gate the tracker does.** It is read for history and
+written to for outcomes and `reassess:` flags, so it can be malformed in the same ways. Say what
+doesn't parse and ask, rather than rewriting it or reading past the damage. Silently skipping an
+unreadable entry is worse here than in the live file, because nothing else ever looks at the
+archive to notice. An entry whose `shipped` date won't parse also drops out of the id backfill's
+ordering and out of every eligibility count that reads it.

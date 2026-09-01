@@ -14,6 +14,9 @@ list of repo files that the work should keep current. Where another skill owns t
 wrap-up hands off to it, such as `repo-knowledge` for gotchas or `next-improvement` for
 progress.
 
+A resume never starts the work on its own. It loads the stream, checks its claims against the
+repo, and then reports where the work stands with numbered next steps. The user picks one.
+
 Files:
 
 - `SKILL.md` — the store layout, the manifest format, the wrap-up flow, and the resume flow.

@@ -1,6 +1,6 @@
 ---
 name: work-streams
-description: Parks and resumes named work streams — parallel threads of work in one repo, like "fix skipped tests" or "refactor the auth flow" — in a personal store outside any repo, so a session's context survives exit or /clear. Wrapping up updates the stream's manifest (goal, state of play), refreshes its task-scoped context files (test logs, progress summaries, temporary learnings), sweeps a per-stream list of repo files that may need updating (a cheatsheet, README, KNOWLEDGE.md, an improvement tracker), and optionally writes a continuation prompt addressed to the next session. Resuming loads all of that back into a fresh session and checks it against the repo's current state. Use this whenever the user says "wrap up", "wrap this session up", "park this", "let's stop here for today", "pick up where we left off", "resume the <x> stream", "what streams are open here", or asks to archive, re-activate, or delete a stream — even when they never say the word "stream", ending a session with unfinished work is the trigger. A bare "commit and push" is ordinary git work, not a wrap-up — but an end-of-day remark beside it ("I'm done for today, just commit and push") still earns a one-line wrap-up offer once the git work is done. Not a memory system — a stream is scoped to one piece of work and dies with it.
+description: Parks and resumes named work streams — parallel threads of work in one repo, like "fix skipped tests" or "refactor the auth flow" — in a personal store outside any repo, so a session's context survives exit or /clear. Wrapping up updates the stream's manifest (goal, state of play), refreshes its task-scoped context files (test logs, progress summaries, temporary learnings), sweeps a per-stream list of repo files that may need updating (a cheatsheet, README, KNOWLEDGE.md, an improvement tracker), and optionally writes a continuation prompt addressed to the next session. Resuming loads all of that back into a fresh session, checks it against the repo's current state, and briefs the user with numbered next steps to pick from before any work starts. Use this whenever the user says "wrap up", "wrap this session up", "park this", "let's stop here for today", "pick up where we left off", "resume the <x> stream", "what streams are open here", or asks to archive, re-activate, or delete a stream — even when they never say the word "stream", ending a session with unfinished work is the trigger. A bare "commit and push" is ordinary git work, not a wrap-up — but an end-of-day remark beside it ("I'm done for today, just commit and push") still earns a one-line wrap-up offer once the git work is done. Not a memory system — a stream is scoped to one piece of work and dies with it.
 ---
 
 # Work streams
@@ -111,8 +111,10 @@ optional.
 | W2 | surface | Propose context-file prunes at every wrap-up, or say none are needed, rather than letting `context/` grow silently |
 | W3 | surface | Say when an update target no longer resolves, or a listed skill is unavailable, rather than silently skipping it |
 | W5 | gate | Present the whole wrap-up plan in one message and wait for confirmation before writing any of it |
+| R1 | gate | With more than one active stream and none named, list them and wait for the pick, whatever the `updated:` dates suggest |
 | R2 | surface | Surface a mismatch between a stream's claims and the repo's current state, rather than silently reconciling it |
 | R2 | prohibition | Never run a side-effectful command to verify a stream's claims |
+| R3 | gate | Brief the stream's state and propose numbered next steps, then wait — never resume straight into the work |
 | lifecycle.md | gate | Confirm before archiving, re-activating, or deleting a stream |
 | every write | prohibition | Never write secrets, credentials, or PII into a stream file, including pasted logs — ask how to redact |
 
@@ -120,10 +122,9 @@ optional.
 
 **Whenever two or more options are presented for the user to pick from, number them `1.`, `2.`,
 `3.`… in a single sequential list**, whatever label each carries. Sites in this skill: the
-stream pick at W1 and R1, the malformed-config and stray-manifest choices at Step 0, the
-base-directory choice in `setup.md`, the slug collisions in `lifecycle.md`, and any added later.
-A label explains an
-option; a number is what the user can
+stream pick at W1 and R1, the next steps at R3, the malformed-config and stray-manifest choices
+at Step 0, the base-directory choice in `setup.md`, the slug collisions in `lifecycle.md`, and
+any added later. A label explains an option; a number is what the user can
 say back ("go with 2") to pick one unambiguously. A single unambiguous recommendation with
 nothing else to choose between needs no number.
 
@@ -204,19 +205,37 @@ any of it. Then write it all and report what was written where. If the stream is
 Trigger: the user wants to pick work back up — "resume the skipped-tests stream", "pick up where
 we left off", "what streams are open here".
 
-**R1 — identify the stream.** A named stream resolves directly. Otherwise list the active
-streams for this project, numbered, with each one's title and `updated:` date. No active streams
-is a plain answer, not an error. A named stream missing from the active list may be archived.
-Check `archive/` before answering that it does not exist. On a hit, offer `lifecycle.md`'s
-re-activation.
+**R1 — identify the stream.** A named stream resolves directly. With exactly one active stream,
+"pick up where we left off" resolves to it. With more than one, list them numbered, with each
+one's title and `updated:` date, and wait for the pick. Say which one the request looks closest
+to when anything in it points at one. A closest match and an `updated:` date are hints, never
+the pick itself. Load and brief exactly one stream. A user who wants a second one asks for it,
+and it gets its own R2 and R3. A request that only asks what is open ends here, with the list.
+
+No active streams is a plain answer, not an error. A named stream missing from the active list
+may be archived. Check `archive/` before answering that it does not exist. On a hit, offer
+`lifecycle.md`'s re-activation.
 
 **R2 — load and verify.** Read the manifest and `continuation.md` if present. List the names of
 what `context/` holds; read individual files as the work needs them, not all up front. The
 stream's claims were true at the last wrap-up, not necessarily now. Cheaply verify that what it
 names — a branch, a file path, a command's definition — still exists. Surface any mismatch
 between the stream's claims and the repo's current state, rather than silently reconciling it.
+R3's briefing is where that is said, so each mismatch is reported once.
 Never run a side-effectful command to verify it.
 
-**R3 — work.** Continue the stream's work with that context. Resume itself writes nothing. If
-the goal turns out to be already met, suggest wrapping up and archiving rather than doing it
-unasked.
+**R3 — brief, then stop.** Give it in one message:
+
+- the stream's goal, and where State of play left it
+- what R2's verification found, including every mismatch with the repo as it stands now
+- the next steps, numbered, each one concrete enough to start from. One obvious next step is a
+  recommendation, not a list of one
+
+Then wait. Never begin the work because the manifest or the continuation prompt names what it
+is. The user is returning to a stream that is days old, and the position is what they need
+first. A request that already names the work to do is itself the pick, and the briefing still
+comes first. If the goal turns out to be already met, say so here and suggest wrapping up and
+archiving instead of proposing steps.
+
+**R4 — work.** Continue with the step the user picked. The store is written at a wrap-up, never
+by a resume.

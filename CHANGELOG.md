@@ -8,6 +8,14 @@ the repo is organised. `next-improvement` keeps a versioned changelog in
 Format: one heading per period, named by theme and dated by its start. Three fixed sections:
 Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `ste-writing`.
 
+## Resume briefing · 2026-09-01
+
+**Skills**
+- `work-streams`: a resume now briefs the state of play and offers numbered next steps, then
+  waits. It no longer continues the work unasked.
+- `work-streams`: re-activating an archived stream now gets the same briefing. A listing-only
+  question stops at the list.
+
 ## Standards audit · 2026-08-27
 
 **Skills**

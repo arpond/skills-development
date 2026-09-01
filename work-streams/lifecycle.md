@@ -36,9 +36,10 @@ wait for confirmation. Then:
   1. rename the re-activated stream
   2. rename the active one
   3. keep both under new, distinct slugs
-- The repo has moved on since the archive date. Run the same claim-verification as resume's R2 —
-  branches, paths, commands the manifest names — and surface what no longer holds. The first
-  session back then starts from the real current state, not the archived one.
+- The repo has moved on since the archive date. Run resume's R2 and R3: the same
+  claim-verification over branches, paths and commands the manifest names, then the briefing and
+  the wait. The first session back starts from the real current state, not the archived one, and
+  it starts when the user picks a step.
 
 ## Deleting a stream
 

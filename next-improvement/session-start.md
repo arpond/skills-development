@@ -25,18 +25,16 @@ something to surface, and they're all surfaced at the start of the same run.
 
 Each step below says what it contributes; none of them re-decides this.
 
-**Mechanical bookkeeping is a required step, not optional prose to skim past.** Four items below
-need no user response:
-- backfilling missing `Created:`/`Feature check:` (Step 0)
-- bulk id-backfill for a tracker with zero ids and no `Next id:` line (Step 0)
-- surfacing a closed-tracker-sections violation (Step 0)
-- re-deriving the Done archive sweep (Step 0.5)
+**The rules that need no answer still have to run.** Steps 0 and 0.5 carry four of them: the two
+backfills, the closed-sections surfacing, and the Done archive sweep. `SKILL.md`'s hard-rules
+table indexes each one, as a `mechanical` or a `surface` row — read them there rather than from a
+second list here.
 
-Because none of them wait on an answer, it's easy for a run to jump straight from "found the
-tracker" to the check-in questions (0.5/0.6/0.7) and skip these silently, since skipping them
-produces no visible error. That's not a shortened Step 0, it's an incomplete one. All four must
-actually execute (files written, violation surfaced if applicable) before continuing to Step 1,
-every run, regardless of whether anything below turns out to be due this run.
+What the table can't say is the ordering. Because none of the four waits on an answer, a run can
+jump from "found the tracker" straight to the check-in questions (0.5/0.6/0.7) and skip them
+silently, since skipping them produces no visible error. That's not a shortened Step 0, it's an
+incomplete one. All four execute — files written, violation surfaced if applicable — before Step
+1, every run, whether or not anything else below turns out to be due.
 
 ## Step 0: Find or bootstrap the tracker
 

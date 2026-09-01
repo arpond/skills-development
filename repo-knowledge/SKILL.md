@@ -105,6 +105,7 @@ table does not mean optional.
 | 0 (setup.md) | gate | Propose creating `KNOWLEDGE.md`, migration candidates, and the CLAUDE.md pointer in one message, and wait for confirmation before writing/moving anything |
 | 0 (setup.md) | gate | Ask whether there's anywhere else worth checking, don't assume the curated list is exhaustive |
 | 0 (session-start.md) | gate | If the file exists but is malformed, ask the user rather than silently rewriting |
+| 0 (session-start.md) | mechanical | Backfill a missing `Feature check:` stamp to `0.0.0`, then treat the file as behind rather than current |
 | 0 (session-start.md) | surface | Surface a `Feature check:` version gap, including a missing stamp, walked as `0.0.0` |
 | 0 (session-start.md) | surface | Surface an unexpectedly-ahead `Feature check:` stamp rather than resolving it either way |
 | 2 | gate | Show the proposed new entry (or edit to an existing one) and wait for confirmation before writing it |

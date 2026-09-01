@@ -212,9 +212,11 @@ Done archive: age=60, floor=5, backstop=40 (last sweep: age, streak: 0)   <!-- o
 
 **Hard rules by step, so a review can check none have gone missing.** Scope: rules that fail
 *silently* if skipped — where nothing errors and no output looks wrong, so only this table would
-ever reveal the omission. Two kinds qualify, marked in the **Kind** column: **gate** (show, then
-wait for a go-ahead — skip it and the write just happens) and **surface** (tell the user something
-unprompted — skip it and they simply never hear it). Rules that fail *visibly* are deliberately
+ever reveal the omission. Three kinds qualify, marked in the **Kind** column: **gate** (show, then
+wait for a go-ahead — skip it and the write just happens), **surface** (tell the user something
+unprompted — skip it and they simply never hear it), and **mechanical** (a write that is due every
+time its condition holds, with no gate and nothing said — skip it and the write simply never
+happens). This skill carries no **prohibition** rows. Rules that fail *visibly* are deliberately
 absent: Step 2's "don't pad a thin category with filler" isn't here, because breaking it produces
 visibly weak ideas the user can see for themselves. Absence from this table doesn't mean optional.
 
@@ -224,8 +226,9 @@ visibly weak ideas the user can see for themselves. Absence from this table does
 | 0 (setup.md) | surface | Disclose the behaviours that aren't opt-in (the fixes/reworks question, Done archiving) rather than letting them appear unannounced |
 | 0 (session-start.md) | gate | If the tracker exists but is malformed, ask the user rather than silently rewriting or refusing |
 | 0 (session-start.md) | surface | Surface a foreign `##` section once per project rather than leaving it unmentioned |
-| 0 (tracker-maintenance.md) | surface | Bulk-backfill ids for a tracker with zero ids and no `Next id:` line, rather than waiting for the lazy per-entry trigger to eventually fire |
-| 0 (tracker-maintenance.md) | surface | Give a backfilled tracker the one-time baseline-subsystems catch-up (`Selection strategy:`/`Feedback:`/`Risk register:`) it never got via `setup.md` |
+| 0 (tracker-maintenance.md) | mechanical | Backfill a missing `Created:`/`Feature check:` to `0.0.0`, and never stamp the current version in the same move |
+| 0 (tracker-maintenance.md) | mechanical | Bulk-backfill ids for a tracker with zero ids and no `Next id:` line, rather than waiting for the lazy per-entry trigger to eventually fire |
+| 0 (tracker-maintenance.md) | gate | Give a backfilled tracker the one-time baseline-subsystems catch-up (`Selection strategy:`/`Feedback:`/`Risk register:`) it never got via `setup.md` |
 | 0 (risk-register.md) | gate | If `RISK_REGISTER.md` exists but is malformed, ask the user rather than silently rewriting or refusing |
 | 0.5 (session-start.md) | gate | Confirm goal changes with the user before updating Goals / bumping `Last reviewed:` |
 | 0.5 (session-start.md) | gate | Confirm before adjusting `Done archive:` knobs or `Feedback:`'s cadence knobs off the back of a detected drift signal |
@@ -243,9 +246,9 @@ visibly weak ideas the user can see for themselves. Absence from this table does
 | 4.5 | surface | Offer a qualifying skill at each handoff point, before the draft and after it, rather than drafting or approving straight past it |
 | 4.5 | surface | Name every qualifying skill in an offer, numbered, rather than picking between them |
 | 4.5 | gate | Get the plan approved before writing any code |
-| 6 | surface | Sweep Done into the archive whenever age/floor/backstop makes an entry eligible, not only when someone happens to notice |
+| 6 | mechanical | Sweep Done into the archive whenever age/floor/backstop makes an entry eligible, not only when someone happens to notice |
 | 6 | gate | If `IMPROVEMENT_TRACKER_DONE.md` exists but is malformed, ask the user rather than rewriting it or reading past the damage |
-| 0.5 (session-start.md) | surface | Re-run that same Done sweep independently of Step 6, so a missed append-time sweep gets caught at the next session start |
+| 0.5 (session-start.md) | mechanical | Re-run that same Done sweep independently of Step 6, so a missed append-time sweep gets caught at the next session start |
 | Checking in (feedback.md) | surface | Always surface the pending-outcome count when it's nonzero, calling out the reassess subset separately |
 | Backlog not shrinking (feedback.md) | surface | Say so at `growth-streak: 2`, since a backlog that keeps growing looks the same as one being worked |
 | Area match (risk-register.md) | surface | Say when an entry's `areas:` path no longer resolves, rather than reading it as a no-match |

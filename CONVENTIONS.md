@@ -103,7 +103,7 @@ is never a read condition and `surface` is never a data tag.
 | core file | any skill file read on every invocation. A skill can have more than one (`SKILL.md` plus a `session-start.md`) | always-loaded file, base file, companion file (for an every-run file) |
 | companion file | a skill file read only when its trigger condition is met | — |
 | artifact | a file a skill maintains inside the user's project | output (as a name for an artifact), state file |
-| mechanical bookkeeping | a write a skill makes without a gate, because it carries no judgement (a backfilled stamp, an archive sweep) | no-confirmation bookkeeping, routine bookkeeping, silent bookkeeping |
+| mechanical bookkeeping | a write a skill makes without a gate, because it carries no judgement (a backfilled stamp, an archive sweep). A hard-rules row for one is `mechanical` | no-confirmation bookkeeping, routine bookkeeping, silent bookkeeping |
 | census | a standards-file sentence that says which skills have or lack a thing | pointer index (that is a "Stated in" list of where inline copies live, a different thing) |
 
 Add a row when a review finds a second name for an existing concept: pick one, rename the other.
@@ -156,13 +156,27 @@ must match.
 Stated in: every skill, each in its own `SKILL.md`. Their scopes genuinely differ. Read each
 table's own scope line rather than assuming one.
 
-**A table that mixes gates with unprompted surfacings should mark which is which.**
-`next-improvement` uses a `Kind` column (`gate` / `surface`), and `repo-knowledge` adds
-`prohibition` for its secrets rule. Reuse those three names rather than a fourth. Both gates and
-surfaces fail silently and both belong in the index, but they are different obligations. One waits
-for an answer, the other only has to be said. Without the column a reader has to infer which from
-the wording of each row, and the distinction is exactly what the older gates-only scoping existed
-to protect.
+**A table that mixes obligations should mark which each row is.** That is a `Kind` column, and it
+takes one of four names. Reuse these rather than a fifth:
+
+| Kind | The obligation | Skipping it looks like |
+|---|---|---|
+| `gate` | show a proposed action and wait for the user's answer | the write just happens |
+| `surface` | tell the user something, with no wait | they never hear it |
+| `prohibition` | never do this | nothing, until the thing it prevented happens |
+| `mechanical` | make this write every time it is due, with no gate and nothing said | the write silently never happens |
+
+All four fail silently, which is why all four belong in the index, but they are different
+obligations. Without the column a reader has to infer which from the wording of each row, and the
+distinction is exactly what the older gates-only scoping existed to protect.
+
+**`mechanical` is the one that gets mislabelled**, because a mandatory write that neither waits
+nor speaks reads like a `surface` to anyone looking for somewhere to put it. It is
+`mechanical bookkeeping` in the Vocabulary table, given a row here. Two tests tell it from a
+`surface`: does anything reach the user when it runs, and does anything stop if the user says
+nothing. A `mechanical` row answers no to both. A write the skill announces after making it is
+still `mechanical`, with the announcement as its own `surface` row where that matters. Anything
+the user can decline is a `gate`, whatever it is folded into.
 
 ## Artifact locations
 

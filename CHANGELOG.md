@@ -10,6 +10,10 @@ Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `st
 
 ## Planning interview · 2026-09-01
 
+**Standards**
+- Spec *The hard-rules table*: a fourth `Kind`, `mechanical`, for a mandatory write that neither
+  waits nor speaks. It was being labelled `surface`.
+
 **Skills**
 - `next-improvement` 2.3.0: Step 4.5 now offers a skill handoff at each end of planning, an
   interview before the draft and a review after it. See `next-improvement/changelog.md`.

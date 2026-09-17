@@ -190,6 +190,8 @@ obvious candidate in the repo):
   Follow its rules over this sweep's judgement.
 - An improvement tracker takes only a new idea, or a finished one moved to Done. Progress,
   measurements, and findings stay in the stream or go to another target.
+- Hand both tracker changes to `next-improvement` where it is available. It mints the id, and it
+  records a ship with the questions and tags an edit made here would skip.
 - For `skill:` entries, hand off to that skill's own flow. If the skill is not available here,
   say so.
 - Then ask the one open question: did this session surface anything else that should be recorded

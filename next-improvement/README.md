@@ -14,8 +14,8 @@ Files:
 - `build-and-record.md` — planning a confirmed pick, building it, and recording what shipped.
   Read only once you confirm a pick, or when finished work needs recording.
 - `session-start.md` — finds or bootstraps the tracker, checks whether the tracker is behind this
-  skill version, checks whether Goals are stale, and surfaces due reassess flags and revisit
-  dates. Read every run, right after `SKILL.md`'s intro. A second core file, not a companion: not optional
+  skill version, checks whether Goals are stale, archives old Done entries, checks entry sizes,
+  and surfaces due reassess flags and revisit dates. Read every run, right after `SKILL.md`'s intro. A second core file, not a companion: not optional
   or one-time, only separated to keep `SKILL.md` focused on the loop.
 - `setup.md` — the one-time-per-project bootstrap interrogation. Read only the first time the
   skill runs for a project, before its tracker file exists.
@@ -54,12 +54,13 @@ All inside the project you work in. Nothing elsewhere on your machine, nothing o
 - **`IMPROVEMENT_TRACKER.md`** — the tracker itself, created on first use after a setup
   conversation. One per project (the directory with its own README or package manifest, not
   necessarily the repo root). A short header at the top tells anyone who edits it, a person or an
-  agent, what an entry is and where other content goes. Each session counts the words in every
+  agent, what an entry is and where other content goes. A new tracker gets the header at setup. An
+  existing one is offered it once. Each session counts the words in every
   idea entry against a limit, 60 by default, and offers to trim the ones over it. A trim never
   writes without your confirmation.
 - **Other files in your project, during a trim only.** A trim can update a file that cites the
-  trimmed entry by its id. It can also create a file in your docs directory for tables or other
-  reference material it moves out of the tracker. Each proposal names these files first.
+  trimmed entry by its id. It can also create a file for tables or other reference material it moves
+  out of the tracker, in your docs directory or, without one, at the project root. Each proposal names these files first.
 - **`IMPROVEMENT_TRACKER_DONE.md`** — appears once Done history gets long. Older shipped entries
   move here automatically, so the live tracker stays a manageable read. Opened only when older
   history is needed.

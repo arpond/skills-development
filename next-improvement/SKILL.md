@@ -55,7 +55,7 @@ skill (no fixed content to read every run) and stays untouched unless something 
 needs older shipped history.
 
 A project with `Risk register: on` also has a sibling `RISK_REGISTER.md` — its own file, own id
-space, own lifecycle, read/written per `risk-register.md`'s rules rather than this file's Step 0-6
+space, own lifecycle, read/written per `risk-register.md`'s rules rather than the Step 0-6
 loop.
 
 ## The tracker file
@@ -139,9 +139,9 @@ Done archive: age=60, floor=5, backstop=40 (last sweep: age, streak: 0)   <!-- o
   small (2, rarely 3); a tier that keeps growing tied entries is a smell that ranking has stopped
   meaning anything, and is worth surfacing (see Step 0.5).
 - `Selection strategy:`, `Feedback:`, `Risk register:`, `Done archive:`, and `Entry limit:` are
-  optional lines that may be absent. Their full format and behaviour live in `strategies.md`,
-  `feedback.md`, `risk-register.md`, and `session-start.md` Step 0.5 (the last two) respectively —
-  don't inline their details here.
+  optional lines that may be absent. The first three are specified in `strategies.md`,
+  `feedback.md`, and `risk-register.md`. The last two are specified in `session-start.md` Step 0.5.
+  Don't inline their details here.
   **Read each companion file by the setting's *value*, not by whether the line is present.** An
   absent line means that setting's documented default, and the defaults differ:
   `Selection strategy:` and `Risk register:` default to off (`top-tier` / `off`), so an absent line
@@ -257,8 +257,9 @@ visibly weak ideas the user can see for themselves. Absence from this table does
 | 0 (setup.md) | gate | Interrogate the proposed categories/tiers with the user before writing the initial tracker |
 | 0 (setup.md) | surface | Disclose the behaviours that aren't opt-in (the fixes/reworks question, Done archiving, the entry-size check) rather than letting them appear unannounced |
 | 0 (session-start.md) | gate | If the tracker exists but is malformed, ask the user rather than silently rewriting or refusing |
-| 0 (session-start.md, setup.md) | prohibition | Never create a docs directory to hold a tracker or any other file this skill writes |
-| Tracker file | prohibition | Never change the header without a confirmed proposal, and never re-add one the user removed |
+| 0 (session-start.md, setup.md, tracker-maintenance.md) | prohibition | Never create a docs directory to hold a tracker or any other file this skill writes |
+| Tracker file | gate | Show any change to the header as a proposal, and wait for confirmation before writing it |
+| Tracker file | prohibition | Never re-add a header the user removed |
 | 0 (session-start.md) | surface | Surface a foreign `##` section once per project rather than leaving it unmentioned |
 | 0 (tracker-maintenance.md) | mechanical | Backfill a missing `Created:`/`Feature check:` to `0.0.0`, and never stamp the current version in the same move |
 | 0 (tracker-maintenance.md) | mechanical | Bulk-backfill ids for a tracker with zero ids and no `Next id:` line, rather than waiting for the lazy per-entry trigger to eventually fire |
@@ -271,7 +272,10 @@ visibly weak ideas the user can see for themselves. Absence from this table does
 | 0.5 (session-start.md) | surface | Surface an unexpectedly-ahead `Feature check:` stamp rather than resolving it either way |
 | 0.5 (session-start.md) | surface | Surface idea-category entries over `Entry limit:`, and non-entry content in a category, once per session |
 | 0.5 (tracker-maintenance.md) | gate | Show each proposed trim, with a destination for every removed part, and wait for confirmation before writing |
-| 0.5 (tracker-maintenance.md) | surface | Name the files that cite an entry's id, and say when removed text would not survive in git, before proposing the trim |
+| 0.5 (tracker-maintenance.md) | surface | For each hit, say which file cites the entry and what detail it relies on |
+| 0.5 (tracker-maintenance.md) | surface | Say that the search covered this project only |
+| 0.5 (tracker-maintenance.md) | surface | Say when deleted text would be lost because the last commit does not hold it |
+| 0.5 (tracker-maintenance.md) | surface | Count trimmed entries again after the write, and report any still over the limit |
 | 0.5 (tracker-maintenance.md) | prohibition | Never write a trimmed finding into another skill's file directly; hand it to that skill |
 | 0.6 (session-start.md) | surface | Surface standalone `reassess: pending` flags when `Feedback:` is explicitly `off` |
 | 0.7 (session-start.md) | surface | Surface Rejected entries whose `revisit-after:` date has passed |

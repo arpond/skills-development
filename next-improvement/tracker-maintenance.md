@@ -155,7 +155,8 @@ cannot carry a hundred proposals.
 
 **Before you propose a trim, find what cites the entry.** Other files point into a tracker by id,
 and a trim can remove the detail they point at.
-1. Search the project for the id as a whole word, outside this skill's own files.
+1. Search the project for the id as a whole word, outside this skill's own files. An entry with no
+   id cannot be cited by one, so skip the search and say why.
 2. For each hit, say which file cites the entry and what detail it relies on.
 3. Where that detail would go, either keep it in the entry or include an update to the citing file
    in the proposal.
@@ -169,14 +170,16 @@ it working.
 1. **Stale content**: superseded counts, lists of line numbers, notes that something no longer
    holds. Delete it. A move keeps an error alive.
 2. **Change history and dated measurements.** Delete it, and name the commit that holds the full
-   text: the last one to touch the tracker. That commit holds it only if the tracker has no
-   uncommitted changes. If the tracker is untracked, modified, or not in a git repository, say the
-   deleted text would be lost. Then ask, as a numbered choice, whether to keep it, move it, or
-   delete it anyway.
+   text. Check that commit by content: `git show HEAD:<tracker path>` must contain the removed text
+   exactly. Earlier writes this session do not matter if they left that text alone. If it is not
+   there, or the tracker is untracked or outside git, say the deleted text would be lost. Then ask,
+   as a numbered choice, whether to keep it or delete it anyway.
 3. **Durable findings and gotchas.** Offer a handoff to a skill in the session that records repo
    knowledge, such as `repo-knowledge`. It applies its own test for what to keep, so never write to
-   its file directly. With no such skill, ask, as a numbered choice, whether to keep the finding in
-   the entry or delete it.
+   its file directly. With no such skill, ask as a numbered choice:
+   1. keep the finding in the entry
+   2. delete it, with the commit named as in kind 2
+   3. move it to a file the user names, which is how a finding reaches the file the header names
 4. **Reference material**: tables, vocabularies, lists of consumers. Propose a file for it, which
    the user decides on. Put it in the project's docs directory, or at the project root if it has
    none. Never create a docs directory to hold it. Where the project has more than one, ask which.
@@ -188,9 +191,9 @@ it working.
 - the files that cite the entry, and any change they need
 
 **Compare the destinations you found with the ones the header names.** The header was filled in
-at setup, and the project may since have gained a `KNOWLEDGE.md` or a docs directory. Where a
-destination now exists that the header does not name, add the update to the header's last
-sentence to the first proposal of the trim. Change only that sentence.
+at setup, and the project may since have gained a `KNOWLEDGE.md` or a docs directory. Re-fill the
+placeholders by the rules in `setup.md`'s "The header". Where the result differs, include a new
+last sentence for the header in the trim's first proposal. Change only that sentence.
 
 A trimmed entry keeps its id, its position, and every tag in its parenthetical. Keep its name
 unless the name is itself the excess.

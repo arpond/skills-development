@@ -137,8 +137,9 @@ read-condition note): its default is `on`, so run `feedback.md`'s check-in unles
 says `off`. That check-in contributes its own line to this run's combined message — including a
 "backlog not shrinking" flag when its `growth-streak` hits 2.
 
-**Run the Done archive sweep.** It runs at every session start, and again after each ship that
-`build-and-record.md` Step 6 records. The run here catches what an append-time sweep missed: a
+**Run the Done archive sweep.** It checks at every session start, and again after each ship that
+`build-and-record.md` Step 6 records. It archives only when an entry qualifies. A check that
+archives nothing leaves the tracker, and the counter below, untouched. The run here catches what an append-time sweep missed: a
 session that ended early, a hand-edited tracker, a tracker older than `Done archive:`. Primary
 trigger is age, not count. How long ago something shipped decides whether it's still useful
 working context, not how many entries sit next to it (a project shipping in bursts can produce 20
@@ -176,12 +177,15 @@ archive to fill the count.
 counter, the same shape as `SKILL.md` Step 2's dry-run tracking. Note which kind of sweep just ran
 inline on the `Done archive:` line: `(last sweep: backstop, streak: N)` or
 `(last sweep: age, streak: 0)`.
-Update it whichever run performed the sweep. **If the `Done archive:` line isn't present** (the
+Update it whichever run performed the sweep, and only when the sweep archived something. **If the
+`Done archive:` line isn't present** (the
 normal case, since it's absent whenever the defaults haven't changed), write it out with its
 default values first and annotate that. There's no other line it belongs on. Trigger/increment: a
-`backstop` sweep. Corrected signal/reset: an `age` sweep, back to 0. Threshold: `streak: 3` (three
-backstop-triggered sweeps in a row with `age` never once catching anything first). At the
-threshold, fold it into this step's combined message:
+`backstop` sweep. Corrected signal/reset: an `age` sweep, back to 0. Threshold: `streak: 3` or
+more (three backstop-triggered sweeps in a row with `age` never once catching anything first).
+**Read the stored streak at session start, before this session's sweep can change it.** A
+threshold reached by a sweep after a ship has no combined message to join, so it waits for the
+next session start. At the threshold, fold it into this step's combined message:
 1. Surface it: `age` is calibrated for a slower project than this one is actually shipping at.
 2. Propose halving `age` (or raising `backstop`) with a concrete number.
 3. Wait for confirmation before writing. This is a hard rule (see the table in `SKILL.md`).
@@ -194,10 +198,10 @@ check.
 2. Count with a tool, such as `wc -w` or a short script. An estimate is not a count.
 3. Note any content in a category that is not an entry: a `###` heading, a table, a paragraph. The
    `(dry runs: …)` note is part of the format, not content.
-4. If anything is over, contribute one line to the combined message. Give the number of entries
-   over the limit and the largest entry, by name and word count. Name any non-entry content by
-   category. Ask whether to trim some now.
-5. If nothing is over, say nothing.
+4. If an entry is over the limit, or a category holds non-entry content, contribute one line to
+   the combined message. Give the number of entries over the limit and the largest entry, by name
+   and word count. Name any non-entry content by category. Ask whether to trim some now.
+5. If neither is found, say nothing.
 
 A yes goes to `tracker-maintenance.md`'s "Trimming an oversized entry". A no holds for the rest of
 the session, and nothing about it is written to the tracker. Done and Rejected are not counted.
@@ -236,7 +240,7 @@ genuinely surprising input, not a normal case to silently resolve either directi
    newer.
 3. Leave the stamp alone. Don't move it forward to match the install, and don't wind it back.
 
-If only this check is due this run (Goals and Done-archive both fine), it still gets its own short
+If only this check is due this run (nothing else in this file has anything to surface), it still gets its own short
 message. It doesn't need another trigger to piggyback on, just doesn't stack as a *second* message
 if others are already due.
 

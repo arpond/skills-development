@@ -187,6 +187,11 @@ it working.
 - each removed part, with its kind and destination
 - the files that cite the entry, and any change they need
 
+**Compare the destinations you found with the ones the header names.** The header was filled in
+at setup, and the project may since have gained a `KNOWLEDGE.md` or a docs directory. Where a
+destination now exists that the header does not name, add the update to the header's last
+sentence to the first proposal of the trim. Change only that sentence.
+
 A trimmed entry keeps its id, its position, and every tag in its parenthetical. Keep its name
 unless the name is itself the excess.
 

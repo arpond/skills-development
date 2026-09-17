@@ -74,7 +74,7 @@ Format:
 ```markdown
 # Improvement Tracker
 
-> **What belongs here:** ...     <!-- the header, text in setup.md Step 6 -->
+> **What belongs here:** ...     <!-- the header, text in setup.md "The header" -->
 
 ## Goals (priority order, highest first)
 Last reviewed: <YYYY-MM-DD>
@@ -124,8 +124,8 @@ Done archive: age=60, floor=5, backstop=40 (last sweep: age, streak: 0)   <!-- o
   entirely by `session-start.md`'s Step 0/0.5 (with the catch-up for a tracker that predates
   them); nothing in Steps 1-6 reads or writes either.
 - **The header above Goals tells every writer what an entry is and where other content goes.**
-  `setup.md`'s "The header" holds its text and its reason. Never rewrite a header the user has
-  edited. Never re-add one they removed.
+  `setup.md`'s "The header" holds its text and its reason. Change the header only through a
+  proposal the user confirms. Never re-add one they removed.
 - **`Entry limit:` is the word limit for each idea-category entry.** `session-start.md` Step 0.5
   holds its default and the check, and `tracker-maintenance.md` holds the trim it offers.
 - Two or more goals may share the same tier number when they're genuinely equal priority right
@@ -236,7 +236,7 @@ visibly weak ideas the user can see for themselves. Absence from this table does
 | 0 (setup.md) | surface | Disclose the behaviours that aren't opt-in (the fixes/reworks question, Done archiving, the entry-size check) rather than letting them appear unannounced |
 | 0 (session-start.md) | gate | If the tracker exists but is malformed, ask the user rather than silently rewriting or refusing |
 | 0 (session-start.md, setup.md) | prohibition | Never create a docs directory to hold a tracker or any other file this skill writes |
-| Tracker file | prohibition | Never rewrite a header the user has edited, and never re-add one they removed |
+| Tracker file | prohibition | Never change the header without a confirmed proposal, and never re-add one the user removed |
 | 0 (session-start.md) | surface | Surface a foreign `##` section once per project rather than leaving it unmentioned |
 | 0 (tracker-maintenance.md) | mechanical | Backfill a missing `Created:`/`Feature check:` to `0.0.0`, and never stamp the current version in the same move |
 | 0 (tracker-maintenance.md) | mechanical | Bulk-backfill ids for a tracker with zero ids and no `Next id:` line, rather than waiting for the lazy per-entry trigger to eventually fire |

@@ -174,6 +174,9 @@ A yes goes to `tracker-maintenance.md`'s "Trimming an oversized entry". A no hol
 the session, and nothing about it is written to the tracker. Done and Rejected are not counted.
 They are append-only history, and a trim edits the entry.
 
+When the user asks to set `Entry limit: off`, the header still tells writers to keep within a
+limit. Offer to delete that sentence from the header in the same write.
+
 **Check the tracker's `Feature check:` version against `SKILL.md`'s current skill version.** This
 is also the walk Step 0 triggers for a missing stamp, treated as `0.0.0`. Compare as standard
 semver: major first, then minor, then patch, numerically (`1.10.0` is newer than `1.9.0`, not

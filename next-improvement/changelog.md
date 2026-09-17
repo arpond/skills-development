@@ -25,6 +25,16 @@ Each entry says what is new and **whether there is anything to opt into**:
   Old and new spellings mixed indefinitely is exactly the drift this kind of change exists to
   close.
 
+- **2.4.0** — *the size check is automatic for all projects. The header is opt-in.* Writers that
+  never load this skill had made some trackers a store for measurements, change history, and
+  reference tables. Two changes follow. First, every session start counts the words in each
+  idea-category entry against `Entry limit:`, a new optional line that defaults to 60 and accepts
+  `off`. Entries over the limit, and content in a category that is not an entry, are surfaced
+  once per session. A yes runs the trim in `tracker-maintenance.md`, with a gate on each proposal.
+  Done and Rejected are not counted. Second, setup now writes a short header above Goals. It says
+  what an entry is and where other content goes. Setup ask for an existing tracker: offer the
+  header, filled in from `setup.md`'s "The header", and write `Entry limit: 60` with it. A decline
+  leaves the tracker as it is, and the check still runs at the default.
 - **2.3.0** — *automatic, all projects, nothing to opt into.* Planning a confirmed pick
   (`SKILL.md` Step 4.5) now has two one-line offers of a handoff to another skill in the session.
   Before the plan is drafted, a skill that interviews the user until the open decisions are

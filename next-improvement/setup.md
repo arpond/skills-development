@@ -3,7 +3,8 @@
 Read this file only when `session-start.md`'s Step 0 finds no `IMPROVEMENT_TRACKER.md` for the
 current project. This is a one-time-per-project interrogation — once the file exists, later runs
 never need this file again (see `session-start.md`'s Step 0.5 for ongoing staleness checks
-instead).
+instead). The one exception is "The header": an existing tracker that accepts it through
+`changelog.md` reads that section alone.
 
 `session-start.md` Step 0 has already resolved that no tracker exists anywhere — don't re-look.
 **Create it in `<docs-dir>/` if the project already has one** (`docs/`, `doc/`, or
@@ -81,9 +82,14 @@ the user has to remember to do first:
      how often the skill goes looking for new ideas rather than just ranking what is there.
    - Goals get a check-in when they were last reviewed over about 30 days ago, or five items have
      shipped since (`session-start.md` Step 0.5). It is a question, never an edit.
-   Both are core-loop, not toggles — say so plainly rather than letting either show up unannounced
-   the first time it fires.
+   - Each idea-category entry has a word limit, 60 by default (`Entry limit:`). Every session start
+     counts entries against it and offers to trim any over it. Say the number can change, and that
+     `off` turns the check off.
+   All of these are core-loop, not toggles — say so plainly rather than letting any show up
+   unannounced the first time it fires.
 6. Write the file with:
+   - the text from "The header", directly under `# Improvement Tracker`
+   - `Entry limit: 60`, always, because the header points at it
    - the confirmed tiers
    - `Selection strategy:`, `Feedback:`, `Risk register:`
    - `Done archive:`, only if changed from the default
@@ -96,3 +102,26 @@ the user has to remember to do first:
 
    Then proceed to Step 1 in `SKILL.md`. It will find the categories empty, which is an expected
    and normal case of "running low," not an error.
+
+## The header
+
+Many of a tracker's writers never load this skill: a session on a ticket, an agent that records
+what it found. The header is the one rule they all read, so it names a destination for each kind of
+content, not only what is banned. A writer with a finding and nowhere named to put it puts it in
+the tracker anyway.
+
+```markdown
+> **What belongs here:** one entry per idea. An entry says what the idea is, why it matters, and
+> where it applies. Keep each one within the `Entry limit:` under Goals. Do not add measurements,
+> change history, line-number lists, tables, or notes on work in progress. Put findings and
+> gotchas in <FINDINGS>, reference material in <REFERENCE>, and evidence in the ticket or the
+> commit message.
+```
+
+Fill the two placeholders from what the project already has, and never create a file to fill one:
+- `<FINDINGS>`: the project's `KNOWLEDGE.md`, looked for in the project root, its docs directory,
+  then `.claude/`. Otherwise `the project's docs`.
+- `<REFERENCE>`: the project's docs directory (`docs/`, `doc/`, or `documentation/`). Otherwise
+  `the project's docs`.
+
+Write each path relative to the project root.

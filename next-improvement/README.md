@@ -28,20 +28,22 @@ Files:
   reworks, or had bad outcomes. It persists each as a named risk area, keyed to the files or
   modules it is about, in a sibling `RISK_REGISTER.md`, and cross-references future proposals
   against it. Off by default. Read only when a project has `Risk register: on`.
-- `tracker-maintenance.md` — rare per-project edge cases: minting or migrating idea ids, catching
-  up a tracker older than the skill's version stamps, and retiring, merging, or narrowing an idea
-  category. Read only when one of those occurs.
+- `tracker-maintenance.md` — per-project events outside the normal loop: minting or migrating idea
+  ids, trimming an entry over the word limit, catching up a tracker older than the skill's version
+  stamps, and retiring, merging, or narrowing an idea category. Read only when one of those occurs.
 - `changelog.md` — what each skill version added, plus the versioning policy. Read only when an
   existing tracker is behind the installed skill version.
 
 ## Cost
 
-Cheap on the common path, and no MCP server or external service on any path. Two things cost more
+Cheap on the common path, and no MCP server or external service on any path. Three things cost more
 than a file read. Topping up a category (Step 2) explores the project to ground new ideas: recent
 commits, new or changed files, rough edges, test gaps. That runs only when a category drops below
 about three items, not on every run. Planning a confirmed pick (Step 4.5) can hand off to another
 skill, and one of those may be expensive. `plan-red-team` spawns a panel of subagents. The offer
 says so, the handoff is never automatic, and declining leaves the step as cheap as it ever was.
+A trim of oversized tracker entries searches the whole project for each entry's id. It runs only
+when you accept one.
 
 ## What it writes
 
@@ -49,7 +51,13 @@ All inside the project you work in. Nothing elsewhere on your machine, nothing o
 
 - **`IMPROVEMENT_TRACKER.md`** — the tracker itself, created on first use after a setup
   conversation. One per project (the directory with its own README or package manifest, not
-  necessarily the repo root).
+  necessarily the repo root). A short header at the top tells anyone who edits it, a person or an
+  agent, what an entry is and where other content goes. Each session counts the words in every
+  idea entry against a limit, 60 by default, and offers to trim the ones over it. A trim never
+  writes without your confirmation.
+- **Other files in your project, during a trim only.** A trim can update a file that cites the
+  trimmed entry by its id. It can also create a file in your docs directory for tables or other
+  reference material it moves out of the tracker. Each proposal names these files first.
 - **`IMPROVEMENT_TRACKER_DONE.md`** — appears once Done history gets long. Older shipped entries
   move here automatically, so the live tracker stays a manageable read. Opened only when older
   history is needed.

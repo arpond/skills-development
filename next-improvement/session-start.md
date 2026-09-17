@@ -71,7 +71,8 @@ Goals aren't fixed forever though: see Step 0.5 below.
 **If it exists but is malformed, don't silently rewrite it back into shape, and don't refuse to
 proceed either.** Malformed means: no `## Goals` section, a tier line that doesn't parse as
 priority order, an unrecognised `Selection strategy:`/`Feedback:`/`Risk register:`/`Done archive:`
-value, or a `Created:`/`Feature check:` that isn't a valid `X.Y.Z` version. Unrecognised means the
+value, an `Entry limit:` that is neither a positive whole number nor `off`, or a
+`Created:`/`Feature check:` that isn't a valid `X.Y.Z` version. Unrecognised means the
 setting itself can't be read: a mode or on/off value that names nothing. A parameter *inside* a
 mode that reads fine is not this case. A degenerate count or a stale cursor is handled where that
 mode is defined (`strategies.md`), announced rather than asked about. This is a case of
@@ -156,6 +157,22 @@ overdue for archiving with nothing left to trigger it. Every session start:
 row, `age` never once catching anything first), that's also due this step. Fold it into the same
 combined message per the rule above, and follow Step 6's threshold steps there (surface, propose,
 wait for confirmation, reset).
+
+**Check entry sizes against `Entry limit:`.** An absent line means 60 words, and `off` skips this
+check.
+1. Count the words in every entry of every idea category. An entry is its bullet line plus the
+   indented lines under it, with its id and name.
+2. Count with a tool, such as `wc -w` or a short script. An estimate is not a count.
+3. Note any content in a category that is not an entry: a `###` heading, a table, a paragraph. The
+   `(dry runs: …)` note is part of the format, not content.
+4. If anything is over, contribute one line to the combined message. Give the number of entries
+   over the limit and the largest entry, by name and word count. Name any non-entry content by
+   category. Ask whether to trim some now.
+5. If nothing is over, say nothing.
+
+A yes goes to `tracker-maintenance.md`'s "Trimming an oversized entry". A no holds for the rest of
+the session, and nothing about it is written to the tracker. Done and Rejected are not counted.
+They are append-only history, and a trim edits the entry.
 
 **Check the tracker's `Feature check:` version against `SKILL.md`'s current skill version.** This
 is also the walk Step 0 triggers for a missing stamp, treated as `0.0.0`. Compare as standard

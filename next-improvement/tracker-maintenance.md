@@ -1,8 +1,8 @@
-# Tracker maintenance (rare edge cases)
+# Tracker maintenance (events outside the normal loop)
 
 Read this file only when one of its specific triggers actually fires — not on a normal run. Each
-section below names its own trigger. This exists to keep this rare, occasional-event content out of
-the core file `SKILL.md` — none of it is needed to run the normal Step 0-6 loop.
+section below names its own trigger. This exists to keep occasional-event content out of the core
+file `SKILL.md` — none of it is needed to run the normal Step 0-6 loop.
 
 ## Minting and migrating ids
 
@@ -139,6 +139,61 @@ they must not be conflated:
   from the changelog walk above: that walk discloses *changes* since baseline; this discloses
   baseline features the tracker never had a chance to decline or accept at all, since it skipped
   `setup.md` entirely.
+
+## Trimming an oversized entry
+
+**Trigger: the user accepts `session-start.md` Step 0.5's entry-size offer, or asks for a trim of
+an idea-category entry.** Done and Rejected stay append-only history. Content in a category that
+is not an entry gets the same treatment as an entry's excess.
+
+**Work in batches, largest first.** A tracker can hold a hundred oversized entries, and one message
+cannot carry a hundred proposals.
+- Propose the five largest in the first message, so the yes that led here is not asked again.
+- Put the full over-limit list under them, numbered, with word counts, so the user can pick others
+  instead.
+- Continue five at a time, and stop when the user says so.
+
+**Before you propose a trim, find what cites the entry.** Other files point into a tracker by id,
+and a trim can remove the detail they point at.
+1. Search the project for the id as a whole word, outside this skill's own files.
+2. For each hit, say which file cites the entry and what detail it relies on.
+3. Where that detail would go, either keep it in the entry or include an update to the citing file
+   in the proposal.
+4. Say that the search covered this project only. A citation from another repository is invisible
+   to it.
+
+A `fixes:`, `reworked:`, or `mitigated-by:` tag cites by id alone, so a trim that keeps the id keeps
+it working.
+
+**Sort what comes out by kind. Each kind has one destination.**
+1. **Stale content**: superseded counts, lists of line numbers, notes that something no longer
+   holds. Delete it. A move keeps an error alive.
+2. **Change history and dated measurements.** Delete it, and name the commit that holds the full
+   text: the last one to touch the tracker. That commit holds it only if the tracker has no
+   uncommitted changes. If the tracker is untracked, modified, or not in a git repository, say the
+   deleted text would be lost. Then ask, as a numbered choice, whether to keep it, move it, or
+   delete it anyway.
+3. **Durable findings and gotchas.** Offer a handoff to a skill in the session that records repo
+   knowledge, such as `repo-knowledge`. It applies its own test for what to keep, so never write to
+   its file directly. With no such skill, ask, as a numbered choice, whether to keep the finding in
+   the entry or delete it.
+4. **Reference material**: tables, vocabularies, lists of consumers. Propose a file for it, which
+   the user decides on. Put it in the project's docs directory, or at the project root if it has
+   none. Never create a docs directory to hold it. Where the project has more than one, ask which.
+   If the user declines the file, treat the material as kind 2.
+
+**Show each proposal and wait for confirmation before writing.** A proposal shows:
+- the entry as it would read after the trim, within the limit
+- each removed part, with its kind and destination
+- the files that cite the entry, and any change they need
+
+A trimmed entry keeps its id, its position, and every tag in its parenthetical. Keep its name
+unless the name is itself the excess.
+
+**After the write, count the trimmed entries again with the same tool.** Report any still over the
+limit. A successful write does not show that the entry fits.
+
+If the trim is committed, the commit message names the commit that held the removed text.
 
 ## Retiring, merging, or narrowing a category
 

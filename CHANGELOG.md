@@ -8,6 +8,12 @@ the repo is organised. `next-improvement` keeps a versioned changelog in
 Format: one heading per period, named by theme and dated by its start. Three fixed sections:
 Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `ste-writing`.
 
+## Tracker entry limit · 2026-09-17
+
+**Skills**
+- `next-improvement` 2.4.0: a tracker header says what an entry is, and each session checks entry
+  size and offers a trim. See `next-improvement/changelog.md`.
+
 ## Planning interview · 2026-09-01
 
 **Standards**

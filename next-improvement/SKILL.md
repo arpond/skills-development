@@ -5,7 +5,7 @@ description: Runs a "what should we work on next" process for whatever project t
 
 # Next improvement
 
-**Skill version: 2.3.0.** `session-start.md`'s version check compares a tracker's `Feature check:`
+**Skill version: 2.4.0.** `session-start.md`'s version check compares a tracker's `Feature check:`
 stamp against this number. `changelog.md` holds both what shipped at each version and the
 versioning policy itself — read it only when that check actually finds a gap, not on every run.
 
@@ -39,8 +39,9 @@ alongside it; `session-start.md` is a second core file, the other six are compan
 - `changelog.md` — what each skill version added, for telling an existing tracker what it's
   missing. Read it only when `session-start.md`'s version check finds a tracker's `Feature check:`
   behind the current skill version.
-- `tracker-maintenance.md` — rare per-project edge cases (minting/migrating ids, retiring/merging/
-  narrowing a category, one-time disclosures to an older tracker). Read it only when that specific
+- `tracker-maintenance.md` — per-project events outside the normal loop (minting/migrating ids,
+  trimming an entry over the limit, retiring/merging/narrowing a category, one-time disclosures to
+  an older tracker). Read it only when that specific
   trigger actually fires — each section names its own.
 
 Each bullet above carries its own read condition, and those conditions are the whole rule.
@@ -73,11 +74,14 @@ Format:
 ```markdown
 # Improvement Tracker
 
+> **What belongs here:** ...     <!-- the header, text in setup.md Step 6 -->
+
 ## Goals (priority order, highest first)
 Last reviewed: <YYYY-MM-DD>
 Created: v<X.Y.Z>               <!-- skill version at setup time, stamped once, never changes -->
 Feature check: v<X.Y.Z>         <!-- skill version last checked for new-feature disclosure -->
 Next id: I<N>                  <!-- next unassigned idea id -->
+Entry limit: 60                <!-- optional, words per idea-category entry, or off -->
 Selection strategy: top-tier   <!-- optional, see strategies.md -->
 Feedback: on                   <!-- optional, see feedback.md -->
 Risk register: on              <!-- optional, see risk-register.md -->
@@ -119,6 +123,11 @@ Done archive: age=60, floor=5, backstop=40 (last sweep: age, streak: 0)   <!-- o
   knowing about. `Feature check:` moves forward as new features get disclosed. Both are handled
   entirely by `session-start.md`'s Step 0/0.5 (with the catch-up for a tracker that predates
   them); nothing in Steps 1-6 reads or writes either.
+- **The header above Goals tells every writer what an entry is and where other content goes.**
+  `setup.md`'s "The header" holds its text and its reason. Never rewrite a header the user has
+  edited. Never re-add one they removed.
+- **`Entry limit:` is the word limit for each idea-category entry.** `session-start.md` Step 0.5
+  holds its default and the check, and `tracker-maintenance.md` holds the trim it offers.
 - Two or more goals may share the same tier number when they're genuinely equal priority right
   now. A tied group must carry a short tie-break note on the same line: what to do when a real
   candidate serves one tied goal but not its sibling. If the user has no strong opinion, fall
@@ -126,9 +135,10 @@ Done archive: age=60, floor=5, backstop=40 (last sweep: age, streak: 0)   <!-- o
   it happens" — but prefer capturing their actual reasoning if they have one. Keep tie groups
   small (2, rarely 3); a tier that keeps growing tied entries is a smell that ranking has stopped
   meaning anything, and is worth surfacing (see Step 0.5).
-- `Selection strategy:`, `Feedback:`, `Risk register:`, and `Done archive:` are optional lines that
-  may be absent. Their full format and behaviour live in `strategies.md`, `feedback.md`,
-  `risk-register.md`, and Step 6 below respectively — don't inline their details here.
+- `Selection strategy:`, `Feedback:`, `Risk register:`, `Done archive:`, and `Entry limit:` are
+  optional lines that may be absent. Their full format and behaviour live in `strategies.md`,
+  `feedback.md`, `risk-register.md`, Step 6 below, and `session-start.md` Step 0.5 respectively —
+  don't inline their details here.
   **Read each companion file by the setting's *value*, not by whether the line is present.** An
   absent line means that setting's documented default, and the defaults differ:
   `Selection strategy:` and `Risk register:` default to off (`top-tier` / `off`), so an absent line
@@ -196,7 +206,7 @@ Done archive: age=60, floor=5, backstop=40 (last sweep: age, streak: 0)   <!-- o
   not for substance reasons ("doesn't fit," "already tried"), which don't go stale the same way and
   don't need a date. See Step 2 for when it's set and Step 1 for how it gets surfaced once due.
 - **The file's top-level sections are closed: Goals, one `##` per idea category, Done, Rejected —
-  nothing else.** Don't add a new `##` section for content that doesn't fit that shape (a
+  nothing else.** The header above Goals is not a section. Don't add a new `##` section for content that doesn't fit that shape (a
   design-discussion doc, a decision log, meeting notes, a roadmap), even when this file is already
   open and being edited and adding a section feels like the path of least resistance — that
   proximity is exactly why it happens and exactly why it's worth a hard no. Content like that
@@ -212,19 +222,21 @@ Done archive: age=60, floor=5, backstop=40 (last sweep: age, streak: 0)   <!-- o
 
 **Hard rules by step, so a review can check none have gone missing.** Scope: rules that fail
 *silently* if skipped — where nothing errors and no output looks wrong, so only this table would
-ever reveal the omission. Three kinds qualify, marked in the **Kind** column: **gate** (show, then
+ever reveal the omission. Four kinds qualify, marked in the **Kind** column: **gate** (show, then
 wait for a go-ahead — skip it and the write just happens), **surface** (tell the user something
-unprompted — skip it and they simply never hear it), and **mechanical** (a write that is due every
+unprompted — skip it and they simply never hear it), **mechanical** (a write that is due every
 time its condition holds, with no gate and nothing said — skip it and the write simply never
-happens). This skill carries no **prohibition** rows. Rules that fail *visibly* are deliberately
-absent: Step 2's "don't pad a thin category with filler" isn't here, because breaking it produces
+happens), and **prohibition** (never do this — break it and nothing shows until the harm lands).
+Rules that fail *visibly* are deliberately absent: Step 2's "don't pad a thin category with filler" isn't here, because breaking it produces
 visibly weak ideas the user can see for themselves. Absence from this table doesn't mean optional.
 
 | Step | Kind | Hard rule |
 |---|---|---|
 | 0 (setup.md) | gate | Interrogate the proposed categories/tiers with the user before writing the initial tracker |
-| 0 (setup.md) | surface | Disclose the behaviours that aren't opt-in (the fixes/reworks question, Done archiving) rather than letting them appear unannounced |
+| 0 (setup.md) | surface | Disclose the behaviours that aren't opt-in (the fixes/reworks question, Done archiving, the entry-size check) rather than letting them appear unannounced |
 | 0 (session-start.md) | gate | If the tracker exists but is malformed, ask the user rather than silently rewriting or refusing |
+| 0 (session-start.md, setup.md) | prohibition | Never create a docs directory to hold a tracker or any other file this skill writes |
+| Tracker file | prohibition | Never rewrite a header the user has edited, and never re-add one they removed |
 | 0 (session-start.md) | surface | Surface a foreign `##` section once per project rather than leaving it unmentioned |
 | 0 (tracker-maintenance.md) | mechanical | Backfill a missing `Created:`/`Feature check:` to `0.0.0`, and never stamp the current version in the same move |
 | 0 (tracker-maintenance.md) | mechanical | Bulk-backfill ids for a tracker with zero ids and no `Next id:` line, rather than waiting for the lazy per-entry trigger to eventually fire |
@@ -235,6 +247,10 @@ visibly weak ideas the user can see for themselves. Absence from this table does
 | 0.5 (session-start.md) | surface | Surface a stale-Goals check-in when due |
 | 0.5 (session-start.md) | surface | Surface a `Feature check:` version gap, including a missing stamp, walked as `0.0.0` |
 | 0.5 (session-start.md) | surface | Surface an unexpectedly-ahead `Feature check:` stamp rather than resolving it either way |
+| 0.5 (session-start.md) | surface | Surface idea-category entries over `Entry limit:`, and non-entry content in a category, once per session |
+| 0.5 (tracker-maintenance.md) | gate | Show each proposed trim, with a destination for every removed part, and wait for confirmation before writing |
+| 0.5 (tracker-maintenance.md) | surface | Name the files that cite an entry's id, and say when removed text would not survive in git, before proposing the trim |
+| 0.5 (tracker-maintenance.md) | prohibition | Never write a trimmed finding into another skill's file directly; hand it to that skill |
 | 0.6 (session-start.md) | surface | Surface standalone `reassess: pending` flags when `Feedback:` is explicitly `off` |
 | 0.7 (session-start.md) | surface | Surface Rejected entries whose `revisit-after:` date has passed |
 | 2 | gate | Show proposed new ideas, or a category retirement/merge/narrow, and wait for confirmation before writing anything |
@@ -338,6 +354,8 @@ keeping. Don't write to the tracker until they've had a chance to react. Then:
   whenever it comes up again?") and store it if they give one. A substance-based decline gets no
   such field, per the Rejected-format note above.
 - Match that file's existing format and voice for whatever does get appended.
+- Keep each appended entry within `Entry limit:`. Neighbouring entries that run longer set the
+  format, not the length.
 - Don't pad a thin category with filler just to hit a count. If there are only one or two solid
   ideas, say so and move on rather than inventing weak ones.
 - If `Selection strategy:` includes `wildcard(tagged)`, see `strategies.md` for the idea-tagging
@@ -461,7 +479,8 @@ line — it's a label, not the list number. A single, unambiguous top pick with 
 choose between doesn't need a number, since there's no distinct option to point at. The rule
 holds at every option-presenting site in this skill and its companions, not only this step. Those
 are Step 2's retire/merge/narrow ask, Step 4.5's two handoff offers, `session-start.md`'s Goals
-reorder, and `feedback.md`'s pending-outcome and cadence asks. Any site added later inherits it.
+reorder, `feedback.md`'s pending-outcome and cadence asks, and the trim's list and destination
+asks in `tracker-maintenance.md`. Any site added later inherits it.
 
 Default (no `Selection strategy:` set, or set to plain `top-tier`): present the top candidate,
 or up to 4 total (winner + close contenders) if the ranking is genuinely close, with reasoning
@@ -592,7 +611,8 @@ Move the item from its origin category to **Done** in that project's tracker, wi
 note on what was actually built. If `Feedback: on`, see `feedback.md` for the extra tagging to
 add at this step. Leave everything else in the file untouched. If the work surfaced new
 follow-on ideas that weren't there before, add them to the relevant category now rather than
-losing them — that's the loop closing, not scope creep.
+losing them — that's the loop closing, not scope creep. Each one stays within `Entry limit:`.
+Evidence from the build goes in the commit message or the ticket, not in any entry.
 
 **Ask whether this ship fixes or reworks an earlier one.** Every recording, ask directly, with an
 auto-detect suggestion rather than a blind open question:

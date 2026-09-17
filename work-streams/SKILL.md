@@ -186,6 +186,10 @@ obvious candidate in the repo):
   from here — say so rather than passing or failing it. A dangling path is surfaced with a
   proposed fix or removal, never silently skipped.
 - Judge whether this session's work belongs in it, and draft the edit if so.
+- A target that states what belongs in it, such as a header at its top, decides that question.
+  Follow its rules over this sweep's judgement.
+- An improvement tracker takes only a new idea, or a finished one moved to Done. Progress,
+  measurements, and findings stay in the stream or go to another target.
 - For `skill:` entries, hand off to that skill's own flow. If the skill is not available here,
   say so.
 - Then ask the one open question: did this session surface anything else that should be recorded

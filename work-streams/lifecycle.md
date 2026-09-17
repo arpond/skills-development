@@ -11,8 +11,8 @@ together in one message, confirmed once:
 
 1. **The graduation sweep.** Reread State of play, Notes, and the `context/` file names for
    anything that deserves a permanent home now the stream will stop being read. Candidates: a
-   gotcha for `repo-knowledge`, progress for an improvement tracker, a fact for a cheatsheet or
-   README.
+   gotcha for `repo-knowledge`, a new idea for an improvement tracker, a fact for a cheatsheet or
+   README. Progress is never a candidate: it is what the stream itself held.
    Task-scoped material that dies with the stream stays put — the test is whether someone
    working *outside* this stream would ever want it. Propose each candidate with its
    destination. When the wrap-up's W3 sweep already ran this session, only look for what the

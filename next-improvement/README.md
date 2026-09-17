@@ -9,8 +9,10 @@ to build. It never writes a new idea to the tracker, starts a plan, or starts a 
 user confirms.
 
 Files:
-- `SKILL.md` — the steady-state loop (ties, idea top-up, ranking, propose/confirm/plan/build/
-  record). The core file, read every time the skill triggers.
+- `SKILL.md` — the steady-state loop up to a confirmed pick (ties, idea top-up, ranking,
+  propose, confirm). The core file, read every time the skill triggers.
+- `build-and-record.md` — planning a confirmed pick, building it, and recording what shipped.
+  Read only once you confirm a pick, or when finished work needs recording.
 - `session-start.md` — finds or bootstraps the tracker, checks whether the tracker is behind this
   skill version, checks whether Goals are stale, and surfaces due reassess flags and revisit
   dates. Read every run, right after `SKILL.md`'s intro. A second core file, not a companion: not optional

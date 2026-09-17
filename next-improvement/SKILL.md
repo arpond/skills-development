@@ -17,13 +17,16 @@ the priority tiers are, what's already been decided) lives in a file inside the 
 not in this skill. That file is what makes this skill reusable across every project rather than
 rewritten per repo.
 
-This file covers Steps 1-6, the steady-state propose/build/record loop. Seven files live
-alongside it; `session-start.md` is a second core file, the other six are companions:
+This file covers Steps 1-4, the steady-state propose loop. Eight files live alongside it;
+`session-start.md` is a second core file, the other seven are companions:
 
 - `session-start.md` — Steps 0 through 0.7 (find/bootstrap the tracker, check whether Goals need a
   check-in, surface standalone reassess flags and due Rejected revisits). **Not optional** — read
   it every run, right after this intro, before Step 1. Split out purely to keep this file's
-  common-case read focused on the propose/build/record loop.
+  common-case read focused on the propose loop.
+- `build-and-record.md` — Steps 4.5 through 6 (plan the confirmed pick, build it, record what
+  shipped). Read it once the user confirms a pick in Step 4, or when finished work needs recording
+  without one.
 - `setup.md` — the one-time-per-project bootstrap interrogation. Read it when `session-start.md`'s
   Step 0 finds no `IMPROVEMENT_TRACKER.md` yet.
 - `strategies.md` — alternate ways of presenting candidates in Step 4, beyond the default
@@ -47,7 +50,7 @@ alongside it; `session-start.md` is a second core file, the other six are compan
 Each bullet above carries its own read condition, and those conditions are the whole rule.
 
 A project's tracker may also grow a sibling `IMPROVEMENT_TRACKER_DONE.md` — the overflow of old
-**Done** history moved out of the live tracker (see Step 6). It's not a companion file of this
+**Done** history moved out of the live tracker (see `session-start.md` Step 0.5). It's not a companion file of this
 skill (no fixed content to read every run) and stays untouched unless something specifically
 needs older shipped history.
 
@@ -65,7 +68,7 @@ or `.claude/`); don't assume a path here. This is the single source of truth: do
 mental list of ideas or priorities, and don't split it across multiple files.
 
 **This skill's other two files sit in whatever directory the tracker was found in** —
-`IMPROVEMENT_TRACKER_DONE.md` (Step 6) and, with `Risk register: on`, `RISK_REGISTER.md`. They're
+`IMPROVEMENT_TRACKER_DONE.md` (the Done archive sweep) and, with `Risk register: on`, `RISK_REGISTER.md`. They're
 never resolved independently: they follow the tracker. One found somewhere else is worth surfacing
 rather than quietly working around.
 
@@ -85,7 +88,7 @@ Entry limit: 60                <!-- optional, words per idea-category entry, or 
 Selection strategy: top-tier   <!-- optional, see strategies.md -->
 Feedback: on                   <!-- optional, see feedback.md -->
 Risk register: on              <!-- optional, see risk-register.md -->
-Done archive: age=60, floor=5, backstop=40 (last sweep: age, streak: 0)   <!-- optional, default shown, see Step 6 -->
+Done archive: age=60, floor=5, backstop=40 (last sweep: age, streak: 0)   <!-- optional, default shown, see session-start.md Step 0.5 -->
 1. <highest-priority tier>
 2. <tier A> / <tier B> — tied; if a candidate must pick one, prefer: <tie-break rule>
 3. <next tier>
@@ -137,7 +140,7 @@ Done archive: age=60, floor=5, backstop=40 (last sweep: age, streak: 0)   <!-- o
   meaning anything, and is worth surfacing (see Step 0.5).
 - `Selection strategy:`, `Feedback:`, `Risk register:`, `Done archive:`, and `Entry limit:` are
   optional lines that may be absent. Their full format and behaviour live in `strategies.md`,
-  `feedback.md`, `risk-register.md`, Step 6 below, and `session-start.md` Step 0.5 respectively —
+  `feedback.md`, `risk-register.md`, and `session-start.md` Step 0.5 (the last two) respectively —
   don't inline their details here.
   **Read each companion file by the setting's *value*, not by whether the line is present.** An
   absent line means that setting's documented default, and the defaults differ:
@@ -173,7 +176,7 @@ Done archive: age=60, floor=5, backstop=40 (last sweep: age, streak: 0)   <!-- o
   cross-referencing wording already do this — the rule is to extend it everywhere else an id would
   otherwise stand alone, including this file's own Step 3 risk-mitigation wording below.
 - **A ship that fixes or reworks an earlier Done item** tags itself with `fixes: I<N>` (bug fix) or
-  `reworked: I<N>` (broader rework), referencing the origin's id — see Step 6. This also sets
+  `reworked: I<N>` (broader rework), referencing the origin's id — see `build-and-record.md` Step 6. This also sets
   `reassess: pending` on the *origin* entry, standalone of whether `Feedback:` is on (see
   `feedback.md`'s and `session-start.md`'s handling of that flag). If `Risk register: on`, a
   `fixes:`/`reworked:` link is also one of the signals that can trigger a risk-area proposal — see
@@ -192,7 +195,7 @@ Done archive: age=60, floor=5, backstop=40 (last sweep: age, streak: 0)   <!-- o
 - **Done grows unbounded over a project's life, so it's kept trimmed to a recent window in the
   live tracker, with the rest moved out to a sibling `IMPROVEMENT_TRACKER_DONE.md`.** Same
   directory, same project, read only when Step 2's history-check or an explicit user question
-  actually needs older history (see Step 6 for exactly when this move happens and what it must
+  actually needs older history (see `session-start.md` Step 0.5 for exactly when this move happens and what it must
   never move).
 - **Rejected** is append-only, same as Done — an idea proposed in Step 2 and declined by the
   user goes here with the reason, not just dropped. See Step 2 for how this gets checked before
@@ -219,6 +222,25 @@ Done archive: age=60, floor=5, backstop=40 (last sweep: age, streak: 0)   <!-- o
   already has a foreign section from before this rule existed, that's not
   silently fine either — see `session-start.md` Step 0's malformed-tracker handling, extended to
   this case.
+
+**Reading the archive.** Only open `IMPROVEMENT_TRACKER_DONE.md` when something actually needs
+older history; otherwise don't read it as part of the normal Step 0-6 loop, since that's most of
+the point of moving entries out of the live tracker. **When something does need it, treat the live
+tracker's Done section and the archive as one combined pool, never just the live file.** The count
+is the sum, "oldest" is the oldest across both, and a write lands in whichever of the two the
+entry actually sits in. Everywhere else that scans Done history
+means this rule, and defers here rather than restating it — Step 2's "has something like this
+already shipped" check, `build-and-record.md` Step 6's `reassess:` write to an origin entry, the user asking about past
+work, `feedback.md`'s eligible-entry scan, and `risk-register.md`'s evidence scan. Archiving is
+purely about what gets loaded on a routine run; it never narrows what a deliberate history lookup
+is allowed to see.
+
+**An archive that doesn't parse gets the same gate the tracker does.** It is read for history and
+written to for outcomes and `reassess:` flags, so it can be malformed in the same ways. Say what
+doesn't parse and ask, rather than rewriting it or reading past the damage. Silently skipping an
+unreadable entry is worse here than in the live file, because nothing else ever looks at the
+archive to notice. An entry whose `shipped` date won't parse also drops out of the id backfill's
+ordering and out of every eligibility count that reads it.
 
 **Hard rules by step, so a review can check none have gone missing.** Scope: rules that fail
 *silently* if skipped — where nothing errors and no output looks wrong, so only this table would
@@ -259,12 +281,11 @@ visibly weak ideas the user can see for themselves. Absence from this table does
 | 4 | gate | Do not start planning or implementing until the user confirms which one (if any) to build |
 | 4 | surface | Surface a feature-type pick as such |
 | 4 | surface | Surface every candidate's risk-register signals (mitigates vs. merely exposed) |
-| 4.5 | surface | Offer a qualifying skill at each handoff point, before the draft and after it, rather than drafting or approving straight past it |
-| 4.5 | surface | Name every qualifying skill in an offer, numbered, rather than picking between them |
-| 4.5 | gate | Get the plan approved before writing any code |
-| 6 | mechanical | Sweep Done into the archive whenever age/floor/backstop makes an entry eligible, not only when someone happens to notice |
-| 6 | gate | If `IMPROVEMENT_TRACKER_DONE.md` exists but is malformed, ask the user rather than rewriting it or reading past the damage |
-| 0.5 (session-start.md) | mechanical | Re-run that same Done sweep independently of Step 6, so a missed append-time sweep gets caught at the next session start |
+| 4.5 (build-and-record.md) | surface | Offer a qualifying skill at each handoff point, before the draft and after it, rather than drafting or approving straight past it |
+| 4.5 (build-and-record.md) | surface | Name every qualifying skill in an offer, numbered, rather than picking between them |
+| 4.5 (build-and-record.md) | gate | Get the plan approved before writing any code |
+| 0.5 (session-start.md), 6 (build-and-record.md) | mechanical | Sweep Done into the archive whenever age/floor/backstop makes an entry eligible, at every session start and after every recorded ship |
+| Tracker file | gate | If `IMPROVEMENT_TRACKER_DONE.md` exists but is malformed, ask the user rather than rewriting it or reading past the damage |
 | Checking in (feedback.md) | surface | Always surface the pending-outcome count when it's nonzero, calling out the reassess subset separately |
 | Backlog not shrinking (feedback.md) | surface | Say so at `growth-streak: 2`, since a backlog that keeps growing looks the same as one being worked |
 | Area match (risk-register.md) | surface | Say when an entry's `areas:` path no longer resolves, rather than reading it as a no-match |
@@ -339,9 +360,9 @@ before for X — has that changed?") rather than silently suppressing or silentl
 
 **Same check, extended to "already shipped."** A candidate can also closely resemble something
 already in **Done** — check the live tracker's Done section same as Rejected. If it's plausible
-but not certain the same thing already shipped, and `IMPROVEMENT_TRACKER_DONE.md` exists (see
-Step 6), it's fine to open it for this one lookup rather than guessing — that's exactly the kind
-of "something actually needs older history" case Step 6 has in mind, not a normal-loop read.
+but not certain the same thing already shipped, and `IMPROVEMENT_TRACKER_DONE.md` exists, it's fine to open it for
+this one lookup rather than guessing. That's exactly the kind of "something actually needs older
+history" case "Reading the archive" has in mind, not a normal-loop read.
 
 **Show the proposed new ideas and wait for confirmation before appending anything.** This is one
 of the skill's hard rules (see the table above): brainstorming is a recommendation, not a
@@ -478,7 +499,7 @@ label a mode adds (`Tier 1 pick:`, `Wildcard:`, `Quick win:`) stays as text with
 line — it's a label, not the list number. A single, unambiguous top pick with nothing else to
 choose between doesn't need a number, since there's no distinct option to point at. The rule
 holds at every option-presenting site in this skill and its companions, not only this step. Those
-are Step 2's retire/merge/narrow ask, Step 4.5's two handoff offers, `session-start.md`'s Goals
+are Step 2's retire/merge/narrow ask, `build-and-record.md` Step 4.5's two handoff offers, `session-start.md`'s Goals
 reorder, `feedback.md`'s pending-outcome and cadence asks, and the trim's list and destination
 asks in `tracker-maintenance.md`. Any site added later inherits it.
 
@@ -509,7 +530,7 @@ plainly as part of its reasoning line (e.g. "this is a new feature, not a mainte
 rather than leaving the category implicit. This doesn't change the presentation format above or
 add a new confirmation gate — it's one clause within the existing line, same as any other
 reasoning. The reason it's worth calling out: users tend to want more direct say over feature
-scope/direction than over maintenance work, and Step 4.5's plan-approval step is where that
+scope/direction than over maintenance work, and `build-and-record.md` Step 4.5's plan approval is where that
 input actually happens — surfacing it here just makes sure the user notices *before* reaching that
 step, instead of registering it only once a plan is already drafted.
 
@@ -525,196 +546,7 @@ This is one of the skill's hard rules (see the table above): the ranking is a re
 a decision. The user may pick something other than the top candidate, ask for a different
 combination, or say none of it is worth doing right now — all of those are fine outcomes.
 
-## Step 4.5: Plan the confirmed pick
+## Step 4.5 through Step 6: Plan, build, and record
 
-A confirmed idea is still just an idea — don't jump straight to code. Produce a detailed
-implementation plan first: what files/functions get touched, the approach, and how it'll be
-verified. **This is one of the skill's hard rules (see the table above): get the plan approved
-before writing any code.**
-
-**Two handoff points, one test.** Other skills in the session can help here, and what a skill
-does with the plan decides where it fits. One that questions the user until the open decisions
-are settled belongs *before* the draft — `grill-me` is the reference case. One that examines a
-drafted plan and argues against it belongs *after* — `plan-red-team` is the reference case. A
-skill that does neither is not offered at this step at all. Both offers work the same way:
-
-- Each is one line, folded into a message already being sent: the acknowledgement of the
-  confirmed pick before the draft, the plan itself after it. Neither is a stop of its own.
-- Each is asked per pick. Nothing is configured, and no answer is remembered.
-- More than one qualifying skill is a numbered choice, per Step 4's rule, each named with the one
-  thing it does differently. Being the reference case doesn't make a skill the winner.
-- Declining stays available beside the numbered skills, and only one runs per handoff point.
-- An offer says what a skill costs, where the skill states a cost of its own. A panel of
-  subagents isn't a free yes, and the offer is where that gets decided.
-- No qualifying skill means silence. An absent skill isn't a finding to report.
-
-**Before the draft**, hand off to the chosen skill's own flow, then plan from what the interview
-settled. Don't re-ask in the plan what the interview already answered. The interview goes before
-the draft for a reason: a plan drafted first anchors it to Claude's guesses about scope. The
-user's answers then arrive as corrections to those guesses, rather than as the input the plan was
-built from. This is most worth taking up on a feature-type pick, for the reason Step 4 already
-gives for surfacing one.
-
-**After the draft**, the offer rides with the plan itself, ahead of the approval gate rather than
-after it. A review comes back with findings, not with a verdict:
-
-- judge each finding rather than applying it
-- revise the plan where one lands
-- say which ones you disagreed with, and why
-
-Then the plan goes to the same approval gate as any other. A review is never approval, however
-clean it comes back.
-
-If Claude Code's plan mode is available in this session, use it naturally for this (EnterPlanMode
-/ ExitPlanMode) — write the plan to the plan file and call ExitPlanMode to request approval. The
-after-draft offer goes in that same message. If
-plan mode isn't available or doesn't fit the context, present the plan inline instead and wait
-for an explicit go-ahead before proceeding.
-
-Keep the plan proportional to the work — a one-line fix doesn't need the same ceremony as a
-multi-file feature. Use judgement on how much detail is actually useful rather than padding every
-plan to a fixed template.
-
-If the user asks for changes to the plan, revise and re-confirm before moving to Step 5 — that's
-iterating on the same plan within the same session, not a persistence question.
-
-If the user declines the plan outright rather than asking for changes ("actually, let's not do
-this after all"), that's not a Step 6 outcome and not a Rejected outcome either — a plan getting
-declined doesn't retroactively unpick or reject the idea itself, which is still perfectly valid,
-just not being built right now. Leave it as-is in its category; it goes back through Step 3's
-ranking next time like anything else outstanding.
-
-**If planning surfaces a risk that wasn't already known** (e.g. scoping the work exposes fragile
-coupling, an untested assumption, a structural weak point), and `Risk register: on`, propose a
-risk-area entry right here rather than waiting for a future fix to retroactively prove the pattern
-— same confirm gate as any other risk-register write, see `risk-register.md`.
-
-**Always plan fresh; don't reuse an old plan for an idea that gets picked again later.** If a
-candidate was proposed, planned, and then declined or shelved in an earlier session, and the same
-idea comes up again now, write a new plan grounded in the project's current state rather than
-resurrecting the old one — the codebase may have changed since (other ideas shipped, files
-moved, dependencies shifted), and a stale plan silently reused is the same risk this skill
-already guards against elsewhere (dry-run tracking, goal staleness, feedback outcomes: don't
-trust a cached judgement, re-ground it). Plan-mode plan files aren't tracked by or referenced from
-the tracker for this reason.
-
-## Step 5: Build it
-
-Once the plan is approved, implement it as planned — this skill only changes how the work item
-was chosen and planned, not how you write code, run tests, or verify changes. Follow whatever
-conventions the project's own docs/CLAUDE.md/memory already establish. If reality diverges from
-the plan enough to matter, say so rather than silently deviating.
-
-## Step 6: Record what shipped
-
-Move the item from its origin category to **Done** in that project's tracker, with a one-line
-note on what was actually built. If `Feedback: on`, see `feedback.md` for the extra tagging to
-add at this step. Leave everything else in the file untouched. If the work surfaced new
-follow-on ideas that weren't there before, add them to the relevant category now rather than
-losing them — that's the loop closing, not scope creep. Each one stays within `Entry limit:`.
-Evidence from the build goes in the commit message or the ticket, not in any entry.
-
-**Ask whether this ship fixes or reworks an earlier one.** Every recording, ask directly, with an
-auto-detect suggestion rather than a blind open question:
-1. Scan recent Done entries (and the branch/commit context, if this session touched a specific
-   bug or reopened specific files) for a plausible origin.
-2. Propose it.
-3. Let the user confirm, correct, or say no.
-
-If `Next id:` was missing before this recording, this is the first time this project has ever been
-asked — give the one-time heads-up in `tracker-maintenance.md` before asking.
-
-If confirmed:
-- Tag the new entry `fixes: I<N>` (bug fix) or `reworked: I<N>` (broader rework), referencing the
-  origin's id (if the origin has no id, mint one for it now — see `tracker-maintenance.md`).
-- Set `reassess: pending` on the **origin** entry — **in whichever file it actually lives in**, per
-  the combined-pool rule below; Done-trimming can move an origin to the archive long before anyone
-  fixes it. This is standalone of `Feedback:` — it
-  applies whether or not the feedback subsystem is on. See `feedback.md` (Feedback on: folded into
-  its check-in, prioritised over routine outcome asks) and `session-start.md` (Feedback off: a
-  lightweight one-off surfacing, no persistent answer required).
-- If `Risk register: on`, this link also feeds three of `risk-register.md`'s own Step-6-triggered
-  checks, each with its full mechanics already documented there rather than repeated here: a
-  creation/update trigger (its "Creating or updating an entry," trigger 1), whether the origin's id
-  is itself a `mitigated-by:` entry (its "A mitigation needing its own fix"), and whether this
-  ship's own id is a `mitigated-by: ... (outcome: planned)` entry on some risk (its "Recording a
-  planned mitigation").
-
-If the user says this ship is *not* a fix/rework of anything, or the auto-detect had nothing
-plausible, record the ship normally with no `fixes:`/`reworked:` tag — don't force a link that
-doesn't exist.
-
-**A clean ship (no `fixes:`/`reworked:` tag) in an active risk entry's areas is counter-evidence
-against that risk.** Nothing to record for it, since exposure was never stored; it's read out of
-Done whenever archival is next considered. See `risk-register.md`'s archival trigger.
-
-**After appending, check whether Done needs trimming.** This isn't the only place this sweep runs:
-`session-start.md` Step 0.5 re-derives the same eligibility independently at the start of every
-session, so a sweep this step fails to complete (a session ending early, a hand-edited tracker, an
-older tracker predating `Done archive:`) still gets caught rather than leaving Done to grow
-unbounded with nothing left to trigger it. Primary trigger is age, not count. How long ago
-something shipped is what determines whether it's still useful working context, not how many
-entries happen to sit next to it (a project shipping in bursts can produce 20 genuinely-recent
-entries in two weeks that are all still relevant; a slow project can carry 10 stale ones for a
-year). The sweep:
-1. Archive any Done entry whose `shipped` date is older than `Done archive:`'s `age` (default 60
-   days).
-2. **Always keep the most recent `floor` entries live regardless of age** (default 5), so a
-   dormant project that just resumed doesn't get its Done section swept to empty.
-3. **Count stays as a backstop only.** If the live section still exceeds `backstop` entries
-   (default 40) after the age sweep (a burst of very recent ships), archive the oldest down to
-   `floor` by age regardless, so one hyperactive stretch can't leave the file unbounded between
-   age-sweeps.
-4. Move archived entries, unedited and in their existing order, to the end of
-   `IMPROVEMENT_TRACKER_DONE.md`. Create it if it doesn't exist yet, in the same directory as
-   `IMPROVEMENT_TRACKER.md`, with a one-line `# <Project> — archived Done history` header.
-5. Update the archive-pointer note under the live `## Done` header to the cutoff date of the
-   oldest entry now remaining live.
-
-This is mechanical bookkeeping, not a judgement call about ideas or priorities, so it doesn't need
-user confirmation the way Steps 2/4/4.5 do. Only the knob *adjustment* below is confirm-gated, not
-the routine sweep itself.
-
-**Track which trigger actually fired, to catch a miscalibrated `age`.** A self-correcting counter,
-same shape as Step 2's dry-run tracking: note inline on the `Done archive:` line which kind of
-sweep just ran, `(last sweep: backstop, streak: N)` or `(last sweep: age, streak: 0)`. **If the
-`Done archive:` line isn't present** (the normal case — it's absent whenever the defaults haven't
-been changed), write it out with its default values first and annotate that, rather than dropping
-the note somewhere else or silently skipping the tracking; there's no other line it belongs on. Trigger/increment: a `backstop` sweep. Corrected signal/reset: an
-`age` sweep, back to 0. Threshold: `streak: 3` (three backstop-triggered sweeps in a row with
-`age` never once catching anything first). At the threshold, at the next `session-start.md`
-Step 0.5 check-in:
-1. Surface it: `age` is calibrated for a slower project than this one is actually shipping at.
-2. Propose halving `age` (or raising `backstop`) with a concrete number.
-3. Wait for confirmation before writing. This is a hard rule (see the table above).
-4. Force-reset the streak once surfaced, regardless of the answer, same as Step 2's dry-run
-   counter.
-
-**Trimming doesn't wait on `outcome`** (`Feedback: on` — see `feedback.md`). Archive eligible-by-age
-entries regardless of whether their outcome is still `pending` — otherwise a feedback loop that
-can't keep pace with shipping would let the live Done section grow without bound. An entry crossing
-into the archive while still `pending` doesn't drop out of consideration, per the combined-pool
-rule below — it's still askable, just from the other file.
-
-`category-rotation` (`strategies.md`) counts live Done entries only, never the archive. A window
-larger than the live section holds counts as insufficient history there, and never opens the
-archive to fill the count.
-
-**Reading the archive.** Only open `IMPROVEMENT_TRACKER_DONE.md` when something actually needs
-older history; otherwise don't read it as part of the normal Step 0-6 loop, since that's most of
-the point of moving entries out of the live tracker. **When something does need it, treat the live
-tracker's Done section and the archive as one combined pool, never just the live file.** The count
-is the sum, "oldest" is the oldest across both, and a write lands in whichever of the two the
-entry actually sits in. Everywhere else that scans Done history
-means this rule, and defers here rather than restating it — Step 2's "has something like this
-already shipped" check, Step 6's `reassess:` write to an origin entry, the user asking about past
-work, `feedback.md`'s eligible-entry scan, and `risk-register.md`'s evidence scan. Archiving is
-purely about what gets loaded on a routine run; it never narrows what a deliberate history lookup
-is allowed to see.
-
-**An archive that doesn't parse gets the same gate the tracker does.** It is read for history and
-written to for outcomes and `reassess:` flags, so it can be malformed in the same ways. Say what
-doesn't parse and ask, rather than rewriting it or reading past the damage. Silently skipping an
-unreadable entry is worse here than in the live file, because nothing else ever looks at the
-archive to notice. An entry whose `shipped` date won't parse also drops out of the id backfill's
-ordering and out of every eligibility count that reads it.
+Once the user confirms a pick, read `build-and-record.md` and follow it. It covers planning the
+pick, building it, and recording what shipped.

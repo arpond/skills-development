@@ -36,7 +36,7 @@ Each entry says what is new and **whether there is anything to opt into**:
   header, filled in from `setup.md`'s "The header", and write `Entry limit: 60` with it. A decline
   leaves the tracker as it is, and the check still runs at the default.
 - **2.3.0** — *automatic, all projects, nothing to opt into.* Planning a confirmed pick
-  (`SKILL.md` Step 4.5) now has two one-line offers of a handoff to another skill in the session.
+  (`build-and-record.md` Step 4.5) now has two one-line offers of a handoff to another skill in the session.
   Before the plan is drafted, a skill that interviews the user until the open decisions are
   settled: `grill-me` is the reference case. After it is drafted, a skill that examines the plan
   and argues against it: `plan-red-team` is the reference case. Each offer rides on a message

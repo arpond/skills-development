@@ -65,12 +65,12 @@ the user has to remember to do first:
    Feedback's and the risk register's questions each stay a single short yes/no, no menu needed.
 5. **Disclose the behaviors that aren't opt-in.** Regardless of what they choose above, mention
    once:
-   - Every ship gets asked whether it fixes or reworks an earlier one (`SKILL.md` Step 6) — this
+   - Every ship gets asked whether it fixes or reworks an earlier one (`build-and-record.md` Step 6) — this
      flags the origin item for a second look (`reassess:`, surfaced via `session-start.md` Step
      0.6 even with both `Feedback:` and `Risk register:` off) and feeds `fixes:`/`reworked:` ids
      used by whichever subsystems are on.
    - Done entries older than 60 days get moved out to a sibling `IMPROVEMENT_TRACKER_DONE.md` to
-     keep the live file lean (`SKILL.md` Step 6, `Done archive:` — mention the default `age`/
+     keep the live file lean (`session-start.md` Step 0.5, `Done archive:` — mention the default `age`/
      `floor`/`backstop` numbers and that they're changeable, same one-sentence treatment
      `strategies.md`'s Setup gives its own knobs); archived entries stay just as readable/askable,
      nothing is deleted. If it's clear from the categories/goals just discussed that this project

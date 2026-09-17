@@ -92,7 +92,7 @@ Next id: R<N>
   originally evidenced the pattern is cheap to recompute on demand — scan Done for links whose
   origin touches this entry's areas — so it isn't persisted here; storing it would
   just be a second copy to keep in sync every time a new link lands. Scan Done per the combined-pool
-  rule (`SKILL.md` Step 6's "Reading the archive") — evidence for an old, slow-moving risk pattern
+  rule (`SKILL.md`'s "Reading the archive") — evidence for an old, slow-moving risk pattern
   is exactly the kind of thing likely to have aged into the archive by the time it matters, and
   missing it there would undercount evidence or, worse, wrongly clear an active entry for archival
   on a false "nothing new" read. When reasoning about an entry (Step 2/3/4, or deciding whether to
@@ -171,7 +171,7 @@ to ask if the evidence doesn't already make it obvious. Five independent trigger
 all funneling through the same proposal format and the same gate — a repeat pattern doesn't care
 which trigger noticed it first:
 
-1. **`SKILL.md` Step 6, a `fixes:`/`reworked:` link lands.** If this is the 2nd+ link touching the
+1. **`build-and-record.md` Step 6, a `fixes:`/`reworked:` link lands.** If this is the 2nd+ link touching the
    same area (or the same specific earlier idea), propose creating a new entry if no entry covers
    that pattern yet. If one already does, there's usually nothing to write — the new link is
    evidence, and evidence isn't stored on the entry (see the no-`cause:`-list note above), so it
@@ -191,7 +191,7 @@ which trigger noticed it first:
    evidence on its own, unlike a merely-disappointing outcome.
 3. **`SKILL.md` Step 2's fragile-scan** turns up a *structural* pattern (not one isolated rough
    spot) while brainstorming — propose directly, don't wait for it to actually break first.
-4. **`SKILL.md` Step 4.5**, planning a confirmed pick exposes a risk that wasn't visible before
+4. **`build-and-record.md` Step 4.5**, planning a confirmed pick exposes a risk that wasn't visible before
    (fragile coupling, an untested assumption) — propose right there rather than waiting for a
    future fix to retroactively prove it.
 5. **Ad hoc, any time** — the user names a risk directly ("flag X as a risk area"), same as Goals'
@@ -200,7 +200,7 @@ which trigger noticed it first:
 ### A mitigation needing its own fix
 
 Distinct from trigger 1's ordinary same-area evidence: if the id getting a `fixes:`/
-`reworked:` link (`SKILL.md` Step 6) is itself tagged `mitigated-by:` on some risk entry — the
+`reworked:` link (`build-and-record.md` Step 6) is itself tagged `mitigated-by:` on some risk entry — the
 thing that was supposed to fix that risk just needed fixing itself — that's not just another data
 point toward a *new* pattern, it's direct evidence the *existing* mitigation didn't hold. Handle it
 as its own case, not folded into trigger 1's generic "2nd+ link" counting:
@@ -237,7 +237,7 @@ Archived entries are skipped for this check — that's the point of archiving; a
 archived theme is instead a **reactivation** trigger (see below), not a routine caution or a new
 planned mitigation.
 
-## Recording a planned mitigation (from `SKILL.md` Step 6)
+## Recording a planned mitigation (from `build-and-record.md` Step 6)
 
 A `mitigated-by:` entry tagged `outcome: planned` was proposed at Step 2 specifically to fix an
 active risk, but hasn't shipped yet. **When *that specific idea* is the one being recorded in
@@ -290,7 +290,7 @@ permanently stuck. Wait for it to ship and reach a real outcome (or get dropped,
 before considering archival, even if a separate, earlier `mitigated-by:` on the same entry already
 came back `effective`.
 
-**A clean ship in an entry's areas is counter-evidence too** (`SKILL.md` Step 6): if an idea
+**A clean ship in an entry's areas is counter-evidence too** (`build-and-record.md` Step 6): if an idea
 touching an active entry's areas ships with no `fixes:`/`reworked:` tag of its own, that's one data
 point against the risk being live — worth factoring into the next archival judgement even without a
 formal `mitigated-by:` entry, though it doesn't trigger archival by itself the way an `effective`

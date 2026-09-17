@@ -13,6 +13,8 @@ Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `st
 **Skills**
 - `next-improvement` 2.4.0: a tracker header says what an entry is, and each session checks entry
   size and offers a trim. See `next-improvement/changelog.md`.
+- `next-improvement`: Steps 4.5 to 6 moved to `build-and-record.md`, read only after a confirmed
+  pick. The Done archive sweep moved to `session-start.md`.
 - `work-streams`: a wrap-up follows a target's own rules for its content, and sends only ideas to
   an improvement tracker, never progress.
 

@@ -5,7 +5,7 @@ through 0.7 of the loop. This is a second core file, not a companion: every run 
 since every run needs
 a tracker to read and needs to know whether its Goals are still trustworthy before ranking
 anything against them. It lives in its own file purely to keep `SKILL.md` focused on the
-steady-state propose/build/record loop — the split is about what's loaded into the common-case
+steady-state propose loop — the split is about what's loaded into the common-case
 read, not about this content being rare.
 
 Once this file's steps are done, continue to Step 1 in `SKILL.md`.
@@ -137,26 +137,55 @@ read-condition note): its default is `on`, so run `feedback.md`'s check-in unles
 says `off`. That check-in contributes its own line to this run's combined message — including a
 "backlog not shrinking" flag when its `growth-streak` hits 2.
 
-**Also re-run Done's own archive sweep here, not only after Step 6 records a fresh ship.** The
-sweep described in `SKILL.md` Step 6 ("After appending, check whether Done needs trimming") only
-fires as a side effect of that one event. A tracker that predates the `Done archive:` field, was
-hand-edited, or had a session end before that check completed can carry a Done section that's
-overdue for archiving with nothing left to trigger it. Every session start:
-1. Re-derive eligibility the same way Step 6 does (age vs. `floor`/`backstop`).
-2. Run the sweep if anything qualifies. This is the same mechanical bookkeeping
-   as Step 6's own sweep, not a new judgement call, so it doesn't wait for the combined check-in
-   gate above.
-3. Update the same `(last sweep: ..., streak: N)` counter Step 6 uses, regardless of which step
-   performed the sweep. The counter tracks whether `age` is catching sweeps at all, not which
-   step happened to run one.
-4. Mention it in one clause if it actually moved anything ("archived 12 entries older than 60
-   days into `IMPROVEMENT_TRACKER_DONE.md`"); otherwise silent, same rule as the id backfill in
-   Step 0.
+**Run the Done archive sweep.** It runs at every session start, and again after each ship that
+`build-and-record.md` Step 6 records. The run here catches what an append-time sweep missed: a
+session that ended early, a hand-edited tracker, a tracker older than `Done archive:`. Primary
+trigger is age, not count. How long ago something shipped decides whether it's still useful
+working context, not how many entries sit next to it (a project shipping in bursts can produce 20
+genuinely-recent entries in two weeks; a slow project can carry 10 stale ones for a year). The
+sweep:
+1. Archive any Done entry whose `shipped` date is older than `Done archive:`'s `age` (default 60
+   days).
+2. **Always keep the most recent `floor` entries live regardless of age** (default 5), so a
+   dormant project that just resumed doesn't get its Done section swept to empty.
+3. **Count stays as a backstop only.** If the live section still exceeds `backstop` entries
+   (default 40) after the age sweep, archive the oldest down to `floor` by age regardless. One
+   hyperactive stretch then can't leave the file unbounded between age-sweeps.
+4. Move archived entries, unedited and in their existing order, to the end of
+   `IMPROVEMENT_TRACKER_DONE.md`. Create it if it doesn't exist yet, in the same directory as
+   `IMPROVEMENT_TRACKER.md`, with a one-line `# <Project> — archived Done history` header.
+5. Update the archive-pointer note under the live `## Done` header to the cutoff date of the
+   oldest entry now remaining live.
+6. Mention it in one clause if it moved anything ("archived 12 entries older than 60 days into
+   `IMPROVEMENT_TRACKER_DONE.md`"). Otherwise stay silent, same rule as the id backfill in Step 0.
 
-**If `SKILL.md` Step 6's Done-archive `streak` has hit 3** (three backstop-triggered sweeps in a
-row, `age` never once catching anything first), that's also due this step. Fold it into the same
-combined message per the rule above, and follow Step 6's threshold steps there (surface, propose,
-wait for confirmation, reset).
+This is mechanical bookkeeping, not a judgement call about ideas or priorities, so it doesn't wait
+for the combined check-in. Only the knob *adjustment* below waits for confirmation.
+
+**Trimming doesn't wait on `outcome`** (`Feedback: on` — see `feedback.md`). Archive eligible-by-age
+entries regardless of whether their outcome is still `pending`. Otherwise a feedback loop that
+can't keep pace with shipping would let the live Done section grow without bound. An entry crossing
+into the archive while still `pending` stays askable from the other file, per `SKILL.md`'s
+"Reading the archive".
+
+`category-rotation` (`strategies.md`) counts live Done entries only, never the archive. A window
+larger than the live section holds counts as insufficient history there, and never opens the
+archive to fill the count.
+
+**Track which trigger actually fired, to catch a miscalibrated `age`.** It is a self-correcting
+counter, the same shape as `SKILL.md` Step 2's dry-run tracking. Note which kind of sweep just ran
+inline on the `Done archive:` line: `(last sweep: backstop, streak: N)` or
+`(last sweep: age, streak: 0)`.
+Update it whichever run performed the sweep. **If the `Done archive:` line isn't present** (the
+normal case, since it's absent whenever the defaults haven't changed), write it out with its
+default values first and annotate that. There's no other line it belongs on. Trigger/increment: a
+`backstop` sweep. Corrected signal/reset: an `age` sweep, back to 0. Threshold: `streak: 3` (three
+backstop-triggered sweeps in a row with `age` never once catching anything first). At the
+threshold, fold it into this step's combined message:
+1. Surface it: `age` is calibrated for a slower project than this one is actually shipping at.
+2. Propose halving `age` (or raising `backstop`) with a concrete number.
+3. Wait for confirmation before writing. This is a hard rule (see the table in `SKILL.md`).
+4. Force-reset the streak once surfaced, regardless of the answer, same as the dry-run counter.
 
 **Check entry sizes against `Entry limit:`.** An absent line means 60 words, and `off` skips this
 check.
@@ -213,14 +242,14 @@ if others are already due.
 
 ## Step 0.6: Surface standalone reassess flags (explicit `Feedback: off` only)
 
-A `reassess: pending` flag (set by `SKILL.md` Step 6 when a later ship fixes/reworks an earlier
+A `reassess: pending` flag (set by `build-and-record.md` Step 6 when a later ship fixes/reworks an earlier
 one) is standalone of `Feedback:` — it exists regardless of whether that subsystem is on. When
 feedback is running, the flag is folded into `feedback.md`'s own check-in instead (see that file)
 and this step does nothing. **This step fires only when `Feedback:` is spelled out as `off`** —
 an *absent* line means the default `on`, so feedback is running and this step stays quiet.
 Firing on an absent line would surface the flag twice, which is exactly what this condition prevents.
 
-Scan Done for `reassess: pending` entries, per the combined-pool rule (`SKILL.md` Step 6's
+Scan Done for `reassess: pending` entries, per the combined-pool rule (`SKILL.md`'s
 "Reading the archive"). If any exist, surface the
 oldest one as a single lightweight line — no persistent answer required, no wait/bulk timing, just
 visibility: "'<origin idea>' needed a follow-up fix/rework (<the fixing idea's name>) — worth a

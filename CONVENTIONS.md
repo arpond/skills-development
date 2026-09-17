@@ -58,7 +58,7 @@ threshold  -> surface to the user, then force-reset to 0 regardless of their ans
   as a change from a zero that never meant zero.
 
 Stated in: `next-improvement`. `SKILL.md` Step 2 (dry-run tracking) holds the canonical wording.
-`SKILL.md` Step 6 (archive-sweep streak) and `feedback.md` ("Backlog not shrinking") declare their
+`session-start.md` Step 0.5 (archive-sweep streak) and `feedback.md` ("Backlog not shrinking") declare their
 own three values and refer back to it. `python check-censuses.py` shows which skills carry the
 shape.
 

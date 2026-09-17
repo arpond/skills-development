@@ -46,7 +46,7 @@ where the eligible count was higher than at the previous offer — see "Backlog 
 
 **If the `Feedback:` line isn't present, write it out before annotating it.** That's the normal
 case, since an absent line already means `on`. Write `Feedback: on` with the note attached, the
-same way Step 6 writes out an absent `Done archive:` line before annotating its own counter. Both
+same way the Done archive sweep (`session-start.md` Step 0.5) writes out an absent `Done archive:` line before annotating its own counter. Both
 fields here need it: the counter, and `bulk-offer last:`, which the re-offer trigger reads back.
 There's no other line either belongs on, so without this they silently stop being recorded at all.
 
@@ -78,7 +78,7 @@ Default `Feedback: on(wait=7, bulk=5, batch=5, reoffer=30)` if they don't care �
 are changeable later without re-running setup, and it's capped and skippable per the mechanics
 below, so opting in is low-risk.
 
-## Recording a ship (from `SKILL.md` Step 6)
+## Recording a ship (from `build-and-record.md` Step 6)
 
 When moving an item to Done, extend the base `I<N>: **Idea name** (Category)` line (see `SKILL.md`
 for the id itself, which applies regardless of `Feedback:`) with a ship date and `outcome:
@@ -101,13 +101,13 @@ normally the next time the skill starts a new session.
 
 A Done entry is **eligible** once it's shipped ≥`wait` days ago (default 7) and still has
 `outcome: pending` — enough time has passed to actually judge it. Count them across both Done
-files, per the combined-pool rule (`SKILL.md` Step 6's "Reading the archive"): Step 6 archives
+files, per the combined-pool rule (`SKILL.md`'s "Reading the archive"): the Done archive sweep archives
 entries regardless of `outcome`, so a `pending` entry can be sitting in
 `IMPROVEMENT_TRACKER_DONE.md` if this loop hasn't caught up to it yet, and missing it would let the
 backlog quietly shrink on paper without anyone answering anything.
 
 - **`reassess: pending` entries take priority over routine eligible items.** A `reassess` flag
-  (`SKILL.md` Step 6: a later ship fixed or reworked this one) means the item's original outcome
+  (`build-and-record.md` Step 6: a later ship fixed or reworked this one) means the item's original outcome
   judgement may no longer hold. Surfacing that is more valuable than a routine newly-eligible ask,
   so reassess-flagged entries always go first, oldest first, ahead of plain eligible items in every
   mode below. Wording is distinct from a routine ask, and depends on what the origin's outcome
@@ -125,7 +125,7 @@ backlog quietly shrink on paper without anyone answering anything.
   - **What the tag measures.** `outcome:` answers one question only: given everything known now,
     did this idea deliver its intended value? It is not a defect record — whether a bug was found
     and fixed later is already preserved permanently and independently via the `fixes:`/`reworked:`
-    link on the fixing entry (`SKILL.md` Step 6), regardless of what outcome gets chosen here.
+    link on the fixing entry (`build-and-record.md` Step 6), regardless of what outcome gets chosen here.
     Don't fold "there was a bug" into the outcome value itself; that fact isn't lost by leaving
     outcome at `effective`, and doesn't need re-litigating by downgrading on principle.
   - **What reassessment is actually for, then.** Not scoring the bug — the fix is evidence the

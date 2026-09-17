@@ -12,7 +12,7 @@ flag) — **or `session-start.md` Step 0 discovering a tracker with zero ids and
 all**, which runs the first-adoption case below immediately rather than waiting for this section's
 usual lazy trigger to eventually fire.
 
-All of it is mechanical bookkeeping, same as Step 6's Done-trimming — never a
+All of it is mechanical bookkeeping, same as the Done archive sweep — never a
 judgement call, and never a reason to stop and ask.
 
 **The bulk-backfill ordering rule**, used both by first-time adoption below and by the one-time
@@ -74,7 +74,7 @@ ordinary steady state, handled by lazy per-entry minting like any other.
 
 ## One-time heads-up on a tracker that predates the fixes/reworks question
 
-**Trigger: `SKILL.md` Step 6 is about to ask whether this ship fixes or reworks an earlier one, and
+**Trigger: `build-and-record.md` Step 6 is about to ask whether this ship fixes or reworks an earlier one, and
 `Next id:` was missing before this recording** — meaning this project has never seen that
 question. `setup.md` writes `Next id:` into every tracker it creates, so a missing field means a
 tracker older than that rule, never a fresh one.

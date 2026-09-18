@@ -90,7 +90,7 @@ Move the item from its origin category to **Done** in that project's tracker, wi
 note on what was actually built. If `Feedback: on`, see `feedback.md` for the extra tagging to
 add at this step. Leave everything else in the file untouched. If the work surfaced new
 follow-on ideas that weren't there before, add them to the relevant category now rather than
-losing them — that's the loop closing, not scope creep. Each one stays within `Entry limit:`.
+losing them — that's the loop closing, not scope creep. Each one stays within `Entry word limit:`.
 Evidence from the build goes in the commit message or the ticket, not in any entry.
 
 **Ask whether this ship fixes or reworks an earlier one.** Every recording, ask directly, with an

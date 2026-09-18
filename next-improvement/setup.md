@@ -83,14 +83,14 @@ the user has to remember to do first:
      how often the skill goes looking for new ideas rather than just ranking what is there.
    - Goals get a check-in when they were last reviewed over about 30 days ago, or five items have
      shipped since (`session-start.md` Step 0.5). It is a question, never an edit.
-   - Each idea-category entry has a word limit, 60 by default (`Entry limit:`). Every session start
-     counts entries against it and offers to trim any over it. Say the number can change, and that
-     `off` turns the check off.
+   - Each idea-category entry has a word limit, 60 by default (`Entry word limit:`). Every
+     session start counts entries against it and offers to trim any over it. Say the number can
+     change, and that `off` turns the check off.
    All of these are core-loop, not toggles — say so plainly rather than letting any show up
    unannounced the first time it fires.
 6. Write the file with:
    - the text from "The header", directly under `# Improvement Tracker`
-   - `Entry limit: 60`, always, because the header points at it
+   - `Entry word limit: 60`, always, because the header points at it
    - the confirmed tiers
    - `Selection strategy:`, `Feedback:`, `Risk register:`
    - `Done archive:`, only if changed from the default
@@ -113,10 +113,10 @@ the tracker anyway.
 
 ```markdown
 > **What belongs here:** one entry per idea. An entry says what the idea is, why it matters, and
-> where it applies. Keep each one within the `Entry limit:` under Goals. Do not add measurements,
-> change history, line-number lists, tables, or notes on work in progress. Put findings and
-> gotchas in <FINDINGS>, reference material in <REFERENCE>, and evidence in the ticket or the
-> commit message.
+> where it applies. Keep each one within the `Entry word limit:` under Goals. Do not add
+> measurements, change history, line-number lists, tables, or notes on work in progress. Put
+> findings and gotchas in <FINDINGS>, reference material in <REFERENCE>, and evidence in the
+> ticket or the commit message.
 ```
 
 Fill the two placeholders from what the project already has, and never create a file to fill one:

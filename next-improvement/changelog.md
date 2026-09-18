@@ -18,13 +18,19 @@ Each entry says what is new and **whether there is anything to opt into**:
 - **Automatic entries** change how something already on behaves. There is nothing to accept or
   decline, so do not pose one as a question. Say it in a clause if it changes what the user will
   see. Stay silent if it does not. Bump `Feature check:` either way.
-- **A pure rename of existing values is automatic too.** No gate, because a rewrite that keeps
-  the meaning exactly has no judgement in it (the same category as the id-restyling mechanics in
-  `tracker-maintenance.md`). Say it happened in the same disclosure clause. Then sweep every
-  occurrence across the live tracker and its archive in that one edit, not lazily on next touch.
-  Old and new spellings mixed indefinitely is exactly the drift this kind of change exists to
-  close.
+- **A pure rename of existing values or setting names is automatic too.** No gate, because a
+  rewrite that keeps the meaning exactly has no judgement in it (the same category as the
+  id-restyling mechanics in `tracker-maintenance.md`). Say it happened in the same disclosure
+  clause. Then sweep every occurrence the skill reads, across the live tracker and its archive, in
+  that one edit, not lazily on next touch. Free prose in Done and Rejected is history, and stays
+  as written. Old and new spellings mixed indefinitely is exactly the drift this kind of change
+  exists to close.
 
+- **3.0.0** — *breaking, one setting name only, migrated automatically.* `Entry limit:` becomes
+  `Entry word limit:`, because the old name could be read as a cap on the number of entries.
+  `session-start.md` Step 0 renames the line, and that key in the header, as soon as it finds
+  them. Rename too any `Entry limit:` an older entry in this same walk has just written. Say it in
+  a clause if anything was renamed this session. Otherwise stay silent.
 - **2.4.0** — *the size check is automatic for all projects. The header is opt-in.* Writers that
   never load this skill had made some trackers a store for measurements, change history, and
   reference tables. Two changes follow. First, every session start counts the words in each

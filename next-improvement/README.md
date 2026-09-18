@@ -55,8 +55,8 @@ All inside the project you work in. Nothing elsewhere on your machine, nothing o
   conversation. One per project (the directory with its own README or package manifest, not
   necessarily the repo root). A short header at the top tells anyone who edits it, a person or an
   agent, what an entry is and where other content goes. A new tracker gets the header at setup. An
-  existing one is offered it once. Each session counts the words in every
-  idea entry against a limit, 60 by default, and offers to trim the ones over it. A trim never
+  existing one is offered it once. Each session counts the words in every idea entry against a
+  word limit, 60 by default, and offers to trim the ones over it. A trim never
   writes without your confirmation.
 - **Other files in your project, during a trim only.** A trim can update a file that cites the
   trimmed entry by its id. It can also create a file for tables or other reference material it moves

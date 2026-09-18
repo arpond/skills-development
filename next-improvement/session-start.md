@@ -71,8 +71,10 @@ Goals aren't fixed forever though: see Step 0.5 below.
 **If it exists but is malformed, don't silently rewrite it back into shape, and don't refuse to
 proceed either.** Malformed means: no `## Goals` section, a tier line that doesn't parse as
 priority order, an unrecognised `Selection strategy:`/`Feedback:`/`Risk register:`/`Done archive:`
-value, an `Entry limit:` that is neither a positive whole number nor `off`, or a
-`Created:`/`Feature check:` that isn't a valid `X.Y.Z` version. Unrecognised means the
+value, an `Entry word limit:` that is neither a positive whole number nor `off`, or a
+`Created:`/`Feature check:` that isn't a valid `X.Y.Z` version. Two lines for one setting are
+malformed too, because they can disagree. An `Entry limit:` line counts as an `Entry word limit:`
+line for this. Unrecognised means the
 setting itself can't be read: a mode or on/off value that names nothing. A parameter *inside* a
 mode that reads fine is not this case. A degenerate count or a stale cursor is handled where that
 mode is defined (`strategies.md`), announced rather than asked about. This is a case of
@@ -84,6 +86,10 @@ broken, leaving categories/Done/Rejected untouched). Never fabricate a plausible
 list to paper over a missing one — a wrong guess here silently misranks every candidate for as
 long as the tracker lives, the exact failure mode Step 0.5 already exists to prevent for staleness.
 This is one of the skill's hard rules (see the table in `SKILL.md`).
+
+**Rename an `Entry limit:` line to `Entry word limit:` as soon as it is found.** It is the 2.4.0
+spelling of the same setting. Do it before any check reads the setting, and at any stamp. Rename
+that key in the header sentence in the same write. It is mechanical bookkeeping, with no gate.
 
 **A `##` section that isn't Goals, a category, Done, or Rejected is a content-placement problem,
 not a parsing problem** (see `SKILL.md`'s "closed sections" rule). It's lighter-weight than the
@@ -191,8 +197,8 @@ next session start. At the threshold, fold it into this step's combined message:
 3. Wait for confirmation before writing. This is a hard rule (see the table in `SKILL.md`).
 4. Force-reset the streak once surfaced, regardless of the answer, same as the dry-run counter.
 
-**Check entry sizes against `Entry limit:`.** An absent line means 60 words, and `off` skips this
-check.
+**Check entry sizes against `Entry word limit:`.** An absent line means 60 words, and `off` skips
+this check.
 1. Count the words in every entry of every idea category. An entry is its bullet line plus the
    indented lines under it, with its id and name.
 2. Count with a tool, such as `wc -w` or a short script. An estimate is not a count.
@@ -207,7 +213,7 @@ A yes goes to `tracker-maintenance.md`'s "Trimming an oversized entry". A no hol
 the session, and nothing about it is written to the tracker. Done and Rejected are not counted.
 They are append-only history, and a trim edits the entry.
 
-When the user asks to set `Entry limit: off`, the header still tells writers to keep within a
+When the user asks to set `Entry word limit: off`, the header still tells writers to keep within a
 limit. Offer to delete that sentence from the header in the same write.
 
 **Check the tracker's `Feature check:` version against `SKILL.md`'s current skill version.** This

@@ -5,7 +5,7 @@ description: Runs a "what should we work on next" process for whatever project t
 
 # Next improvement
 
-**Skill version: 2.4.0.** `session-start.md`'s version check compares a tracker's `Feature check:`
+**Skill version: 3.0.0.** `session-start.md`'s version check compares a tracker's `Feature check:`
 stamp against this number. `changelog.md` holds both what shipped at each version and the
 versioning policy itself — read it only when that check actually finds a gap, not on every run.
 
@@ -43,8 +43,8 @@ This file covers Steps 1-4, the steady-state propose loop. Eight files live alon
   missing. Read it only when `session-start.md`'s version check finds a tracker's `Feature check:`
   behind the current skill version.
 - `tracker-maintenance.md` — per-project events outside the normal loop (minting/migrating ids,
-  trimming an entry over the limit, retiring/merging/narrowing a category, one-time disclosures to
-  an older tracker). Read it only when that specific
+  trimming an entry over the word limit, retiring/merging/narrowing a category, one-time
+  disclosures to an older tracker). Read it only when that specific
   trigger actually fires — each section names its own.
 
 Each bullet above carries its own read condition, and those conditions are the whole rule.
@@ -84,7 +84,7 @@ Last reviewed: <YYYY-MM-DD>
 Created: v<X.Y.Z>               <!-- skill version at setup time, stamped once, never changes -->
 Feature check: v<X.Y.Z>         <!-- skill version last checked for new-feature disclosure -->
 Next id: I<N>                  <!-- next unassigned idea id -->
-Entry limit: 60                <!-- optional, words per idea-category entry, or off -->
+Entry word limit: 60           <!-- optional, words per idea-category entry, or off -->
 Selection strategy: top-tier   <!-- optional, see strategies.md -->
 Feedback: on                   <!-- optional, see feedback.md -->
 Risk register: on              <!-- optional, see risk-register.md -->
@@ -129,8 +129,9 @@ Done archive: age=60, floor=5, backstop=40 (last sweep: age, streak: 0)   <!-- o
 - **The header above Goals tells every writer what an entry is and where other content goes.**
   `setup.md`'s "The header" holds its text and its reason. Change the header only through a
   proposal the user confirms. Never re-add one they removed.
-- **`Entry limit:` is the word limit for each idea-category entry.** `session-start.md` Step 0.5
-  holds its default and the check, and `tracker-maintenance.md` holds the trim it offers.
+- **`Entry word limit:` caps the words in each idea-category entry, not the number of entries.**
+  `session-start.md` Step 0.5 holds its default and the check. `tracker-maintenance.md` holds the
+  trim it offers. `session-start.md` Step 0 renames the old `Entry limit:` spelling.
 - Two or more goals may share the same tier number when they're genuinely equal priority right
   now. A tied group must carry a short tie-break note on the same line: what to do when a real
   candidate serves one tied goal but not its sibling. If the user has no strong opinion, fall
@@ -138,8 +139,8 @@ Done archive: age=60, floor=5, backstop=40 (last sweep: age, streak: 0)   <!-- o
   it happens" — but prefer capturing their actual reasoning if they have one. Keep tie groups
   small (2, rarely 3); a tier that keeps growing tied entries is a smell that ranking has stopped
   meaning anything, and is worth surfacing (see Step 0.5).
-- `Selection strategy:`, `Feedback:`, `Risk register:`, `Done archive:`, and `Entry limit:` are
-  optional lines that may be absent. The first three are specified in `strategies.md`,
+- `Selection strategy:`, `Feedback:`, `Risk register:`, `Done archive:`, and `Entry word limit:`
+  are optional lines that may be absent. The first three are specified in `strategies.md`,
   `feedback.md`, and `risk-register.md`. The last two are specified in `session-start.md` Step 0.5.
   Don't inline their details here.
   **Read each companion file by the setting's *value*, not by whether the line is present.** An
@@ -261,6 +262,7 @@ visibly weak ideas the user can see for themselves. Absence from this table does
 | Tracker file | gate | Show any change to the header as a proposal, and wait for confirmation before writing it |
 | Tracker file | prohibition | Never re-add a header the user removed |
 | 0 (session-start.md) | surface | Surface a foreign `##` section once per project rather than leaving it unmentioned |
+| 0 (session-start.md) | mechanical | Rename an `Entry limit:` line, and that key in the header, to `Entry word limit:` before any check reads the setting |
 | 0 (tracker-maintenance.md) | mechanical | Backfill a missing `Created:`/`Feature check:` to `0.0.0`, and never stamp the current version in the same move |
 | 0 (tracker-maintenance.md) | mechanical | Bulk-backfill ids for a tracker with zero ids and no `Next id:` line, rather than waiting for the lazy per-entry trigger to eventually fire |
 | 0 (tracker-maintenance.md) | gate | Give a backfilled tracker the one-time baseline-subsystems catch-up (`Selection strategy:`/`Feedback:`/`Risk register:`) it never got via `setup.md` |
@@ -270,7 +272,7 @@ visibly weak ideas the user can see for themselves. Absence from this table does
 | 0.5 (session-start.md) | surface | Surface a stale-Goals check-in when due |
 | 0.5 (session-start.md) | surface | Surface a `Feature check:` version gap, including a missing stamp, walked as `0.0.0` |
 | 0.5 (session-start.md) | surface | Surface an unexpectedly-ahead `Feature check:` stamp rather than resolving it either way |
-| 0.5 (session-start.md) | surface | Surface idea-category entries over `Entry limit:`, and non-entry content in a category, once per session |
+| 0.5 (session-start.md) | surface | Surface idea-category entries over `Entry word limit:`, and non-entry content in a category, once per session |
 | 0.5 (tracker-maintenance.md) | gate | Show each proposed trim, with a destination for every removed part, and wait for confirmation before writing |
 | 0.5 (tracker-maintenance.md) | surface | For each hit, say which file cites the entry and what detail it relies on |
 | 0.5 (tracker-maintenance.md) | surface | Say that the search covered this project only |
@@ -379,7 +381,7 @@ keeping. Don't write to the tracker until they've had a chance to react. Then:
   whenever it comes up again?") and store it if they give one. A substance-based decline gets no
   such field, per the Rejected-format note above.
 - Match that file's existing format and voice for whatever does get appended.
-- Keep each appended entry within `Entry limit:`. Neighbouring entries that run longer set the
+- Keep each appended entry within `Entry word limit:`. Neighbouring entries that run longer set the
   format, not the length.
 - Don't pad a thin category with filler just to hit a count. If there are only one or two solid
   ideas, say so and move on rather than inventing weak ones.

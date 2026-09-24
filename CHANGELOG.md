@@ -8,6 +8,12 @@ the repo is organised. `next-improvement` keeps a versioned changelog in
 Format: one heading per period, named by theme and dated by its start. Three fixed sections:
 Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `ste-writing`.
 
+## Frontmatter that parses · 2026-09-24
+
+**Skills**
+- `plan-technical-jira-ticket` and `commit-message-check`: each description had a colon and a
+  space, which strict YAML parsers reject. Those parsers now load both skills.
+
 ## Tracker entry word limit · 2026-09-17
 
 **Skills**

@@ -49,7 +49,7 @@ Format:
 # Repo Knowledge
 
 Last reviewed: <YYYY-MM-DD>
-Feature check: v<X.Y.Z>
+Feature check: <X.Y.Z>
 
 <the header from setup.md: how to use an entry without this skill>
 
@@ -89,6 +89,8 @@ Feature check: v<X.Y.Z>
 - **`Feature check:`** is a skill-version stamp: the skill version last disclosed to this file.
   `session-start.md` owns it (backfill, compare, bump after disclosure). Nothing in Steps 1-3
   reads or writes it.
+  - Write it without a leading `v`.
+  - Read a leading `v` as the same version. Never rewrite a stamp only to drop it.
 - **No archive section for removed entries.** The file is git-tracked, so a removed entry is fully
   recoverable via `git log`/`git blame` — don't build a second history mechanism for something git
   already gives for free.

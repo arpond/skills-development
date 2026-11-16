@@ -81,8 +81,8 @@ Format:
 
 ## Goals (priority order, highest first)
 Last reviewed: <YYYY-MM-DD>
-Created: v<X.Y.Z>               <!-- skill version at setup time, stamped once, never changes -->
-Feature check: v<X.Y.Z>         <!-- skill version last checked for new-feature disclosure -->
+Created: <X.Y.Z>                <!-- skill version at setup time, stamped once, never changes -->
+Feature check: <X.Y.Z>          <!-- skill version last checked for new-feature disclosure -->
 Next id: I<N>                  <!-- next unassigned idea id -->
 Entry word limit: 60           <!-- optional, words per idea-category entry, or off -->
 Selection strategy: top-tier   <!-- optional, see strategies.md -->
@@ -126,6 +126,8 @@ Done archive: age=60, floor=5, backstop=40 (last sweep: age, streak: 0)   <!-- o
   knowing about. `Feature check:` moves forward as new features get disclosed. Both are handled
   entirely by `session-start.md`'s Step 0/0.5 (with the catch-up for a tracker that predates
   them); nothing in Steps 1-6 reads or writes either.
+  - Write each without a leading `v`.
+  - Read a leading `v` as the same version. Never rewrite a stamp only to drop it.
 - **The header above Goals tells every writer what an entry is and where other content goes.**
   `setup.md`'s "The header" holds its text and its reason. Change the header only through a
   proposal the user confirms. Never re-add one they removed.

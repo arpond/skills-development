@@ -40,8 +40,8 @@ handled separately below, not here.
 **If it exists but is malformed, don't silently reshape it back into form, and don't refuse to
 proceed either.** Malformed means: no `## Entries` section, an entry missing one of the required
 fields, an unparseable `Last reviewed:` date, or a `Feature check:` that is not a valid `X.Y.Z`
-version. This is a case of "unreachable isn't resolved," not a normal empty file; reshaping
-guesses at intent the user never confirmed.
+version. A leading `v` is valid. This is a case of "unreachable isn't resolved," not a normal
+empty file; reshaping guesses at intent the user never confirmed.
 - Name the specific thing that doesn't parse and ask directly: fix it by hand, or walk through
   repairing just that piece, leaving everything else untouched.
 - Never fabricate plausible-looking Evidence or dates to paper over a broken entry. A wrong guess

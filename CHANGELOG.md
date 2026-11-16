@@ -8,6 +8,12 @@ their own folder. Entries here point to them.
 Format: one heading per period, named by theme and dated by its start. Three fixed sections:
 Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `ste-writing`.
 
+## Version stamps without a v · 2026-11-16
+
+**Standards**
+- Spec *Skill versioning*: a `Feature check:` stamp is written without a leading `v`. A stamp
+  with one is still valid. `repo-knowledge` and `next-improvement` match.
+
 ## Knowledge entries used without the skill · 2026-11-16
 
 **Skills**

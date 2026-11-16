@@ -270,7 +270,7 @@ Every versioned skill implements one mechanism:
 
 ```
 SKILL.md, top:           **Skill version: X.Y.Z.**
-artifact header:         Feature check: vX.Y.Z
+artifact header:         Feature check: X.Y.Z
 skill companion file:    changelog.md
 ```
 
@@ -280,6 +280,9 @@ skill companion file:    changelog.md
 - **The stamp** is the skill version last disclosed to the artifact. Bootstrap writes it. Only
   the check below moves it. A skill may add stamps of its own beside it (`next-improvement`'s
   `Created:`). This spec covers only `Feature check:`.
+  - Write it without a leading `v`.
+  - Read a leading `v` as the same version, never as unparseable. Never rewrite a stamp only to
+    drop it.
 - **`changelog.md`** restates this policy, then lists one entry per MINOR+ version, newest first.
   Each entry says what changed and whether there is anything to opt into. Its only read condition
   is the check finding a gap.

@@ -72,14 +72,13 @@ Goals aren't fixed forever though: see Step 0.5 below.
 proceed either.** Malformed means: no `## Goals` section, a tier line that doesn't parse as
 priority order, an unrecognised `Selection strategy:`/`Feedback:`/`Risk register:`/`Done archive:`
 value, an `Entry word limit:` that is neither a positive whole number nor `off`, or a
-`Created:`/`Feature check:` that isn't a valid `X.Y.Z` version. Two lines for one setting are
-malformed too, because they can disagree. An `Entry limit:` line counts as an `Entry word limit:`
-line for this. Unrecognised means the
-setting itself can't be read: a mode or on/off value that names nothing. A parameter *inside* a
-mode that reads fine is not this case. A degenerate count or a stale cursor is handled where that
-mode is defined (`strategies.md`), announced rather than asked about. This is a case of
-"unreachable isn't resolved," not a normal empty/stale tracker. Rewriting it guesses at intent the
-user never confirmed.
+`Created:`/`Feature check:` that isn't a valid `X.Y.Z` version. A leading `v` is valid. Two lines
+for one setting are malformed too, because they can disagree. An `Entry limit:` line counts as an
+`Entry word limit:` line for this. Unrecognised means the setting itself can't be read: a mode or
+on/off value that names nothing. A parameter *inside* a mode that reads fine is not this case. A
+degenerate count or a stale cursor is handled where that mode is defined (`strategies.md`),
+announced rather than asked about. This is a case of "unreachable isn't resolved," not a normal
+empty/stale tracker. Rewriting it guesses at intent the user never confirmed.
 Name the specific thing that doesn't parse and ask directly: fix it by hand, or walk through
 re-doing just that broken piece (e.g. re-running the Goals portion of `setup.md` if only Goals is
 broken, leaving categories/Done/Rejected untouched). Never fabricate a plausible-looking Goals

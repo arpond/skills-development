@@ -38,8 +38,8 @@ Each entry says what is new and **whether there is anything to opt into**:
   `off`. Entries over the limit, and content in a category that is not an entry, are surfaced
   once per session. A yes runs the trim in `tracker-maintenance.md`, with a gate on each proposal.
   Done and Rejected are not counted. Second, setup now writes a short header above Goals. It says
-  what an entry is and where other content goes. Setup ask for an existing tracker: offer the
-  header, filled in from `setup.md`'s "The header", and write `Entry limit: 60` with it. A decline
+  what an entry is and where other content goes. For an existing tracker, offer the header,
+  filled in from `setup.md`'s "The header", and write `Entry limit: 60` with it. A decline
   leaves the tracker as it is, and the check still runs at the default.
 - **2.3.0** — *automatic, all projects, nothing to opt into.* Planning a confirmed pick
   (`build-and-record.md` Step 4.5) now has two one-line offers of a handoff to another skill in the session.

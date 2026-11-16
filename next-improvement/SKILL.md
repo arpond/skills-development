@@ -129,8 +129,14 @@ Done archive: age=60, floor=5, backstop=40 (last sweep: age, streak: 0)   <!-- o
   - Write each without a leading `v`.
   - Read a leading `v` as the same version. Never rewrite a stamp only to drop it.
 - **The header above Goals tells every writer what an entry is and where other content goes.**
-  `setup.md`'s "The header" holds its text and its reason. Change the header only through a
-  proposal the user confirms. Never re-add one they removed.
+  `setup.md`'s "The header" holds its text and its reason, the only copy.
+  - It is prose. Never give it a line shaped like an entry or a setting.
+  - Setup writes it. An existing tracker gets it only through a proposal the user confirms. The
+    trigger is `changelog.md`'s 2.4.0 entry, or the user asking at any time.
+  - A decline writes nothing. The version check does not offer it again.
+  - Change the header only through a proposal the user confirms, including a reword in a later
+    version. The exception is a key rename, which `session-start.md` Step 0 makes everywhere at once.
+  - Never re-add one they removed.
 - **`Entry word limit:` caps the words in each idea-category entry, not the number of entries.**
   `session-start.md` Step 0.5 holds its default and the check. `tracker-maintenance.md` holds the
   trim it offers. `session-start.md` Step 0 renames the old `Entry limit:` spelling.

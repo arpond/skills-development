@@ -8,6 +8,19 @@ their own folder. Entries here point to them.
 Format: one heading per period, named by theme and dated by its start. Three fixed sections:
 Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `ste-writing`.
 
+## Artifact headers · 2026-11-16
+
+**Standards**
+- Principle *An artifact is used without its skill*: a rule every reader of the file must follow
+  goes in the file, as a header.
+- Spec *Artifact headers*: one lifecycle for a header that a skill writes into its artifact.
+  `next-improvement` and `repo-knowledge` implement it.
+
+**Skills**
+- `repo-knowledge`: a later version that rewords the `KNOWLEDGE.md` header must propose the change
+  first.
+- `next-improvement`: the user can ask for the tracker header at any time.
+
 ## Version stamps without a v · 2026-11-16
 
 **Standards**

@@ -3,9 +3,10 @@
 Read this file only when `session-start.md`'s Step 0 finds no `IMPROVEMENT_TRACKER.md` for the
 current project. This is a one-time-per-project interrogation — once the file exists, later runs
 never need this file again (see `session-start.md`'s Step 0.5 for ongoing staleness checks
-instead). The one exception is "The header". Two later events read that section alone: an existing
-tracker that accepts the header through `changelog.md`, and a trim that checks the header's
-destinations (`tracker-maintenance.md`).
+instead). The one exception is "The header". Three later events read that section alone:
+- an existing tracker that accepts the header through `changelog.md`
+- a user who asks for the header
+- a trim that checks the header's destinations (`tracker-maintenance.md`)
 
 `session-start.md` Step 0 has already resolved that no tracker exists anywhere — don't re-look.
 **Create it in `<docs-dir>/` if the project already has one** (`docs/`, `doc/`, or

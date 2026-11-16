@@ -55,6 +55,7 @@ principle that only ever gets applied outward isn't being applied.
   - [Progressive disclosure](#progressive-disclosure)
   - [Moving content means re-pointing every reference to it](#moving-content-means-re-pointing-every-reference-to-it)
   - [Documentation travels with the skill](#documentation-travels-with-the-skill)
+  - [An artifact is used without its skill](#an-artifact-is-used-without-its-skill)
   - [A skill's own instructions can't depend on the dev repo around it](#a-skills-own-instructions-cant-depend-on-the-dev-repo-around-it)
   - [No machine-specific paths in a tracked skill file](#no-machine-specific-paths-in-a-tracked-skill-file)
   - [Mechanism and personal preference belong in different files](#mechanism-and-personal-preference-belong-in-different-files)
@@ -419,6 +420,35 @@ The bar is a person deciding whether to install this, who can't see the code and
 into my project, and where?** Someone is entitled to know that before a skill edits their repo,
 not after. Which sections a README must carry to clear that bar is a spec — see `CONVENTIONS.md`,
 "Skill README contents."
+
+### An artifact is used without its skill
+
+A file a skill keeps in someone's project is read and edited by people and sessions that never
+load the skill. They reach it through a pointer in an instruction file, a grep, or a hand edit. A
+rule that keeps the file correct in use, held only in the skill, is skipped by every one of them.
+Nothing errors. The file just drifts. Distinct from
+[Documentation travels with the skill](#documentation-travels-with-the-skill): that is the skill's
+folder, for someone deciding whether to install it. This is the artifact, for someone using it who
+may never have heard of the skill.
+
+So decide, for each rule about the artifact, who has to follow it:
+- A rule only the skill applies, such as a periodic review, can stay in the skill.
+- A rule every reader or writer must follow goes in the artifact itself, as a header.
+- A session that greps the file never sees its top. A pointer in the instruction file, sending
+  readers to the header, reaches that session too.
+
+A value only the skill writes records when the skill was loaded, not how the file was used. Read
+it that way before acting on it.
+
+Worked instances, both real:
+- `next-improvement` 2.4.0. Writers without the skill made trackers a store for measurements,
+  change history and reference tables, because nothing they read said what an entry was.
+- `repo-knowledge` 1.1.0. Sessions used knowledge entries through a pointer and a grep without
+  checking their Evidence. One relied on line numbers that had moved. Most reference counts sat at
+  zero, which a review would have read as unused entries.
+
+Both fixes put the rules in a header. How a header is written, offered, and changed is a spec —
+see `CONVENTIONS.md`, "Artifact headers."
 
 ### A skill's own instructions can't depend on the dev repo around it
 

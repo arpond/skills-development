@@ -259,6 +259,33 @@ runtime. That makes it the copy most likely to drift unnoticed. Nothing at runti
 wrong path there misdirects someone before they ever invoke the skill. A change to a resolve order
 is three edits per skill, not two.
 
+## Artifact headers
+
+A human-facing artifact (see "Artifact locations") can carry a header. That is prose at the top
+of the file that tells a reader or writer without the skill how to use it. `DESIGN_PHILOSOPHY.md`,
+"An artifact is used without its skill", says when a skill needs one. Every skill that writes one
+follows these rules:
+
+- **One copy of the text**, in the skill's setup file, with the reason for it. The format block in
+  the core file holds only a placeholder that names that section.
+- **Prose, never a shape the skill parses.** A header line shaped like an entry or a setting is
+  read as one.
+- **Bootstrap writes it.** The proposal to create the artifact shows the header text.
+- **An existing artifact gets it only through a gate.** Show the text and wait. The trigger is an
+  opt-in item in the skill's `changelog.md`, or a request from the user at any time.
+- **A decline writes nothing.** The version check does not offer it again.
+- **A change to an existing header is a proposal the user confirms.** That includes a reword in a
+  later skill version. One exception: when a version renames a key everywhere in the file, the
+  header gets the same rename as mechanical bookkeeping.
+- **Never re-add a header the user removed.**
+
+### Implemented by
+
+| Skill | Where it's stated |
+|---|---|
+| `next-improvement` | `SKILL.md` "The tracker file" (all rules), `setup.md` "The header" (text, reason), `changelog.md` 2.4.0 (opt-in), the hard-rules table |
+| `repo-knowledge` | `SKILL.md` "The knowledge file" (all rules), `setup.md` "The header and the pointer" (text, reason) and "Adding the header and pointer to an existing file" (gate), `changelog.md` 1.1.0 (opt-in), the hard-rules table |
+
 ## Skill versioning
 
 A skill carries a version number only when an artifact outside this repo compares against it.

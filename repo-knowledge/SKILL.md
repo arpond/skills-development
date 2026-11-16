@@ -75,7 +75,14 @@ Feature check: <X.Y.Z>
   - Anchor it on content that moves with the code: a symbol, a heading, a search string.
   - Never anchor it on a line number alone. Any edit above that line makes it point at the wrong
     place, and the pointer still resolves.
-- **The header** is Step 1 for a reader without this skill. `setup.md` holds its wording.
+- **The header** is Step 1 for a reader without this skill. `setup.md` holds its wording and its
+  reason, the only copy.
+  - It is prose. Never give it a line shaped like an entry or a field.
+  - Setup writes it. An existing file gets it only through `setup.md`'s gate. The trigger is
+    `changelog.md`'s 1.1.0 entry, or the user asking at any time.
+  - A decline writes nothing. The version check does not offer it again.
+  - Change an existing header only through a proposal the user confirms. That includes a reword in
+    a later skill version.
   - Keep it intact when editing the file.
   - Never re-add a header the user removed.
 - **Last referenced** and **referenced: N** exist for two reasons at once: they're a usage/success
@@ -129,6 +136,7 @@ numbered options or the capture bar's four tests. Absence from this table does n
 | 0 (session-start.md) | surface | Surface a `Feature check:` version gap, including a missing stamp, walked as `0.0.0` |
 | 0 (session-start.md) | surface | Surface an unexpectedly-ahead `Feature check:` stamp rather than resolving it either way |
 | 0 (setup.md) | gate | Show the header and pointer text and wait before adding either to an existing project. The user accepts or declines each one separately |
+| File | gate | Show any change to an existing header as a proposal, and wait for confirmation before writing it |
 | File | prohibition | Never re-add a header the user removed |
 | 1 | surface | Surface an entry when current work touches its Evidence |
 | 1 | mechanical | Bump `Last referenced` and the count, at most once a day, after relying on an entry whose Evidence resolves |

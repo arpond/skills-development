@@ -16,6 +16,10 @@ Read every entry in `KNOWLEDGE.md` and collect, without editing anything yet:
 - Any entry with `referenced: 0` — never used since capture. Zero references doesn't necessarily
   mean the entry is wrong, but it's a real signal worth a human eye: either nobody's hit the
   situation it describes since, or nobody's finding it when they do.
+- **Except when more than half the entries are at `referenced: 0`.** Then the count most likely
+  shows references that went unrecorded, not entries that went unused.
+  - Say how many entries are at zero, and say that the count cannot tell the two apart.
+  - List none of them as candidates on the count alone.
 - As a soft suggestion, not a removal candidate: entries with a notably high reference count.
   These are working, but a fact that keeps coming up repeatedly is also a candidate for a more
   permanent fix — promoting the note into `CLAUDE.md`, fixing the underlying issue in code, or

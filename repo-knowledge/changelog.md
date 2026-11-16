@@ -17,7 +17,18 @@ Each entry says what is new and **whether there is anything to opt into**:
   decline, so do not pose one as a question. Say it in a clause if it changes what the user will
   see. Stay silent if it does not. Bump `Feature check:` either way.
 
+- **1.1.0** — *one opt-in item, three automatic changes.*
+  - *Opt-in:* a header in `KNOWLEDGE.md` that holds the rules for using an entry without this
+    skill, and a pointer sentence that sends a session to it. Hand off to `setup.md`'s "Adding the
+    header and pointer to an existing file", which holds the gate.
+  - *Automatic:* a review lists no entry on a zero count alone when more than half the entries are
+    at zero. Say this in a clause when a review is due in the same message.
+  - *Automatic:* Evidence is anchored on content, not on a line number. A line number passes the
+    check only if that line still shows what the entry says. Say this in a clause.
+  - *Automatic:* the count goes up at most once a day. When the skill loads part-way through a
+    session, it checks and bumps the entries the session already relied on. A `needs-review` entry
+    whose Evidence passes again goes back to `active`. Stay silent about these.
 - **1.0.0** — *baseline, automatic, nothing to opt into.* Everything in this skill as of the
-  version field's introduction. A file backfilled from a missing stamp to `0.0.0` is not behind on
-  anything this file tracks. The only visible change is the new `Feature check:` header line. Say
-  that in a clause, then stamp.
+  version field's introduction. A file backfilled from a missing stamp to `0.0.0` has nothing to
+  adopt from this entry. The only visible change is the new `Feature check:` header line. Say that
+  in a clause, then walk on to the next entry.

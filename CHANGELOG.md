@@ -2,11 +2,19 @@
 
 Changes worth a reader's attention, newest first. This is not the commit log. An entry records
 one of three things: what a skill now does for its user, what an author here must follow, or how
-the repo is organised. `next-improvement` keeps a versioned changelog in
-`next-improvement/changelog.md`. Entries here point to it.
+the repo is organised. `next-improvement` and `repo-knowledge` each keep a versioned changelog in
+their own folder. Entries here point to them.
 
 Format: one heading per period, named by theme and dated by its start. Three fixed sections:
 Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `ste-writing`.
+
+## Knowledge entries used without the skill · 2026-11-16
+
+**Skills**
+- `repo-knowledge` 1.1.0: a new file header holds the rules for using an entry without the skill.
+  The pointer sends sessions to it. See `repo-knowledge/changelog.md`.
+- `repo-knowledge` 1.1.0: when more than half the entries are at zero, a review lists none of them
+  on the count alone.
 
 ## Frontmatter that parses · 2026-09-24
 

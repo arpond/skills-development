@@ -21,8 +21,10 @@ Files:
 - `setup.md` — the one-time-per-project bootstrap. It creates `KNOWLEDGE.md`, checks a bounded
   set of the project's existing docs (README, CLAUDE.md/AGENTS.md, a troubleshooting guide or
   runbook, and their `docs/`-folder equivalents) for gotcha-shaped content that should migrate
-  over, and asks whether there is anywhere else worth a check. Read only the first time the skill
-  runs for a project, before `KNOWLEDGE.md` exists.
+  over, and asks whether there is anywhere else worth a check. It also holds the wording of the
+  file's header and the pointer. Read the first time the skill runs for a project, before
+  `KNOWLEDGE.md` exists. Read again when an upgrade offers the header and pointer, or when you ask
+  for the doc scan or the header.
 - `review.md` — the occasional judgment-drift review and prune pass. `SKILL.md` handles
   mechanical staleness inline. This is the human-judgment pass on top of it. Read when a review
   is due, or on explicit request.
@@ -37,11 +39,15 @@ All inside the project you work in. Nothing elsewhere on your machine, nothing o
 - **`KNOWLEDGE.md`** — the knowledge file itself, created on first use after a short setup
   conversation. One per project (the directory with its own README or package manifest, not
   necessarily the repo root). Meant for commit. The whole point is that the next person hits the
-  gotcha and finds it already written down.
-- **One line added to an existing `CLAUDE.md`**, if the project has one. A pointer so people find
-  the file, not a copy of its contents. Proposed and confirmed like anything else, and skipped if
-  there is no `CLAUDE.md` to point from. This is the only file the skill touches that it does not
-  own.
+  gotcha and finds it already written down. Its header holds the rules for using an entry and
+  adding one, for a reader without this skill.
+- **One pointer line in the project's instruction file**: an existing pointer if there is one,
+  otherwise `AGENTS.md` or `CLAUDE.md`. It tells people where the file is, and tells a session to
+  follow the header's rules before it acts on an entry. Sessions often read the file without this
+  skill loaded. Proposed and confirmed like anything else, and skipped if there is no instruction
+  file.
+- **Removals from your existing docs**, when setup moves a gotcha out of a README, `CLAUDE.md`
+  or similar into `KNOWLEDGE.md`. Proposed and confirmed first.
 
 **Where it looks:** the project root first, then the project's own docs directory (`docs/`,
 `doc/`, `documentation/`) if it has one, then `.claude/`. It uses an existing file wherever it
@@ -49,8 +55,12 @@ finds one and never moves it. A new file goes into the docs directory if the pro
 one, otherwise the project root. It never creates a docs directory to hold it.
 
 The skill shows and confirms every write first, including the first one that creates the file.
-The one exception is the `Feature check:` skill-version stamp in the file's header. The skill
-moves that line itself, after it says what changed since the stamped version.
+There are three exceptions:
+- The `Feature check:` skill-version stamp in the file's header. The skill moves that line itself,
+  after it says what changed since the stamped version.
+- An entry's bookkeeping fields: the `Last referenced` date, the reference count, and `Status`.
+  The skill updates them when it uses an entry. It says so when an entry's status changes.
+- An entry whose root cause a change fixes. The skill removes it in that same change and says so.
 
 ## Requires
 
@@ -106,7 +116,7 @@ Claude: [adds it, removes it from team-wiki/gotchas.md]
 You: [starts editing migrations/runner.rb]
 
 Claude: KNOWLEDGE.md has an entry for this file — "migration runner needs DB_MIGRATIONS_URL
-        set in local dev." Evidence still checks out (env var still referenced at line 12).
+        set in local dev." Evidence still checks out (the runner still reads that env var).
         [uses it, bumps Last referenced and the reference count]
 ```
 

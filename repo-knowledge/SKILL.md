@@ -5,7 +5,7 @@ description: Maintains a per-project KNOWLEDGE.md — a git-tracked, human-reada
 
 # Repo knowledge
 
-**Skill version: 1.0.0.** `session-start.md`'s version check compares `KNOWLEDGE.md`'s
+**Skill version: 1.1.0.** `session-start.md`'s version check compares `KNOWLEDGE.md`'s
 `Feature check:` stamp against this number. `changelog.md` holds what shipped at each version and
 the versioning policy. Read it only when that check finds a gap, not on every run.
 
@@ -22,9 +22,11 @@ alongside it. `session-start.md` is a second core file, the other three are comp
 - `session-start.md` — Step 0 (find `KNOWLEDGE.md`, or defer to `setup.md` to bootstrap it).
   **Not optional** — read it every run, right after this intro, before Step 1. Split out purely to
   keep this file's common-case read focused on the reference/capture/removal loop.
-- `setup.md` — the one-time-per-project bootstrap: creating `KNOWLEDGE.md`, the `CLAUDE.md`
-  pointer, and the doc-migration scan. Read only the first time `session-start.md` finds no
-  `KNOWLEDGE.md` yet — never on later runs.
+- `setup.md` — the one-time-per-project bootstrap: creating `KNOWLEDGE.md`, the pointer to it,
+  and the doc-migration scan. It also holds the wording of the file's header and the pointer.
+  Read it the first time `session-start.md` finds no `KNOWLEDGE.md` yet. On a later run, read it
+  for a hand-off from `changelog.md`'s 1.1.0 entry. Read it also when the user asks for its doc
+  scan or for the header.
 - `review.md` — the occasional judgment-drift review/prune pass. Read it when `KNOWLEDGE.md`'s
   `Last reviewed:` date says it's due (see `session-start.md`), or when the user explicitly asks
   to review/prune repo knowledge.
@@ -49,6 +51,8 @@ Format:
 Last reviewed: <YYYY-MM-DD>
 Feature check: v<X.Y.Z>
 
+<the header from setup.md: how to use an entry without this skill>
+
 ## Entries
 
 ### <Short title>
@@ -68,9 +72,16 @@ Feature check: v<X.Y.Z>
   a config key, or a command. It's what Step 1's staleness check and `review.md`'s mechanical pass
   both key off. An entry without a checkable Evidence line is a weaker candidate for capture in
   the first place (see Step 2).
+  - Anchor it on content that moves with the code: a symbol, a heading, a search string.
+  - Never anchor it on a line number alone. Any edit above that line makes it point at the wrong
+    place, and the pointer still resolves.
+- **The header** is Step 1 for a reader without this skill. `setup.md` holds its wording.
+  - Keep it intact when editing the file.
+  - Never re-add a header the user removed.
 - **Last referenced** and **referenced: N** exist for two reasons at once: they're a usage/success
   signal (is this file actually earning its keep) and a curation signal (entries with a zero count
-  are prune candidates in `review.md`, independent of whether they've gone factually stale).
+  are prune candidates in `review.md`, independent of whether they've gone factually stale). The
+  curation signal fails when most counts are zero. `review.md` says what to do then.
 - **Status: needs-review** is set by Step 1's mechanical check when Evidence no longer resolves —
   a flag for a human to look at, never a silent deletion.
 - **Last reviewed:** at the top drives `review.md`'s occasional judgment-drift prompt — same
@@ -91,23 +102,38 @@ Feature check: v<X.Y.Z>
   Step 2). Whatever gets written here is still subject to the same secrets/PII rule as entries.
 
 **Hard rules by step, so a review can check none have gone missing.** Scope: rules that fail
-*silently* if skipped — gates (including must-ask obligations), the secrets/PII prohibition, and
-surfaces alike, since all three break without anything visibly going wrong (a leaked credential
-surfaces long after the fact, an unasked question never gets asked, an unsaid version gap stays
-unsaid). The **Kind** column marks which: **gate** (show, then wait for
-an answer), **surface** (say it, no answer needed), **prohibition** (never do it). It deliberately
-does not list every-run behaviour whose omission shows up on its own — referencing an entry when
-work touches its area, running an entry's mechanical check before relying on it. Absence from this
-table does not mean optional.
+*silently* if skipped. That covers gates (including must-ask obligations), the secrets/PII
+prohibition, surfaces and mechanical bookkeeping alike. All four break without anything visibly
+going wrong:
+- A leaked credential surfaces long after the fact.
+- An unasked question never gets asked, and an unsaid version gap stays unsaid.
+- An unrecorded reference leaves a count that looks like disuse.
+
+The **Kind** column marks which:
+- **gate**: show, then wait for an answer.
+- **surface**: say it, no answer needed.
+- **prohibition**: never do it.
+- **mechanical**: make the write every time it is due, with no gate and nothing said.
+
+It deliberately does not list rules whose omission shows in the skill's own output, such as
+numbered options or the capture bar's four tests. Absence from this table does not mean optional.
 
 | Step | Kind | Hard rule |
 |---|---|---|
-| 0 (setup.md) | gate | Propose creating `KNOWLEDGE.md`, migration candidates, and the CLAUDE.md pointer in one message, and wait for confirmation before writing/moving anything |
+| 0 (setup.md) | gate | Propose creating `KNOWLEDGE.md`, migration candidates, the header and the pointer in one message, and wait for confirmation before writing/moving anything |
 | 0 (setup.md) | gate | Ask whether there's anywhere else worth checking, don't assume the curated list is exhaustive |
 | 0 (session-start.md) | gate | If the file exists but is malformed, ask the user rather than silently rewriting |
 | 0 (session-start.md) | mechanical | Backfill a missing `Feature check:` stamp to `0.0.0`, then treat the file as behind rather than current |
 | 0 (session-start.md) | surface | Surface a `Feature check:` version gap, including a missing stamp, walked as `0.0.0` |
 | 0 (session-start.md) | surface | Surface an unexpectedly-ahead `Feature check:` stamp rather than resolving it either way |
+| 0 (setup.md) | gate | Show the header and pointer text and wait before adding either to an existing project. The user accepts or declines each one separately |
+| File | prohibition | Never re-add a header the user removed |
+| 1 | surface | Surface an entry when current work touches its Evidence |
+| 1 | mechanical | Bump `Last referenced` and the count, at most once a day, after relying on an entry whose Evidence resolves |
+| 1 | mechanical | Set `Status: needs-review` when an entry's Evidence stops resolving, and `active` when it resolves again |
+| 1 | mechanical | When the skill loads, run that check and bump for each entry already relied on earlier in the session |
+| 1 | surface | Say so when an entry's Evidence no longer resolves, resolves again, or cannot be reached from this checkout |
+| 1 | prohibition | Never run a side-effectful Evidence command to check it |
 | 2 | gate | Show the proposed new entry (or edit to an existing one) and wait for confirmation before writing it |
 | 2 | prohibition | Never write secrets, credentials, or PII into an entry or a Declined line — ask if uncertain |
 | 3 | gate | Confirm before removing an entry for staleness (a failed mechanical check alone isn't enough) |
@@ -135,14 +161,24 @@ whether a judgment-drift review is due. Once it says to, continue to Step 1 belo
 When current work touches a file, module, command, or area that an existing entry's **Evidence**
 overlaps with, surface that entry. Don't let the same ground get rediscovered.
 
+Sessions often act on an entry without this skill loaded, through the pointer or a grep. The
+pointer sends them to the file's header, which is this step for a reader without the skill. When
+the skill loads part-way through a session, catch up:
+- List the entries the session has already relied on.
+- Run this step's check and bump for each one now, as below. The once-a-day rule stops a second
+  bump of an entry the header already had the session bump.
+
 Before relying on it, mechanically check the Evidence pointer still resolves. Resolves means: the
 file/symbol still exists; the command still runs the way it's described; the config key still
-exists. This is the staleness check, and it's deliberately event-triggered rather than a full sweep
+exists. A line number resolves only if that line still shows what the entry describes. This is
+the staleness check, and it's deliberately event-triggered rather than a full sweep
 of every entry every session: only check the entries actually relevant to what's being touched
 right now, when they're about to be relied on.
 
 - If the pointer still resolves: use the entry. Then bump `Last referenced:` to today and
   increment the reference count.
+  - If `Last referenced:` is already today, change nothing. The count is the number of days the
+    entry was used, so a second use on one day adds nothing, from this session or another.
 - If it doesn't:
   - Mark `Status: needs-review` inline and say so plainly in the session.
   - Don't silently keep trusting it, and don't silently drop it either (see Step 3 for what
@@ -154,6 +190,7 @@ right now, when they're about to be relied on.
   than assuming the flag is still accurate. It may have been fixed (Evidence updated, or the
   underlying thing restored) without anyone clearing the flag. Re-checking is cheap. Don't nag
   about the same flag more than once per session: surface it, then move on.
+  - If it resolves now, set `Status: active` and say so.
 - If more than one relevant entry needs a decision from the user in the same pass (e.g. two
   touched entries both flagged `needs-review`), number them in one list (the numbering rule
   above).

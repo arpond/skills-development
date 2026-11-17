@@ -406,7 +406,7 @@ code.
    that only exists in this conversation is lost the moment the session ends, while a plan posted
    as a Jira comment survives for whoever picks the ticket up next, including a future session of
    this same skill.
-3. Offer to post it (e.g. as a comment via `mcp__jira__addCommentToJiraIssue`) as the natural
+3. Offer to post it (e.g. as a comment via `mcp__jira__addOrEditJiraIssueComment`) as the natural
    next step.
 4. Treat posting as a write to shared state like any other: confirm the content with the user
    before posting. Don't post automatically just because a plan now exists.

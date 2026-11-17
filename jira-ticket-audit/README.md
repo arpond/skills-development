@@ -50,7 +50,7 @@ your project.
 - **A Jira MCP server, configured and authenticated** — a hard dependency. Every step relies on
   Jira MCP tools (`getJiraIssue`, `search`, `searchJiraIssuesUsingJql`,
   `getJiraIssueRemoteIssueLinks`, and, only if the skill posts a report to the ticket,
-  `addCommentToJiraIssue`). Without one, the skill can only say so and point at whatever MCP
+  `addOrEditJiraIssueComment`). Without one, the skill can only say so and point at whatever MCP
   setup docs exist in the environment (for example an `atlassian-mcp` skill, if installed).
 
 ## When it triggers

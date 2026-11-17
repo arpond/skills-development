@@ -8,6 +8,12 @@ their own folder. Entries here point to them.
 Format: one heading per period, named by theme and dated by its start. Three fixed sections:
 Skills, Standards, Tooling. One line per item. Prose in the flavored mode of `ste-writing`.
 
+## Jira MCP v2 tool names · 2026-11-17
+
+**Skills**
+- `plan-technical-jira-ticket` and `jira-ticket-audit`: name `addOrEditJiraIssueComment`, the v2 Jira MCP comment
+  tool. It replaces the v1 name `addCommentToJiraIssue`.
+
 ## Artifact headers · 2026-11-16
 
 **Standards**
